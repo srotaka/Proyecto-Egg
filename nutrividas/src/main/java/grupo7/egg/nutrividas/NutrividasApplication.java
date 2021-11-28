@@ -1,4 +1,4 @@
-package grupo7.egg.nutrividas;
+package grupo7.egg.Nutrividas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

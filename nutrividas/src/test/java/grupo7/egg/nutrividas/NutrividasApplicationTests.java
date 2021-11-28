@@ -1,4 +1,4 @@
-package grupo7.egg.nutrividas;
+package grupo7.egg.Nutrividas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
