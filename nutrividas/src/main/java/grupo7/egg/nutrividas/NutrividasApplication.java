@@ -1,13 +1,13 @@
-package grupo7.egg.comedor;
+package grupo7.egg.nutrividas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ComedorApplication {
+public class NutrividasApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ComedorApplication.class, args);
+		SpringApplication.run(NutrividasApplication.class, args);
 	}
 
 }

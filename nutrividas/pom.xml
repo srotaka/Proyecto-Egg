@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>grupo7.egg</groupId>
-	<artifactId>comedor</artifactId>
+	<artifactId>nutrividas</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>comedor</name>
-	<description>Proyecto Comedor con Spring Web</description>
+	<name>nutrividas</name>
+	<description>Proyecto final grupo 7</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
