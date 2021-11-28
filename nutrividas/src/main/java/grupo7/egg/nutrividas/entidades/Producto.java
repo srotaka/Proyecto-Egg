@@ -1,5 +1,6 @@
 package grupo7.egg.nutrividas.entidades;
 
+import grupo7.egg.nutrividas.enums.Categoria;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,30 +10,28 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="personas")
-@SQLDelete(sql = "UPDATE personas SET alta = false WHERE id = ?")
+@Table(name="productos")
+@SQLDelete(sql = "UPDATE productos SET alta = false WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 @NoArgsConstructor
-public class Persona {
+public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String apellido;
-    private LocalDate fechaNacimiento;
-    private Integer edad;
-    private Integer altura;
-    private Integer peso;
-    //No se pude guardar una lista en la base, hacer una tabla de enfermedades aparte o hacer un capo de texto simple
-    private String enfermedades;
-    private Double IMC;
+    private String marca;
+    private Double precio;
+    private Boolean aptoCeliacos;
+    private Boolean aptoHipertensos;
+    private Boolean aptoDiabeticos;
+    private Boolean aptoIntoleranteLactosa;
+    private Categoria categoria;
 
     @CreatedDate
     @Column( updatable = false)

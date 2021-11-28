@@ -1,5 +1,6 @@
 package grupo7.egg.nutrividas.entidades;
 
+import grupo7.egg.nutrividas.enums.TipoTarjeta;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,26 +14,23 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="personas")
-@SQLDelete(sql = "UPDATE personas SET alta = false WHERE id = ?")
+@Table(name="tarjetas")
+@SQLDelete(sql = "UPDATE tarjetas SET alta = false WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 @NoArgsConstructor
-public class Persona {
+public class Tarjeta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
     private String apellido;
-    private LocalDate fechaNacimiento;
-    private Integer edad;
-    private Integer altura;
-    private Integer peso;
-    //No se pude guardar una lista en la base, hacer una tabla de enfermedades aparte o hacer un capo de texto simple
-    private String enfermedades;
-    private Double IMC;
+    private Long numeroTarjeta;
+    private Integer codigoSeguridad;
+    private TipoTarjeta tipoTarjeta;
+    private LocalDate fechaVencimiento;
 
     @CreatedDate
     @Column( updatable = false)
@@ -43,3 +41,4 @@ public class Persona {
 
     private Boolean alta;
 }
+
