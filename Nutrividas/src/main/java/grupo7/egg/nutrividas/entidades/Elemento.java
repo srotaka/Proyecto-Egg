@@ -29,7 +29,7 @@ public class Elemento {
     private Producto producto;
     private Integer cantidadNecesaria;
     private Integer cantidadComprada;
-    private Boolean fueComprado;
+    private Boolean fueComprado; // actua como alta asi que saco el flag de alta
     @ManyToOne
     private Canasta canasta;
     @CreatedDate
@@ -38,6 +38,4 @@ public class Elemento {
 
     @LastModifiedDate
     private LocalDateTime modificacion;
-
-    private Boolean alta;
 }

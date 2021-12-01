@@ -12,12 +12,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 
+import java.util.List;
+
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto,Long> {
 
-    @Modifying
-    @Query("UPDATE Producto p SET p.alta = true WHERE p.id = :id")
-    void habilitar(@Param("id")Long id);
 
     Page<Producto> findByCategoria(Categoria categoria,Pageable pageable);
     List<Producto> findByAptoCeliacos(Boolean aptoCeliacos);
@@ -25,5 +24,25 @@ public interface ProductoRepository extends JpaRepository<Producto,Long> {
     List<Producto> findByAptoIntoleranteLactosa(Boolean aptoIntoleranteLactosa);
     List<Producto> findByAptoDiabeticos(Boolean aptoDiabeticos);
     boolean existsByNombreAndMarca(String nombre,String marca);
+
+    @Modifying
+    @Query("UPDATE Producto p SET p.alta = 0 WHERE p.id = :id")
+    void deshabilitarProducto(@Param("id") Long id);
+
+    @Modifying
+    @Query("UPDATE Producto p SET p.alta = 1 WHERE p.id = :id")
+    void habilitarProducto(@Param("id") Long id);
+
+    @Query("SELECT p FROM Producto p WHERE p.id = :id")
+    Producto buscarProductoPorId(@Param("id") Long id);
+
+    @Modifying
+    @Query("UPDATE Producto p SET p.nombre = :nombre, p.marca = :marca, p.precio = :precio, " +
+            "p.aptoIntoleranteLactosa = :aptoIntoleranteLactosa, p.aptoCeliacos = :aptoCeliacos, " +
+            "p.aptoHipertensos = :aptoHipertensos, p.aptoDiabeticos = :aptoDiabeticos WHERE p.id = :id")
+    void modificarProducto(@Param("id") Long id, @Param("nombre") String nombre, @Param("marca") String marca,
+                           @Param("precio") Double precio, @Param("aptoIntoleranteLactosa") Boolean aptoIntoleranteLactosa,
+                           @Param("aptoCeliacos") Boolean aptoCeliacos, @Param("aptoHipertensos") Boolean aptoHipertensos,
+                           @Param("aptoDiabeticos") Boolean aptoDiabeticos);
 
 }
