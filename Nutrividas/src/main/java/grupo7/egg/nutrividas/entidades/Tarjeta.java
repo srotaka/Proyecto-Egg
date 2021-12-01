@@ -31,6 +31,8 @@ public class Tarjeta {
     private Integer codigoSeguridad;
     private TipoTarjeta tipoTarjeta;
     private LocalDate fechaVencimiento;
+    @ManyToOne
+    private Usuario usuario;
 
     @CreatedDate
     @Column( updatable = false)

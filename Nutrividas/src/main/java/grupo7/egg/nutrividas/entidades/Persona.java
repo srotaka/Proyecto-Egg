@@ -34,6 +34,9 @@ public class Persona {
     private String enfermedades;
     private Double IMC;
 
+    @ManyToOne
+    private Comedor comedor;
+
     @CreatedDate
     @Column( updatable = false)
     private LocalDateTime creacion;

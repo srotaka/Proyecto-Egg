@@ -29,8 +29,9 @@ public class Nutricionista {
     private Long matricula;
     private Long telefono;
     private String mail;
-    @OneToMany
-    private List<Comedor> comedoresACargo;
+
+    @OneToMany(mappedBy = "nutricionista")
+    private List<Comedor> comedores;
 
     @CreatedDate
     @Column( updatable = false)

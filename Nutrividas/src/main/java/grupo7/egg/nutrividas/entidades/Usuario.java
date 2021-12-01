@@ -29,7 +29,7 @@ public class Usuario {
     private String apellido;
     private String mail;
     private Long telefono;
-    @OneToMany
+    @OneToMany(mappedBy = "usuario")
     private List<Tarjeta> tarjetas;
 
     @CreatedDate

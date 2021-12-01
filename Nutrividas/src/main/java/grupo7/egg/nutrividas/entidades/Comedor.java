@@ -34,13 +34,14 @@ public class Comedor {
     private String biografia;
 
     //Mapped by comedor ---> agregar hacemos la relación bidireccional añadiendo a Persona el atributo comedor
-    @OneToMany
-    @JoinColumn
+    @OneToMany(mappedBy = "comedor")
     private List<Persona> personas;
     //Mapped by comedor ---> agregar hacemos la relación bidireccional añadiendo a Canasta el atributo comedor
-    @OneToMany
-    @JoinColumn
+    @OneToMany(mappedBy = "comedor")
     private List<Canasta> canastas;
+
+    @ManyToOne
+    private Nutricionista nutricionista;
 
     private Boolean alta;
 

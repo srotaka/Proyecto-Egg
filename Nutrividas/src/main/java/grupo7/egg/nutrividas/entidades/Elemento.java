@@ -30,7 +30,8 @@ public class Elemento {
     private Integer cantidadNecesaria;
     private Integer cantidadComprada;
     private Boolean fueComprado;
-
+    @ManyToOne
+    private Canasta canasta;
     @CreatedDate
     @Column( updatable = false)
     private LocalDateTime creacion;

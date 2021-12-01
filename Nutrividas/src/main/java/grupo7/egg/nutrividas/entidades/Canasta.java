@@ -29,9 +29,12 @@ public class Canasta {
     @Column(nullable = false)
     private Integer cantidadDePersonas;
 
-    @JoinColumn
-    @OneToMany
+
+    @OneToMany(mappedBy = "canasta")
     List<Elemento> elementos;
+
+    @ManyToOne
+    private Comedor comedor;
 
     @CreatedDate
     @Column( updatable = false)
