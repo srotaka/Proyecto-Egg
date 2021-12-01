@@ -60,11 +60,6 @@ public class productoServicio {
     }
 
     @Transactional
-    public List<Producto> obtenerProductos(){
-        return productoRepository.obtenerProductosHabilitados();
-    }
-
-    @Transactional
     public void deshabilitarProducto(Long id) {
         productoRepository.deshabilitarProducto(id);
     }

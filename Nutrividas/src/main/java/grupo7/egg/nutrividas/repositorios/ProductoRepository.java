@@ -15,10 +15,6 @@ public interface ProductoRepository extends JpaRepository<Producto,Long> {
 
     boolean existsByNombreAndMarca(String nombre,String marca);
 
-    //Sirve para obtener productos, ver como es el tema de obtener productos aplicando filtros
-    @Query("SELECT p FROM Producto p WHERE p.alta = 1")
-    List<Producto> obtenerProductosHabilitados();
-
     @Modifying
     @Query("UPDATE Producto p SET p.alta = 0 WHERE p.id = :id")
     void deshabilitarProducto(@Param("id") Long id);
