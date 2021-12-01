@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class elementoServicio {
+public class ElementoServicio {
 
     @Autowired
     private ElementoRepository elementoRepository;
