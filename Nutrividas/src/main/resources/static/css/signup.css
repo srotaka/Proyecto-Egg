@@ -1,0 +1,79 @@
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url("../img/children08.jpg");
+  background-size: cover;
+  background-position: center center;
+}
+
+body {
+    color: #444444 !important;
+    font-family: 'Newsreader', serif !important;
+
+}
+
+#boton-SignIn {
+    background-color:  #1bac91 !important;
+    border-color: #1bac91 !important;
+    width: auto !important
+}
+
+#boton-SignIn:hover {
+    background-color:  #08493d !important;
+    transition: 1.5s;
+}
+
+#boton-SignIn:not(:hover) {   
+    transition: 1.6s;
+}
+
+#link-SignUp:hover {
+  text-decoration: underline;
+} 
+
+/* check (Recordar Email) */
+#customCheck1 {
+  background-color: #1bac91 !important;
+}
+
+/* --------- SACAR LAS FLECHAS PARA INCREMENTAR O DISMINUIR NÚMEROS --------- */
+/* Chrome */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="number"]:hover,
+input[type="number"]:focus {
+  -moz-appearance: number-input;
+}
+/* Other */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+#mensaje-Bienvenida-SignUp {
+    font-size: 2.9rem;
+}
+
+#mensaje-Secundario-SignUp {
+    font-size: 1.5rem;
+    text-align: center;
+}
