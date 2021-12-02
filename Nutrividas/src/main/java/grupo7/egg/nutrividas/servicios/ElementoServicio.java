@@ -21,6 +21,7 @@ public class ElementoServicio {
     @Autowired
     private CanastaRepository canastaRepository;
 
+    @Transactional
     public Elemento crearElementoDeCanasta(Long idProducto, Integer cantidadNecesaria, Long idCanasta) throws Exception{
 
         Elemento elemento = new Elemento();

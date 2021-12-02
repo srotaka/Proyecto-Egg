@@ -54,7 +54,7 @@ public class ProductoServicio {
         producto.setAptoDiabeticos(aptoDiabeticos);
         producto.setAlta(true);
 
-        return producto;
+        return productoRepository.save(producto);
     }
 
     public void validarDatosDelProducto(String nombre, String marca, Double precio) throws Exception{
@@ -74,16 +74,31 @@ public class ProductoServicio {
     }
 
     @Transactional
-    public void modificarProducto(Long id, String nombre, String marca, Double precio, Categoria categoria,
+    public Producto modificarProducto(Long id,String nombre, String marca, Double precio, Categoria categoria,
                                   Boolean aptoIntoleranteLactosa, Boolean aptoCeliaco, Boolean aptoHipertenso,
-                                  Boolean aptoDiabeticos) throws Exception{
+                                  Boolean aptoDiabeticos) throws Exception {
+
+        Producto producto = productoRepository.findById(id).orElseThrow(() ->
+                new Exception("No se encontró un producto con el id "+id));
+
         validarDatosDelProducto(nombre, marca, precio);
-        productoRepository.modificarProducto(id, nombre, marca, precio, aptoIntoleranteLactosa, aptoCeliaco, aptoHipertenso, aptoDiabeticos);
+
+        producto.setNombre(nombre);
+        producto.setMarca(marca);
+        producto.setPrecio(precio);
+        producto.setCategoria(categoria);
+        producto.setAptoIntoleranteLactosa(aptoIntoleranteLactosa);
+        producto.setAptoCeliacos(aptoCeliaco);
+        producto.setAptoHipertensos(aptoHipertenso);
+        producto.setAptoDiabeticos(aptoDiabeticos);
+        producto.setAlta(true);
+
+        return productoRepository.save(producto);
     }
 
     @Transactional
     public void deshabilitarProducto(Long id) {
-        productoRepository.deshabilitarProducto(id);
+        productoRepository.deleteById(id);
     }
 
     @Transactional

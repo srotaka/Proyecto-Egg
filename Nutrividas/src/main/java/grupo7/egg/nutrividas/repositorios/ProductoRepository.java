@@ -25,9 +25,6 @@ public interface ProductoRepository extends JpaRepository<Producto,Long> {
     List<Producto> findByAptoDiabeticos(Boolean aptoDiabeticos);
     boolean existsByNombreAndMarca(String nombre,String marca);
 
-    @Modifying
-    @Query("UPDATE Producto p SET p.alta = 0 WHERE p.id = :id")
-    void deshabilitarProducto(@Param("id") Long id);
 
     @Modifying
     @Query("UPDATE Producto p SET p.alta = 1 WHERE p.id = :id")

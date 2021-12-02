@@ -1,5 +1,6 @@
 package grupo7.egg.nutrividas.entidades;
 
+import grupo7.egg.nutrividas.enums.Sexo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,11 +29,14 @@ public class Persona {
     private String apellido;
     private LocalDate fechaNacimiento;
     private Integer edad;
-    private Integer altura;
-    private Integer peso;
-    //No se pude guardar una lista en la base, hacer una tabla de enfermedades aparte o hacer un capo de texto simple
-    private String enfermedades;
+    private Double altura;
+    private Double peso;
+    private Boolean aptoCeliacos;
+    private Boolean aptoHipertensos;
+    private Boolean aptoDiabeticos;
+    private Boolean aptoIntoleranteLactosa;
     private Double IMC;
+    private Sexo sexo;
 
     @ManyToOne
     private Comedor comedor;
