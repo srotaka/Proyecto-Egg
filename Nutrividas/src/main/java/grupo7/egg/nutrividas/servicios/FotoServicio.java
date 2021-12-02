@@ -24,8 +24,6 @@ public class FotoServicio {
     @Autowired
     private FotoRepository fotoRepositorio;
 
-    @Autowired
-    private Foto foto;
 
     public final Boolean DISCHARGE = Boolean.TRUE;
 
@@ -39,11 +37,13 @@ public class FotoServicio {
         String nameFormated = name.replaceAll("\\s","-");
         String finalPath = createPath(multipartFile,folderLocation,id,nameFormated);
         String relativPath =finalPath.substring(25);
+
         try {
             byte[] bytes = multipartFile.getBytes();
             Path path = Paths.get(finalPath);
             Files.write(path, bytes);
 
+            Foto foto = new Foto();
             foto.setMime(multipartFile.getContentType());
             foto.setNombre(multipartFile.getName());
             foto.setRuta(relativPath);
@@ -51,7 +51,7 @@ public class FotoServicio {
             return fotoRepositorio.save(foto);
         }catch (Exception e) {
             e.printStackTrace();
-            throw new ConflictException("Error during upload: " + multipartFile.getOriginalFilename());
+            throw new ConflictException("Error al cargar: " + multipartFile.getOriginalFilename());
         }
     }
 
@@ -89,7 +89,6 @@ public class FotoServicio {
             path = Paths.get(finalPath);
             Files.write(path, bytes);
 
-            this.foto= foto;
             foto.setMime(multipartFile.getContentType());
             foto.setNombre(multipartFile.getName());
             foto.setRuta(relativPath);

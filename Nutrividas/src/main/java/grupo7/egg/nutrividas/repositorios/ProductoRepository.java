@@ -43,6 +43,7 @@ public interface ProductoRepository extends JpaRepository<Producto,Long> {
                            @Param("aptoCeliacos") Boolean aptoCeliacos, @Param("aptoHipertensos") Boolean aptoHipertensos,
                            @Param("aptoDiabeticos") Boolean aptoDiabeticos);
 
+    @Modifying
     @Query("UPDATE Producto p SET p.foto = :foto WHERE p.id = :id")
     void actualizarFoto(Foto foto, Long id);
 

@@ -1,6 +1,7 @@
 package grupo7.egg.nutrividas.controlador;
 
 
+import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.ProductoServicio;
@@ -45,7 +46,8 @@ public class ProductoContolador {
                              UriComponentsBuilder componentsBuilder){
 
         Producto producto = productoServicio.obtenerProductoPorId(id);
-        fotoServicio.crearFoto(PRODUCTOS_UPLOADED_FOLDER ,String.valueOf(id),producto.getNombre()+"-"+producto.getMarca(),multipartFile);
+        Foto foto = fotoServicio.crearFoto(PRODUCTOS_UPLOADED_FOLDER ,String.valueOf(id),producto.getNombre()+"-"+producto.getMarca(),multipartFile);
+        productoServicio.crearFoto(foto,id);
     }
 
     public Sort getSort(String order) throws Exception {

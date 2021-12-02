@@ -113,7 +113,7 @@ public class ProductoServicio {
         return productoRepository.buscarProductoPorId(id);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void crearFoto(Foto foto, Long id){
         if(foto == null){
             throw new FieldInvalidException("La imagen no puede ser nula");
@@ -122,7 +122,6 @@ public class ProductoServicio {
         Producto producto  = productoRepository.findById(id).orElseThrow(
                 ()->new NoSuchElementException("No se halló un producto con el id '"+id+"'"));
 
-        producto.setFoto(foto);
-        productoRepository.save(producto);
+        productoRepository.actualizarFoto(foto,id);
     }
 }
