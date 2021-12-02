@@ -1,6 +1,7 @@
 package grupo7.egg.nutrividas.repositorios;
 
 
+import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.enums.Categoria;
 import org.springframework.data.domain.Page;
@@ -41,5 +42,8 @@ public interface ProductoRepository extends JpaRepository<Producto,Long> {
                            @Param("precio") Double precio, @Param("aptoIntoleranteLactosa") Boolean aptoIntoleranteLactosa,
                            @Param("aptoCeliacos") Boolean aptoCeliacos, @Param("aptoHipertensos") Boolean aptoHipertensos,
                            @Param("aptoDiabeticos") Boolean aptoDiabeticos);
+
+    @Query("UPDATE Producto p SET p.foto = :foto WHERE p.id = :id")
+    void actualizarFoto(Foto foto, Long id);
 
 }

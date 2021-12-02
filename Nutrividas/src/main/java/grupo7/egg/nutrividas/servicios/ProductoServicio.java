@@ -1,7 +1,9 @@
 package grupo7.egg.nutrividas.servicios;
 
+import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.enums.Categoria;
+import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.ProductoRepository;
 import grupo7.egg.nutrividas.util.Validations;
 import grupo7.egg.nutrividas.util.paginacion.Paged;
@@ -12,7 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.data.domain.Pageable;;
+import org.springframework.data.domain.Pageable;;import java.util.NoSuchElementException;
 
 @Service
 public class ProductoServicio {
@@ -106,8 +108,21 @@ public class ProductoServicio {
         productoRepository.habilitarProducto(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Producto obtenerProductoPorId(Long id){
         return productoRepository.buscarProductoPorId(id);
+    }
+
+    @Transactional(readOnly = true)
+    public void crearFoto(Foto foto, Long id){
+        if(foto == null){
+            throw new FieldInvalidException("La imagen no puede ser nula");
+        }
+
+        Producto producto  = productoRepository.findById(id).orElseThrow(
+                ()->new NoSuchElementException("No se halló un producto con el id '"+id+"'"));
+
+        producto.setFoto(foto);
+        productoRepository.save(producto);
     }
 }

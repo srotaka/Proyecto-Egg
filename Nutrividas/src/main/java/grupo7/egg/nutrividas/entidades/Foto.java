@@ -1,6 +1,5 @@
 package grupo7.egg.nutrividas.entidades;
 
-import grupo7.egg.nutrividas.enums.Categoria;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,37 +7,33 @@ import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Component
 @Entity
-@Table(name="productos")
-@SQLDelete(sql = "UPDATE productos SET alta = false WHERE id = ?")
-@EntityListeners(AuditingEntityListener.class)
+@Table(name="fotos")
+@SQLDelete(sql = "UPDATE fotos SET alta = false WHERE id = ?")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Producto {
+@EntityListeners(AuditingEntityListener.class)
+public final class Foto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String marca;
-    private Double precio;
-    private Boolean aptoCeliacos;
-    private Boolean aptoHipertensos;
-    private Boolean aptoDiabeticos;
-    private Boolean aptoIntoleranteLactosa;
-    private Categoria categoria;
-    @OneToOne
-    private Foto foto;
+    private String mime;
+    private String ruta;
+    private Boolean alta;
+
     @CreatedDate
     @Column( updatable = false)
     private LocalDateTime creacion;
 
     @LastModifiedDate
     private LocalDateTime modificacion;
-
-    private Boolean alta;
 }
