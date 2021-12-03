@@ -39,7 +39,7 @@ public class ElementoServicio {
         elemento.setCanasta(canastaRepository.buscarCanastaPorId(idCanasta));
         elemento.setFueComprado(true);
 
-        return elemento;
+        return elementoRepository.save(elemento);
     }
 
     @Transactional

@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name="usuarios")
-@SQLDelete(sql = "UPDATE usuarios SET alta = false WHERE id = ?")
+@SQLDelete(sql = "UPDATE Usuarios SET alta = false WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter

@@ -111,14 +111,14 @@ public class PersonaServicio {
 
     @Transactional
     public void habilitarPersona(Long id) throws Exception {
-        Persona persona = personaRepository.findById(id).orElseThrow(
+        personaRepository.findById(id).orElseThrow(
                 () -> new Exception("No se halló una persona con el id "+id));
-        personaRepository.habilitarPersonao(id);
+        personaRepository.habilitarPersona(id);
     }
 
     @Transactional
     public void deshabilitarPersona(Long id) throws Exception {
-        Persona persona = personaRepository.findById(id).orElseThrow(
+        personaRepository.findById(id).orElseThrow(
                 () -> new Exception("No se halló una persona con el id "+id));
         personaRepository.deleteById(id);
     }

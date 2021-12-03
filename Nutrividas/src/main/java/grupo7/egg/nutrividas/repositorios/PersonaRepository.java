@@ -12,5 +12,5 @@ public interface PersonaRepository extends JpaRepository<Persona,Long> {
 
     @Modifying
     @Query("UPDATE Persona p SET p.alta = 1 WHERE p.id = :id")
-    void habilitarPersonao(@Param("id") Long id);
+    void habilitarPersona(@Param("id") Long id);
 }
