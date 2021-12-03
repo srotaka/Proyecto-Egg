@@ -18,8 +18,11 @@ public interface TarjetaRepository extends JpaRepository<Tarjeta,Long> {
     @Query("SELECT t FROM Tarjeta t WHERE t.numeroTarjeta = :numeroTarjeta")
     Tarjeta obtenerTarjetaPorNumero(@Param("numeroTarjeta") Long numeroTarjeta);
 
+    @Query("SELECT t FROM Tarjeta t WHERE t.usuario = :usuario AND t.alta = 0")
+    List<Tarjeta> obtenerTarjetasPorUsuarioHabilitadas(@Param("usuario") Usuario usuario);
+
     @Query("SELECT t FROM Tarjeta t WHERE t.usuario = :usuario")
-    List<Tarjeta> obtenerTarjetasPorUsuario(@Param("usuario") Usuario usuario);
+    List<Tarjeta> obtenerTarjetasDeUsuario(@Param("usuario") Usuario usuario);
 
     @Modifying
     @Query("UPDATE Tarjeta t SET t.alta = 1 WHERE t.id = :id")

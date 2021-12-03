@@ -141,15 +141,15 @@ public class TarjetaServicio {
     }
 
     @Transactional
-    public void deshabilitarPersona(Long idTarjeta) throws Exception {
+    public void eliminarTarjeta(Long idTarjeta) throws Exception {
         tarjetaRepository.findById(idTarjeta).orElseThrow(
                 () -> new Exception("No se halló una tarjeta con el id " + idTarjeta));
         tarjetaRepository.deleteById(idTarjeta);
     }
 
     @Transactional
-    public List<Tarjeta> obtenerTarjetasDeUsuario(Long idUsuario){
-        return tarjetaRepository.obtenerTarjetasPorUsuario(usuarioRepository.findById(idUsuario).get());
+    public List<Tarjeta> obtenerTarjetasHabilitadas(Long idUsuario){
+        return tarjetaRepository.obtenerTarjetasPorUsuarioHabilitadas(usuarioRepository.findById(idUsuario).get());
     }
 
 }
