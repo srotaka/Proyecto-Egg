@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class ElementoServicio {
 
@@ -36,7 +38,8 @@ public class ElementoServicio {
         elemento.setProducto(productoRepository.buscarProductoPorId(idProducto));
         elemento.setCantidadNecesaria(cantidadNecesaria);
         elemento.setCantidadComprada(0);
-        elemento.setCanasta(canastaRepository.buscarCanastaPorId(idCanasta));
+        elemento.setCanasta(canastaRepository.findById(idCanasta).orElseThrow(
+                ()->new NoSuchElementException("La canasta ingresada no existe")));
         elemento.setFueComprado(true);
 
         return elemento;
@@ -70,5 +73,9 @@ public class ElementoServicio {
         elementoRepository.comprarElemento(idElemento);
     }
 
-
+    public void deshabilitarElemento(Long id){
+        Elemento elemento = elementoRepository.findById(id).orElseThrow(
+                ()-> new NoSuchElementException("El elemento que desea eliminar no existe"));
+        elementoRepository.delete(elemento);
+    }
 }

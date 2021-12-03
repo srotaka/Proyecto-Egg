@@ -33,13 +33,23 @@ public final class Validations {
     }
 
     private static final String DOCUMENT_REGEX  = "\\d{8}";
+    private static final String MATRICULA_REGEX  = "\\d{12}";
 
     public static void validDocument(Long document) throws Exception {
         String parse = String.valueOf(document);
         validNotEmptyfield(parse);
 
         if (!parse.matches(DOCUMENT_REGEX)) {
-            throw new Exception("The 'document' must contain 8 digits");
+            throw new Exception("El documento debe contener 8 dígitos");
+        }
+    }
+
+    public static void validMatricula(Long document) throws Exception {
+        String parse = String.valueOf(document);
+        validNotEmptyfield(parse);
+
+        if (!parse.matches(DOCUMENT_REGEX)) {
+            throw new Exception("La matricula debe contener 12 dígitos");
         }
     }
 

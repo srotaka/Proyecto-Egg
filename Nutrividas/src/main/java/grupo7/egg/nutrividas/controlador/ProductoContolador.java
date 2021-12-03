@@ -39,7 +39,7 @@ public class ProductoContolador {
         return productoServicio.buscarPorCategoria(categoria,page,size,getSort(order));
     }
 
-    public final String PRODUCTOS_UPLOADED_FOLDER = "src/main/resources/static/img/";
+    public final String PRODUCTOS_UPLOADED_FOLDER = "src/main/resources/static/img/productos/";
 
     @PostMapping("/imagen/crear")
     public void  uploadImage(@RequestParam("id")Long id,@RequestParam("imagen") MultipartFile multipartFile,
