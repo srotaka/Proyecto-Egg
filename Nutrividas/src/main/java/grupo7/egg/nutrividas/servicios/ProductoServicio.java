@@ -119,7 +119,7 @@ public class ProductoServicio {
             throw new FieldInvalidException("La imagen no puede ser nula");
         }
 
-        Producto producto  = productoRepository.findById(id).orElseThrow(
+        productoRepository.findById(id).orElseThrow(
                 ()->new NoSuchElementException("No se halló un producto con el id '"+id+"'"));
 
         productoRepository.actualizarFoto(foto,id);

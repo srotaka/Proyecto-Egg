@@ -38,6 +38,9 @@ public class Persona {
     private Double IMC;
     private Sexo sexo;
 
+    @OneToOne
+    private Foto foto;
+
     @ManyToOne
     private Comedor comedor;
 

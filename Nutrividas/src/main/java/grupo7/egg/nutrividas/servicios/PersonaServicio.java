@@ -1,8 +1,9 @@
 package grupo7.egg.nutrividas.servicios;
 
-import grupo7.egg.nutrividas.entidades.Comedor;
+import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Persona;
 import grupo7.egg.nutrividas.enums.Sexo;
+import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.ComedorRepository;
 import grupo7.egg.nutrividas.repositorios.PersonaRepository;
 import grupo7.egg.nutrividas.util.Validations;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.NoSuchElementException;
 
 
 @Service
@@ -122,4 +124,17 @@ public class PersonaServicio {
                 () -> new Exception("No se halló una persona con el id "+id));
         personaRepository.deleteById(id);
     }
+
+    @Transactional
+    public void modificarFoto(Long id, Foto foto) throws Exception{
+        if(foto == null){
+            throw new FieldInvalidException("La imagen no puede ser nula");
+        }
+
+        personaRepository.findById(id).orElseThrow(
+                ()->new NoSuchElementException("No se halló una persona con el id '"+id+"'"));
+
+        personaRepository.actualizarFoto(foto,id);
+    }
+
 }

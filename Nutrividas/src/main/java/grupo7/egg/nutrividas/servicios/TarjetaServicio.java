@@ -134,10 +134,17 @@ public class TarjetaServicio {
     }
 
     @Transactional
-    public void habilitarTarjeta(Long idTarjeta) throws Exception {
+    public Tarjeta habilitarTarjeta(Long idTarjeta) throws Exception {
         tarjetaRepository.findById(idTarjeta).orElseThrow(
                 () -> new Exception("No se halló una tarjeta con el id " + idTarjeta));
-        tarjetaRepository.habilitarTarjeta(idTarjeta);
+        return tarjetaRepository.habilitarTarjeta(idTarjeta);
+    }
+
+    @Transactional
+    public Tarjeta deshabilitarTarjeta(Long idTarjeta) throws Exception {
+        tarjetaRepository.findById(idTarjeta).orElseThrow(
+                () -> new Exception("No se halló una tarjeta con el id " + idTarjeta));
+        return tarjetaRepository.deshabilitarTarjeta(idTarjeta);
     }
 
     @Transactional
@@ -148,8 +155,13 @@ public class TarjetaServicio {
     }
 
     @Transactional
-    public List<Tarjeta> obtenerTarjetasHabilitadas(Long idUsuario){
+    public List<Tarjeta> obtenerTarjetasDeUsuarioHabilitadas(Long idUsuario){
         return tarjetaRepository.obtenerTarjetasPorUsuarioHabilitadas(usuarioRepository.findById(idUsuario).get());
+    }
+
+    @Transactional
+    public List<Tarjeta> obtenerTarjetasDeUsuario(Long idUsuario){
+        return tarjetaRepository.obtenerTarjetasPorUsuario(usuarioRepository.findById(idUsuario).get());
     }
 
 }

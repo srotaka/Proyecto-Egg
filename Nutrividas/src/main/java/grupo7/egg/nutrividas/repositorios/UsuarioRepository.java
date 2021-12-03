@@ -15,6 +15,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
     @Query("SELECT u FROM Usuario u WHERE u.mail = :mail")
     Usuario obtenerUsuarioPorMail(@Param("mail") String mail);
 
-    @Query("UPDATE Usuario u SET u.alta = 1")
+    @Query("UPDATE Usuario u SET u.alta = false")
     void deshabilitarUsuario(@Param("id") Long id);
+
+    @Query("UPDATE Usuario u SET u.alta = true")
+    void habilitarUsuario(@Param("id") Long id);
 }

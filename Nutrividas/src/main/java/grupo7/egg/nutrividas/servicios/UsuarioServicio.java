@@ -118,9 +118,40 @@ public class UsuarioServicio {
     }
 
     @Transactional
-    public void dasabilitarUsuario(Long idUsuario) throws Exception{
+    public void deshabilitarTarjetaDeUsuario(Long idTarjeta, Long idUsuario) throws Exception{
+        Usuario usuario = usuarioRepository.findById(idUsuario).get();
+        List <Tarjeta> tarjetas = usuario.getTarjetas();
+        Tarjeta tarjeta = tarjetaRepository.findById(idTarjeta).get();
+        tarjetas.remove(tarjeta);
+        tarjeta = tarjetaServicio.deshabilitarTarjeta(idTarjeta);
+        tarjetas.add(tarjeta);
+        usuario.setTarjetas(tarjetas);
+        usuarioRepository.save(usuario);
+    }
+
+    @Transactional
+    public void habilitarTarjetaDeUsuario(Long idTarjeta, Long idUsuario) throws Exception{
+        Usuario usuario = usuarioRepository.findById(idUsuario).get();
+        List <Tarjeta> tarjetas = usuario.getTarjetas();
+        Tarjeta tarjeta = tarjetaRepository.findById(idTarjeta).get();
+        tarjetas.remove(tarjeta);
+        tarjeta = tarjetaServicio.habilitarTarjeta(idTarjeta);
+        tarjetas.add(tarjeta);
+        usuario.setTarjetas(tarjetas);
+        usuarioRepository.save(usuario);
+    }
+
+    @Transactional
+    public void dashabilitarUsuario(Long idUsuario) throws Exception{
         usuarioRepository.findById(idUsuario).orElseThrow(
                 () -> new Exception("No se halló un usuario con el id " + idUsuario));
         usuarioRepository.deshabilitarUsuario(idUsuario);
+    }
+
+    @Transactional
+    public void habilitarUsuario(Long idUsuario) throws Exception{
+        usuarioRepository.findById(idUsuario).orElseThrow(
+                () -> new Exception("No se halló un usuario con el id " + idUsuario));
+        usuarioRepository.habilitarUsuario(idUsuario);
     }
 }
