@@ -42,7 +42,7 @@ public class ElementoServicio {
                 ()->new NoSuchElementException("La canasta ingresada no existe")));
         elemento.setFueComprado(true);
 
-        return elemento;
+        return elementoRepository.save(elemento);
     }
 
     @Transactional

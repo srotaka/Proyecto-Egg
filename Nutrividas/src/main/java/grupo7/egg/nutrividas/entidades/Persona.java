@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="personas")
-@SQLDelete(sql = "UPDATE personas SET alta = false WHERE id = ?")
+@SQLDelete(sql = "UPDATE Personas SET alta = false WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
@@ -37,6 +37,9 @@ public class Persona {
     private Boolean aptoIntoleranteLactosa;
     private Double IMC;
     private Sexo sexo;
+
+    @OneToOne
+    private Foto foto;
 
     @ManyToOne
     private Comedor comedor;

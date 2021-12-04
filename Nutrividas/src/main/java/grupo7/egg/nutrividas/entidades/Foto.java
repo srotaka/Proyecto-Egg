@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Component
 @Entity
 @Table(name="fotos")
-@SQLDelete(sql = "UPDATE fotos SET alta = false WHERE id = ?")
+@SQLDelete(sql = "UPDATE Fotos SET alta = false WHERE id = ?")
 @Getter
 @Setter
 @NoArgsConstructor

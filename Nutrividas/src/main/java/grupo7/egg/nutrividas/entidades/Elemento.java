@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="elementos")
-@SQLDelete(sql = "UPDATE elementos SET alta = false WHERE id = ?")
+@SQLDelete(sql = "UPDATE Elementos SET alta = false WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
