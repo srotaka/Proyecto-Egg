@@ -20,13 +20,10 @@ public class ElementoServicio {
     private ElementoRepository elementoRepository;
 
     @Autowired
-    private CanastaServicio canastaServicio;
-
-    @Autowired
     private ProductoServicio productoServicio;
 
     @Transactional
-    public Elemento crearElementoDeCanasta(Long idProducto, Integer cantidadNecesaria, Long idCanasta){
+    public Elemento crearElementoDeCanasta(Long idProducto, Integer cantidadNecesaria,Long idCanasta){
 
         if(elementoRepository.existsByProducto_IdAndCanasta_Id(idProducto,idCanasta)){
             throw new FieldAlreadyExistException("Ya existe el elemento en esta canasta");
@@ -42,7 +39,7 @@ public class ElementoServicio {
         elemento.setProducto(productoServicio.obtenerProductoPorId(idProducto));
         elemento.setCantidadNecesaria(cantidadNecesaria);
         elemento.setCantidadComprada(0);
-        elemento.setCanasta(canastaServicio.buscarPorId(idCanasta));
+        //elemento.setCanasta(canastaServicio.buscarPorId(idCanasta));
         elemento.setFueComprado(true);
 
         return elementoRepository.save(elemento);
@@ -70,7 +67,7 @@ public class ElementoServicio {
         elemento.setProducto(productoServicio.obtenerProductoPorId(idProducto));
         elemento.setCantidadNecesaria(cantidadNecesaria);
         elemento.setCantidadComprada(0);
-        elemento.setCanasta(canastaServicio.buscarPorId(idCanasta));
+        //elemento.setCanasta(canastaServicio.buscarPorId(idCanasta));
         elemento.setFueComprado(true);
 
         return elementoRepository.save(elemento);

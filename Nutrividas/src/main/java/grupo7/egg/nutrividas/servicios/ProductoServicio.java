@@ -1,6 +1,7 @@
 package grupo7.egg.nutrividas.servicios;
 
 import grupo7.egg.nutrividas.entidades.Foto;
+import grupo7.egg.nutrividas.entidades.Marca;
 import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.enums.Categoria;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
@@ -23,19 +24,23 @@ public class ProductoServicio {
     @Autowired
     private ProductoRepository productoRepository;
 
+    @Autowired
+    private MarcaServicio marcaServicio;
+
     @Transactional
-    public Producto crearProducto(String nombre, String marca, Double precio, Categoria categoria,
+    public Producto crearProducto(String nombre, Long idMarca, Double precio, Categoria categoria,
                                   Boolean aptoIntoleranteLactosa, Boolean aptoCeliaco, Boolean aptoHipertenso,
                                   Boolean aptoDiabeticos){
 
-        if(productoRepository.existsByNombreAndMarca(nombre,marca)){
+        Marca marca = marcaServicio.buscarPorId(idMarca);
+        if(productoRepository.existsByNombreAndMarca_Nombre(nombre,marca.getNombre())){
             throw new FieldAlreadyExistException("Ya esite un producto registrado con el mismo nombre y marca");
         }
 
-        validarDatosDelProducto(nombre, marca, precio);
+        validarDatosDelProducto(nombre,marca.getNombre(),precio);
         Producto producto = new Producto();
         producto.setNombre(Validations.formatText(nombre));
-        producto.setMarca(Validations.formatNames(marca));
+        producto.setMarca(marcaServicio.buscarPorId(idMarca));
         producto.setPrecio(precio);
         producto.setCategoria(categoria);
         producto.setAptoIntoleranteLactosa(aptoIntoleranteLactosa);
@@ -55,7 +60,7 @@ public class ProductoServicio {
         if(marca == null || marca.trim().isEmpty()){
             throw new FieldInvalidException("La marca del producto es obligatoria");
         }
-        if(productoRepository.existsByNombreAndMarca(nombre,marca)){
+        if(productoRepository.existsByNombreAndMarca_Nombre(nombre,marca)){
             throw new FieldInvalidException("El producto ya existe");
         }
         if(precio == null || precio < 0){
@@ -64,22 +69,23 @@ public class ProductoServicio {
     }
 
     @Transactional
-    public Producto modificarProducto(Long id,String nombre, String marca, Double precio, Categoria categoria,
+    public Producto modificarProducto(Long id,String nombre, Long idMarca, Double precio, Categoria categoria,
                                   Boolean aptoIntoleranteLactosa, Boolean aptoCeliaco, Boolean aptoHipertenso,
                                   Boolean aptoDiabeticos){
 
+        Marca marca = marcaServicio.buscarPorId(idMarca);
         Producto producto = productoRepository.findById(id).orElseThrow(() ->
                 new NoSuchElementException("No se encontró un producto con el id "+id));
 
-        if(productoRepository.existsByNombreAndMarca(nombre,marca) &&
-                productoRepository.findByNombreAndMarca(nombre,marca).get().getId() != id){
+        if(productoRepository.existsByNombreAndMarca_Nombre(nombre,marca.getNombre()) &&
+                productoRepository.findByNombreAndMarca_Nombre(nombre,marca.getNombre()).get().getId() != id){
             new FieldAlreadyExistException("Ya esite un producto registrado con el mismo nombre y marca");
         }
 
-        validarDatosDelProducto(nombre, marca, precio);
+        validarDatosDelProducto(nombre, marca.getNombre(), precio);
 
         producto.setNombre(Validations.formatText(nombre));
-        producto.setMarca(Validations.formatNames(marca));
+        producto.setMarca(marca);
         producto.setPrecio(precio);
         producto.setCategoria(categoria);
         producto.setAptoIntoleranteLactosa(aptoIntoleranteLactosa);

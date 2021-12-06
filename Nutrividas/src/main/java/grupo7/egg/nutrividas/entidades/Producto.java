@@ -24,7 +24,8 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String marca;
+    @OneToOne
+    private Marca marca;
     private Double precio;
     private Boolean aptoCeliacos;
     private Boolean aptoHipertensos;

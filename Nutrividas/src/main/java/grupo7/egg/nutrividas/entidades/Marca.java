@@ -5,9 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="marcas")
@@ -20,7 +24,17 @@ public class Marca {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
+    @NotEmpty(message = "El campo 'nombre' es obligatorio")
     @Column(unique = true)
-    String nombre;
+    private String nombre;
+
+    @CreatedDate
+    @Column( updatable = false)
+    private LocalDateTime creacion;
+
+    @LastModifiedDate
+    private LocalDateTime modificacion;
+
+    private Boolean alta;
 }

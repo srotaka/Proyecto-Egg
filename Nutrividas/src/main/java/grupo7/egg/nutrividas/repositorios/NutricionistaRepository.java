@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
@@ -16,8 +17,8 @@ public interface NutricionistaRepository extends JpaRepository<Nutricionista,Lon
     boolean existsByMatriculaOrDocumento(Long matricula, Long documento);
     Optional<Nutricionista> findByMatriculaOrDocumento(Long matricula, Long documento);
     Optional<Nutricionista> findById(Long id);
-    @Query("SELECT n FROM Nutricionista n CONCAT_WS(l.nombre,l.apellido, l.matricula,l.documento,l.comedor.nombre) LIKE %:search%")
-    Page<Nutricionista> buscarPorTodosCampos(String busqueda, Pageable pageable);
+    @Query(value = "SELECT n FROM nutricionistas n CONCAT_WS(n.nombre,n.apellido, n.matricula,n.documento,n.comedor.nombre) LIKE %:busqueda%",nativeQuery = true)
+    Page<Nutricionista> buscarPorTodosCampos(@Param("busqueda") String busqueda, Pageable pageable);
     Page<Nutricionista> findByMatriculaContaining(Long matricula,Pageable pageable);
     /*
     Optional<Nutricionista> findByDocumento(Long documento);
@@ -25,10 +26,10 @@ public interface NutricionistaRepository extends JpaRepository<Nutricionista,Lon
 
     @Modifying
     @Query("UPDATE Nutricionista n SET n.alta = true WHERE n.id = :id")
-    void habilitarNutricionista(Long id);
+    void habilitarNutricionista(@Param("id") Long id);
 
     @Modifying
     @Query("UPDATE Nutricionista n SET n.foto = :foto WHERE n.id = :id")
-    void actualizarFoto(Foto foto, Long id);
+    void actualizarFoto(@Param("foto") Foto foto,@Param("id")Long id);
 
 }

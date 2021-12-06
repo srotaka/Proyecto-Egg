@@ -19,8 +19,8 @@ import java.util.Optional;
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto,Long> {
 
-    boolean existsByNombreAndMarca(String nombre,String marca);
-    Optional<Producto> findByNombreAndMarca(String nombre,String marca);
+    boolean existsByNombreAndMarca_Nombre(String nombre,String marcaNombre);
+    Optional<Producto> findByNombreAndMarca_Nombre(String nombre,String marcaNombre);
     Page<Producto> findByCategoria(Categoria categoria,Pageable pageable);
     Page<Producto> findByAptoCeliacos(Boolean aptoCeliacos,Pageable pageable);
     Page<Producto> findByAptoHipertensos(Boolean aptoHipertensos,Pageable pageable);
