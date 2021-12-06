@@ -1,6 +1,5 @@
 package grupo7.egg.nutrividas.entidades;
 
-import grupo7.egg.nutrividas.enums.Provincia;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,8 +7,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import grupo7.egg.nutrividas.entidades.Biografia;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,24 +25,20 @@ public class Comedor {
     private Long id;
     @Column(name = "unique")
     private String nombre;
-    private String direccion;
-    private String localidad;
-    private Provincia provincia;
+    @OneToOne
+    private Direccion direccion;
     private Integer cantidadDePersonas;
     private Long telefono;
     @OneToOne
     private Biografia biografia;
-
-    //Mapped by comedor ---> agregar hacemos la relación bidireccional añadiendo a Persona el atributo comedor
     @OneToMany(mappedBy = "comedor")
     private List<Persona> personas;
-    //Mapped by comedor ---> agregar hacemos la relación bidireccional añadiendo a Canasta el atributo comedor
     @OneToMany(mappedBy = "comedor")
     private List<Canasta> canastas;
-
     @ManyToOne
     private Nutricionista nutricionista;
-
+    @OneToOne
+    private Foto foto;
     private Boolean alta;
 
     @CreatedDate

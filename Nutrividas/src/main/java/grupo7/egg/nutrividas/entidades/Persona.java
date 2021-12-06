@@ -27,6 +27,7 @@ public class Persona {
     private Long id;
     private String nombre;
     private String apellido;
+    private Long documento;
     private LocalDate fechaNacimiento;
     private Integer edad;
     private Double altura;

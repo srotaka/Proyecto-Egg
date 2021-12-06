@@ -18,6 +18,7 @@ public interface CanastaRepository extends JpaRepository<Canasta,Long> {
     void habilitar(@Param("id") Long id);
 
     boolean existsByDescripcionAndComedor(String descripcion, Comedor comedor);
+    Canasta findByDescripcionAndComedor(String descripcion, Comedor comedor);
 
     List<Canasta> findByComedor(Comedor comedor);
 }

@@ -7,6 +7,8 @@ import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.ProductoServicio;
 import grupo7.egg.nutrividas.util.paginacion.Paged;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +41,8 @@ public class ProductoContolador {
         return productoServicio.buscarPorCategoria(categoria,page,size,getSort(order));
     }
 
-    public final String PRODUCTOS_UPLOADED_FOLDER = "src/main/resources/static/img/productos/";
+    @Value("${picture.products.location}")
+    public String PRODUCTOS_UPLOADED_FOLDER;
 
     @PostMapping("/imagen/crear")
     public void  uploadImage(@RequestParam("id")Long id,@RequestParam("imagen") MultipartFile multipartFile,

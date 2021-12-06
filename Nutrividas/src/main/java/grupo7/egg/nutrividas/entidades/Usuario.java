@@ -31,6 +31,8 @@ public class Usuario {
     private Long telefono;
     @OneToMany(mappedBy = "usuario")
     private List<Tarjeta> tarjetas;
+    @OneToOne
+    private  Foto foto;
 
     @CreatedDate
     @Column( updatable = false)

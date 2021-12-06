@@ -4,6 +4,7 @@ import grupo7.egg.nutrividas.entidades.Canasta;
 import grupo7.egg.nutrividas.entidades.Comedor;
 import grupo7.egg.nutrividas.entidades.Elemento;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
+import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.CanastaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class CanastaServicio {
 
     @Transactional
     public Canasta crearCanasta(String descripcion, Integer cantidadPersonas,
-                                List<Elemento> elementos, Comedor comedor) throws Exception {
+                                List<Elemento> elementos, Comedor comedor){
 
         if(canastaRepository.existsByDescripcionAndComedor(descripcion,comedor)){
             throw new FieldAlreadyExistException("La canasta que desea crear ya existe");
@@ -40,10 +41,16 @@ public class CanastaServicio {
 
     @Transactional
     public Canasta modificarCanasta(Long id,String descripcion, Integer cantidadPersonas,
-                                List<Elemento> elementos, Comedor comedor) throws Exception {
+                                List<Elemento> elementos, Comedor comedor){
 
         Canasta canasta = canastaRepository.findById(id).orElseThrow(
                 ()-> new NoSuchElementException("La canasta que desea modificar no existe"));
+        if(canastaRepository.existsByDescripcionAndComedor(descripcion,comedor)
+                && canastaRepository.findByDescripcionAndComedor(descripcion,comedor).getId() != id){
+            throw new FieldAlreadyExistException("Ya existe una canasta con la misma descripción para el comedor '"
+            +comedor+"' ");
+        }
+
         validarDatosCanasta(descripcion,cantidadPersonas,elementos,comedor);
         canasta.setDescripcion(descripcion);
         canasta.setCantidadDePersonas(cantidadPersonas);
@@ -54,18 +61,18 @@ public class CanastaServicio {
     }
 
     public void validarDatosCanasta(String descripcion, Integer cantidadPersonas,
-                                 List<Elemento> elementos, Comedor comedor) throws Exception {
+                                 List<Elemento> elementos, Comedor comedor) {
         if(descripcion == null || descripcion.trim().isEmpty()){
-            throw new Exception("La descripción del producto es obligatorio");
+            throw new FieldInvalidException("La descripción del producto es obligatorio");
         }
         if(cantidadPersonas == null || cantidadPersonas<0){
-            throw new Exception("La cantidad de personas indicada es inválida");
+            throw new FieldInvalidException("La cantidad de personas indicada es inválida");
         }
         if(elementos == null || elementos.isEmpty()){
-            throw new Exception("Debe agregar al menos un producto a la canasta");
+            throw new FieldInvalidException("Debe agregar al menos un producto a la canasta");
         }
         if(comedor == null){
-            throw new Exception("El comedor es obligatorio");
+            throw new FieldInvalidException("El comedor es obligatorio");
         }
     }
 

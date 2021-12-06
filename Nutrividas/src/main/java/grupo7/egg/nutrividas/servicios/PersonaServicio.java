@@ -3,6 +3,7 @@ package grupo7.egg.nutrividas.servicios;
 import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Persona;
 import grupo7.egg.nutrividas.enums.Sexo;
+import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.ComedorRepository;
 import grupo7.egg.nutrividas.repositorios.PersonaRepository;
@@ -25,14 +26,20 @@ public class PersonaServicio {
      private ComedorRepository comedorRepository;
 
     @Transactional
-    public Persona crearPersona(String nombre, String apellido, LocalDate fechaNacimiento,Double peso,
+    public Persona crearPersona(String nombre, String apellido, Long documento,LocalDate fechaNacimiento,Double peso,
                                 Double altura, Boolean aptoIntoleranteLactosa, Boolean aptoCeliaco, Boolean aptoHipertenso,
-                                Boolean aptoDiabeticos, Sexo sexo, Long idComedor) throws Exception {
+                                Boolean aptoDiabeticos, Sexo sexo, Long idComedor){
 
-        validarDatos(nombre,apellido,fechaNacimiento,peso,altura,sexo);
+
+        if (personaRepository.existsByDocumento(documento)){
+            throw new FieldAlreadyExistException("Ya existe una persona registrada con el documento '"+documento+"'");
+        }
+
+        validarDatos(nombre,apellido,documento,fechaNacimiento,peso,altura,sexo);
         Persona persona = new Persona();
         persona.setNombre(Validations.formatNames(nombre));
         persona.setApellido(Validations.formatNames(apellido));
+        persona.setDocumento(documento);
         persona.setFechaNacimiento(fechaNacimiento);
         persona.setPeso(peso);
         persona.setAltura(altura);
@@ -43,18 +50,26 @@ public class PersonaServicio {
         persona.setEdad(calcularEdad(fechaNacimiento));
         persona.setIMC(calcularIMC(peso,altura));
         persona.setSexo(sexo);
-        persona.setComedor(comedorRepository.buscarComedorPorId(idComedor));
+        persona.setComedor(comedorRepository.findById(idComedor).orElseThrow(
+                () ->new NoSuchElementException("No existe un comedor asociado con el id '"+idComedor+"' ")));
 
         return personaRepository.save(persona);
     }
 
     @Transactional
-    public Persona modificarPersona(Long id, String nombre, String apellido, LocalDate fechaNacimiento,Double peso,
+    public Persona modificarPersona(Long id, String nombre, String apellido,Long documento,LocalDate fechaNacimiento,Double peso,
                                 Double altura, Boolean aptoIntoleranteLactosa, Boolean aptoCeliaco, Boolean aptoHipertenso,
-                                Boolean aptoDiabeticos, Sexo sexo, Long idComedor) throws Exception {
+                                Boolean aptoDiabeticos, Sexo sexo, Long idComedor){
 
-        validarDatos(nombre,apellido,fechaNacimiento,peso,altura,sexo);
-        Persona persona = personaRepository.getById(id);
+        validarDatos(nombre,apellido,documento,fechaNacimiento,peso,altura,sexo);
+        Persona persona = personaRepository.findById(id).orElseThrow(
+                ()-> new NoSuchElementException("La persona que desea modificar no existe"));
+
+        if (personaRepository.existsByDocumento(documento) &&
+        personaRepository.findByDocumento(documento).get().getId() != id){
+            throw new FieldAlreadyExistException("Ya existe una persona registrada con el documento '"+documento+"'");
+        }
+
         persona.setNombre(Validations.formatNames(nombre));
         persona.setApellido(Validations.formatNames(apellido));
         persona.setFechaNacimiento(fechaNacimiento);
@@ -67,35 +82,34 @@ public class PersonaServicio {
         persona.setEdad(calcularEdad(fechaNacimiento));
         persona.setIMC(calcularIMC(peso,altura));
         persona.setSexo(sexo);
-        persona.setComedor(comedorRepository.buscarComedorPorId(idComedor));
+        persona.setComedor(comedorRepository.findById(idComedor).orElseThrow(
+                () ->new NoSuchElementException("No existe un comedor asociado con el id '"+idComedor+"' ")));
 
         return personaRepository.save(persona);
     }
 
-    public void validarDatos(String nombre,String apellido, LocalDate fechaNacimiento, Double peso,
-                             Double altura, Sexo sexo) throws Exception {
+    public void validarDatos(String nombre,String apellido,Long documento,LocalDate fechaNacimiento, Double peso,
+                             Double altura, Sexo sexo) {
 
         if(nombre == null || nombre.trim().isEmpty()){
-            throw new Exception("El nombre es obligatorio");
+            throw new FieldInvalidException("El nombre es obligatorio");
         }
         if(apellido == null || apellido.trim().isEmpty()){
-            throw new Exception("El apellido es obligatorio");
+            throw new FieldInvalidException("El apellido es obligatorio");
         }
+        Validations.validDocument(documento);
         if(fechaNacimiento == null){
-            throw new Exception("La fecha es obligatoria");
+            throw new FieldInvalidException("La fecha es obligatoria");
         }
-        if(fechaNacimiento.getYear()<LocalDate.now().getYear()-100 || fechaNacimiento.isAfter(LocalDate.now())){
-            throw new Exception("La edad de la persona es inválida");
-        }
-
+        Validations.validDateBirth(fechaNacimiento);
         if(peso<=0){
-            throw new Exception("El peso ingresado es inválido");
+            throw new FieldInvalidException("El peso ingresado es inválido");
         }
         if(altura<=0){
-            throw new Exception("La altura ingresada es inválida");
+            throw new FieldInvalidException("La altura ingresada es inválida");
         }
         if(sexo!=null){
-            throw new Exception("El género no puede ser nulo");
+            throw new FieldInvalidException("El género no puede ser nulo");
         }
     }
 
@@ -112,16 +126,16 @@ public class PersonaServicio {
     }
 
     @Transactional
-    public void habilitarPersona(Long id) throws Exception {
+    public void habilitarPersona(Long id) {
         personaRepository.findById(id).orElseThrow(
-                () -> new Exception("No se halló una persona con el id "+id));
+                () -> new NoSuchElementException("No se halló una persona con el id "+id));
         personaRepository.habilitarPersona(id);
     }
 
     @Transactional
     public void deshabilitarPersona(Long id) throws Exception {
         personaRepository.findById(id).orElseThrow(
-                () -> new Exception("No se halló una persona con el id "+id));
+                () -> new NoSuchElementException("No se halló una persona con el id "+id));
         personaRepository.deleteById(id);
     }
 
@@ -130,7 +144,6 @@ public class PersonaServicio {
         if(foto == null){
             throw new FieldInvalidException("La imagen no puede ser nula");
         }
-
         personaRepository.findById(id).orElseThrow(
                 ()->new NoSuchElementException("No se halló una persona con el id '"+id+"'"));
 

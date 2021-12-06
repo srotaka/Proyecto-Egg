@@ -31,8 +31,10 @@ public class Producto {
     private Boolean aptoDiabeticos;
     private Boolean aptoIntoleranteLactosa;
     private Categoria categoria;
+
     @OneToOne
     private Foto foto;
+
     @CreatedDate
     @Column( updatable = false)
     private LocalDateTime creacion;
