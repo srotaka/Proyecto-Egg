@@ -29,18 +29,16 @@ public class MarcaServicio {
     }
 
     @Transactional
-    public Marca editarMarca(Long id, String nombre) {
+    public void editarMarca(Long id, Marca marcaDto) {
 
         Marca marca = marcaRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("No existe una marca registrada con el id '" + id + "'"));
 
-        if (marcaRepository.existsByNombre(nombre) && marcaRepository.findByNombre(nombre).get().getId() != id) {
-            throw new FieldAlreadyExistException("La marca '" + nombre + "' ya se encuentra registrada");
+        if (marcaRepository.existsByNombre(marcaDto.getNombre()) && marcaRepository.findByNombre(marcaDto.getNombre()).get().getId() != id) {
+            throw new FieldAlreadyExistException("La marca '" + marcaDto.getNombre() + "' ya se encuentra registrada");
         }
-        marca.setId(id);
-        marca.setNombre(nombre);
-        marca.setAlta(true);
-        return marcaRepository.save(marca);
+        marca.setNombre(marcaDto.getNombre());
+        marcaRepository.save(marca);
     }
 
     @Transactional
@@ -66,5 +64,10 @@ public class MarcaServicio {
     public Marca buscarPorId(Long id){
         return marcaRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("No existe una marca registrada con el id '" + id + "'"));
+    }
+
+    @Transactional(readOnly = true)
+    public boolean existsByNombre(String nombre){
+        return marcaRepository.existsByNombre(nombre);
     }
 }

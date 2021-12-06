@@ -24,7 +24,12 @@ public class MarcaControlador {
 
     @PostMapping("/editar/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Marca editarMarca(@PathVariable Long id, @RequestBody @Valid Marca marca){
-        return marcaServicio.crearMarca(marca);
+    public void editarMarca(@PathVariable Long id, @RequestBody @Valid Marca marca){
+       marcaServicio.editarMarca(id,marca);
+    }
+
+    @GetMapping(value = "/exists",params = {"nombre"})
+    public boolean existsByNombre(@RequestParam("nombrgit ae")String nombre){
+        return marcaServicio.existsByNombre(nombre);
     }
 }
