@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- xmlns:sec="http://www.thymeleaf.org/extras/spring-security" -->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta content="Nutrividas" name="Grupo7" />
+    <title>Inicio - Nutrividas</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" />
+    <link href="../static/img/favicon.ico" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap"
+        rel="stylesheet">
+
+    <!-- Style -->
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/icofont/icofont.min.css" rel="stylesheet">
+    <link href="../static/css/contactanos.css" rel="stylesheet">
+</head>
+
+<body>
+    <section class="contact-form" id="contact-form">
+        <!-- <section class="ftco-section"> -->
+        <div class="container">
+          <br>
+          <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+              <h2 class="heading-section" id="contactanos-form">CONTÁCTANOS</h2>
+            </div>
+          </div>
+          <div class="row justify-left-center">
+            <div class="col-lg-3 col-sm-6 mb-4"></div>
+            <div class="col-lg-10 col-sm-10 cos-xs-4">
+              <div class="wrapper img" style="background-image: url(../static/img/children06.jpg)">
+                <div class="row">
+                  <div class="col-md-9 col-lg-7">
+                    <div class="contact-wrap w-100 p-md-5">
+                      <h3 class="mb-4">Envíenos su consulta</h3>
+                      <div id="form-message-warning" class="mb-4"></div>
+                      <div id="form-message-success" class="mb-4">
+                        Su mensaje ha sido enviado. ¡Muchas gracias!
+                      </div>
+                      <form action="https://formspree.io/f/xwkagzoj" method="POST" id="contactForm" name="contactForm"
+                        class="contactForm">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="label" for="name">Nombre y Apellido</label>
+                              <input type="text" class="form-control" name="name" id="name"
+                                placeholder="Nombre y Apellido" />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label class="label" for="email">Email</label>
+                              <input type="email" class="form-control" name="email" id="email" placeholder="Email" />
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label class="label" for="subject">Asunto</label>
+                              <input type="text" class="form-control" name="subject" id="subject" placeholder="Asunto" />
+                            </div>
+                          </div>
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label class="label" for="#">Mensaje</label>
+                              <textarea name="message" class="form-control" id="message" cols="30" rows="4"
+                                placeholder="Escriba su mensaje aquí..."></textarea>
+                            </div>
+                          </div>
+    
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <br><br>
+                              <input type="submit" value="Enviar mensaje" class="btn btn-form" />
+                              <div class="submitting"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+      </section>
+     
+</body>
+
+</html>

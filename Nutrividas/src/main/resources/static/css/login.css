@@ -1,0 +1,56 @@
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url("../img/children07.jpg");
+  background-size: cover;
+  background-position: center center;
+}
+
+body {
+    color: #444444 !important;
+    font-family: 'Newsreader', serif !important;
+
+}
+
+#boton-SignIn {
+    background-color:  #1bac91 !important;
+    border-color: #1bac91 !important;
+    width: auto !important
+}
+
+#boton-SignIn:hover {
+    background-color:  #08493d !important;
+    transition: 1.5s;
+}
+
+#boton-SignIn:not(:hover) {   
+    transition: 1.6s;
+}
+
+#link-SignUp:hover {
+  text-decoration: underline;
+} 
+
+/* check (Recordar Email) */
+#customCheck1 {
+  background-color: #1bac91 !important;
+}
+
+#mensaje-Bienvenida-Login {
+  text-align: center;
+}
+
+#mensaje-Secundario-Login {
+  font-size: 1.5rem;
+  text-align: center;
+}
