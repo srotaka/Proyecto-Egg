@@ -35,10 +35,10 @@ public class ComedorServicio {
     private DireccionSevicio direccionSevicio;
 
     @Transactional
-    public Comedor crearComedor(String nombre, String calle, Integer numero, Integer codigoPostal, String localidad,String provincia,
+    public Comedor crearComedor(String nombre, String calle, Integer numero, String codigoPostal, String localidad,Provincia provincia,
                                 Integer cantidadDePersonas, Long telefono, String detalleBiografia){
 
-        if(direccionSevicio.existeDireccion(calle,numero,provincia)){
+        if(direccionSevicio.existeDireccion(calle, numero, localidad)){
             throw new FieldAlreadyExistException("La dirección '"+calle+" "+numero+","+localidad+" ya se encuentra registrada");
         }
         validarDatosDeComedor(nombre, cantidadDePersonas,telefono);
@@ -55,7 +55,7 @@ public class ComedorServicio {
     }
 
     @Transactional
-    public Comedor modificarComedor(Long id,String nombre, String calle, Integer numero, Integer codigoPostal, String localidad,String provincia,
+    public Comedor modificarComedor(Long id,String nombre, String calle, Integer numero, String codigoPostal, String localidad,Provincia provincia,
                                     Integer cantidadDePersonas, Long telefono, String detalleBiografia){
         Comedor comedor = comedorRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("El comedor que desa modificar no existe"));
@@ -114,5 +114,10 @@ public class ComedorServicio {
         Pageable request = PageRequest.of(page - 1, size, order);
         Page<Comedor> comedorPage = comedorRepository.findAll(request);
         return new Paged(comedorPage, Paging.of(comedorPage.getTotalPages(), page, size));
+    }
+
+    @Transactional
+    public List<Comedor> mostrarTodosLosComedores(){
+        return comedorRepository.findAll();
     }
 }

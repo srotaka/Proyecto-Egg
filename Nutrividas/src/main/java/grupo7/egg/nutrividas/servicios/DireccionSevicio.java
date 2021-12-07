@@ -1,6 +1,7 @@
 package grupo7.egg.nutrividas.servicios;
 
 import grupo7.egg.nutrividas.entidades.Direccion;
+import grupo7.egg.nutrividas.enums.Provincia;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.repositorios.DireccionRepository;
 import grupo7.egg.nutrividas.util.Validations;
@@ -19,22 +20,23 @@ public class DireccionSevicio {
     private final String PAIS = "Argentina";
 
     @Transactional
-    public Direccion createDireccion(String calle, Integer numero, Integer codigoPostal, String localidad,String provincia){
+    public Direccion createDireccion(String calle, Integer numero, String codigoPostal, String localidad, Provincia provincia){
         if(direccionRepository.existsByCalleAndNumeroAndLocalidad(calle,numero,localidad)){
             throw new FieldAlreadyExistException("La dirección '"+calle+" "+numero+","+localidad+" ya se encuentra registrada");
         }
         Direccion direccion = new Direccion();
         direccion.setCalle(Validations.formatNames(calle));
         direccion.setNumero(numero);
+        direccion.setCodigoPostal(codigoPostal);
         direccion.setLocalidad(Validations.formatNames(localidad));
-        direccion.setProvincia(Validations.formatNames(provincia));
         direccion.setPais(PAIS);
+        direccion.setProvincia(provincia);
         direccion.setAlta(true);
         return direccionRepository.save(direccion);
     }
 
     @Transactional
-    public Direccion updateDireccion(Long id,String calle, Integer numero, Integer codigoPostal, String localidad,String provincia){
+    public Direccion updateDireccion(Long id,String calle, Integer numero, String codigoPostal, String localidad, Provincia provincia){
 
         Direccion direccion = direccionRepository.findById(id).orElseThrow(() ->
                 new NoSuchElementException("La dirección que desea modificar no existe"));
@@ -46,7 +48,8 @@ public class DireccionSevicio {
         direccion.setCalle(Validations.formatNames(calle));
         direccion.setNumero(numero);
         direccion.setLocalidad(Validations.formatNames(localidad));
-        direccion.setProvincia(Validations.formatNames(provincia));
+        direccion.setProvincia(provincia);
+        direccion.setCodigoPostal(codigoPostal);
         direccion.setPais(PAIS);
         direccion.setAlta(true);
         return direccionRepository.save(direccion);
