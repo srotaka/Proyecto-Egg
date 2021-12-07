@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,6 +27,7 @@ public class Marca {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "El campo 'nombre' es obligatorio")
+    @Pattern(regexp = "^[\\p{L} .'-]+$",message="solo se permiten letras" )
     @Column(unique = true)
     private String nombre;
 

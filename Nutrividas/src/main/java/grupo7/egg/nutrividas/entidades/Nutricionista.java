@@ -29,10 +29,10 @@ public class Nutricionista {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "El campo 'nombre' es obligatorio")
-    @Pattern(regexp = "/[a-zA-Z\\t\\h]+|(^$)/",message="solo se permiten letras" )
+    @Pattern(regexp = "^[\\p{L} .'-]+$",message="solo se permiten letras" )
     private String nombre;
     @NotEmpty(message = "El campo 'apellido' es obligatorio")
-    @Pattern(regexp = "/[a-zA-Z\\t\\h]+|(^$)/",message="solo se permiten letras" )
+    @Pattern(regexp = "^[\\p{L} .'-]+$",message="solo se permiten letras" )
     private String apellido;
     @NotEmpty(message = "El campo 'documento' es obligatorio")
     @Pattern(regexp="\\d{8}",message = "El campo 'documento' debe contener 8 caracteres")
