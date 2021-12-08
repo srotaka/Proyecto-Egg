@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -31,7 +30,6 @@ public class DireccionSevicio {
 
     @Transactional
     public Direccion createDireccion(String calle, Integer numero, Integer codigoPostal, String localidad,String provincia){
-
         if(direccionRepository.existsByCalleAndNumeroAndLocalidad(calle,numero,localidad)){
             throw new FieldAlreadyExistException("La dirección '"+calle+" "+numero+","+localidad+" ya se encuentra registrada");
         }
@@ -39,15 +37,16 @@ public class DireccionSevicio {
         Direccion direccion = new Direccion();
         direccion.setCalle(Validations.formatNames(calle));
         direccion.setNumero(numero);
+        direccion.setCodigoPostal(codigoPostal);
         direccion.setLocalidad(Validations.formatNames(localidad));
-        direccion.setProvincia(Validations.formatNames(provincia));
         direccion.setPais(PAIS);
+        direccion.setProvincia(provincia);
         direccion.setAlta(true);
         return direccionRepository.save(direccion);
     }
 
     @Transactional
-    public Direccion updateDireccion(Long id,String calle, Integer numero, Integer codigoPostal, String localidad,String provincia){
+    public Direccion updateDireccion(Long id,String calle, Integer numero, Integer codigoPostal, String localidad, String provincia){
 
         Direccion direccion = direccionRepository.findById(id).orElseThrow(() ->
                 new NoSuchElementException("La dirección que desea modificar no existe"));
@@ -59,7 +58,8 @@ public class DireccionSevicio {
         direccion.setCalle(Validations.formatNames(calle));
         direccion.setNumero(numero);
         direccion.setLocalidad(Validations.formatNames(localidad));
-        direccion.setProvincia(Validations.formatNames(provincia));
+        direccion.setProvincia(provincia);
+        direccion.setCodigoPostal(codigoPostal);
         direccion.setPais(PAIS);
         direccion.setAlta(true);
         return direccionRepository.save(direccion);
