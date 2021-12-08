@@ -13,10 +13,15 @@ import grupo7.egg.nutrividas.util.paginacion.Paging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.data.domain.Pageable;;import java.util.NoSuchElementException;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+;
 
 @Service
 public class ProductoServicio {
@@ -131,6 +136,12 @@ public class ProductoServicio {
         Page<Producto> productPage = productoRepository.findAll(request);
         return new Paged(productPage, Paging.of(productPage.getTotalPages(), page, size));
     }
+
+    @Transactional(readOnly = true)
+    public List<Producto> listarProductos(){
+        return productoRepository.findAll();
+    }
+
 
     @Transactional(readOnly = true)
     public Paged<Producto> buscarPorCategoria(String categoria,int page, int size,Sort order){
