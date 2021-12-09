@@ -99,4 +99,10 @@ public class NutricionistaServicio {
         return new Paged(nutricionistasPage, Paging.of(nutricionistasPage.getTotalPages(), page, size));
     }
 
+    @Transactional(readOnly = true)
+    public Nutricionista buscarPorId(Long id){
+        return nutricionistaRepository.findById(id).orElseThrow(
+                ()->new NoSuchElementException("No se halló ningún nutricionista con el id '"+id+"'"));
+    }
+
 }

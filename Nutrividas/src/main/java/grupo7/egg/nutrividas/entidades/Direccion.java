@@ -1,5 +1,6 @@
 package grupo7.egg.nutrividas.entidades;
 
+import grupo7.egg.nutrividas.enums.Provincia;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,9 +37,11 @@ public class Direccion {
     private String localidad;
     @NotEmpty(message = "El campo 'provincia' es obligatorio")
     private String provincia;
-    @NotEmpty(message = "El campo 'país' es obligatorio")
     private String pais;
     private Boolean alta;
+
+    @OneToOne
+    private Comedor comedor;
 
     @CreatedDate
     @Column( updatable = false)

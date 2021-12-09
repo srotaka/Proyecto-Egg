@@ -17,11 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 import java.util.NoSuchElementException;
-
-;
+import java.util.List;
 
 @Service
 public class ProductoServicio {
@@ -31,6 +28,7 @@ public class ProductoServicio {
 
     @Autowired
     private MarcaServicio marcaServicio;
+
 
     @Transactional
     public Producto crearProducto(String nombre, Long idMarca, Double precio, Categoria categoria,
@@ -84,7 +82,7 @@ public class ProductoServicio {
 
         if(productoRepository.existsByNombreAndMarca_Nombre(nombre,marca.getNombre()) &&
                 productoRepository.findByNombreAndMarca_Nombre(nombre,marca.getNombre()).get().getId() != id){
-            new FieldAlreadyExistException("Ya esite un producto registrado con el mismo nombre y marca");
+            new FieldAlreadyExistException("Ya exisite un producto registrado con el mismo nombre y marca");
         }
 
         validarDatosDelProducto(nombre, marca.getNombre(), precio);
@@ -131,8 +129,8 @@ public class ProductoServicio {
 
 
     @Transactional(readOnly = true)
-    public Paged<Producto> buscarTodos(int page, int size){
-        PageRequest request = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.ASC, "nombre"));
+    public Paged<Producto> buscarTodos(int page, int size,Sort order){
+        PageRequest request = PageRequest.of(page - 1, size, order);
         Page<Producto> productPage = productoRepository.findAll(request);
         return new Paged(productPage, Paging.of(productPage.getTotalPages(), page, size));
     }

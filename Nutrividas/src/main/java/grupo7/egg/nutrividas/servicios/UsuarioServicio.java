@@ -142,7 +142,7 @@ public class UsuarioServicio {
     }
 
     @Transactional
-    public void dashabilitarUsuario(Long idUsuario) throws Exception{
+    public void deshabilitarUsuario(Long idUsuario) throws Exception{
         usuarioRepository.findById(idUsuario).orElseThrow(
                 () -> new Exception("No se halló un usuario con el id " + idUsuario));
         usuarioRepository.deshabilitarUsuario(idUsuario);

@@ -1,5 +1,6 @@
 package grupo7.egg.nutrividas.servicios;
 
+import grupo7.egg.nutrividas.entidades.Comedor;
 import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Persona;
 import grupo7.egg.nutrividas.enums.Sexo;
@@ -8,11 +9,18 @@ import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.ComedorRepository;
 import grupo7.egg.nutrividas.repositorios.PersonaRepository;
 import grupo7.egg.nutrividas.util.Validations;
+import grupo7.egg.nutrividas.util.paginacion.Paged;
+import grupo7.egg.nutrividas.util.paginacion.Paging;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -133,7 +141,7 @@ public class PersonaServicio {
     }
 
     @Transactional
-    public void deshabilitarPersona(Long id) throws Exception {
+    public void deshabilitarPersona(Long id){
         personaRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("No se halló una persona con el id "+id));
         personaRepository.deleteById(id);
@@ -148,6 +156,23 @@ public class PersonaServicio {
                 ()->new NoSuchElementException("No se halló una persona con el id '"+id+"'"));
 
         personaRepository.actualizarFoto(foto,id);
+    }
+
+    @Transactional(readOnly = true)
+    public Paged<Persona> listarPersonas(int page, int size, Sort order){
+        Pageable request = PageRequest.of(page - 1, size, order);
+        Page<Persona> personaPage = personaRepository.findAll(request);
+        return new Paged(personaPage, Paging.of(personaPage.getTotalPages(), page, size));
+    }
+
+    @Transactional
+    public List<Persona> mostrarTodasLasPersonas(){
+        return personaRepository.buscarTodasLasPersonas();
+    }
+
+    @Transactional
+    public Persona buscarPorId(Long id){
+        return personaRepository.findById(id).get();
     }
 
 }
