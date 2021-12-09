@@ -1,0 +1,246 @@
+:root {
+  --background-dark: #2d3548;
+  --text-light: rgba(255, 255, 255, 0.6);
+  --text-lighter: rgba(255, 255, 255, 0.9);
+  --spacing-s: 8px;
+  --spacing-m: 16px;
+  --spacing-l: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 64px;
+  --width-container: 1200px;
+}
+
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+}
+
+body {
+  padding-top: 6rem;
+  height: 100%;
+}
+.comedores-registrados{
+    color: #444444;
+    text-align: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    letter-spacing: .15em;
+    
+   
+}
+.hero-section {
+  align-items: flex-start;
+  background-image: #fff;
+  display: flex;
+  min-height: auto;
+  justify-content: center;
+  padding: var(--spacing-xxl) var(--spacing-l);
+  padding-top: 2rem;
+  position: relative;
+  }
+
+  .hero-section-canastas {
+    align-items: flex-start;
+    background-image: #fff;
+    display: flex;
+    min-height: 63.9%;
+    justify-content: center;
+    padding: var(--spacing-xxl) var(--spacing-l);
+    padding-top: 6rem;
+    position: relative;
+    }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-column-gap: var(--spacing-l);
+  grid-row-gap: var(--spacing-l);
+  max-width: var(--width-container);
+  width: 55%;
+}
+
+@media (min-width: 540px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .card-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card {
+  list-style: none;
+  position: relative;
+  border: none !important;
+}
+
+.card:before {
+  content: "";
+  display: block;
+  padding-bottom: 150%;
+  width: 100%;
+}
+
+.card__background {
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--spacing-l);
+  bottom: 0;
+  filter: brightness(0.75) saturate(1.2) contrast(0.85);
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform-origin: center;
+  transform: scale(1) translateZ(0);
+  transition: filter 200ms linear, transform 200ms linear;
+}
+
+.card:hover .card__background {
+  transform: scale(1.05) translateZ(0);
+  filter: opacity(-60);
+  filter: sepia(-600);
+}
+
+.card-grid:hover > .card:not(:hover) .card__background {
+  filter: brightness(0.5) saturate(0) contrast(1.2);
+}
+
+.card__content {
+  left: 0;
+  padding: var(--spacing-l);
+  position: absolute;
+  top: 0;
+}
+
+
+.card__heading {
+  color: var(--text-lighter);
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
+  line-height: 1.2;
+  text-align: center !important;
+  vertical-align: center center !important;
+  margin-top: 50%;
+  
+}
+.card__heading2 {
+  color: var(--text-lighter);
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
+  line-height: 1.2;
+  text-align: center !important;
+  vertical-align: center center !important;
+  margin-top: 80%;
+  
+}
+
+.card__direccion{
+  color: var(--text-light);
+  vertical-align: text-bottom !important;
+  margin-top: var(--spacing-s);
+  font-size: 16px;
+  margin-top: 20%;
+  line-height: 1.2;
+}
+
+.card__precio{
+  color: var(--text-light);
+  vertical-align: text-bottom !important;
+  margin-top: var(--spacing-s);
+  font-size: 16px;
+  line-height: 1.2;
+
+  
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+
+#footer2 .copyright2 {
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  position: fixed;
+  height: 50px;
+  background-color: #1d1d1d;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+  padding-top: 15px;
+  
+}
+
+
+/*--------------------------------------------------------------
+# TÍTULO
+--------------------------------------------------------------*/
+
+#titulo{
+  text-align: center !important;
+  
+  color: #444444;
+  font: normal 40px/50px "Montserrat", sans-serif;
+  background: url("../img/cover01.jpg") center center;
+  background-size: cover;
+  padding-bottom: 2rem;
+}
+
+.texto-comedores {
+  
+  top: 50%;
+  margin-top: -20px;
+  font-family: 'Monserrat', serif;
+  font-size: 50px;
+}
+
+p {
+  display: inline-block;
+  vertical-align: top;
+ align-items: center;
+}
+
+.word {
+  position: auto;
+  width: 250px;
+  opacity: 0;
+}
+
+.letter {
+  display: inline-block;
+  position: relative;
+  float: left;
+  transform: translateZ(25px);
+  transform-origin: 50% 50% 25px;
+}
+
+.letter.out {
+  transform: rotateX(90deg);
+  transition: transform 0.32s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.letter.behind {
+  transform: rotateX(-90deg);
+}
+
+.letter.in {
+  transform: rotateX(0deg);
+  transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.color {
+  color: #1bac91;
+}

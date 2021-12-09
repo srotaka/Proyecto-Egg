@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<!-- xmlns:sec="http://www.thymeleaf.org/extras/spring-security" -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <meta charset="UTF-8" />
@@ -28,6 +27,7 @@
   <link href="../static/aos/aos.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
+  <link href="../static/css/preloader.css" rel="stylesheet">
   <link href="../static/css/style.css" rel="stylesheet">
 
 </head>
@@ -36,6 +36,7 @@
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
+
     <div class="container d-flex">
 
       <div class="logo">
@@ -49,17 +50,22 @@
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <li class="active"><a href="#hero">Inicio</a></li>
-          <li><a href="#about">¿Qué hacemos?</a></li>
-          <!-- <li><a href="#services">Sumate</a></li> -->
-          <li><a href="#testimonials">Testimonios</a></li>
+          <li class="drop-down"><a href="#">Sobre Nutrividas</a>
+            <ul>
+              <li><a href="#about">¿Qué hacemos?</a></li>
+              <li><a href="#testimonials">Testimonios</a></li>
+              <li><a href="#team">Nuestro Equipo</a></li>
+              <li><a href="#faq">Preguntas Frecuentes</a></li>
+            </ul>
+          </li>
+          <li><a href="comedores.html">Comedores</a></li>
+          <!-- <li><a href="#testimonials">Testimonios</a></li>
           <li><a href="#team">Nuestro Equipo</a></li>
-          <li><a href="#faq">Preguntas Frecuentes</a></li>
-
-          <li><a href="#contact">Contáctanos</a></li>
-
+          <li><a href="#faq">Preguntas Frecuentes</a></li> -->
+          <li><a href="#contact">Contáctanos</a></li>&nbsp;&nbsp;&nbsp;
         </ul>
       </nav><!-- .nav-menu -->
-
+      <a href="login.html" class="botonform scrollto">Inicia Sesión</a>
     </div>
   </header><!-- End Header -->
 
@@ -68,7 +74,7 @@
     <div class="container text-center text-md-left" data-aos="fade-up">
       <h1>Bienvenidos a Nutrividas</h1>
       <h2>Alimentando sonrisas</h2>
-      <a href="#about" class="btn-get-started scrollto">¡COMENCEMOS!</a>
+      <a href="login.html" class="btn-get-started scrollto">¡COMENCEMOS!</a>
     </div>
   </section>
   <!-- ======= End Hero Section ======= -->
@@ -126,7 +132,8 @@
           <div class="icon-box icon-box-pink">
             <div class="icon"><i class="bx bx-detail"></i></div>
             <h4 class="title"><a href="">Regístrate</a></h4>
-            <p class="description">Para comenzar a alimentar sonrisas, completa el formulario de registro desde aquí.
+            <p class="description">Para comenzar a alimentar sonrisas, completa el formulario de registro desde <a
+                href="signup.html"> aquí.</a>
             </p>
           </div>
         </div>
@@ -162,9 +169,6 @@
     </div>
   </section><!-- End Services Section -->
 
-
-
-
   <!-- ======= Testimonials Section ======= -->
   <section id="testimonials" class="testimonials">
     <div class="container">
@@ -187,7 +191,7 @@
             <i class="bx bxs-quote-alt-left quote-icon-left"></i>
             Para comprar los alimentos recibíamos un escaso subsidio del Gobierno nacional.
             Ahora estamos cumpliendo con los 4 alimentos diarios de todos los niños. Esas sonrisas son el mayor regalo
-            que podíamos espear.
+            que podíamos esperar.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
           <img src="../static/img/testimonial02.png" class="testimonial-img" alt="">
@@ -205,7 +209,7 @@
           </p>
           <img src="../static/img/testimonial01.png" class="testimonial-img" alt="">
           <h3>Gabriel Pereyra</h3>
-          <h4>Comedor Pekes del Corazón</h4>
+          <h4>Comedor Nuestros Pekes</h4>
         </div>
 
         <div class="testimonial-item">
@@ -285,8 +289,8 @@
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
-              <a href=""><i class="icofont-email"></i></a>
-              <a href=""><i class="icofont-linkedin"></i></a>
+              <a href="mailto:evyy.sarapura@gmail.com"><i class="icofont-email"></i></a>
+              <a href="https://www.linkedin.com/in/eva-s-74335b1b2/"><i class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -326,7 +330,7 @@
             <h4>Jorge Nogueira</h4>
             <span>FrontEnd Developer</span>
             <p>
-              Alguna breve descripción o comentario personal
+              "Me encanta la vida al aire libre y pasar tiempo con mis perros."
             </p>
             <div class="social">
               <a href="mailto:nogueira.jorgea@gmail.com"><i class="icofont-email"></i></a>
@@ -367,7 +371,7 @@
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-lucas.png" alt="">
+            <img src="../static/img/team-lucas.jpeg" alt="">
             <h4>Lucas Moyano</h4>
             <span>BackEnd Developer</span>
             <p>
@@ -400,76 +404,113 @@
     </div>
   </section><!-- End Team Section -->
 
- <!-- ======= F.A.Q Section ======= -->
- <section id="faq" class="faq">
-  <div class="container">
+  <!-- ======= F.A.Q Section ======= -->
+  <section id="faq" class="faq ">
+    <div class="container">
 
-    <div class="section-title" data-aos="fade-up">
-      <h2>Preguntas Frecuentes</h2>
-      <p>Para obtener una respuesta inmediata, puedes ingresar a las siguientes preguntas frecuentes, <br> donde encontrarás información sobre las cuestiones más consultadas. <br> Si no encuentras tu respuesta, pueden enviarnos una consulta desde aquí.</p>
+      <div class="section-title " data-aos="fade-up">
+        <h2>Preguntas Frecuentes</h2>
+        <p>Aquí encontrarás información sobre las cuestiones más consultadas. <br> Si no encuentras tu respuesta, pueden
+          enviarnos una consulta desde <a href="#contact"> aquí</a>.</p>
+      </div>
+
+      <div class="faq-list">
+        <ul>
+          <li data-aos="fade-up">
+            <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" class="collapse"
+              href="#faq-list-1">¿Qué es Nutrividas? <i class="bx bx-chevron-down icon-show"></i><i
+                class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-1" class="collapse show" data-parent=".faq-list">
+              <p>
+                Nutrividas es una organización sin fines de lucro, sin afiliación política ni religiosa cuya misión es
+                hacer llegar alimentos a los Comedores registrados. El objetivo de Nutrividas es facilitar el
+                establecimiento de lazos de solidaridad entre los ciudadanos y los niños más necesitados de nuestro país
+                de manera fácil y transparente. De esta forma lograr que los Comedores puedan conseguir los alimentos
+                necesarios para alimentar a sus niños. Asimismo, contamos con un equipo de nutricionistas que dedican su
+                tiempo a elaborar distintos menús de acuerdo a las necesidades de cada miembro.
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="200">
+            <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-2"
+              class="collapsed">¿Alguien recibe dinero por participar en Nutrividas? <i
+                class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-2" class="collapse" data-parent=".faq-list">
+              <p>
+                De ninguna manera. Nutrividas fue construido y es actualmente operado por un grupo de voluntarios.
+                Ningún miembro del equipo recibe dinero ni compensación alguna. Para más información sobre el equipo
+                refiérase a nuestra sección de Nuestro Equipo.
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="300">
+            <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-3"
+              class="collapsed">¿Cómo funciona la entrega de alimentos? <i class="bx bx-chevron-down icon-show"></i><i
+                class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-3" class="collapse" data-parent=".faq-list">
+              <p>
+                El mecanismo de entrega de alimentos a Comedores es simple y transparente. A fin de cada semana se hace
+                un recuento de las contribuciones individuales para cada comedor y se realiza la compra de los alimentos
+                donados. Los comedores no reciben dinero sino alimentos, de esta manera podemos garantizar que las
+                donaciones son utilizadas efectivamente para la alimentación de los niños.
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="400">
+            <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-4"
+              class="collapsed">¿Qué pasa con los Comedores cuya necesidad no está cubierta 100% por las donaciones?<i
+                class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-4" class="collapse" data-parent=".faq-list">
+              <p>
+                Cuando un comedor publicado en Nutrividas no alcanza el nivel 100% de ayuda de parte de los ususario,
+                esto no significa que van a haber chicos que se quedan sin comer en el comedor. Nutrividas cuenta con
+                fondos de reserva (donados por empresas) que son utilizados para abastecer a los comedores con los
+                requerimientos alimenticios que cada niño necesita.
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="400">
+            <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-5"
+              class="collapsed">¿Cómo se eligen los comedores? ¿Puedo recomendar un comedor nuevo?<i
+                class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-5" class="collapse" data-parent=".faq-list">
+              <p>
+                Los comedores a los que se destina ayuda se encuentran registrados en Nutrividas. Para ello, el Comedor
+                se pone en contacto a través de nuestro formulario de consulta. Nuestro equipo se comunica a la brevedad
+                con el responsable a cargo para corroborar la veracidad de los datos. Estos comedores registran un
+                número distintos de chicos necesitados de asistencia alimenticia diaria. Por otro lado hacemos una
+                evaluación previa del comedor para asegurarnos de que podemos confiar plenamente en su funcionamiento y
+                transparencia. Actualmente contamos con una lista de comedores que están siendo evaluados para la pronta
+                incorporación. Para sugerir nuevos comedores, por favor escríbenos a info@nutrividas.com.
+              </p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="400">
+            <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-6"
+              class="collapsed">¿Puedo confiar que mis datos personales no van a ser divulgados? <i
+                class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-6" class="collapse" data-parent=".faq-list">
+              <p>
+                ¡Absolutamente! Todos sus datos personales son tratados con la máxima confidencialidad y no son
+                compartidos con nadie. Del mismo modo, tomamos muy seriamente el correcto uso y manejo de los datos de
+                tarjeta de crédito. Entendemos que esta información debe ser manejada con la mayor de las precauciones.
+                Es por ello que estos datos son encriptados para que puedan ser accedidos solamente cuando es necesario
+                y no puedan ser visualizados por nadie. Para mayor información, puede leer nuestra Política de
+                privacidad.
+              </p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
     </div>
-
-    <div class="faq-list">
-      <ul>
-        <li data-aos="fade-up">
-          <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" class="collapse" href="#faq-list-1">¿Qué es Nutrividas? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-          <div id="faq-list-1" class="collapse show" data-parent=".faq-list">
-            <p>
-              Nutrividas es una organización sin fines de lucro, sin afiliación política ni religiosa cuya misión es hacer llegar alimentos a los Comedores registrados. El objetivo de Nutrividas es facilitar el establecimiento de lazos de solidaridad entre los ciudadanos y los niños más necesitados de nuestro país de manera fácil y transparente. De esta forma lograr que los Comedores puedan conseguir los alimentos necesarios para alimentar a sus niños. Asimismo, contamos con un equipo de nutricionistas que dedican su tiempo a elaborar distintos menús de acuerdo a las necesidades de cada miembro. 
-            </p>
-          </div>
-        </li>
-      
-        <li data-aos="fade-up" data-aos-delay="200">
-          <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-2" class="collapsed">¿Alguien recibe dinero por participar en Nutrividas? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-          <div id="faq-list-2" class="collapse" data-parent=".faq-list">
-            <p>
-              No. Nutrividas fue construido y es actualmente operado por un grupo de voluntarios. Ningún miembro del equipo recibe dinero ni compensación alguna. Para más información sobre el equipo hacer click aquí.
-            </p>
-          </div>
-        </li>
-
-        <li data-aos="fade-up" data-aos-delay="300">
-          <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-3" class="collapsed">¿Cómo funciona la entrega de alimentos? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-          <div id="faq-list-3" class="collapse" data-parent=".faq-list">
-            <p>
-              El mecanismo de entrega de alimentos a Comedores es simple y transparente. A fin de cada semana se hace un recuento de las contribuciones individuales para cada comedor y se realiza la compra de los alimentos donados. Los comedores no reciben dinero sino alimentos, de esta manera podemos garantizar que las donaciones son utilizados efectivamente para la alimentación de los niños.
-            </p>
-          </div>
-        </li>
-
-        <li data-aos="fade-up" data-aos-delay="400">
-          <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-4" class="collapsed">¿Qué pasa con los Comedores cuya necesidad no está cubierta 100% por las donaciones?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-          <div id="faq-list-4" class="collapse" data-parent=".faq-list">
-            <p>
-              Cuando un comedor publicado en Nutrividas no alcanza el nivel 100% de ayuda de parte de los ususario, esto no significa que van a haber chicos que se quedan sin comer en el comedor. Nutrividas cuenta con fondos de reserva (donados por empresas) que son utilizados para abastecer al comedor con los requerimientos alimenticios que cada niño necesita.
-            </p>
-          </div>
-        </li>
-
-        <li data-aos="fade-up" data-aos-delay="400">
-          <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-5" class="collapsed">¿Cómo se eligen los comedores? ¿Puedo recomendar un comedor nuevo?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-          <div id="faq-list-5" class="collapse" data-parent=".faq-list">
-            <p>
-              Los comedores a los que se destina ayuda se encuentran registrados en Nutrividas. Para ello, el Comedor se pone en contacto a través de nuestro formulario de consulta. Nuestro equipo se comunica a la brevedad con el responsable a cargo para corroborar la veracidad de los datos. Estos comedores registran un número distintos de chicos necesitados de asistencia alimenticia diaria. Por otro lado hacemos una evaluación previa del comedor para asegurarnos de que podemos confiar plenamente en su funcionamiento y transparencia. Actualmente contamos con una lista de comedores que están siendo evaluados para la pronta incorporación. Para sugerir nuevos comedores, por favor escríbenos a info@nutrividas.com.
-            </p>
-          </div>
-        </li>
-
-        <li data-aos="fade-up" data-aos-delay="400">
-          <i class="bx bx-help-circle icon-help"></i> <a data-toggle="collapse" href="#faq-list-6" class="collapsed">¿Puedo confiar que mis datos personales no van a ser divulgados? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-          <div id="faq-list-6" class="collapse" data-parent=".faq-list">
-            <p>
-              ¡Absolutamente! Todos sus datos personales son tratados con la máxima confidencialidad y no son compartidos con nadie.  Del mismo modo, tomamos muy seriamente el correcto uso y manejo de los datos de tarjeta de crédito. Entendemos que esta información debe ser manejada con la mayor de las precauciones. Es por ello que estos datos son encriptados para que puedan ser accedidos solamente cuando es necesario y no puedan ser visualizados por nadie. Para mayor información, puede leer nuetra Política de privacidad.
-            </p>
-          </div>
-        </li>
-
-      </ul>
-    </div>
-
-  </div>
-</section><!-- End F.A.Q Section -->
+  </section><!-- End F.A.Q Section -->
 
 
 
@@ -577,8 +618,11 @@
               <li><i class="bx bx-chevron-right"></i> <a href="#">Inicio</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">¿Qué hacemos?</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Nuestro Equipo</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="terminos-condiciones.html">Términos y condiciones</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="politica-privacidad.html">Política de privacidad</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="terminos-condiciones.html" target="_blank">Términos y
+                  condiciones</a>
+              </li>
+              <li><i class="bx bx-chevron-right"></i> <a href="politica-privacidad.html" target="_blank">Política de
+                  privacidad</a></li>
             </ul>
           </div>
 
@@ -588,19 +632,14 @@
             <form action="" method="post">
               <input type="email" name="email"><input type="submit" value="Suscribirse">
             </form>
-
           </div>
-          
         </div>
       </div>
     </div>
 
     <div class="copyright">
-      Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos reservados.
+      Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos reservados
     </div>
-
-
-
   </footer><!-- End Footer -->
 
 
@@ -608,7 +647,15 @@
   <!-- ======= BACK TO TOP ======= -->
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
   <!-- ======= BACK TO TOP ======= -->
-
+  <div class="loader-center" id="onload">
+    <div class="loader">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
   <!-- Vendor JS Files -->
   <script src="../static/jquery/jquery.min.js"></script>
   <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -618,9 +665,11 @@
   <script src="../static/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="../static/venobox/venobox.min.js"></script>
   <script src="../static/aos/aos.js"></script>
+  <script src="../static/js/loader.js"> </script>
 
   <!-- Template Main JS File -->
   <script src="../static/js/main.js"></script>
+
 </body>
 
 </html>

@@ -5,6 +5,15 @@
 * ==========================================
 *
 */
+
+
+.signup-section {
+  padding-left: 12%;
+  padding-right: 12%;
+  padding-top: 10%;
+  margin-bottom: 50px;
+}
+
 .login,
 .image {
   min-height: 100vh;
@@ -14,6 +23,7 @@
   background-image: url("../img/children08.jpg");
   background-size: cover;
   background-position: center center;
+  border-radius: 20px;
 }
 
 body {
@@ -76,4 +86,24 @@ input[type="number"]::-webkit-outer-spin-button {
 #mensaje-Secundario-SignUp {
     font-size: 1.5rem;
     text-align: center;
+}
+
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+
+#footer2 .copyright2 {
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  
+  height: 50px;
+  background-color: #1d1d1d;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+  padding-top: 15px;
+  
 }

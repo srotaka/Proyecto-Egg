@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta content="Nutrividas" name="Grupo7" />
+    <title>Nutrividas - Productos</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" />
+    <link href="../static/img/favicon.ico" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/icofont/icofont.min.css" rel="stylesheet">
+    <link href="../static/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../static/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../static/venobox/venobox.css" rel="stylesheet">
+    <link href="../static/aos/aos.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/productos.css">
+
+
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top">
+        <div class="container d-flex">
+
+            <div class="logo">
+                <a href="index.html"><img src="../static/img/logo.png" alt="" class="img-fluid"></a>
+            </div>
+
+            <div class="logo mr-auto">
+                <h2 class="text-light mt-0" style="color: #1bac91 !important;">&nbsp;Nutrividas</h2>
+            </div>
+
+            <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#contact">Contáctanos</a></li>
+
+                </ul>
+            </nav><!-- .nav-menu -->
+
+        </div>
+    </header><!-- End Header -->
+
+    <!-- ======= TÍTULO ======= -->
+
+    <section class="titulo" id="titulo">
+        
+        <div class="texto-comedores">
+            <p> Productos que alimentan</p>
+            <p>
+                <span class="word color">sonrisas</span>               
+            </p>
+        </div>
+    </section><!-- End TÍTULO -->
+
+    <!-- ======= TABLA PRODUCTOS ======= -->
+    <section>
+    <div class="container" id="tabla-productos">
+
+        <h6 style="padding-bottom: 8px;">Para mayor comodidad, puede realizar una búsqueda por nombre o marca.</h6>
+        <input class="form-control" style="width: auto;" id="myInput" type="text" placeholder="Buscar...">
+        <br>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Marca</th>
+                    <!-- <th>Categoría</th> -->
+                    <th class="text-center">Precio</th>
+                    <th class="text-center">Celíaco</th>
+                    <th class="text-center">Diabético</th>
+                    <th class="text-center">Hipertenso</th>
+                    <th class="text-center">Intolerante Lactosa</th>
+                    <th class="text-center">Editar</th>
+                </tr>
+            </thead>
+            <tbody id="myTable">
+                <tr>
+                    <td>Cereales Integrales Frutal</td>
+                    <td>Trix</td>
+
+                    <td id="precio-producto">211.5</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Sí</td>
+                    <td>Sí</td>
+                    <td class="text-center">
+                        <a class="btn btn-nutri btn-space">Editar</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Leche en Polvo</td>
+                    <td>La Lechera</td>
+                    <td id="precio-producto">488.6</td>
+                    <td>No</td>
+                    <td>Sí</td>
+                    <td>Sí</td>
+                    <td>No</td>
+                    <td class="text-center">
+                        <a class="btn btn-nutri btn-space">Editar</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Fideos Spaghetti</td>
+                    <td>Terrabusi</td>
+                    <td id="precio-producto">61.9</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Sí</td>
+                    <td>Sí</td>
+                    <td class="text-center">
+                        <a class="btn btn-nutri btn-space">Editar</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Fideos Tirabuzón</td>
+                    <td>Terrabusi</td>
+                    <td id="precio-producto">57.85</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>Sí</td>
+                    <td>Sí</td>
+                    <td class="text-center">
+                        <a class="btn btn-nutri btn-space">Editar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div> <!-- End Tabla productos -->
+</section>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer2">
+        <div class="copyright2">
+            Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
+            reservados
+        </div>
+    </footer><!-- End Footer -->
+
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Vendor JS Files -->
+    <script src="../static/jquery/jquery.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/jquery.easing/jquery.easing.min.js"></script>
+    <script src="../static/php-email-form/validate.js"></script>
+    <script src="../static/owl.carousel/owl.carousel.min.js"></script>
+    <script src="../static/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="../static/venobox/venobox.min.js"></script>
+    <script src="../static/aos/aos.js"></script>
+    <script src="../static/js/loader.js"> </script>
+
+    <!-- Template Main JS File -->
+    <script src="../static/js/main.js"></script>
+
+    <!--  JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- JS PARA TITULO -->
+     <script src="../static/js/titulo.js"></script>
+
+    <!-- BUSCADOR DE PRODUCTOS -->
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
