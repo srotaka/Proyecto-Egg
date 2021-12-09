@@ -1107,22 +1107,29 @@ width: fit-content; height: fit-content;}
   background-position: center center;
 }
 
-
-#botonform{
-  color: white;
+.botonform{
+  color: white !important;
   background-color: #1bac91 !important;
-  border-color: #1bac91 ;
-  margin-top: 0.5rem;
+  border: 1px solid #1fc5a7;
+  margin-top: 1px;
+  border-radius: 6px;
+  padding: 8px 15px 0px 15px !important;
+  max-height: 40px;
+  text-align: center;
+  vertical-align: center !important;
 }
 
-#botonform:hover {
-  background-color:  #08493d !important;
-  transition: 1.5s;
+.botonform:hover {
+  background-color:  #1a8673 !important;
+  border-radius: 6px;
+  border: 1px solid #1fc5a7;
+  transition: 1s;
 }
 
-#botonform:not(:hover) {   
-  transition: 1.6s;
+.botonform:not(:hover) {   
+  transition: 1s;
 } 
+
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
