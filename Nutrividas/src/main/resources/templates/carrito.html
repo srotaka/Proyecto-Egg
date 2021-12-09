@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+  <meta content="Nutrividas" name="Grupo7" />
+  <title>Nutrividas - Carrito de Compras</title>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" />
+  <link href="../static/img/favicon.ico" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/icofont/icofont.min.css" rel="stylesheet">
+  <link href="../static/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../static/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="../static/venobox/venobox.css" rel="stylesheet">
+  <link href="../static/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../static/css/style.css" rel="stylesheet">
+  <link href="../static/css/comedores.css" rel="stylesheet">
+  <link href="../static/css/carrito.css" rel="stylesheet">
+
+</head>
+
+<body class="hidden">
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="loader-center" id="onload">
+      <div class="loader">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="container d-flex">
+
+      <div class="logo">
+        <a href="index.html"><img src="../static/img/logo.png" alt="" class="img-fluid"></a>
+      </div>
+
+      <div class="logo mr-auto">
+        <h2 class="text-light mt-0" style="color: #1bac91 !important;" href="index.html">&nbsp;Nutrividas</h2>
+      </div>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="comedores.html">Comedores</a></li>
+          <li><a href="index.html#contactanos">Contáctanos</a></li>
+
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= TÍTULO ======= -->
+
+  <section class="titulo" id="titulo">
+
+    <div class="texto-comedores">Carrito de Compras</div>
+  </section>
+
+  <!-- ======= TARJETA DE CRÉDITO ======= -->
+  <main>
+    <div class="basket">
+
+      <div class="basket-labels">
+        <ul>
+          <li class="item item-heading">Canasta</li>
+          <li class="price">Precio</li>
+          <li class="quantity">Cantidad</li>
+          <li class="subtotal">Subtotal</li>
+        </ul>
+      </div>
+      <!-- PRODUCTO 1 -->
+      <div class="basket-product">
+        <div class="item">
+          <div class="product-image">
+            <img src="../static/img/food-basket01.jpg" alt="Canasta01" class="product-frame">
+          </div>
+          <div class="product-details">
+            <h1><span class="item-quantity"></span> Canasta Nº 1</h1>
+
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Detalle de productos
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modal-productos">Productos</h5>
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Tabla de productos -->
+                    <div class="container mt-3">
+                      <p>Detalle de productos de la canasta</p>
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Cantidad</th>
+                            <th>Nombre</th>
+                            <th>Marca</th>
+                            <th>Precio</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>2</td>
+                            <td>Fideos Tirabuzón</td>
+                            <td>Terrabusi</td>
+                            <td id="precio-modal">57.85</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Aceite Girasol</td>
+                            <td>Cocinero</td>
+                            <td id="precio-modal">135.05</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Puré de tomate</td>
+                            <td>Arcor</td>
+                            <td id="precio-modal">51.98</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- Fin Tabla de productos -->
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-modal-trigger" data-bs-dismiss="modal">Cerrar</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Fin modal detalles productos -->
+          </div>
+        </div>
+        <div class="price">300</div>
+        <div class="quantity">
+          <input type="number" value="0" min="0" class="quantity-field">
+        </div>
+        <div class="subtotal">0</div>
+        <!-- <div class="remove">
+          <button>Eliminar</button>
+        </div> -->
+      </div>
+      <!-- PRODUCTO 2 -->
+      <div class="basket-product">
+        <div class="item">
+          <div class="product-image">
+            <img src="../static/img/food-basket02.jpg" alt="Canasta01" class="product-frame">
+          </div>
+          <div class="product-details">
+            <h1><span class="item-quantity"></span> Canasta Nº 2</h1>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Detalle de productos
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title text-center" id="modal-productos">Productos</h5>
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Tabla de productos -->
+                    <div class="container mt-3">
+                      <p>Detalle de productos de la canasta</p>
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Cantidad</th>
+                            <th>Nombre</th>
+                            <th>Marca</th>
+                            <th>Precio</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>2</td>
+                            <td>Fideos Tirabuzón</td>
+                            <td>Terrabusi</td>
+                            <td id="precio-modal">57.85</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Aceite Girasol</td>
+                            <td>Cocinero</td>
+                            <td id="precio-modal">135.05</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Puré de tomate</td>
+                            <td>Arcor</td>
+                            <td id="precio-modal">51.98</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- Fin Tabla de productos -->
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-modal-trigger" data-bs-dismiss="modal">Cerrar</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Fin modal detalles productos -->
+          </div>
+        </div>
+        <div class="price">500</div>
+        <div class="quantity">
+          <input type="number" value="0" min="0" class="quantity-field">
+        </div>
+        <div class="subtotal">0</div>
+        <!-- <div class="remove">
+          <button>Eliminar</button>
+        </div> -->
+      </div>
+
+      <!-- PRODUCTO 3 -->
+      <div class="basket-product">
+        <div class="item">
+          <div class="product-image">
+            <img src="../static/img/food-basket03.jpg" alt="Canasta01" class="product-frame">
+          </div>
+          <div class="product-details">
+            <h1><span class="item-quantity"></span> Canasta Nº 3</h1>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Detalle de productos
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modal-productos">Productos</h5>
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Tabla de productos -->
+                    <div class="container mt-3">
+                      <p>Detalle de productos de la canasta</p>
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Cantidad</th>
+                            <th>Nombre</th>
+                            <th>Marca</th>
+                            <th>Precio</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>2</td>
+                            <td>Fideos Tirabuzón</td>
+                            <td>Terrabusi</td>
+                            <td id="precio-modal">57.85</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Aceite Girasol</td>
+                            <td>Cocinero</td>
+                            <td id="precio-modal">135.05</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Puré de tomate</td>
+                            <td>Arcor</td>
+                            <td id="precio-modal">51.98</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- Fin Tabla de productos -->
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-modal-trigger" data-bs-dismiss="modal">Cerrar</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Fin modal detalles productos -->
+          </div>
+        </div>
+        <div class="price">800</div>
+        <div class="quantity">
+          <input type="number" value="0" min="0" class="quantity-field">
+        </div>
+        <div class="subtotal">0</div>
+        <!-- <div class="remove">
+          <button>Eliminar</button>
+        </div> -->
+      </div>
+      <!-- PRODUCTO 4 -->
+      <div class="basket-product">
+        <div class="item">
+          <div class="product-image">
+            <img src="../static/img/food-basket04.jpg" alt="Canasta01" class="product-frame">
+          </div>
+          <div class="product-details">
+            <h1><span class="item-quantity"></span> Canasta Nº 4</h1>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Detalle de productos
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modal-productos">Productos</h5>
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Tabla de productos -->
+                    <div class="container mt-3">
+                      <p>Detalle de productos de la canasta</p>
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Cantidad</th>
+                            <th>Nombre</th>
+                            <th>Marca</th>
+                            <th>Precio</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>2</td>
+                            <td>Fideos Tirabuzón</td>
+                            <td>Terrabusi</td>
+                            <td id="precio-modal">57.85</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Aceite Girasol</td>
+                            <td>Cocinero</td>
+                            <td id="precio-modal">135.05</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Puré de tomate</td>
+                            <td>Arcor</td>
+                            <td id="precio-modal">51.98</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- Fin Tabla de productos -->
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-modal-trigger" data-bs-dismiss="modal">Cerrar</button>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Fin modal detalles productos -->
+          </div>
+        </div>
+        <div class="price">900</div>
+        <div class="quantity">
+          <input type="number" value="0" min="0" class="quantity-field">
+        </div>
+        <div class="subtotal">0</div>
+        <!-- <div class="remove">
+          <button>Eliminar</button>
+        </div> -->
+      </div>
+    </div>
+    </div>
+
+
+    <!-- RESUMEN COMPRA  -->
+    <aside>
+      <div class="summary mt-4">
+
+        <div class="summary-subtotal">
+          <div class="subtotal-title">Subtotal</div>
+          <div class="subtotal-value final-value" id="basket-subtotal">0</div>
+        </div>
+        <div class="summary-delivery">
+          <div class="summary-total-items"> Productos Seleccionados: <span class="total-items"></span></div>
+        </div>
+        <div class="summary-total">
+          <div class="total-title">Total</div>
+          <div class="total-value final-value" id="basket-total">0</div>
+        </div>
+        <div class="summary-checkout">
+          <button class="checkout-cta">Finalizar Compra</button>
+        </div>
+      </div>
+    </aside>
+  </main>
+  <!-- End RESUMEN COMPRA --> <br><br>
+
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer2">
+    <div class="copyright2">
+      Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
+      reservados
+    </div>
+  </footer><!-- End Footer -->
+
+
+
+  <!-- JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="../static/js/carrito.js"> </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Vendor JS Files -->
+  <script src="../static/jquery/jquery.min.js"></script>
+  <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/jquery.easing/jquery.easing.min.js"></script>
+  <script src="../static/php-email-form/validate.js"></script>
+  <script src="../static/owl.carousel/owl.carousel.min.js"></script>
+  <script src="../static/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../static/venobox/venobox.min.js"></script>
+  <script src="../static/aos/aos.js"></script>
+  <script src="../static/js/loader.js"> </script>
+
+  <!-- Template Main JS File -->
+  <script src="../static/js/main.js"></script>
+
+</body>
+
+</html>

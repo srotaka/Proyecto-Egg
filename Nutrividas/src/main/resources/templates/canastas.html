@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!-- xmlns:sec="http://www.thymeleaf.org/extras/spring-security" -->
+
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta content="Nutrividas" name="Grupo7" />
+    <title>Nutividas - Canastas</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" />
+    <link href="../static/img/favicon.ico" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/icofont/icofont.min.css" rel="stylesheet">
+    <link href="../static/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../static/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../static/venobox/venobox.css" rel="stylesheet">
+    <link href="../static/aos/aos.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="../static/css/style.css" rel="stylesheet">
+    <link href="../static/css/comedores.css" rel="stylesheet">
+
+</head>
+
+<body class="hidden">
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top">
+        <div class="loader-center" id="onload">
+            <div class="loader">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
+
+        <div class="container d-flex">
+
+            <div class="logo">
+                <a href="index.html"><img src="../static/img/logo.png" alt="" class="img-fluid"></a>
+            </div>
+
+            <div class="logo mr-auto">
+                <h2 class="text-light mt-0" style="color: #1bac91 !important;" href="index.html">&nbsp;Nutrividas</h2>
+            </div>
+
+            <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="comedores.html">Comedores</a></li>
+                    <li><a href="index.html#contactanos">Contáctanos</a></li>
+
+                </ul>
+            </nav><!-- .nav-menu -->
+
+        </div>
+    </header><!-- End Header -->
+
+    <!-- ======= TÍTULO ======= -->
+
+    <section class="titulo" id="titulo">
+        
+        <div class="texto-comedores">
+            <p> Estoy Creciendo</p> <br>
+            <p>Canastas que alimentan</p>
+            <p>
+                <span class="word color">sonrisas</span>
+                <!-- <span class="word color">esperanzas</span>
+                <span class="word color">ilusiones</span> -->
+            </p>
+        </div>
+
+
+    </section>
+
+    <!-- ======= CANASTAS CARDS ======= -->
+    <section class="hero-section-canastas">
+        <div class="card-grid">
+            <a class="card" href="#">
+                <div class="card__background"
+                    style="background-image:url('../static/img/food-basket01.jpg');">
+                </div>
+                <div class="card__content">
+                    <h3 class="card__heading2">Canasta 1</h3>
+                    <p class="card__precio">$2964</p>
+                    
+                </div>
+            </a>
+            <a class="card" href="#">
+                <div class="card__background"
+                    style="background-image:url('../static/img/food-basket02.jpg');"></div>
+                <div class="card__content">
+                    <h3 class="card__heading2">Canasta 2</h3>
+                    <p class="card__precio">$4325</p>
+                </div>
+            </a>
+            <a class="card" href="#">
+                <div class="card__background"
+                    style="background-image:url('../static/img/food-basket03.jpg');"></div>
+                <div class="card__content">
+                    <h3 class="card__heading2">Canasta 3</h3>
+                    <p class="card__precio">$6781</p>
+                </div>
+            </a>
+            <a class="card" href="#">
+                <div class="card__background"
+                    style="background-image:url('../static/img/food-basket04.jpg');"></div>
+                <div class="card__content">
+                    <h3 class="card__heading2">Canasta 4</h3>
+                    <p class="card__precio">$1147</p>
+                </div>
+            </a>
+        </div>
+    </section> <!-- End Canastas Cards -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer2">
+        <div class="copyright2">
+            Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
+            reservados
+        </div>
+    </footer><!-- End Footer -->
+
+    <!-- ======= BACK TO TOP ======= -->
+    <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+    <!-- ======= BACK TO TOP ======= -->
+
+    <!-- Vendor JS Files -->
+    <script src="../static/jquery/jquery.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/jquery.easing/jquery.easing.min.js"></script>
+    <script src="../static/php-email-form/validate.js"></script>
+    <script src="../static/owl.carousel/owl.carousel.min.js"></script>
+    <script src="../static/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="../static/venobox/venobox.min.js"></script>
+    <script src="../static/aos/aos.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="../static/js/main.js"></script>
+
+    <!-- JS PARA TITULO -->
+    <script>
+        var words = document.getElementsByClassName("word");
+        var wordArray = [];
+        var currentWord = 0;
+
+        words[currentWord].style.opacity = 1;
+        for (var i = 0; i < words.length; i++) {
+            splitLetters(words[i]);
+        }
+
+        function changeWord() {
+            var cw = wordArray[currentWord];
+            var nw =
+                currentWord == words.length - 1 ? wordArray[0] : wordArray[currentWord + 1];
+            for (var i = 0; i < cw.length; i++) {
+                animateLetterOut(cw, i);
+            }
+
+            for (var i = 0; i < nw.length; i++) {
+                nw[i].className = "letter behind";
+                nw[0].parentElement.style.opacity = 1;
+                animateLetterIn(nw, i);
+            }
+
+            currentWord = currentWord == wordArray.length - 1 ? 0 : currentWord + 1;
+        }
+
+        function animateLetterOut(cw, i) {
+            setTimeout(function () {
+                cw[i].className = "letter out";
+            }, i * 80);
+        }
+
+        function animateLetterIn(nw, i) {
+            setTimeout(function () {
+                nw[i].className = "letter in";
+            }, 340 + i * 80);
+        }
+
+        function splitLetters(word) {
+            var content = word.innerHTML;
+            word.innerHTML = "";
+            var letters = [];
+            for (var i = 0; i < content.length; i++) {
+                var letter = document.createElement("span");
+                letter.className = "letter";
+                letter.innerHTML = content.charAt(i);
+                word.appendChild(letter);
+                letters.push(letter);
+            }
+
+            wordArray.push(letters);
+        }
+
+        changeWord();
+        setInterval(changeWord, 4000);
+
+    </script>
+
+</body>
+
+</html>

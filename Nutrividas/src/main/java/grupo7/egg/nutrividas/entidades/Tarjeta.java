@@ -1,6 +1,8 @@
 package grupo7.egg.nutrividas.entidades;
 
+import grupo7.egg.nutrividas.enums.MarcaTarjeta;
 import grupo7.egg.nutrividas.enums.TipoTarjeta;
+import grupo7.egg.nutrividas.entidades.Usuario;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +17,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="tarjetas")
-@SQLDelete(sql = "UPDATE tarjetas SET alta = false WHERE id = ?")
+@SQLDelete(sql = "UPDATE Tarjetas SET alta = false WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
@@ -30,6 +32,7 @@ public class Tarjeta {
     private Long numeroTarjeta;
     private Integer codigoSeguridad;
     private TipoTarjeta tipoTarjeta;
+    private MarcaTarjeta marcaTarjeta;
     private LocalDate fechaVencimiento;
     @ManyToOne
     private Usuario usuario;

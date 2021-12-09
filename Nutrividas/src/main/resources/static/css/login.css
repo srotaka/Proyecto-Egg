@@ -5,41 +5,44 @@
 * ==========================================
 *
 */
-.login,
-.image {
-  min-height: 100vh;
+
+.login-section {
+  padding-left: 12%;
+  padding-right: 12%;
+  padding-top: 10%;
+  margin-bottom: 50px;
 }
 
 .bg-image {
   background-image: url("../img/children07.jpg");
   background-size: cover;
   background-position: center center;
+  border-radius: 20px;
 }
 
 body {
-    color: #444444 !important;
-    font-family: 'Newsreader', serif !important;
-
+  color: #444444 !important;
+  font-family: "Newsreader", serif !important;
 }
 
 #boton-SignIn {
-    background-color:  #1bac91 !important;
-    border-color: #1bac91 !important;
-    width: auto !important
+  background-color: #1bac91 !important;
+  border-color: #1bac91 !important;
+  width: auto !important;
 }
 
 #boton-SignIn:hover {
-    background-color:  #08493d !important;
-    transition: 1.5s;
+  background-color: #08493d !important;
+  transition: 1.5s;
 }
 
-#boton-SignIn:not(:hover) {   
-    transition: 1.6s;
+#boton-SignIn:not(:hover) {
+  transition: 1.6s;
 }
 
 #link-SignUp:hover {
   text-decoration: underline;
-} 
+}
 
 /* check (Recordar Email) */
 #customCheck1 {
@@ -53,4 +56,22 @@ body {
 #mensaje-Secundario-Login {
   font-size: 1.5rem;
   text-align: center;
+}
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+
+#footer2 .copyright2 {
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  position: fixed;
+  height: 50px;
+  background-color: #1d1d1d;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+  padding-top: 15px;
+  
 }
