@@ -1,5 +1,6 @@
 package grupo7.egg.nutrividas.entidades;
 
+import grupo7.egg.nutrividas.enums.Sexo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="personas")
-@SQLDelete(sql = "UPDATE personas SET alta = false WHERE id = ?")
+@SQLDelete(sql = "UPDATE Personas SET alta = false WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
@@ -26,13 +27,20 @@ public class Persona {
     private Long id;
     private String nombre;
     private String apellido;
+    private Long documento;
     private LocalDate fechaNacimiento;
     private Integer edad;
-    private Integer altura;
-    private Integer peso;
-    //No se pude guardar una lista en la base, hacer una tabla de enfermedades aparte o hacer un capo de texto simple
-    private String enfermedades;
+    private Double altura;
+    private Double peso;
+    private Boolean aptoCeliacos;
+    private Boolean aptoHipertensos;
+    private Boolean aptoDiabeticos;
+    private Boolean aptoIntoleranteLactosa;
     private Double IMC;
+    private Sexo sexo;
+
+    @OneToOne
+    private Foto foto;
 
     @ManyToOne
     private Comedor comedor;

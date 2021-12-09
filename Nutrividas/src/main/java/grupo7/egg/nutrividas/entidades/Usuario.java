@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name="usuarios")
-@SQLDelete(sql = "UPDATE usuarios SET alta = false WHERE id = ?")
+@SQLDelete(sql = "UPDATE Usuarios SET alta = false WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
@@ -31,6 +31,8 @@ public class Usuario {
     private Long telefono;
     @OneToMany(mappedBy = "usuario")
     private List<Tarjeta> tarjetas;
+    @OneToOne
+    private  Foto foto;
 
     @CreatedDate
     @Column( updatable = false)

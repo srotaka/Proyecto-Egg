@@ -8,13 +8,12 @@ import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name="productos")
-@SQLDelete(sql = "UPDATE productos SET alta = false WHERE id = ?")
+@SQLDelete(sql = "UPDATE Productos SET alta = false WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
@@ -25,13 +24,17 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private String marca;
+    @OneToOne
+    private Marca marca;
     private Double precio;
     private Boolean aptoCeliacos;
     private Boolean aptoHipertensos;
     private Boolean aptoDiabeticos;
     private Boolean aptoIntoleranteLactosa;
     private Categoria categoria;
+
+    @OneToOne
+    private Foto foto;
 
     @CreatedDate
     @Column( updatable = false)
