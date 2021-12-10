@@ -170,12 +170,18 @@ public class ProductoContolador {
     @Value("${picture.products.location}")
     public String PRODUCTOS_UPLOADED_FOLDER;
 
-    @PostMapping("/imagen/crear")
+    @PostMapping("/imagen/actualizar")
     public void  uploadImage(@RequestParam("id")Long id,@RequestParam("imagen") MultipartFile multipartFile,
                              UriComponentsBuilder componentsBuilder){
 
         Producto producto = productoServicio.obtenerProductoPorId(id);
-        Foto foto = fotoServicio.crearFoto(PRODUCTOS_UPLOADED_FOLDER ,String.valueOf(id),producto.getNombre()+"-"+producto.getMarca(),multipartFile);
+        Foto foto;
+        if(producto.getFoto() == null){
+            foto = fotoServicio.crearFoto(PRODUCTOS_UPLOADED_FOLDER ,String.valueOf(id),producto.getNombre()+"-"+producto.getMarca(),multipartFile);
+        }else{
+            foto = fotoServicio.actualizarFoto(producto.getFoto(),PRODUCTOS_UPLOADED_FOLDER ,String.valueOf(id),producto.getNombre()+"-"+producto.getMarca(),multipartFile);
+        }
+
         productoServicio.crearFoto(foto,id);
     }
 

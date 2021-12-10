@@ -3,6 +3,7 @@ package grupo7.egg.nutrividas.servicios;
 import grupo7.egg.nutrividas.entidades.Canasta;
 import grupo7.egg.nutrividas.entidades.Comedor;
 import grupo7.egg.nutrividas.entidades.Elemento;
+import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.CanastaRepository;
@@ -105,6 +106,17 @@ public class CanastaServicio {
                 () -> new NoSuchElementException("La canasta que desea modificar no existe"));
         canasta.getElementos().forEach(e -> elementoServicio.deshabilitarElemento(e.getId()));
         canastaRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void crearFoto(Foto foto, Long id){
+        if(foto == null){
+            throw new FieldInvalidException("La imagen no puede ser nula");
+        }
+        canastaRepository.findById(id).orElseThrow(
+                ()->new NoSuchElementException("No se halló una canasta con el id '"+id+"'"));
+
+        canastaRepository.actualizarFoto(foto,id);
     }
 
 }

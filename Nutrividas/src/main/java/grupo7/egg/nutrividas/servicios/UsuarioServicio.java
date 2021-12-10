@@ -1,9 +1,11 @@
 package grupo7.egg.nutrividas.servicios;
 
+import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Tarjeta;
 import grupo7.egg.nutrividas.entidades.Usuario;
 import grupo7.egg.nutrividas.enums.MarcaTarjeta;
 import grupo7.egg.nutrividas.enums.TipoTarjeta;
+import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.TarjetaRepository;
 import grupo7.egg.nutrividas.repositorios.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UsuarioServicio {
@@ -153,5 +156,22 @@ public class UsuarioServicio {
         usuarioRepository.findById(idUsuario).orElseThrow(
                 () -> new Exception("No se halló un usuario con el id " + idUsuario));
         usuarioRepository.habilitarUsuario(idUsuario);
+    }
+
+    @Transactional(readOnly = true)
+    public Usuario buscarPorId(Long id){
+        return  usuarioRepository.findById(id).orElseThrow(()->
+                new NoSuchElementException("No existe un usuario vincilado al id '"+id+"'"));
+    }
+
+    @Transactional
+    public void crearFoto(Foto foto, Long id){
+        if(foto == null){
+            throw new FieldInvalidException("La imagen no puede ser nula");
+        }
+        usuarioRepository.findById(id).orElseThrow(
+                ()->new NoSuchElementException("No se halló un usuario con el id '"+id+"'"));
+
+        usuarioRepository.actualizarFoto(foto,id);
     }
 }

@@ -1,9 +1,6 @@
 package grupo7.egg.nutrividas.servicios;
 
-import grupo7.egg.nutrividas.entidades.Biografia;
-import grupo7.egg.nutrividas.entidades.Comedor;
-import grupo7.egg.nutrividas.entidades.Direccion;
-import grupo7.egg.nutrividas.entidades.Producto;
+import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.enums.Provincia;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
@@ -98,9 +95,16 @@ public class ComedorServicio {
             throw new FieldInvalidException("El telefono es obligatorio");
         }
 
-        if(comedorRepository.buscarComedorPorNombre(nombre) != null){
+        if(comedorRepository.findByNombre(nombre) != null){
             throw new FieldInvalidException("Ya existe un comedor con ese nombre");
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Comedor buscarPorId(Long id){
+        return comedorRepository.findById(id).orElseThrow(
+                ()-> new NoSuchElementException("No existe un comedor asociado al id '"+id+"' ")
+        );
     }
 
     @Transactional(readOnly = true)
@@ -119,5 +123,16 @@ public class ComedorServicio {
     @Transactional
     public List<Comedor> mostrarTodosLosComedores(){
         return comedorRepository.findAll();
+    }
+
+    @Transactional
+    public void guardarFoto(Foto foto, Long id){
+        if(foto == null){
+            throw new FieldInvalidException("La imagen no puede ser nula");
+        }
+        comedorRepository.findById(id).orElseThrow(
+                ()->new NoSuchElementException("No se halló un comedor con el id '"+id+"'"));
+
+        comedorRepository.actualizarFoto(foto,id);
     }
 }

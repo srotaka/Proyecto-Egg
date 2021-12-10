@@ -1,16 +1,22 @@
 package grupo7.egg.nutrividas.controlador;
 
 import grupo7.egg.nutrividas.entidades.Canasta;
+import grupo7.egg.nutrividas.entidades.Foto;
+import grupo7.egg.nutrividas.entidades.Usuario;
 import grupo7.egg.nutrividas.servicios.CanastaServicio;
 import grupo7.egg.nutrividas.servicios.ElementoServicio;
+import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.ProductoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -27,6 +33,9 @@ public class CanastaControlador {
 
     @Autowired
     private CanastaServicio canastaServicio;
+
+    @Autowired
+    private FotoServicio fotoServicio;
 
 
     @GetMapping("/crear")
@@ -107,5 +116,23 @@ public class CanastaControlador {
     public RedirectView eliminar(@PathVariable Long id) {
         canastaServicio.deshabilitarCanasta(id);
         return new RedirectView("/canasta");
+    }
+
+    @Value("${picture.canastas.location}")
+    public String CANASTAS_UPLOADED_FOLDER;
+
+    @PostMapping("/imagen/actualizar")
+    public void  uploadImage(@RequestParam("id")Long id, @RequestParam("imagen") MultipartFile multipartFile,
+                             UriComponentsBuilder componentsBuilder){
+
+        Canasta canasta = canastaServicio.buscarPorId(id);
+        Foto foto;
+        if(canasta.getFoto() == null){
+            foto = fotoServicio.crearFoto(CANASTAS_UPLOADED_FOLDER,String.valueOf(id),canasta.getDescripcion(),multipartFile);
+        }else{
+            foto = fotoServicio.actualizarFoto(canasta.getFoto(),CANASTAS_UPLOADED_FOLDER,String.valueOf(id),canasta.getDescripcion(),multipartFile);
+        }
+
+        canastaServicio.crearFoto(foto,id);
     }
 }
