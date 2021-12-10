@@ -23,7 +23,7 @@ public class Comedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "unique")
+    @Column(name = "nombre")
     private String nombre;
     @OneToOne
     private Direccion direccion;

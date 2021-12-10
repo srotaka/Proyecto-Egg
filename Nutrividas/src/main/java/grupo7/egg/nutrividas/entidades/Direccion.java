@@ -40,9 +40,6 @@ public class Direccion {
     private String pais;
     private Boolean alta;
 
-    @OneToOne
-    private Comedor comedor;
-
     @CreatedDate
     @Column( updatable = false)
     private LocalDateTime creacion;

@@ -36,6 +36,9 @@ public class Canasta {
     @ManyToOne
     private Comedor comedor;
 
+    @OneToOne
+    private Foto foto;
+
     @CreatedDate
     @Column( updatable = false)
     private LocalDateTime creacion;

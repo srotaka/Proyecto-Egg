@@ -2475,13 +2475,17 @@
   }
   .btn-secondary {
     color: #fff;
-    background-color: #6c757d;
-    border-color: #6c757d;
+    background-color: #1bac91;
+    border-color: #1fc5a7;
+    border-radius: 6px;
+    transition: 1s;
   }
   .btn-secondary:hover {
     color: #fff;
-    background-color: #5a6268;
-    border-color: #545b62;
+    background-color: #1a8673;
+    border-color: #1fc5a7;
+    border-radius: 6px;
+    transition: 1s;
   }
   .btn-secondary.focus,
   .btn-secondary:focus {
@@ -5563,6 +5567,7 @@
     position: relative;
     display: -ms-flexbox;
     display: flex;
+    text-align: center;
     -ms-flex-direction: column;
     flex-direction: column;
     width: 100%;
@@ -5590,7 +5595,7 @@
   }
   .modal-header {
     display: -ms-flexbox;
-    display: flex;
+    /* display: flex; */
     -ms-flex-align: start;
     align-items: flex-start;
     -ms-flex-pack: justify;
@@ -5612,7 +5617,8 @@
     position: relative;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    padding: 1rem;
+    padding: none;
+    margin-top: -22px;
   }
   .modal-footer {
     display: -ms-flexbox;
