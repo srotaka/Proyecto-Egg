@@ -3,6 +3,7 @@ package grupo7.egg.nutrividas.controlador;
 import grupo7.egg.nutrividas.entidades.Comedor;
 import grupo7.egg.nutrividas.entidades.Persona;
 import grupo7.egg.nutrividas.enums.Sexo;
+import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.PersonaRepository;
 import grupo7.egg.nutrividas.servicios.ComedorServicio;
 import grupo7.egg.nutrividas.servicios.PersonaServicio;
@@ -29,7 +30,7 @@ public class ComedorControlador {
     @GetMapping
     public ModelAndView mostrarComedores(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                          @RequestParam(value = "size", required = false, defaultValue = "5") int size,
-                                         @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") Sort order,
+                                         @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                          HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("comedores");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -39,7 +40,7 @@ public class ComedorControlador {
             mav.addObject("error", flashMap.get("error"));
         }
 
-        mav.addObject("comedores", comedorServicio.listarComedores(page, size, order));
+        mav.addObject("comedores", comedorServicio.listarComedores(page, size, getSort(order)));
         return mav;
     }
 
@@ -78,6 +79,17 @@ public class ComedorControlador {
         }
 
         return redirectView;
+    }
+
+    public Sort getSort(String order){
+        switch (order){
+            case "OrderByNombreASC":
+                return Sort.by(Sort.Direction.ASC,"nombre");
+            case "OrderByNombreDESC":
+                return Sort.by(Sort.Direction.DESC,"nombre");
+            default:
+                throw new FieldInvalidException("El parámetro de orden ingresado es inválido");
+        }
     }
 
 }

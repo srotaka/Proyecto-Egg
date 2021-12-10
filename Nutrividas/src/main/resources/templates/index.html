@@ -9,8 +9,8 @@
   <title>Inicio - Nutrividas</title>
 
   <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" />
-  <link href="../static/img/favicon.ico" rel="apple-touch-icon">
+  <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}"/>
+  <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,16 +19,16 @@
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../static/icofont/icofont.min.css" rel="stylesheet">
-  <link href="../static/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../static/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="../static/venobox/venobox.css" rel="stylesheet">
-  <link href="../static/aos/aos.css" rel="stylesheet">
+  <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/icofont/icofont.min.css}" rel="stylesheet">
+  <link th:href="@{/boxicons/css/boxicons.min.css}" rel="stylesheet">
+  <link th:href="@{/owl.carousel/assets/owl.carousel.min.css}" rel="stylesheet">
+  <link th:href="@{/venobox/venobox.css}" rel="stylesheet">
+  <link th:href="@{/aos/aos.css}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="../static/css/preloader.css" rel="stylesheet">
-  <link href="../static/css/style.css" rel="stylesheet">
+  <link th:href="@{/css/preloader.css}" rel="stylesheet">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
 
 </head>
 
@@ -40,11 +40,11 @@
     <div class="container d-flex">
 
       <div class="logo">
-        <a href="index.html"><img src="../static/img/logo.png" alt="" class="img-fluid"></a>
+        <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
       </div>
 
       <div class="logo mr-auto">
-        <h2 class="text-light mt-0" style="color: #1bac91 !important;" href="index.html">&nbsp;Nutrividas</h2>
+        <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
       </div>
 
       <nav class="nav-menu d-none d-lg-block">
@@ -58,14 +58,14 @@
               <li><a href="#faq">Preguntas Frecuentes</a></li>
             </ul>
           </li>
-          <li><a href="comedores.html">Comedores</a></li>
+          <li><a th:href="@{/comedor}">Comedores</a></li>
           <!-- <li><a href="#testimonials">Testimonios</a></li>
           <li><a href="#team">Nuestro Equipo</a></li>
           <li><a href="#faq">Preguntas Frecuentes</a></li> -->
           <li><a href="#contact">Contáctanos</a></li>&nbsp;&nbsp;&nbsp;
         </ul>
       </nav><!-- .nav-menu -->
-      <a href="login.html" class="botonform scrollto">Inicia Sesión</a>
+      <a th:href="@{/login}" class="botonform scrollto">Inicia Sesión</a>
     </div>
   </header><!-- End Header -->
 
@@ -74,7 +74,7 @@
     <div class="container text-center text-md-left" data-aos="fade-up">
       <h1>Bienvenidos a Nutrividas</h1>
       <h2>Alimentando sonrisas</h2>
-      <a href="login.html" class="btn-get-started scrollto">¡COMENCEMOS!</a>
+      <a th:href="@{/login}" class="btn-get-started scrollto">¡COMENCEMOS!</a>
     </div>
   </section>
   <!-- ======= End Hero Section ======= -->
@@ -85,7 +85,7 @@
 
       <div class="row">
         <div class="col-xl-6 col-lg-7" data-aos="fade-right">
-          <img src="../static/img/children10.jpg" class="img-fluid" alt="donaciones">
+          <img th:src="@{/img/children10.jpg}" class="img-fluid" alt="donaciones">
         </div>
         <div class="col-xl-6 col-lg-5 pt-5 pt-lg-0">
           <h3 data-aos="fade-up" style="text-align: center;">¡Ayúdanos a ayudar!</h3>
@@ -133,7 +133,7 @@
             <div class="icon"><i class="bx bx-detail"></i></div>
             <h4 class="title"><a href="">Regístrate</a></h4>
             <p class="description">Para comenzar a alimentar sonrisas, completa el formulario de registro desde <a
-                href="signup.html"> aquí.</a>
+                th:href="@{/signup}"> aquí.</a>
             </p>
           </div>
         </div>
@@ -194,7 +194,7 @@
             que podíamos esperar.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img src="../static/img/testimonial02.png" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial02.png}" class="testimonial-img" alt="">
           <h3>Eliana Paniagua</h3>
           <h4>Comedor Estoy Creciendo</h4>
         </div>
@@ -207,7 +207,7 @@
             ningún chico.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img src="../static/img/testimonial01.png" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial01.}" class="testimonial-img" alt="">
           <h3>Gabriel Pereyra</h3>
           <h4>Comedor Nuestros Pekes</h4>
         </div>
@@ -220,7 +220,7 @@
             causa para que otros nenes no pasen por esta situación y podamos llenar sus pancitas.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img src="../static/img/testimonial03.png" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial03.png}" class="testimonial-img" alt="">
           <h3>Silvia Palacios</h3>
           <h4>Comedor Caritas Sucias</h4>
         </div>
@@ -233,7 +233,7 @@
             llegar a muchas más personas.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img src="../static/img/testimonial04.png" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial04.png}" class="testimonial-img" alt="">
           <h3>Giuliana Cerván</h3>
           <h4>Comedor Pancitas Llenas</h4>
         </div>
@@ -246,7 +246,7 @@
             a todas las familias.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img src="../static/img/testimonial05.png" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial05.png}" class="testimonial-img" alt="">
           <h3>Cristian Solís</h3>
           <h4>Comedor Caminando de la Mano</h4>
         </div>
@@ -259,7 +259,7 @@
             por ellos recibo mucho más de lo merezco.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img src="../static/img/testimonial06.png" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial06.png}" class="testimonial-img" alt="">
           <h3>Julieta Villarruel</h3>
           <h4>Comedor Juntando Esperanzas</h4>
         </div>
@@ -282,7 +282,7 @@
       <div class="row">
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-eva.png" alt="">
+            <img th:src="@{/img/team-eva.png}" alt="">
             <h4>Eva Sarapura</h4>
             <span>FrontEnd Developer</span>
             <p>
@@ -297,7 +297,7 @@
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-flor.png" alt="">
+            <img th:src="@{/img/team-flor.png}" alt="">
             <h4>Florencia Zabala</h4>
             <span>BackEnd Developer</span>
             <p>
@@ -312,7 +312,7 @@
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-franco.jpeg" alt="">
+            <img th:src="@{/img/team-franco.jpeg}" alt="">
             <h4>Franco Scolari</h4>
             <span>BackEnd Developer</span>
             <p>
@@ -326,7 +326,7 @@
         </div>
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-jorge.jpeg" alt="">
+            <img th:src="@{/img/team-jorge.jpeg}" alt="">
             <h4>Jorge Nogueira</h4>
             <span>FrontEnd Developer</span>
             <p>
@@ -341,7 +341,7 @@
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-juan.jpeg" alt="">
+            <img th:src="@{/img/team-juan.jpeg}" alt="">
             <h4>Juan Telis</h4>
             <span>FrontEnd Developer</span>
             <p>
@@ -356,7 +356,7 @@
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-juana.png" alt="">
+            <img th:src="@{/img/team-juana.png}" alt="">
             <h4>Juana Morinigo</h4>
             <span>FrontEnd Developer</span>
             <p>
@@ -371,7 +371,7 @@
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-lucas.jpeg" alt="">
+            <img th:src="@{/img/team-lucas.jpeg}" alt="">
             <h4>Lucas Moyano</h4>
             <span>BackEnd Developer</span>
             <p>
@@ -386,7 +386,7 @@
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-silvia.png" alt="">
+            <img th:src="@{/img/team-silvia.png}" alt="">
             <h4>Silvia Otaka</h4>
             <span>FrontEnd Developer</span>
             <p>
@@ -657,18 +657,18 @@
     </div>
   </div>
   <!-- Vendor JS Files -->
-  <script src="../static/jquery/jquery.min.js"></script>
-  <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../static/jquery.easing/jquery.easing.min.js"></script>
-  <script src="../static/php-email-form/validate.js"></script>
-  <script src="../static/owl.carousel/owl.carousel.min.js"></script>
-  <script src="../static/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="../static/venobox/venobox.min.js"></script>
-  <script src="../static/aos/aos.js"></script>
-  <script src="../static/js/loader.js"> </script>
+  <script th:src="@{/jquery/jquery.min.js}"></script>
+  <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/jquery.easing/jquery.easing.min.js}"></script>
+  <script th:src="@{/php-email-form/validate.js}"></script>
+  <script th:src="@{/owl.carousel/owl.carousel.min.js}"></script>
+  <script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
+  <script th:src="@{/venobox/venobox.min.js}"></script>
+  <script th:src="@{/aos/aos.js}"></script>
+  <script th:src="@{/js/loader.js}"> </script>
 
   <!-- Template Main JS File -->
-  <script src="../static/js/main.js"></script>
+  <script th:src="@{/js/main.js}"></script>
 
 </body>
 
