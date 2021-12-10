@@ -2,7 +2,6 @@ package grupo7.egg.nutrividas.controlador;
 
 import grupo7.egg.nutrividas.entidades.Canasta;
 import grupo7.egg.nutrividas.entidades.Foto;
-import grupo7.egg.nutrividas.entidades.Usuario;
 import grupo7.egg.nutrividas.servicios.CanastaServicio;
 import grupo7.egg.nutrividas.servicios.ElementoServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
