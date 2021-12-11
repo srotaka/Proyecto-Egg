@@ -51,7 +51,7 @@ public class ComedorControlador {
             mav.addObject("error", flashMap.get("error"));
         }
 
-        mav.addObject("comedores", comedorServicio.listarComedores(page, size, getSort(order)));
+        mav.addObject("comedores", comedorServicio.listarComedores(page, size, getSort(order)).getPage().getContent());
         return mav;
     }
 
