@@ -9,9 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,24 +26,25 @@ public class Nutricionista {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "{}")
+
+    @NotBlank(message = "{}")
     @Pattern(regexp = "^[\\p{L} .'-]+$",message="solo se permiten letras" )
     private String nombre;
-    @NotEmpty(message = "El campo 'apellido' es obligatorio")
+    @NotBlank(message = "El campo 'apellido' es obligatorio")
     @Pattern(regexp = "^[\\p{L} .'-]+$",message="solo se permiten letras" )
     private String apellido;
-    @NotEmpty(message = "El campo 'documento' es obligatorio")
+    @NotNull(message = "El campo 'documento' es obligatorio")
     @Pattern(regexp="\\d{8}",message = "El campo 'documento' debe contener 8 caracteres")
     private Long documento;
-    @NotEmpty(message = "El campo 'matricula' es obligatorio")
+    @NotNull(message = "El campo 'matricula' es obligatorio")
     @Pattern(regexp="\\d{12}",message = "El campo 'matrícula' debe contener 12 caracteres")
     private Long matricula;
-    @NotEmpty(message = "El campo 'fecha de nacimiento' es obligatorio")
+    @NotBlank(message = "El campo 'fecha de nacimiento' es obligatorio")
     private LocalDate fechaNacimiento;
-    @NotEmpty(message = "El campo 'telefono' es obligatorio")
+    @NotBlank(message = "El campo 'telefono' es obligatorio")
     @Pattern(regexp="\\d{8}",message = "El campo 'teléfono' debe contener 8 caracteres")
     private Long telefono;
-    @NotEmpty(message = "El campo 'mail' es obligatorio")
+    @NotBlank(message = "El campo 'mail' es obligatorio")
     @Email(message = "El formato de email debe ser válido")
     private String mail;
 
@@ -55,6 +54,10 @@ public class Nutricionista {
 
     @OneToOne
     private Foto foto;
+
+    @NotEmpty(message = "Nombre de usuario y contraseña obligatorios")
+    @OneToOne
+    private Credencial credencial;
 
     @CreatedDate
     @Column( updatable = false)

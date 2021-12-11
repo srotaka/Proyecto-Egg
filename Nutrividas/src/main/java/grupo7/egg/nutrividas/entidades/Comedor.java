@@ -39,6 +39,10 @@ public class Comedor {
     private Nutricionista nutricionista;
     @OneToOne
     private Foto foto;
+
+    @OneToOne
+    private Credencial credencial;
+
     private Boolean alta;
 
     @CreatedDate

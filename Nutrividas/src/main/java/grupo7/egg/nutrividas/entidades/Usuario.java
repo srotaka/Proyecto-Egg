@@ -32,7 +32,9 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Tarjeta> tarjetas;
     @OneToOne
-    private  Foto foto;
+    private Foto foto;
+    @OneToOne
+    private Credencial credencial;
 
     @CreatedDate
     @Column( updatable = false)

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8" />
@@ -78,13 +78,13 @@
                                     <h3 class="display-4" id="mensaje-Bienvenida-Login">¡Bienvenido!</h3>
                                     <p class="text-muted mb-4" id="mensaje-Secundario-Login">Inicia sesión en tu cuenta
                                     </p>
-                                    <form>
+                                    <form th:action="@{/logincheck}" method="POST" >
                                         <div class="form-group mb-3">
-                                            <input id="inputEmail" type="email" placeholder="Email" required=""
+                                            <input id="inputEmail" type="text" name="username" placeholder="Email" required=""
                                                 autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                         </div>
                                         <div class="form-group mb-3">
-                                            <input id="inputPassword" type="password" placeholder="Contraseña"
+                                            <input id="inputPassword" type="password" name="password" placeholder="Contraseña"
                                                 required=""
                                                 class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
                                         </div>

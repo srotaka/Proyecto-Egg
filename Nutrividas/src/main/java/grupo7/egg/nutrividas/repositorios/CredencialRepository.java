@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface CredencialRepository extends JpaRepository<Credencial,Long> {
 
     @Modifying
-    @Query("UPDATE Credencia c SET c.alta = true WHERE c.id = :id")
+    @Query("UPDATE Credencial c SET c.alta = true WHERE c.id = :id")
     void habilitar(@Param("id") Long id);
 
     Optional<Credencial> findByMailOrUsername(String mail, String username);
@@ -24,11 +24,11 @@ public interface CredencialRepository extends JpaRepository<Credencial,Long> {
     @Modifying
     @Query( value = "DELETE FROM credenciales_roles WHERE credencial_id= :idCredencial AND rol_id = :idRol", nativeQuery = true)
     void eliminarRelacionCredencialRol (@Param("idCredencial") Long idCredencial,@Param("idRol") Integer idRol);
-    @Query( value = "SELECT count(*) FROM  credenciales_roles WHERE EXISTS( SELECT * FROM  credenciales_roles  WHERE credencial_id= :idUser AND rol_id = :idRol) LIMIT 1", nativeQuery = true)
+    @Query( value = "SELECT count(*) FROM  credenciales_roles WHERE EXISTS( SELECT * FROM  credenciales_roles  WHERE credencial_id= :idCredencial AND rol_id = :idRol) LIMIT 1", nativeQuery = true)
     Integer existsRelation(@Param("idCredencial") Long idCredencial,@Param("idRol")Integer idRol);
     @Modifying
-    @Query( value = "INSERT INTO credenciales_roles  (credencial_id, rol_id) values (idCredencial ,:idRol)", nativeQuery = true)
-    void guardarRelacion(@Param("iidCredencial")Long idCredencial,@Param("idRol")Integer idRol);
+    @Query( value = "INSERT INTO credenciales_roles  (credencial_id, rol_id) values (:idCredencial ,:idRol)", nativeQuery = true)
+    void guardarRelacion(@Param("idCredencial")Long idCredencial,@Param("idRol")Integer idRol);
 
     boolean existsByIdAndRoles_Id(Long idCredencial,Integer idRol);
 }
