@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
 @EnableWebSecurity
@@ -28,18 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(credencialServicio).passwordEncoder(encoder);
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**", "/static/**","/webjars/**");
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/css/*", "/img/*","/ ", "/login", "/signup", "/error", "/login-error","/save-signup","/socket").permitAll() // Recursos permitidos
+                .antMatchers("/bootstrap/**","/venobox/**","/isotope-layout/**","/boxicons/**","/icofont/**","/owl.carousel/**","/php-email-form/**","/img/**","/jquery/easing/**","/jquery/**","/js/**","/css/**","/", "/login", "/signup/*", "/error", "/login-error","/registro/usuario").permitAll() // Recursos permitidos
                 .antMatchers("/**").authenticated() // Recursos protegidos
                 .and()
                 .formLogin()

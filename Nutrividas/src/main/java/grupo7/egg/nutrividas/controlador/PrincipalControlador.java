@@ -40,6 +40,10 @@ public class PrincipalControlador {
         return new ModelAndView("index");
     }
 
+    @GetMapping("/contacto")
+    public ModelAndView contacto(){
+        return new ModelAndView("contacto");
+    }
 
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false) String error, @RequestParam(required = false)String logout, Principal principal, HttpServletRequest request){
