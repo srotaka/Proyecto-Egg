@@ -100,7 +100,7 @@ public class PrincipalControlador {
 
         if (result.hasErrors()) {
             mav.addObject("usuario", usuario);
-            mav.setViewName("signup/usuario");
+            mav.setViewName("signup");
             return mav;
         }
 
@@ -130,7 +130,7 @@ public class PrincipalControlador {
         return mav;
     }
 
-    @GetMapping(value = "/signup/comedoro")
+    @GetMapping(value = "/signup/comedor")
     public ModelAndView signupComedor(HttpServletRequest request,Principal principal){
         ModelAndView mav = new ModelAndView("signupComedor");
         Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);

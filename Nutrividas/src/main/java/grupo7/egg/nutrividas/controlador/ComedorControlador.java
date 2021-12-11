@@ -10,6 +10,7 @@ import grupo7.egg.nutrividas.repositorios.PersonaRepository;
 import grupo7.egg.nutrividas.servicios.ComedorServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.PersonaServicio;
+import grupo7.egg.nutrividas.util.paginacion.Paged;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
@@ -24,6 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -117,6 +119,16 @@ public class ComedorControlador {
         }
 
         comedorServicio.guardarFoto(foto,comedor.getId());
+    }
+
+    @GetMapping("/comedorRest2")
+    public Paged<Comedor> mostrarComedoresRest(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                               @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                                               @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order) {
+
+
+        return comedorServicio.listarComedores(page, size, getSort(order));
+
     }
 
 }

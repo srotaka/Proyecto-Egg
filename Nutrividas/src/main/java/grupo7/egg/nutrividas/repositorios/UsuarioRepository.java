@@ -8,16 +8,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 
     @Query("SELECT u FROM Usuario u WHERE u.nombre = :nombre AND u.apellido = :apellido")
-    Usuario obtenerUsuarioPorNombreYApellido(@Param("nombre") String nombre, @Param("apellido") String apellido);
+    Optional<Usuario> obtenerUsuarioPorNombreYApellido(@Param("nombre") String nombre, @Param("apellido") String apellido);
 
-    @Query("UPDATE Usuario u SET u.alta = false")
-    void deshabilitarUsuario(@Param("id") Long id);
+    Optional<Usuario> findByDni(@Param("dni") Long dni);
 
+    @Modifying
     @Query("UPDATE Usuario u SET u.alta = true")
     void habilitarUsuario(@Param("id") Long id);
 

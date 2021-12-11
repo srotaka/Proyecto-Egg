@@ -3,9 +3,11 @@ package grupo7.egg.nutrividas.servicios;
 import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.enums.MarcaTarjeta;
 import grupo7.egg.nutrividas.enums.TipoTarjeta;
+import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.TarjetaRepository;
 import grupo7.egg.nutrividas.repositorios.UsuarioRepository;
+import grupo7.egg.nutrividas.util.Validations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,13 +37,16 @@ public class UsuarioServicio {
 
     private final String ROL = "USUARIO";
     @Transactional
-    public Usuario crearUsuario(Long dni, String nombre, String apellido, String mail, Long telefono, String username, String password)throws Exception{
+    public Usuario crearUsuario(Long dni, String nombre, String apellido, String mail, Long telefono, String username, String password){
+
+        if(usuarioRepository.findByDni(dni).isPresent()){
+            throw new FieldAlreadyExistException("Ya existe un usuario registrado con el dni '"+dni+"' ");
+        }
 
         Usuario usuario = new Usuario();
-        validarDatosDeUsuario(dni, nombre, apellido,telefono);
         usuario.setDni(dni);
-        usuario.setNombre(nombre);
-        usuario.setApellido(apellido);
+        usuario.setNombre(Validations.formatNames(nombre));
+        usuario.setApellido(Validations.formatNames(apellido));
         usuario.setTelefono(telefono);
         usuario.setAlta(true);
 
@@ -53,44 +58,28 @@ public class UsuarioServicio {
     }
 
     @Transactional
-    public Usuario modificarUsuario(Long id, Long dni, String nombre, String apellido,Long telefono)throws Exception{
-        Usuario usuario = usuarioRepository.findById(id).get();
-        validarDatosDeUsuario(dni, nombre, apellido,telefono);
+    public Usuario modificarUsuario(Long id, Long dni, String nombre, String apellido,Long telefono,String mail, String username, String password){
+
+        if(usuarioRepository.findById(id).isPresent() || usuarioRepository.findById(id) != null){
+            throw new NoSuchElementException("No existe un usuario registrado con el dni '"+dni+"' ");
+        }
+        if(usuarioRepository.findByDni(dni).isPresent() && usuarioRepository.findByDni(dni).get().getId() != id){
+            throw new FieldAlreadyExistException("Ya existe un usuario registrado con el dni '"+dni+"' ");
+        }
+
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(
+                ()->new NoSuchElementException("No eiste un usuario vinculado al id '"+id+"'"));
         usuario.setDni(dni);
-        usuario.setNombre(nombre);
-        usuario.setApellido(apellido);
+        usuario.setNombre(Validations.formatNames(nombre));
+        usuario.setApellido(Validations.formatNames(apellido));
         usuario.setTelefono(telefono);
         usuario.setAlta(true);
 
+        List<Rol> roles = new ArrayList<>();
+        roles.add(rolServicio.buscarPorNombre(ROL));
+        Credencial credencial = credencialServicio.crear(username,mail,password,roles);
+        usuario.setCredencial(credencial);
         return usuarioRepository.save(usuario);
-    }
-
-    public void validarDatosDeUsuario(Long dni, String nombre, String apellido,Long telefono) throws Exception{
-
-        if(obtenerLargoDeNumero(dni) != 8){
-            throw new Exception("El numero de dni es invalido");
-        }
-
-        if(dni==null){
-            throw new Exception("El numero de dni es obligatorio");
-        }
-
-        if(nombre == null || nombre.trim().isEmpty()){
-            throw new Exception("El nombre es obligatorio");
-        }
-
-        if(apellido == null || apellido.trim().isEmpty()){
-            throw new Exception("El apellido es obligatorio");
-        }
-
-        if(usuarioRepository.obtenerUsuarioPorNombreYApellido(nombre, apellido) != null){
-            throw new Exception("Ya existe un usuario con ese nombre y apellido");
-        }
-
-        if(telefono == null){
-            throw new Exception("El numero de telefono es obligatorio");
-        }
-        //ver de validar numero de telefono
     }
 
     public Integer obtenerLargoDeNumero(Long dni) {
@@ -150,16 +139,16 @@ public class UsuarioServicio {
     }
 
     @Transactional
-    public void deshabilitarUsuario(Long idUsuario) throws Exception{
-        usuarioRepository.findById(idUsuario).orElseThrow(
-                () -> new Exception("No se halló un usuario con el id " + idUsuario));
-        usuarioRepository.deshabilitarUsuario(idUsuario);
+    public void deshabilitarUsuario(Long idUsuario){
+        Usuario usuario =usuarioRepository.findById(idUsuario).orElseThrow(
+                () -> new NoSuchElementException("No se halló un usuario con el id " + idUsuario));
+        usuarioRepository.delete(usuario);
     }
 
     @Transactional
-    public void habilitarUsuario(Long idUsuario) throws Exception{
+    public void habilitarUsuario(Long idUsuario){
         usuarioRepository.findById(idUsuario).orElseThrow(
-                () -> new Exception("No se halló un usuario con el id " + idUsuario));
+                () -> new NoSuchElementException("No se halló un usuario con el id " + idUsuario));
         usuarioRepository.habilitarUsuario(idUsuario);
     }
 

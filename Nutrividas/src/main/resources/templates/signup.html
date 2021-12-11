@@ -90,30 +90,44 @@
                                         <input th:field="*{nombre}" id="inputEmail" type="text" placeholder="Nombre" required="" autofocus=""
                                             class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
+                                    <div class="error text-start" th:if="${#fields.hasErrors('nombre')}"
+                                         th:errors="*{nombre}"></div>
                                     <div class="form-group mb-3">
                                         <input th:field="*{apellido}" id="inputPassword" type="text" placeholder="Apellido" required=""
                                             class="form-control rounded-pill border-0 shadow-sm px-4 text">
                                     </div>
+                                    <div class="error text-start" th:if="${#fields.hasErrors('apellido')}"
+                                         th:errors="*{apellido}"></div>
                                     <div class="form-group mb-3">
                                         <input th:field="*{dni}" id="inputEmail" type="number" placeholder="DNI" required="" autofocus=""
                                             class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
+                                    <div class="error text-start" th:if="${#fields.hasErrors('dni')}"
+                                         th:errors="*{dni}"></div>
                                     <div class="form-group mb-3">
                                         <input th:field="*{telefono}" id="inputEmail" type="number" placeholder="Telefono" required=""
                                             autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
+                                    <div class="error text-start" th:if="${#fields.hasErrors('telefono')}"
+                                         th:errors="*{telefono}"></div>
                                     <div class="form-group mb-3">
                                         <input th:field="*{credencial.mail}" id="inputEmail" type="email" placeholder="Email" required="" autofocus=""
                                             class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
+                                    <div class="error text-start" th:if="${#fields.hasErrors('credencial.mail')}"
+                                         th:errors="*{credencial.mail}"></div>
                                     <div class="form-group mb-3">
                                         <input th:field="*{credencial.username}" id="inputUsuario" type="text" placeholder="Usuario" required="" autofocus=""
                                                class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
+                                    <div class="error text-start" th:if="${#fields.hasErrors('credencial.username')}"
+                                         th:errors="*{credencial.username}"></div>
                                     <div class="form-group mb-3">
                                         <input th:field="*{credencial.password}" id="inputEmail" type="password" placeholder="Contraseña" required=""
                                             autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
+                                    <div class="error text-start" th:if="${#fields.hasErrors('credencial.password')}"
+                                         th:errors="*{credencial.password}"></div>
                                     <div class="custom-control custom-checkbox mb-3">
                                         <input id="customCheck1" type="checkbox" checked class="custom-control-input">
                                         <label for="customCheck1" class="custom-control-label">Recordar email</label>

@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -69,12 +71,13 @@ public class UsuarioControlador {
     
     
     @PostMapping("/modificar")
-    public RedirectView modificar(@ModelAttribute Usuario usuario, RedirectAttributes attributes){
+    public RedirectView modificar(@Valid @ModelAttribute Usuario usuario, RedirectAttributes attributes){
         RedirectView redirectview = new RedirectView("/usuario");
         
         try{
             usuarioServicio.modificarUsuario(usuario.getId(), usuario.getDni(), usuario.getNombre(),
-                    usuario.getApellido(), usuario.getTelefono());
+                    usuario.getApellido(), usuario.getTelefono(),usuario.getCredencial().getMail(),
+                    usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
             attributes.addFlashAttribute("exito", "La actualizacion se realizo con exito");
         }catch(Exception e){
             attributes.addFlashAttribute("usuario", usuario);
