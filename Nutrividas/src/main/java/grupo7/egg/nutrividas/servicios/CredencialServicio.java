@@ -43,7 +43,7 @@ public class CredencialServicio implements UserDetailsService {
             throw new FieldAlreadyExistException("Ya existe una cuenta asociada a el mail '"+mail+"' ");
         }
         if(credencialRepository.findByUsername(usename).isPresent()){
-            throw new FieldAlreadyExistException("Elnombre de usuario ya existe");
+            throw new FieldAlreadyExistException("El nombre de usuario ya existe");
         }
 
         Credencial credencial = new Credencial();
@@ -56,7 +56,7 @@ public class CredencialServicio implements UserDetailsService {
         Credencial credencial = credencialRepository.findByMail(mail)
                 .orElseThrow(() -> new NoSuchElementException("The credencial with mail '"+mail+"' doesn't exists"));
 
-        final Rol ROLEDEFAULT = rolServicio.buscarPorNombre("credencial");
+        final Rol ROLEDEFAULT = rolServicio.buscarPorNombre("USUARIO");
 
         if(roles.isEmpty() || roles == null){
             roles = new ArrayList<>();
@@ -105,7 +105,7 @@ public class CredencialServicio implements UserDetailsService {
     private final Boolean DISCHARGE = Boolean.TRUE;
     public void setDates(Credencial credencial,String credencialname,String mail,String password,List<Rol> roles){
 
-        final Rol ROLEDEFAULT = rolServicio.buscarPorNombre("credencial");
+        final Rol ROLEDEFAULT = rolServicio.buscarPorNombre("USUARIO");
 
         if(roles.isEmpty() || roles == null){
             roles = new ArrayList<>();

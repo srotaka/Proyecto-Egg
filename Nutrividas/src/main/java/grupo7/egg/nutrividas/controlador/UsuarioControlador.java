@@ -74,7 +74,7 @@ public class UsuarioControlador {
         
         try{
             usuarioServicio.modificarUsuario(usuario.getId(), usuario.getDni(), usuario.getNombre(),
-                    usuario.getApellido(), usuario.getMail(), usuario.getTelefono());
+                    usuario.getApellido(), usuario.getTelefono());
             attributes.addFlashAttribute("exito", "La actualizacion se realizo con exito");
         }catch(Exception e){
             attributes.addFlashAttribute("usuario", usuario);
@@ -91,7 +91,7 @@ public class UsuarioControlador {
         RedirectView redirectView = new RedirectView("/usuario");
         
         try{
-            usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getMail(), usuario.getTelefono());
+            usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
             attributes.addFlashAttribute("exito", "La creacion se realizo con exito");
         }catch(Exception e){
             attributes.addFlashAttribute("usuario", usuario);

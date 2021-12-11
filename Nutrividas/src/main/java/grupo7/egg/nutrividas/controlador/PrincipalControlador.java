@@ -105,7 +105,8 @@ public class PrincipalControlador {
         }
 
         try {
-            Usuario usuarioCreado =usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getMail(), usuario.getTelefono());
+
+            Usuario usuarioCreado =usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
 
             /*Foto foto;
             if(usuario.getFoto() == null){

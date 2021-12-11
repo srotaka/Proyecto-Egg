@@ -27,7 +27,6 @@ public class Usuario {
     private Long dni;
     private String nombre;
     private String apellido;
-    private String mail;
     private Long telefono;
     @OneToMany(mappedBy = "usuario")
     private List<Tarjeta> tarjetas;

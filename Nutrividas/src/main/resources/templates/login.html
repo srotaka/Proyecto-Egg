@@ -44,7 +44,7 @@
         <div class="container d-flex">
 
             <div class="logo">
-                <a href="index.html"><img src="../static/img/logo.png" alt="" class="img-fluid"></a>
+                <a href="index.html"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
             </div>
 
             <div class="logo mr-auto">
@@ -64,11 +64,27 @@
     <section class="login-section">
         <div class="container-fluid">
             <div class="row no-gutter">
+
+                <!-- Mensaje éxito y error-->
+                <div th:if="${error != null} OR ${logout != null}" th:classappend="${error != null} ? 'alert-danger' : 'alert-warning'" class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <i th:classappend="${error != null} ? 'fa-times-circle' : 'fa-check-circle'" class="fas "></i>
+                    [[${error != null} ? ${error} : ${logout}]]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <div th:if="${success != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle"></i>[[${success}]]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <!-- ************ -->
+
+
                 <!-- The image half -->
                 <div class="col-md-6 d-none d-md-flex bg-image"></div>
 
                 <!-- The content half -->
                 <div class="col-md-6 bg-light">
+
                     <div class="login d-flex align-items-center py-5">
 
                         <!-- Demo content-->

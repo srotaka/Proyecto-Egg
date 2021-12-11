@@ -44,7 +44,7 @@
         <div class="container d-flex">
 
             <div class="logo">
-                <a href="index.html"><img src="../static/img/logo.png" alt="" class="img-fluid"></a>
+                <a href="index.html"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
             </div>
 
             <div class="logo mr-auto">
@@ -53,8 +53,8 @@
 
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
-                    <li><a href="index.html">Inicio</a></li>
-                    <li><a href="#contact">Contáctanos</a></li>
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a href="#">Contáctanos</a></li>
 
                 </ul>
             </nav><!-- .nav-menu -->
@@ -65,6 +65,14 @@
     <section  class="signup-section">
     <div class="container-fluid">
         <div class="row no-gutter">
+
+            <!-- Mensaje éxito y error -->
+                <div th:if="${error != null} OR ${success != null}" th:classappend="${error != null} ? 'alert-danger' : 'alert-success'" class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <i th:classappend="${error != null} ? 'fa-times-circle' : 'fa-check-circle'" class="fas "></i>
+                    [[${error != null} ? ${error} : ${success}]]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <!-- *************** -->
 
             <!-- The content half -->
             <div class="col-md-6 bg-light">
@@ -77,29 +85,33 @@
                                 <h3 class="display-4" id="mensaje-Bienvenida-SignUp">¡Bienvenido a Nutrividas!</h3>
                                 <p class="text-muted mb-4" id="mensaje-Secundario-SignUp">Forma parte de esta
                                     experiencia</p>
-                                <form>
+                                <form th:action="@{/registro/usuario}" th:object="${usuario}" method="POST">
                                     <div class="form-group mb-3">
-                                        <input id="inputEmail" type="text" placeholder="Nombre" required="" autofocus=""
+                                        <input th:field="*{nombre}" id="inputEmail" type="text" placeholder="Nombre" required="" autofocus=""
                                             class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
                                     <div class="form-group mb-3">
-                                        <input id="inputPassword" type="text" placeholder="Apellido" required=""
+                                        <input th:field="*{apellido}" id="inputPassword" type="text" placeholder="Apellido" required=""
                                             class="form-control rounded-pill border-0 shadow-sm px-4 text">
                                     </div>
                                     <div class="form-group mb-3">
-                                        <input id="inputEmail" type="number" placeholder="DNI" required="" autofocus=""
+                                        <input th:field="*{dni}" id="inputEmail" type="number" placeholder="DNI" required="" autofocus=""
                                             class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
                                     <div class="form-group mb-3">
-                                        <input id="inputEmail" type="number" placeholder="Telefono" required=""
+                                        <input th:field="*{telefono}" id="inputEmail" type="number" placeholder="Telefono" required=""
                                             autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
                                     <div class="form-group mb-3">
-                                        <input id="inputEmail" type="email" placeholder="Email" required="" autofocus=""
+                                        <input th:field="*{credencial.mail}" id="inputEmail" type="email" placeholder="Email" required="" autofocus=""
                                             class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
                                     <div class="form-group mb-3">
-                                        <input id="inputEmail" type="password" placeholder="Contraseña" required=""
+                                        <input th:field="*{credencial.username}" id="inputUsuario" type="text" placeholder="Usuario" required="" autofocus=""
+                                               class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input th:field="*{credencial.password}" id="inputEmail" type="password" placeholder="Contraseña" required=""
                                             autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
                                     <div class="custom-control custom-checkbox mb-3">

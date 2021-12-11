@@ -1,8 +1,6 @@
 package grupo7.egg.nutrividas.servicios;
 
-import grupo7.egg.nutrividas.entidades.Foto;
-import grupo7.egg.nutrividas.entidades.Tarjeta;
-import grupo7.egg.nutrividas.entidades.Usuario;
+import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.enums.MarcaTarjeta;
 import grupo7.egg.nutrividas.enums.TipoTarjeta;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -20,43 +19,53 @@ import java.util.NoSuchElementException;
 public class UsuarioServicio {
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
-    TarjetaRepository tarjetaRepository;
+    private TarjetaRepository tarjetaRepository;
 
     @Autowired
-    TarjetaServicio tarjetaServicio;
+    private TarjetaServicio tarjetaServicio;
 
+    @Autowired
+    private CredencialServicio credencialServicio;
+
+    @Autowired
+    private RolServicio rolServicio;
+
+    private final String ROL = "USUARIO";
     @Transactional
-    public Usuario crearUsuario(Long dni, String nombre, String apellido, String mail, Long telefono)throws Exception{
+    public Usuario crearUsuario(Long dni, String nombre, String apellido, String mail, Long telefono, String username, String password)throws Exception{
+
         Usuario usuario = new Usuario();
-        validarDatosDeUsuario(dni, nombre, apellido, mail, telefono);
+        validarDatosDeUsuario(dni, nombre, apellido,telefono);
         usuario.setDni(dni);
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
-        usuario.setMail(mail);
         usuario.setTelefono(telefono);
         usuario.setAlta(true);
 
+        List<Rol> roles = new ArrayList<>();
+        roles.add(rolServicio.buscarPorNombre(ROL));
+        Credencial credencial = credencialServicio.crear(username,mail,password,roles);
+        usuario.setCredencial(credencial);
         return usuarioRepository.save(usuario);
     }
 
     @Transactional
-    public Usuario modificarUsuario(Long id, Long dni, String nombre, String apellido, String mail, Long telefono)throws Exception{
+    public Usuario modificarUsuario(Long id, Long dni, String nombre, String apellido,Long telefono)throws Exception{
         Usuario usuario = usuarioRepository.findById(id).get();
-        validarDatosDeUsuario(dni, nombre, apellido, mail, telefono);
+        validarDatosDeUsuario(dni, nombre, apellido,telefono);
         usuario.setDni(dni);
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
-        usuario.setMail(mail);
         usuario.setTelefono(telefono);
         usuario.setAlta(true);
 
         return usuarioRepository.save(usuario);
     }
 
-    public void validarDatosDeUsuario(Long dni, String nombre, String apellido, String mail, Long telefono) throws Exception{
+    public void validarDatosDeUsuario(Long dni, String nombre, String apellido,Long telefono) throws Exception{
 
         if(obtenerLargoDeNumero(dni) != 8){
             throw new Exception("El numero de dni es invalido");
@@ -76,10 +85,6 @@ public class UsuarioServicio {
 
         if(usuarioRepository.obtenerUsuarioPorNombreYApellido(nombre, apellido) != null){
             throw new Exception("Ya existe un usuario con ese nombre y apellido");
-        }
-
-        if(usuarioRepository.obtenerUsuarioPorMail(mail) != null){
-            throw new Exception("Ya existe un usuario con ese mail");
         }
 
         if(telefono == null){
