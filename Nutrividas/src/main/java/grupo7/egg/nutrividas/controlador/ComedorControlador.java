@@ -40,10 +40,10 @@ public class ComedorControlador {
 
     @GetMapping
     public ModelAndView mostrarComedores(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                                         @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                                         @RequestParam(value = "size", required = false, defaultValue = "8") int size,
                                          @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                          HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("comedores");
+        ModelAndView mav = new ModelAndView("pruebac");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -119,16 +119,6 @@ public class ComedorControlador {
         }
 
         comedorServicio.guardarFoto(foto,comedor.getId());
-    }
-
-    @GetMapping("/comedorRest2")
-    public Paged<Comedor> mostrarComedoresRest(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                                               @RequestParam(value = "size", required = false, defaultValue = "5") int size,
-                                               @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order) {
-
-
-        return comedorServicio.listarComedores(page, size, getSort(order));
-
     }
 
 }

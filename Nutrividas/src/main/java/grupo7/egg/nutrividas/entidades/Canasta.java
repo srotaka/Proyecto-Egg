@@ -28,7 +28,8 @@ public class Canasta {
     private String descripcion;
     @Column(nullable = false)
     private Integer cantidadDePersonas;
-
+    @Column(nullable = false)
+    private Double precio;
 
     @OneToMany(mappedBy = "canasta")
     List<Elemento> elementos;

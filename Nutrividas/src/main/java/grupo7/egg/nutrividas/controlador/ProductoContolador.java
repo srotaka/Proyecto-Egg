@@ -140,32 +140,61 @@ public class ProductoContolador {
         return new RedirectView("/producto");
     }
 
-    @GetMapping(value = "",params = {"page","size","order"})
+    @GetMapping
     public ModelAndView buscarProductos(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                         @RequestParam(value = "size", required = false, defaultValue = "5") int size,
                                         @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                                     HttpServletRequest request) {
 
-        ModelAndView mav = new ModelAndView("");
+        ModelAndView mav = new ModelAndView("productosFlor");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
         }
-        mav.addObject("productoPagina", productoServicio.buscarTodos(page,size,getSort(order)));
+        mav.addObject("productos", productoServicio.buscarTodos(page,size,getSort(order)));
         return mav;
     }
 
-    @GetMapping(value = "",params = {"categoria","page","size","order"})
-    public Paged<Producto> buscarCategoria(@RequestParam(value = "categoria") String categoria,
+    @GetMapping(value = "/filtrar")
+    public ModelAndView buscarPorTodosCaompos(@RequestParam(value = "busqueda") String busqueda,
+                                           @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                           @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                                           @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
+                                              HttpServletRequest request){
+
+        ModelAndView mav = new ModelAndView("productosFlor");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+        }
+
+        mav.addObject("productos", productoServicio.buscarPorTodosCampos(busqueda,page,size,getSort(order)));
+        return mav;
+    }
+
+    @GetMapping(value = "/cat")
+    public ModelAndView buscarCategoria(@RequestParam(value = "categoria") String categoria,
                                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                             @RequestParam(value = "size", required = false, defaultValue = "5") int size,
-                                            @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order
-                                            ){
+                                            @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
+                                            HttpServletRequest request){
 
-        return productoServicio.buscarPorCategoria(categoria,page,size,getSort(order));
+        ModelAndView mav = new ModelAndView("productosFlor");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+        }
+
+        mav.addObject("productos", productoServicio.buscarPorCategoria(categoria,page,size,getSort(order)));
+        return mav;
     }
+
 
     @Value("${picture.products.location}")
     public String PRODUCTOS_UPLOADED_FOLDER;

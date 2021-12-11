@@ -26,13 +26,16 @@ public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty
-    @Pattern(regexp = "^[\\p{L} .'-]+$")
+
+    @NotBlank(message = "El campo 'nombre' es obligatorio")
+    @Pattern(regexp = "^[\\p{L} .'-]+$",message = "Solo se aceptan caracteres numéricos")
     private String nombre;
     @OneToOne
     private Marca marca;
-    @DecimalMin(value = "0.5")
+    @NotNull(message = "El campo 'precio' es obligatorio")
+    @DecimalMin(value = "0.5",message = "El precio debe ser mayor a 0.5")
     private Double precio;
+
     private Boolean aptoCeliacos;
     private Boolean aptoHipertensos;
     private Boolean aptoDiabeticos;

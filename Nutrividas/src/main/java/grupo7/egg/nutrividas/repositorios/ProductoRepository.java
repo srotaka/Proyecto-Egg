@@ -2,6 +2,7 @@ package grupo7.egg.nutrividas.repositorios;
 
 
 import grupo7.egg.nutrividas.entidades.Foto;
+import grupo7.egg.nutrividas.entidades.Nutricionista;
 import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.enums.Categoria;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,8 @@ public interface ProductoRepository extends JpaRepository<Producto,Long> {
 
     boolean existsByNombreAndMarca_Nombre(String nombre,String marcaNombre);
     Optional<Producto> findByNombreAndMarca_Nombre(String nombre,String marcaNombre);
+    @Query(value = "SELECT p FROM Producto p WHERE CONCAT(trim(p.nombre),trim(p.marca.nombre),trim(p.precio)) LIKE %:busqueda%")
+    Page<Producto> buscarPorTodosCampos(@Param("busqueda") String busqueda, Pageable pageable);
     Page<Producto> findByCategoria(Categoria categoria,Pageable pageable);
     Page<Producto> findByAptoCeliacos(Boolean aptoCeliacos,Pageable pageable);
     Page<Producto> findByAptoHipertensos(Boolean aptoHipertensos,Pageable pageable);

@@ -2,6 +2,7 @@ package grupo7.egg.nutrividas.servicios;
 
 import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Marca;
+import grupo7.egg.nutrividas.entidades.Nutricionista;
 import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.enums.Categoria;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
@@ -127,12 +128,18 @@ public class ProductoServicio {
         productoRepository.actualizarFoto(foto,id);
     }
 
-
     @Transactional(readOnly = true)
     public Paged<Producto> buscarTodos(int page, int size,Sort order){
         PageRequest request = PageRequest.of(page - 1, size, order);
         Page<Producto> productPage = productoRepository.findAll(request);
         return new Paged(productPage, Paging.of(productPage.getTotalPages(), page, size));
+    }
+
+    @Transactional(readOnly = true)
+    public Paged<Producto> buscarPorTodosCampos(String busqueda, int page, int size,Sort order){
+        PageRequest request = PageRequest.of(page - 1, size, order);
+        Page<Producto> productosPage = productoRepository.buscarPorTodosCampos(busqueda,request);
+        return new Paged(productosPage, Paging.of(productosPage.getTotalPages(), page, size));
     }
 
     @Transactional(readOnly = true)
@@ -150,7 +157,7 @@ public class ProductoServicio {
     }
 
     @Transactional(readOnly = true)
-    public Paged<Producto> buscarAptoCeliacos(Boolean apto,String patologia, int page, int size,Sort order) throws Exception {
+    public Paged<Producto> buscarApto(Boolean apto,String patologia, int page, int size,Sort order) throws Exception {
 
         Pageable request = PageRequest.of(page - 1, size, order);
         Page<Producto> productPage = null;
