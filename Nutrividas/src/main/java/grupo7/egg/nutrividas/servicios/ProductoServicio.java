@@ -41,7 +41,6 @@ public class ProductoServicio {
             throw new FieldAlreadyExistException("Ya esite un producto registrado con el mismo nombre y marca");
         }
 
-        validarDatosDelProducto(nombre,marca.getNombre(),precio);
         Producto producto = new Producto();
         producto.setNombre(Validations.formatText(nombre));
         producto.setMarca(marcaServicio.buscarPorId(idMarca));
@@ -56,21 +55,6 @@ public class ProductoServicio {
         return productoRepository.save(producto);
     }
 
-    public void validarDatosDelProducto(String nombre, String marca, Double precio){
-
-        if(nombre == null || nombre.trim().isEmpty()){
-            throw new FieldInvalidException("El nombre del producto es obligatorio");
-        }
-        if(marca == null || marca.trim().isEmpty()){
-            throw new FieldInvalidException("La marca del producto es obligatoria");
-        }
-        if(productoRepository.existsByNombreAndMarca_Nombre(nombre,marca)){
-            throw new FieldInvalidException("El producto ya existe");
-        }
-        if(precio == null || precio < 0){
-            throw new FieldInvalidException("El precio del producto no puede ser ni nulo o negativo");
-        }
-    }
 
     @Transactional
     public Producto modificarProducto(Long id,String nombre, Long idMarca, Double precio, Categoria categoria,
@@ -82,11 +66,10 @@ public class ProductoServicio {
                 new NoSuchElementException("No se encontró un producto con el id "+id));
 
         if(productoRepository.existsByNombreAndMarca_Nombre(nombre,marca.getNombre()) &&
-                productoRepository.findByNombreAndMarca_Nombre(nombre,marca.getNombre()).get().getId() != id){
-            new FieldAlreadyExistException("Ya exisite un producto registrado con el mismo nombre y marca");
-        }
+                (productoRepository.findByNombreAndMarca_Nombre(nombre,marca.getNombre()).get().getId() != id)){
 
-        validarDatosDelProducto(nombre, marca.getNombre(), precio);
+            throw new FieldAlreadyExistException("Ya exisite un producto registrado con el mismo nombre y marca");
+        }
 
         producto.setNombre(Validations.formatText(nombre));
         producto.setMarca(marca);

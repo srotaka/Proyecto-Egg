@@ -2,13 +2,11 @@ package grupo7.egg.nutrividas.controlador;
 
 import grupo7.egg.nutrividas.entidades.Canasta;
 import grupo7.egg.nutrividas.entidades.Foto;
-import grupo7.egg.nutrividas.servicios.CanastaServicio;
-import grupo7.egg.nutrividas.servicios.ElementoServicio;
-import grupo7.egg.nutrividas.servicios.FotoServicio;
-import grupo7.egg.nutrividas.servicios.ProductoServicio;
+import grupo7.egg.nutrividas.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
@@ -28,10 +27,10 @@ public class CanastaControlador {
     private ElementoServicio elementoServicio;
 
     @Autowired
-    private ProductoServicio productoServicio;
+    private CanastaServicio canastaServicio;
 
     @Autowired
-    private CanastaServicio canastaServicio;
+    private ComedorServicio comedorServicio;
 
     @Autowired
     private FotoServicio fotoServicio;
@@ -49,60 +48,84 @@ public class CanastaControlador {
             mav.addObject("canasta", new Canasta());
         }
 
-        mav.addObject("productos", productoServicio.listarProductos());
+        mav.addObject("comedores", comedorServicio.listarComedores());
         mav.addObject("title", "Crear Canasta");
         mav.addObject("action", "guardar");
         return mav;
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@ModelAttribute Canasta canasta, RedirectAttributes attributes) {
-        RedirectView redirectView = new RedirectView("/canasta");
+    public ModelAndView guardar(@Valid @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes) {
+        ModelAndView mav = new ModelAndView();
+
+        if (result.hasErrors()) {
+            mav.addObject("canasta", canasta);
+            mav.addObject("comedores", comedorServicio.listarComedores());
+            mav.addObject("title", "Crear Canasta");
+            mav.addObject("action", "guardar");
+            mav.setViewName("canasta");
+            return mav;
+        }
 
         try {
             canastaServicio.crearCanasta(canasta.getDescripcion(), canasta.getCantidadDePersonas(), canasta.getElementos(), canasta.getComedor());
             attributes.addFlashAttribute("exito", "La creación ha sido realizada satisfactoriamente");
+            mav.setViewName("redirect:/canasta");
         } catch (Exception e) {
             attributes.addFlashAttribute("canasta", canasta);
             attributes.addFlashAttribute("error", e.getMessage());
-            redirectView.setUrl("/canasta/crear");
+            mav.setViewName("redirect:/canasta/crear");
         }
 
-        return redirectView;
+        return mav;
     }
 
     @GetMapping("/editar/{id}")
-    public ModelAndView editar(@PathVariable("id") Long id, HttpServletRequest request){
+    public ModelAndView editar(@PathVariable("id") Long id, HttpServletRequest request,RedirectAttributes attributes){
         ModelAndView mav = new ModelAndView("canasta");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
-        if (flashMap != null) {
-            mav.addObject("error", flashMap.get("error"));
-            mav.addObject("canasta", flashMap.get("canasta"));
-        } else {
-            mav.addObject("canasta", new Canasta());
-        }
+        try {
+            if (flashMap != null) {
+                mav.addObject("error", flashMap.get("error"));
+                mav.addObject("canasta", flashMap.get("canasta"));
+            } else {
+                mav.addObject("canasta", canastaServicio.buscarPorId(id));
+            }
 
-        mav.addObject("productos", productoServicio.listarProductos());
-        mav.addObject("title", "Crear Canasta");
-        mav.addObject("action", "guardar");
+            mav.addObject("comedores", comedorServicio.listarComedores());
+            mav.addObject("title", "Crear Canasta");
+            mav.addObject("action", "modificar");
+
+        }catch (Exception e){
+            attributes.addFlashAttribute("error",e.getMessage());
+            mav.setViewName("redirect:/canasta");
+        }
         return mav;
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificar(@ModelAttribute Canasta canasta, RedirectAttributes attributes) {
-        RedirectView redirectView = new RedirectView("/canasta");
+    public ModelAndView modificar(@Valid @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes) {
 
+        ModelAndView mav = new ModelAndView();
+        if(result.hasErrors()){
+            mav.addObject("canasta",canastaServicio.buscarPorId(canasta.getId()));
+            mav.addObject("comedores", comedorServicio.listarComedores());
+            mav.addObject("title", "Crear Canasta");
+            mav.addObject("action", "guardar");
+            mav.setViewName("canasta-formulario");
+        }
         try {
             canastaServicio.crearCanasta(canasta.getDescripcion(), canasta.getCantidadDePersonas(), canasta.getElementos(), canasta.getComedor());
             attributes.addFlashAttribute("exito", "La creación ha sido realizada satisfactoriamente");
+            mav.setViewName("redirect:/canasta");
         } catch (Exception e) {
             attributes.addFlashAttribute("canasta", canasta);
             attributes.addFlashAttribute("error", e.getMessage());
-            redirectView.setUrl("/canasta/crear");
+            mav.setViewName("redirect:/canasta/editar"+canasta.getId());
         }
 
-        return redirectView;
+        return mav;
     }
 
     @PostMapping("/habilitar/{id}")
