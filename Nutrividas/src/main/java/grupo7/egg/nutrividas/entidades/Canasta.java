@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @Entity
 @Table(name="canastas")
 @SQLDelete(sql = "UPDATE canastas SET alta = false WHERE id = ?")
@@ -35,16 +36,19 @@ public class Canasta {
     @Column(nullable = false)
     private Integer cantidadDePersonas;
 
-    @NotNull(message = "El campo 'precio' es obligatorio")
-    @Positive(message = "El precio debe ser mayor a 0")
     @Column(nullable = false)
     private Double precio;
 
-    @NotEmpty(message = "Debe ingresar al menos un elemento a la canasta")
+
     @OneToMany(mappedBy = "canasta")
     List<Elemento> elementos;
 
-    @NotEmpty(message = "Es obligatorio ingresar el comedor")
+    /*@ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "elementos_canasta", joinColumns = @JoinColumn(name = "elementos_canasta"))
+    @MapKeyColumn(name = "producto_key", length = 50)
+    @Column(name = "producto_val", length = 100)
+    private Map<Producto,Integer> productos;*/
+
     @ManyToOne
     private Comedor comedor;
 

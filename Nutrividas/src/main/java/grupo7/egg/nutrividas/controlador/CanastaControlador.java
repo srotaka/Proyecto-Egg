@@ -2,6 +2,7 @@ package grupo7.egg.nutrividas.controlador;
 
 import grupo7.egg.nutrividas.entidades.Canasta;
 import grupo7.egg.nutrividas.entidades.Foto;
+import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +17,10 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -35,10 +39,13 @@ public class CanastaControlador {
     @Autowired
     private FotoServicio fotoServicio;
 
+    @Autowired
+    private ProductoServicio productoServicio;
+
 
     @GetMapping("/crear")
-    public ModelAndView crear(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("canasta");
+    public ModelAndView crear(HttpServletRequest request, HttpSession session){
+        ModelAndView mav = new ModelAndView("crearCanasta2");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -49,9 +56,18 @@ public class CanastaControlador {
         }
 
         mav.addObject("comedores", comedorServicio.listarComedores());
-        mav.addObject("title", "Crear Canasta");
-        mav.addObject("action", "guardar");
+        mav.addObject("elementos", elementoServicio.obtenerElemntosSesion(session.getAttribute("emailSession").toString()));
+        mav.addObject("titulo", "Crear Canasta");
+        mav.addObject("accion", "guardar");
         return mav;
+    }
+    protected Map<Producto,Integer> getMapElemento(){
+        Map<Producto,Integer> productosElementos = new HashMap<>();
+        List<Producto> productos = productoServicio.listarProductos();
+        for (Producto p: productos) {
+            productosElementos.put(p,1);
+        }
+        return productosElementos;
     }
 
     @PostMapping("/guardar")
@@ -59,13 +75,33 @@ public class CanastaControlador {
         ModelAndView mav = new ModelAndView();
 
         if (result.hasErrors()) {
-            mav.addObject("canasta", canasta);
             mav.addObject("comedores", comedorServicio.listarComedores());
-            mav.addObject("title", "Crear Canasta");
-            mav.addObject("action", "guardar");
-            mav.setViewName("canasta");
+            mav.addObject("productos", getMapElemento());
+            mav.addObject("titulo", "Crear Canasta");
+            mav.addObject("accion", "guardar");
+            mav.setViewName("crearCanasta2");
             return mav;
         }
+
+        try {
+            Canasta canastaCreada = canastaServicio.crearCanasta(canasta.getDescripcion(), canasta.getCantidadDePersonas(), canasta.getElementos(), canasta.getComedor());
+
+            attributes.addFlashAttribute("exito", "La creación ha sido realizada satisfactoriamente");
+            mav.setViewName("redirect:/canasta");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("canasta", canasta);
+            attributes.addFlashAttribute("error", e.getMessage());
+            System.out.println(e.getMessage());
+            mav.setViewName("redirect:/canasta/crear");
+        }
+
+        return mav;
+    }
+/*
+    @PostMapping("/guardar/2")
+    public ModelAndView guarda2(@RequestParam RedirectAttributes attributes) {
+        ModelAndView mav = new ModelAndView();
+
 
         try {
             canastaServicio.crearCanasta(canasta.getDescripcion(), canasta.getCantidadDePersonas(), canasta.getElementos(), canasta.getComedor());
@@ -78,11 +114,11 @@ public class CanastaControlador {
         }
 
         return mav;
-    }
+    }*/
 
     @GetMapping("/editar/{id}")
     public ModelAndView editar(@PathVariable("id") Long id, HttpServletRequest request,RedirectAttributes attributes){
-        ModelAndView mav = new ModelAndView("canasta");
+        ModelAndView mav = new ModelAndView("crearCanastaFlor");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         try {
@@ -94,8 +130,9 @@ public class CanastaControlador {
             }
 
             mav.addObject("comedores", comedorServicio.listarComedores());
-            mav.addObject("title", "Crear Canasta");
-            mav.addObject("action", "modificar");
+            mav.addObject("productos", productoServicio.listarProductos());
+            mav.addObject("titulo", "Editar Canasta");
+            mav.addObject("accion", "modificar");
 
         }catch (Exception e){
             attributes.addFlashAttribute("error",e.getMessage());
@@ -111,9 +148,10 @@ public class CanastaControlador {
         if(result.hasErrors()){
             mav.addObject("canasta",canastaServicio.buscarPorId(canasta.getId()));
             mav.addObject("comedores", comedorServicio.listarComedores());
-            mav.addObject("title", "Crear Canasta");
-            mav.addObject("action", "guardar");
-            mav.setViewName("canasta-formulario");
+            mav.addObject("productos", productoServicio.listarProductos());
+            mav.addObject("titulo", "Crear Canasta");
+            mav.addObject("accion", "guardar");
+            mav.setViewName("crearCanastaFlor");
         }
         try {
             canastaServicio.crearCanasta(canasta.getDescripcion(), canasta.getCantidadDePersonas(), canasta.getElementos(), canasta.getComedor());

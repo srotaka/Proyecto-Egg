@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,12 +24,23 @@ public class Comedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "El campo nombre es obligatorio")
+    @Pattern(regexp = "^[\\p{L} .'-]+$",message="solo se permiten letras" )
     @Column(name = "nombre")
     private String nombre;
     @OneToOne
     private Direccion direccion;
+
+    @NotNull(message = "La cantidad de peronas es obligatoria")
+    @Positive(message = "La cantidad de peronas no puede ser menor a 1")
     private Integer cantidadDePersonas;
+
+    @NotNull(message = "El campo 'telefono' es obligatorio")
+    @Min(value = 10000000,message = "El campo 'teléfono' debe contener 8 dígitos")
+    @Max(value = 99999999,message = "El campo 'teléfono' debe contener 8 dígitos")
     private Long telefono;
+
     @OneToOne
     private Biografia biografia;
     @OneToMany(mappedBy = "comedor")

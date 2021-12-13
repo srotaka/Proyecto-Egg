@@ -140,7 +140,7 @@ public class ProductoServicio {
     }
 
     @Transactional(readOnly = true)
-    public Paged<Producto> buscarApto(Boolean apto,String patologia, int page, int size,Sort order) throws Exception {
+    public Paged<Producto> buscarApto(Boolean apto,String patologia, int page, int size,Sort order){
 
         Pageable request = PageRequest.of(page - 1, size, order);
         Page<Producto> productPage = null;

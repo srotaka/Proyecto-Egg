@@ -75,27 +75,8 @@
   <div class="container" id="tabla-productos">
 
     <div class="row">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Crear producto
-      </button>
-
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              ...
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
+      <div class="col-md-2 offset-md-10">
+        <a th:href="@{/producto/crear}"><box-icon name='plus-circle' size="lg" type='solid' animation='burst-hover' color='#1bac91' ></box-icon></a>
       </div>
     </div>
 
@@ -111,7 +92,7 @@
         <table th:unless="${productos.page.isEmpty()}" class="table table-bordered table-striped">
           <thead>
           <tr>
-            <th></th>
+            <th>Añadir a canasta</th>
             <th class="text-center" width="40px">Foto</th>
             <th class="text-center">Nombre</th>
             <th class="text-center">Marca</th>
@@ -127,9 +108,9 @@
           </thead>
           <tbody id="myTable" th:each="producto : ${productos.page}">
           <tr>
-            <th>
-              <input type="checkbox" value="" id="flexCheckDefault">
-            </th>
+            <td class="text-center">
+              <a href="#" th:id="element+__${producto.id}__" th:onclick="'javascript:addBasket(' + ${producto.id} + ')'"><box-icon name='basket' type='solid' animation='tada-hover'></box-icon></a>
+            </td>
             <th th:if="${producto.foto == null}" width="30px" heigth="25px" class="text-center"
                 th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
               background-position: center;background-size: cover;'">
@@ -158,10 +139,10 @@
               <box-icon th:name="${producto.aptoIntoleranteLactosa == true} ? 'check' : 'x'"></box-icon>
             </th>
             <td class="text-center">
-              <a th:href="@{/producto/editar/__${producto.id}__}"><box-icon name='pencil' type='solid' animation='tada-hover'></box-icon></a>
+              <a th:href="@{/producto/editar/__${producto.id}__}"><box-icon name='pencil' type='solid' animation='tada-hover' color='#1bac91'></box-icon></a>
             </td>
             <td class="text-center">
-              <a th:href="@{/producto/eliminar/__${producto.id}__}"><box-icon name='trash-alt' type='solid' animation='tada-hover'></box-icon></a>
+              <a th:href="@{/producto/eliminar/__${producto.id}__}"><box-icon name='trash-alt' type='solid' animation='tada-hover' color='#F55C5C'></box-icon></a>
             </td>
           </tr>
           </tbody>
@@ -186,6 +167,17 @@
                     th:text="${categoria.valor}">
             </option>
           </select>
+            <button class="btn btn-outline-secondary pb-0" type="submit"><box-icon name='search' size="xs" animation='flashing'></box-icon></box-icon></button>
+          </div>
+        </form>
+        <form class="m-3" method="GET" action="/producto/apto">
+          <div class="input-group">
+            <select name="apto" id="apto" class="form-control" style="width: auto;" >
+              <option value="celiacos" >Apto celíacos</option>
+              <option value="diabeticos" >Apto diabéticos</option>
+              <option value="hipertensos" >Apto hipertensos</option>
+              <option value="intolerantesLactosa" >Apto intolerantes a la lactosa</option>
+            </select>
             <button class="btn btn-outline-secondary pb-0" type="submit"><box-icon name='search' size="xs" animation='flashing'></box-icon></box-icon></button>
           </div>
         </form>
@@ -278,12 +270,14 @@
             });
         });
 
-        var myModal = document.getElementById('myModal')
-            var myInput = document.getElementById('myInput')
+        function addBasket(id){
+            var element = document.getElementById('element'+id);
+            $.ajax({
+                type: 'GET',
+                url:'/elemento/agregar/'+id
+            });
+        }
 
-            myModal.addEventListener('shown.bs.modal', function () {
-              myInput.focus()
-        })
  </script>
 </body>
 

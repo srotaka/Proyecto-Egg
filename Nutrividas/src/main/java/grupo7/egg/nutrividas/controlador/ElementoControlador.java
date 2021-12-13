@@ -1,55 +1,54 @@
 package grupo7.egg.nutrividas.controlador;
 
+import grupo7.egg.nutrividas.entidades.Elemento;
+import grupo7.egg.nutrividas.entidades.Usuario;
+import grupo7.egg.nutrividas.servicios.ElementoServicio;
+import grupo7.egg.nutrividas.servicios.UsuarioServicio;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/elemento")
 public class ElementoControlador {
 
-  /*  @Autowired
-    private ElementoServicio elementoServicio;
+     @Autowired
+     private ElementoServicio elementoServicio;
 
-    @Autowired
-    private ProductoServicio productoServicio;
-
-    @Autowired
-    private CanastaServicio canastaServicio;
+     @Autowired
+     private UsuarioServicio usuarioServicio;
 
 
-    @GetMapping("/crear")
-    public ModelAndView crear(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("elemento");
-        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
-
-        if (flashMap != null) {
-            mav.addObject("error", flashMap.get("error"));
-            mav.addObject("elemento", flashMap.get("elemento"));
-        } else {
-            mav.addObject("elemento", new Elemento());
+    public Usuario getCustomerLogged(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String mail;
+        if (principal instanceof UserDetails){
+            mail = ((UserDetails) principal).getUsername();
+        }else{
+            mail = principal.toString();
         }
 
-        mav.addObject("productos", productoServicio.listarProductos());
-        mav.addObject("canasta", );
-        mav.addObject("title", "Crear Libro");
-        mav.addObject("action", "guardar");
-        return mav;
-    }
-
-    @PostMapping("/guardar")
-    public Elemento crearElementoDeCanasta(@ModelAttribute @Valid Elemento elemento){
-        return elementoServicio.crearElementoDeCanasta(elemento.getId(), elemento.getCantidadNecesaria(), elemento.getCanasta().getId());
-    }
-
-    @PostMapping("/editar/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void editarElementoDeCanasta(@RequestBody @Valid Long idElemento,Long idProducto, Integer cantidadNecesaria, Long idCanasta){
-        elementoServicio.editarElementoDeCanasta(idElemento, idProducto, cantidadNecesaria, idCanasta);
+        return usuarioServicio.buscarPorMail(mail);
     }
 
 
+    @GetMapping("/agregar/{id}")
+    public void crearElementoDeCanasta(@PathVariable("id")Long idProducto, HttpServletRequest request, HttpSession session){
+        elementoServicio.crearElemento(idProducto,getCustomerLogged());
+    }
 
-    @PostMapping("/comprar")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void comprarCantidadDeElemento(@RequestParam(""))  */
+    @PostMapping("/editar")
+    public void editarCandidad(@RequestParam("id")Long id, @RequestParam("cantidad") Integer cantidad,@RequestParam("asignado") Boolean asignado){
+        elementoServicio.editarCantidad(id,cantidad,asignado);
+    }
+
 }

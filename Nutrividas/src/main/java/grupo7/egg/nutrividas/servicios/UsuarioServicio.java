@@ -168,4 +168,9 @@ public class UsuarioServicio {
 
         usuarioRepository.actualizarFoto(foto,id);
     }
+
+    public Usuario buscarPorMail(String mail){
+        return usuarioRepository.findByCredencial_mail(mail).orElseThrow(
+                ()->new NoSuchElementException("No se halló un usuario con el email '"+mail+"'"));
+    }
 }

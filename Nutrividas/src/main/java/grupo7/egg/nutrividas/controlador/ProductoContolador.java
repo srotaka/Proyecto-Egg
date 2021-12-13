@@ -177,6 +177,25 @@ public class ProductoContolador {
         mav.addObject("rutaActual", obtenerRutaActual(request.getRequestURL()+"?busqueda="+busqueda));
         return mav;
     }
+    @GetMapping(value = "/apto")
+    public ModelAndView buscarAptoPatologías(@RequestParam(value = "apto") String apto,
+                                              @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                              @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                                              @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
+                                              HttpServletRequest request){
+
+        ModelAndView mav = new ModelAndView("productosFlor");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+        }
+
+        mav.addObject("productos", productoServicio.buscarApto(true,apto,page,size,getSort(order)));
+        mav.addObject("rutaActual", obtenerRutaActual(request.getRequestURL()+"?apto="+apto));
+        return mav;
+    }
 
     @GetMapping(value = "/cat")
     public ModelAndView buscarCategoria(@RequestParam(value = "categoria") String categoria,

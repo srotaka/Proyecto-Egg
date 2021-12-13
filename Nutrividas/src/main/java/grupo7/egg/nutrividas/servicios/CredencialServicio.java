@@ -2,6 +2,7 @@ package grupo7.egg.nutrividas.servicios;
 
 import grupo7.egg.nutrividas.entidades.Credencial;
 import grupo7.egg.nutrividas.entidades.Rol;
+import grupo7.egg.nutrividas.entidades.Usuario;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.NotFoundException;
 import grupo7.egg.nutrividas.repositorios.CredencialRepository;
@@ -35,6 +36,10 @@ public class CredencialServicio implements UserDetailsService {
 
     @Autowired
     private RolServicio rolServicio;
+
+    @Autowired
+    private ElementoServicio elementoServicio;
+
 
     @Transactional
     public Credencial crear(String usename, String mail, String password, List<Rol> roles){
@@ -136,6 +141,10 @@ public class CredencialServicio implements UserDetailsService {
         HttpSession session = attributes.getRequest().getSession(true);
         session.setAttribute("usernameSession",credencial.getUsername());
         session.setAttribute("emailSession",credencial.getMail());
+
+        if(credencial.getRoles().contains(rolServicio.buscarPorNombre("ADMIN"))){
+            session.setAttribute("listaElementos",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
+        }
 
 
         List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();

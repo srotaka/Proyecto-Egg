@@ -1,9 +1,6 @@
 package grupo7.egg.nutrividas.servicios;
 
-import grupo7.egg.nutrividas.entidades.Canasta;
-import grupo7.egg.nutrividas.entidades.Comedor;
-import grupo7.egg.nutrividas.entidades.Elemento;
-import grupo7.egg.nutrividas.entidades.Foto;
+import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.CanastaRepository;
@@ -11,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -31,7 +29,8 @@ public class CanastaServicio {
         if(canastaRepository.existsByDescripcionAndComedor(descripcion,comedor)){
             throw new FieldAlreadyExistException("La canasta que desea crear ya existe");
         }
-
+        System.out.println("Elemento: "+elementos.size());
+        System.out.println("Elemento id:"+elementos.get(0).getId());
         Canasta canasta = new Canasta();
         canasta.setDescripcion(descripcion);
         canasta.setCantidadDePersonas(cantidadPersonas);
@@ -40,15 +39,19 @@ public class CanastaServicio {
         canasta.setAlta(true);
         Double precioFinal = 0.0;
         for (Elemento e: elementos) {
+            System.out.println("Precio :"+e.getProducto().getPrecio());
             precioFinal += (e.getProducto().getPrecio() * e.getCantidadNecesaria());
         }
+       /* for (Map.Entry<Producto, Integer> entry : productos.entrySet()) {
+           precioFinal += entry.getKey().getPrecio() * entry.getValue();
+        }*/
         canasta.setPrecio(precioFinal);
         return canastaRepository.save(canasta);
     }
 
     @Transactional
     public Canasta modificarCanasta(Long id,String descripcion, Integer cantidadPersonas,
-                                List<Elemento> elementos, Comedor comedor){
+                                    List<Elemento> elementos, Comedor comedor){
 
         Canasta canasta = canastaRepository.findById(id).orElseThrow(
                 ()-> new NoSuchElementException("La canasta que desea modificar no existe"));
@@ -100,7 +103,7 @@ public class CanastaServicio {
     public void deshabilitarCanasta(Long id){
         Canasta canasta = canastaRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("La canasta que desea modificar no existe"));
-        canasta.getElementos().forEach(e -> elementoServicio.deshabilitarElemento(e.getId()));
+        /*canasta.getElementos().forEach(e -> elementoServicio.deshabilitarElemento(e.getId()));*/
         canastaRepository.deleteById(id);
     }
 

@@ -28,7 +28,6 @@ public class Elemento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "El producto es obligatorio")
     @ManyToOne
     private Producto producto;
 
@@ -39,6 +38,11 @@ public class Elemento {
     private Boolean fueComprado;
     @ManyToOne
     private Canasta canasta;
+    @OneToOne
+    private Usuario usuario;
+
+    private Boolean asignado;
+
     @CreatedDate
     @Column( updatable = false)
     private LocalDateTime creacion;

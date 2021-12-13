@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta content="Nutrividas" name="Grupo7" />
+    <title>Nutrividas - Productos</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
+    <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/icofont/icofont.min.css}" rel="stylesheet">
+    <link th:href="@{/boxicons/css/boxicons.min.css}" rel="stylesheet">
+    <link th:href="@{/owl.carousel/assets/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/venobox/venobox.css}" rel="stylesheet">
+    <link th:href="@{/aos/aos.css}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/productos.css}">
+
+
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+    <div class="container d-flex">
+
+        <div class="logo">
+            <a href="index.html"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
+        </div>
+
+        <div class="logo mr-auto">
+            <h2 class="text-light mt-0" style="color: #1bac91 !important;">&nbsp;Nutrividas</h2>
+        </div>
+
+        <nav class="nav-menu d-none d-lg-block">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#contact">Contáctanos</a></li>
+
+            </ul>
+        </nav><!-- .nav-menu -->
+
+    </div>
+</header><!-- End Header -->
+
+<!-- ======= TÍTULO ======= -->
+
+<section class="titulo" id="titulo">
+
+    <div class="texto-comedores">
+        <p> Productos que alimentan</p>
+        <p>
+            <span class="word color">sonrisas</span>
+        </p>
+    </div>
+</section><!-- End TÍTULO -->
+
+<!-- ======= TABLA PRODUCTOS ======= -->
+<section>
+    <div class="container" id="tabla-productos">
+
+
+        <h4 th:text="${titulo}"></h4>
+
+        <form th:action="@{/canasta/__${accion}__}" th:object="${canasta}" method="POST">
+
+            <input th:if="${canasta.id} != null" th:field="*{id}" type="hidden"
+                   class="form-control rounded-pill border-0 shadow-sm px-4">
+
+            <div class="form-group mb-3">
+                <input th:field="*{descripcion}" type="text" placeholder="Descripcion" required="" autofocus=""
+                       class="form-control rounded-pill border-0 shadow-sm px-4">
+            </div>
+            <div class="error text-start" th:if="${#fields.hasErrors('descripcion')}"
+                 th:errors="*{descripcion}"></div>
+
+            <select th:with="comedor=*{comedor}" name="comedor" id="comedor" class="form-control rounded-pill border-0 shadow-sm px-4" style="width: auto;" >
+                <option th:each="comedor : ${comedores}"
+                        th:value="${comedor.id}"
+                        th:text="${comedor.nombre}"
+                        th:selected="${canasta.comedor != null} ? ${comedor.nombre} == *{comedor.nombre} : false">
+                </option>
+            </select>
+
+            <div class="form-group mb-3">
+                <input th:field="*{cantidadDePersonas}" type="number" placeholder="Cantidad de personas" required="" autofocus=""
+                       class="form-control rounded-pill border-0 shadow-sm px-4">
+            </div>
+            <div class="error text-start" th:if="${#fields.hasErrors('cantidadDePersonas')}"
+                 th:errors="*{cantidadDePersonas}"></div>
+
+
+            <button type="submit"
+                    class="btn btn-primary btn-block text-uppercase  rounded-pill shadow-sm mb-2 mt-4"
+                    id="boton-SignIn" th:text="${action == 'guardar'} ? 'Ingresar producto' : 'Guardar cambios'"></button>
+
+            <div class="row">
+                <!-- Columna tabla-->
+                <div class="col col-10">
+
+                    <h6 style="padding-bottom: 8px;">Para mayor comodidad, puede realizar una búsqueda por nombre o marca.</h6>
+                    <input name="busqueda" id="buscador" class="form-control" style="width: auto;" type="text" placeholder="Buscar...">
+
+                    <div class="alert alert-secondary" role="alert" th:if="${productos.isEmpty()}">
+                        <h5>No se hallaron productos</h5>
+                    </div>
+
+                    <table th:unless="${productos.isEmpty()}" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th class="text-center" width="40px">Foto</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Marca</th>
+                            <!-- <th>Categoría</th> -->
+                            <th class="text-center">Precio</th>
+                            <th class="text-center">Celíaco</th>
+                            <th class="text-center">Diabético</th>
+                            <th class="text-center">Hipertenso</th>
+                            <th class="text-center">Intolerante Lactosa</th>
+                        </tr>
+                        </thead>
+                        <tbody id="myTable" th:each="producto : ${productos}">
+                        <tr>
+                            <th>
+                                <input th:field="*{productos['${producto}']}" type="checkbox" th:value="${producto}" id="productoCheck">
+                            </th>
+                            <th>
+                                <input  type="number"  id="flexCheckDefault">
+                            </th>
+                            <th th:if="${producto.foto == null}" width="30px" heigth="25px" class="text-center"
+                                th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
+                                background-position: center;background-size: cover;'">
+                            </th>
+
+                            <th th:unless="${producto.foto == null}" width="40px" heigth="25px" class="text-center" th:style="'z-index: 100
+                             ;background-image:url(http://localhost:8080/fotos/'+${producto.foto.id}+') !important;background-repeat: no-repeat;
+                                background-position: center;background-size: cover;'">
+                            <th th:text="|${producto.nombre}|" class="text-center"></th>
+                            <th th:text="|${producto.marca.nombre}|" class="text-center"></th>
+                            <!-- <th>Categoría</th> -->
+                            <th th:text="|${producto.precio}|" class="text-center"></th>
+                            <th class="text-center">
+                                <box-icon th:name="${producto.aptoCeliacos == true} ? 'check' : 'x'"></box-icon>
+                            </th>
+                            <th  class="text-center">
+                                <box-icon th:name="${producto.aptoDiabeticos == true} ? 'check' : 'x'"></box-icon>
+                            </th>
+                            <th class="text-center">
+                                <box-icon th:name="${producto.aptoHipertensos == true} ? 'check' : 'x'"></box-icon>
+                            </th>
+                            <th class="text-center">
+                                <box-icon th:name="${producto.aptoIntoleranteLactosa == true} ? 'check' : 'x'"></box-icon>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div> <!-- End Tabla productos -->
+
+            </div>
+        </form>
+
+    </div>
+
+</section>
+
+<!-- ======= Footer ======= -->
+<footer id="footer2">
+    <div class="copyright2">
+        Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
+        reservados
+    </div>
+</footer><!-- End Footer -->
+
+
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Vendor JS Files -->
+<script th:href="@{/jquery/jquery.min.js}"></script>
+<script th:href="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:href="@{/jquery.easing/jquery.easing.min.js}"></script>
+<script th:href="@{/php-email-form/validate.js}"></script>
+<script th:href="@{/owl.carousel/owl.carousel.min.js}"></script>
+<script th:href="@{/isotope-layout/isotope.pkgd.min.js}"></script>
+<script th:href="@{/venobox/venobox.min.js}"></script>
+<script th:href="@{/aos/aos.js}"></script>
+<script th:href="@{/js/loader.js}"> </script>
+<script src="https://unpkg.com/boxicons@2.1.1/dist/boxicons.js"></script>
+
+<!-- Template Main JS File -->
+<script th:href="@{/js/main.js}"></script>
+
+<!--  JQUERY -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- JS PARA TITULO -->
+<script th:href="@{/js/titulo.js}"></script>
+
+<!-- BUSCADOR DE PRODUCTOS -->
+<script>
+        $(document).ready(function () {
+            $("#buscador").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+ </script>
+</body>
+
+</html>
