@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -31,9 +32,18 @@ public class ComedorServicio {
     @Autowired
     private DireccionSevicio direccionSevicio;
 
+    @Autowired
+    private RolServicio rolServicio;
+
+    @Autowired
+    private CredencialServicio credencialServicio;
+
+    private final String ROL = "COMEDOR";
+
     @Transactional
     public Comedor crearComedor(String nombre, String calle, Integer numero, Integer codigoPostal, String localidad,String provincia,
-                                Integer cantidadDePersonas, Long telefono, String detalleBiografia){
+                                Integer cantidadDePersonas, Long telefono, String detalleBiografia,
+                                String username, String mail, String password){
 
         if(direccionSevicio.existeDireccion(calle, numero, localidad)){
             throw new FieldAlreadyExistException("La dirección '"+calle+" "+numero+","+localidad+" ya se encuentra registrada");
@@ -48,12 +58,19 @@ public class ComedorServicio {
         comedor.setTelefono(telefono);
         comedor.setBiografia(biografia);
         comedor.setAlta(true);
+
+        List<Rol> roles = new ArrayList<>();
+        roles.add(rolServicio.buscarPorNombre(ROL));
+        Credencial credencial = credencialServicio.crear(username,mail,password,roles);
+        comedor.setCredencial(credencial);
         return comedorRepository.save(comedor);
     }
 
     @Transactional
     public Comedor modificarComedor(Long id,String nombre, String calle, Integer numero, Integer codigoPostal, String localidad,String provincia,
-                                    Integer cantidadDePersonas, Long telefono, String detalleBiografia){
+                                    Integer cantidadDePersonas, Long telefono, String detalleBiografia,
+                                    String username, String mail, String password){
+
         Comedor comedor = comedorRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("El comedor que desa modificar no existe"));
 
@@ -65,6 +82,10 @@ public class ComedorServicio {
         comedor.setCantidadDePersonas(cantidadDePersonas);
         comedor.setTelefono(telefono);
         comedor.setAlta(true);
+        List<Rol> roles = new ArrayList<>();
+        roles.add(rolServicio.buscarPorNombre(ROL));
+        Credencial credencial = credencialServicio.crear(username,mail,password,roles);
+        comedor.setCredencial(credencial);
         return comedorRepository.save(comedor);
     }
 
@@ -114,14 +135,14 @@ public class ComedorServicio {
 
 
     @Transactional(readOnly = true)
-    public Paged<Comedor> listarComedores(int page, int size, Sort order){
+    public Paged<Comedor> listarPaginaComedores(int page, int size, Sort order){
         Pageable request = PageRequest.of(page - 1, size, order);
         Page<Comedor> comedorPage = comedorRepository.findAll(request);
         return new Paged(comedorPage, Paging.of(comedorPage.getTotalPages(), page, size));
     }
 
     @Transactional
-    public List<Comedor> mostrarTodosLosComedores(){
+    public List<Comedor> listarComedores(){
         return comedorRepository.findAll();
     }
 

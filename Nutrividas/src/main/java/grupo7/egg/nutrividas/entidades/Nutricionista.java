@@ -27,7 +27,7 @@ public class Nutricionista {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "${El campo nombre es obligatorio}")
+    @NotBlank(message = "El campo nombre es obligatorio")
     @Pattern(regexp = "^[\\p{L} .'-]+$",message="solo se permiten letras" )
     private String nombre;
 

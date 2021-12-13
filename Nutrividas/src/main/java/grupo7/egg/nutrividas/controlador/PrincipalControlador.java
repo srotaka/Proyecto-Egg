@@ -91,9 +91,7 @@ public class PrincipalControlador {
             mav.addObject("error", flashMap.get("error"));
             mav.addObject("usuario", flashMap.get("usuario"));
         } else {
-            Usuario usuario = new Usuario();
-            //usuario.setRol(Rol.USER);
-            mav.addObject("usuario", usuario);
+            mav.addObject("usuario", new Usuario());
         }
 
         return mav;
