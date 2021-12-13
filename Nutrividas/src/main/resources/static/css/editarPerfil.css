@@ -71,3 +71,22 @@ input[type="number"]::-webkit-outer-spin-button {
 #mensaje-EditarPerfil {
     text-align: center !important;
 }
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+
+#footer2 .copyright2 {
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  position: fixed;
+  height: 50px;
+  background-color: #1d1d1d;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+  padding-top: 15px;
+  
+}

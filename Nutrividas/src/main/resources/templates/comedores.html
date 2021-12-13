@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -28,7 +29,7 @@
     <!-- Template Main CSS File -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <link th:href="@{/css/comedores.css}" rel="stylesheet">
-    
+
 
 </head>
 
@@ -36,123 +37,136 @@
 
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
-        <div class="container d-flex">
 
-            <div class="logo">
-                <a href="index.html"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
+        <!-- PRELOADER -->
+        <div class="loader-center" id="onload">
+            <div class="loader">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
             </div>
+        </div>
+        <!-- END PRELOADER -->
 
+        <div class="container d-flex">
+            <div class="logo">
+                <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
+            </div>
             <div class="logo mr-auto">
                 <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
             </div>
-
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
                     <li><a th:href="@{/}">Inicio</a></li>
                     <li><a th:href="@{/#contact}">Contáctanos</a></li>
+                    <li><a th:href="@{/comedor/crear}">Registrar Comedores</a></li>&nbsp;&nbsp;&nbsp;
+                    <!-- Botón Usuario si está loggeado -->
+                    <li class="drop-down" sec:authorize="isAuthenticated()">
+                        <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#"
+                            id="dropdown-avatar" style="margin-top: -13px;" role="button float-right">
+                            <img class="rounded-circle" th:src="@{/img/user-nopic.png}" width="50">
+                        </a>
+                        <ul>
+                            <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
+                            <li class="dropdown-divider"></li>
 
+                            <li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar perfil</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                    <!-- Fin Botón Usuario si está loggeado -->
                 </ul>
             </nav><!-- .nav-menu -->
-
+            <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+            <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a>
+            <!-- End Botón Inicio Sesión -->
         </div>
     </header><!-- End Header -->
 
     <!-- ======= TÍTULO ======= -->
-
     <section class="titulo" id="titulo">
-        
         <div class="texto-comedores">
             <p> Comedores que alimentan</p>
             <p>
-                <span class="word color">sonrisas</span>               
+                <span class="word color">sonrisas</span>
             </p>
         </div>
     </section><!-- End TÍTULO -->
 
-    <!-- ======= COMEDORES CARDS ======= -->
-    <section class="hero-section">
-        <div class="card-grid">
-            <a class="card" href="carrito.html">
-                <div class="card__background"
-                    style="background-image:url(../img/children16.jpg);">
-                </div>
-                <div class="card__content">
-                    <h3 class="card__heading">Estoy Creciendo</h3>
-                    <p class="card__direccion">Moreno 1563 <br>Caseros, Buenos Aires</p>
-                    
-                </div>
-            </a>
-            <a class="card" href="#">
-                <div class="card__background"
-                    style="background-image:url(../img/children17.jpg);"></div>
-                <div class="card__content">
-                    <h3 class="card__heading">Pequeños Pekes</h3>
-                    <p class="card__direccion">Brown 3906<br>La Plata, Buenos Aires</p>
-                </div>
-            </a>
-            <a class="card" href="#">
-                <div class="card__background"
-                    style="background-image:url(../img/children18.jpg);"></div>
-                <div class="card__content">
-                    <h3 class="card__heading">Caritas Sucias</h3>
-                    <p class="card__direccion">Dorrego 4078<br>Junín, Buenos Aires</p>
-                </div>
-            </a>
-            <a class="card" href="#">
-                <div class="card__background"
-                    style="background-image:url(../img/children19.jpg);"></div>
-                <div class="card__content">
-                    <h3 class="card__heading">Pancitas Llenas</h3>
-                    <p class="card__direccion">San Martín 961<br>Lanús, Buenos Aires</p>
-                </div>
-            </a>
-            <a class="card" href="#">
-                <div class="card__background"
-                    style="background-image:url(../img/children20.jpg);"></div>
-                <div class="card__content">
-                    <h3 class="card__heading">Caminando de la Mano</h3>
-                    <p class="card__direccion">Belgrano 7638<br>Quilmes, Buenos Aires</p>
-                </div>
-            </a>
-            <a class="card" href="#">
-                <div class="card__background"
-                    style="background-image:url(../img/children21.jpg);"></div>
-                <div class="card__content">
-                    <h3 class="card__heading">Juntando Esperanzas</h3>
-                    <p class="card__direccion">Suipacha 6391<br>Tigre, Buenos Aires</p>
-                </div>
-            </a>
-            <a class="card" href="#">
-                <div class="card__background"
-                    style="background-image:url(../img/children22.jpg);"></div>
-                <div class="card__content">
-                    <h3 class="card__heading">Charquito de Amor</h3>
-                    <p class="card__direccion">San Lorenzo 5834<br>Tandil, Buenos Aires</p>
-                </div>
-            </a>
-            <a class="card" href="#">
-                <div class="card__background"
-                    style="background-image:url(../img/children13.jpg);"></div>
-                <div class="card__content">
-                    <h3 class="card__heading">Rincón del Alba</h3>
-                    <p class="card__direccion">Uriburu 2897<br>Zárate, Buenos Aires</p>
-                </div>
-            </a>
-        </div>
-    </section> <!-- End Comedores Cards -->
+    <!-- ======= TABLA COMEDORES ======= -->
+    <section>
+        <div class="container" id="tabla-comedores">
+
+
+            <table th:unless="${comedores.page.isEmpty()}" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="row">Nombre</th>
+                        <th scope="row">Teléfono</th>
+                        <th scope="row">Calle</th>
+                        <th scope="row">Número</th>
+                        <th scope="row">Localidad</th>
+                        <th scope="row">Provincia</th>
+                        <th scope="row">Cantidad de Personas</th>
+                        <th scope="row">Editar Comedor</th>
+                    </tr>
+                </thead>
+                <tbody id="myTable" th:each="comedor : ${comedores.page}">
+                    <tr>
+                        <td th:text="${comedor.nombre}"></td>
+                        <td th:text="${comedor.telefono}"></td>
+                        <td th:text="${comedor.direccion.calle}"></td>
+                        <td th:text="${comedor.direccion.numero}"></td>
+                        <td th:text="${comedor.direccion.localidad}"></td>
+                        <td th:text="${comedor.direccion.provincia}"></td>
+                        <td th:text="${comedor.cantidadDePersonas}"></td>
+                        <td> Editar</td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Paginacion -->
+            <nav aria-label="Page navigation" class="paging">
+                <ul class="pagination" th:if="${comedores.page.totalPages > 1}">
+                    <li class="page-item" th:classappend="${!comedores.paging.isPrevEnabled()? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{'/comedor?page=' + ${comedores.paging.pageNumber - 1}}"
+                            tabindex="-1">Anterior</a>
+                    </li>
+                    <th:block th:each="item : ${comedores.paging.getItems()}">
+                        <li class="page-item"
+                            th:classappend="${item.index == comedores.paging.pageNumber? 'active' : ''}"
+                            th:if="${item.pageItemType.name() == 'PAGE'}">
+                            <a class="page-link" th:href="@{'/comedor?page=' + ${item.index}}"
+                                th:text="${item.index}"></a>
+                        </li>
+                        <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                            <a class="page-link" href="#">...</a>
+                        </li>
+                    </th:block>
+                    <li class="page-item" th:classappend="${!comedores.paging.isNextEnabled()? 'disabled' : ''}">
+                        <a class="page-link"
+                            th:href="@{'/comedor?page=' + ${comedores.paging.pageNumber + 1}}">Siguiente</a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- ******************** -->
+
+        </div> <!-- End Tabla productos -->
 
 
 
-
+    </section>
     <!-- ======= Footer ======= -->
-    <footer id="footer">
-        <div class="copyright">
+    <footer id="footer2">
+        <div class="copyright2">
             Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
             reservados
         </div>
     </footer><!-- End Footer -->
-
-
 
     <!-- ======= BACK TO TOP ======= -->
     <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
