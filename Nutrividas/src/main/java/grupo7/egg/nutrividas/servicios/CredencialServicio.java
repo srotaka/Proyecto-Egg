@@ -40,7 +40,7 @@ public class CredencialServicio implements UserDetailsService {
     public Credencial crear(String usename, String mail, String password, List<Rol> roles){
 
         if(credencialRepository.findByMail(mail).isPresent()){
-            throw new FieldAlreadyExistException("Ya existe una cuenta asociada a el mail '"+mail+"' ");
+            throw new FieldAlreadyExistException("Ya existe una cuenta asociada al mail '"+mail+"' ");
         }
         if(credencialRepository.findByUsername(usename).isPresent()){
             throw new FieldAlreadyExistException("El nombre de usuario ya existe");

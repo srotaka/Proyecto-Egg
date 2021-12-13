@@ -40,7 +40,7 @@ public class ComedorControlador {
 
     @GetMapping
     public ModelAndView mostrarComedores(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                                         @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                                         @RequestParam(value = "size", required = false, defaultValue = "8") int size,
                                          @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                          HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("comedores");

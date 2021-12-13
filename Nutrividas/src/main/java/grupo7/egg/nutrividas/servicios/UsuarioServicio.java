@@ -40,7 +40,7 @@ public class UsuarioServicio {
     public Usuario crearUsuario(Long dni, String nombre, String apellido, String mail, Long telefono, String username, String password){
 
         if(usuarioRepository.findByDni(dni).isPresent()){
-            throw new FieldAlreadyExistException("Ya existe un usuario registrado con el dni '"+dni+"' ");
+            throw new FieldAlreadyExistException("Ya existe un usuario registrado con el DNI '"+dni+"' ");
         }
 
         Usuario usuario = new Usuario();
@@ -61,14 +61,14 @@ public class UsuarioServicio {
     public Usuario modificarUsuario(Long id, Long dni, String nombre, String apellido,Long telefono,String mail, String username, String password){
 
         if(usuarioRepository.findById(id).isPresent() || usuarioRepository.findById(id) != null){
-            throw new NoSuchElementException("No existe un usuario registrado con el dni '"+dni+"' ");
+            throw new NoSuchElementException("No existe un usuario registrado con el DNI '"+dni+"' ");
         }
         if(usuarioRepository.findByDni(dni).isPresent() && usuarioRepository.findByDni(dni).get().getId() != id){
-            throw new FieldAlreadyExistException("Ya existe un usuario registrado con el dni '"+dni+"' ");
+            throw new FieldAlreadyExistException("Ya existe un usuario registrado con el DNI '"+dni+"' ");
         }
 
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(
-                ()->new NoSuchElementException("No eiste un usuario vinculado al id '"+id+"'"));
+                ()->new NoSuchElementException("No existe un usuario vinculado al id '"+id+"'"));
         usuario.setDni(dni);
         usuario.setNombre(Validations.formatNames(nombre));
         usuario.setApellido(Validations.formatNames(apellido));
@@ -155,7 +155,7 @@ public class UsuarioServicio {
     @Transactional(readOnly = true)
     public Usuario buscarPorId(Long id){
         return  usuarioRepository.findById(id).orElseThrow(()->
-                new NoSuchElementException("No existe un usuario vincilado al id '"+id+"'"));
+                new NoSuchElementException("No existe un usuario vinculado al id '"+id+"'"));
     }
 
     @Transactional

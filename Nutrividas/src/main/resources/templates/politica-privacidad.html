@@ -10,8 +10,8 @@
     <title>Nutividas - Políticas de Privacidad</title>
 
     <!-- Favicons -->
-    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" />
-    <link href="../static/img/favicon.ico" rel="apple-touch-icon">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
+    <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,38 +20,31 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/icofont/icofont.min.css" rel="stylesheet">
-    <link href="../static/boxicons/css/boxicons.min.css" rel="stylesheet">
-        
-    <!-- Template Main CSS File -->
-    <link href="../static/css/style.css" rel="stylesheet">
-    <link href="../static/css/policies.css" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/icofont/icofont.min.css}" rel="stylesheet">
+    <link th:href="@{/boxicons/css/boxicons.min.css}" rel="stylesheet">
 
+    <!-- Template Main CSS File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/policies.css}" rel="stylesheet">
 </head>
 
 <body>
-
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
         <div class="container d-flex">
-
             <div class="logo">
-                <a href="index.html"><img src="../static/img/logo.png" alt="" class="img-fluid"></a>
+                <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
             </div>
-
             <div class="logo mr-auto">
-                <h2 class="text-light mt-0" style="color: #1bac91 !important;" href="index.html">&nbsp;Nutrividas</h2>
+                <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
             </div>
-
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
-                    <li class="active"><a href="index.html">Inicio</a></li>
-                    <li><a href="index.html#contactanos">Contáctanos</a></li>
-
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/#contact}">Contáctanos</a></li>
                 </ul>
             </nav><!-- .nav-menu -->
-
         </div>
     </header><!-- End Header -->
 
@@ -190,7 +183,7 @@
             de este tipo estará sujeta a obligaciones de confidencialidad y seguridad, y con el único propósito del
             desempeño de las funciones o servicios correspondientes.</p>
 
-            <br> <br>
+        <br> <br>
         <h3><strong>Protección de sus Datos Personales</strong></h3>
 
         <p>7.1. Nutrividas ha implementado medidas de seguridad para resguardar y asegurar los Datos Personales que
@@ -216,7 +209,7 @@
             Nutrividas no es responsable por las prácticas de privacidad ni el Tratamiento de los Datos Personales de
             esos sitios. Le recomendamos que consulte las prácticas de privacidad de dichos sitios de Internet antes de
             su utilización.</p>
-            <br> <br>
+        <br> <br>
 
         <h3><strong>Ejerecicio de Derechos</strong></h3>
 
@@ -247,6 +240,7 @@
             modificación a efectos de que Usted pueda acceder a la misma.</p>
 
     </section>
+    
     <!-- ======= Footer ======= -->
     <footer id="footer">
         <div class="copyright">
@@ -254,15 +248,13 @@
             reservados
     </footer><!-- End Footer -->
 
-
-
     <!-- ======= BACK TO TOP ======= -->
     <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
     <!-- ======= BACK TO TOP ======= -->
 
     <!-- Vendor JS Files -->
-    <script src="../static/jquery/jquery.min.js"></script>
-    <script src="../static/js/main.js"></script>
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <script th:src="@{/js/main.js"></script>
 
 
 

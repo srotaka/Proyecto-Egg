@@ -39,7 +39,15 @@ public class PrincipalControlador {
     public ModelAndView inicio(){
         return new ModelAndView("index");
     }
-
+    
+      @GetMapping("/politica")
+    public ModelAndView politica(){
+        return new ModelAndView("politica-privacidad");
+    }
+      @GetMapping("/condiciones")
+    public ModelAndView condiciones(){
+        return new ModelAndView("terminos-condiciones");
+    }
     @GetMapping("/contacto")
     public ModelAndView contacto(){
         return new ModelAndView("contacto");
@@ -57,6 +65,7 @@ public class PrincipalControlador {
 
         if (logout != null) {
             modelAndView.addObject("logout", "Ha salido correctamente de la plataforma");
+             modelAndView.setViewName("redirect:/");
         }
         if(flashMap != null){
             modelAndView.addObject("success", flashMap.get("success"));
