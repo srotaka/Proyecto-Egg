@@ -47,6 +47,7 @@
         <h2 class="text-light mt-0" style="color: #1bac91 !important;">&nbsp;Nutrividas</h2>
       </div>
 
+<<<<<<< HEAD
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <li><a th:href="@{/}">Inicio</a></li>
@@ -68,6 +69,23 @@
 
     </div>
   </header><!-- End Header -->
+=======
+    <nav class="nav-menu d-none d-lg-block">
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="#contact">Contáctanos</a></li>
+        <li><a th:href="@{/canasta/crear}"><box-icon name='basket'></box-icon>
+          <p th:text="|( ${#lists.size(session.listaElementos)} )|"></p></a>
+        </li>
+        <!--<li><button type="button" class="btn btn-primary position-relative">
+          Canasta
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            [[${#lists.size(session.listaElementos)}]]
+          </span>
+        </button></li>-->
+      </ul>
+    </nav><!-- .nav-menu -->
+>>>>>>> 788339b7226333eafdb3030d3e9513d8fbe20e2c
 
   <!-- ======= TÍTULO ======= -->
 
@@ -132,12 +150,9 @@
                 </td>
                 <th th:if="${producto.foto == null}" width="30px" heigth="25px" class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
               background-position: center;background-size: cover;'">
-                </th>
-                <!--<th th:unless="${producto.foto == null}" width="30px" heigth="25px" class="text-center" th:style="'z-index: 100
-            ;background-image:url(' + ${producto.foto.ruta}+ ') !important;background-repeat: no-repeat;
-            background-position: center;background-size: cover;'">
-            </th>-->
-                <th th:unless="${producto.foto == null}" width="40px" heigth="25px" class="text-center" th:style="'z-index: 100
+            </th>
+
+            <th th:unless="${producto.foto == null}" width="40px" heigth="25px" class="text-center" th:style="'z-index: 100
           ;background-image:url(http://localhost:8080/fotos/'+${producto.foto.id}+') !important;background-repeat: no-repeat;
           background-position: center;background-size: cover;'">
                 <th th:text="|${producto.nombre}|" class="text-center"></th>

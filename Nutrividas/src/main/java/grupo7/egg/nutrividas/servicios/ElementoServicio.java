@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ElementoServicio {
@@ -41,7 +42,6 @@ public class ElementoServicio {
         elemento.setProducto(productoServicio.obtenerProductoPorId(idProducto));
         elemento.setCantidadNecesaria(1);
         elemento.setCantidadComprada(0);
-        //elemento.setCanasta(canastaServicio.buscarPorId(idCanasta));
         elemento.setFueComprado(false);
         elemento.setUsuario(usuario);
         elemento.setAsignado(false);
@@ -73,13 +73,13 @@ public class ElementoServicio {
     public void eliminarElemento(Long id){
         Elemento elemento = elementoRepository.findById(id).orElseThrow(
                 ()-> new NoSuchElementException("El elemento que desea eliminar no existe"));
-        elementoRepository.delete(elemento);
+        elementoRepository.deleteById(elemento.getId());
     }
 
     @Transactional(readOnly = true)
-    public boolean existeElemntoSesion(Long idProducto, Usuario usuario){
+    public Optional<Elemento> existeElementoSesion(Long idProducto, Usuario usuario){
         Producto producto = productoServicio.obtenerProductoPorId(idProducto);
-        return elementoRepository.existeElementoSesion(producto,usuario).isPresent();
+        return elementoRepository.existeElementoSesion(producto,usuario);
     }
 
     @Transactional(readOnly = true)
@@ -87,11 +87,13 @@ public class ElementoServicio {
         return elementoRepository.obtenerElementosSesion(mail);
     }
 
+    @Transactional
     public void asignarACanasta(Elemento elemento, Canasta canasta){
         elemento.setCanasta(canasta);
         elemento.setAsignado(true);
         elementoRepository.save(elemento);
     }
+
 
     @Transactional
     public void comprarCantidadDeElemento(Long idElemento, Integer cantidadComprada){
