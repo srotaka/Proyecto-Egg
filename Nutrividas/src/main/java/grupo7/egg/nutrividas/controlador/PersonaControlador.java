@@ -60,7 +60,7 @@ public class PersonaControlador {
             mav.addObject("persona", new Persona());
         }
 
-        mav.addObject("comedores", comedorServicio.mostrarTodosLosComedores());
+        mav.addObject("comedores", comedorServicio.listarComedores());
         mav.addObject("title", "Ingresar Persona");
         mav.addObject("action", "guardar");
         return mav;
@@ -79,7 +79,7 @@ public class PersonaControlador {
                 mav.addObject("persona", personaServicio.buscarPorId(id));
             }
 
-            mav.addObject("comedores", comedorServicio.mostrarTodosLosComedores());
+            mav.addObject("comedores", comedorServicio.listarComedores());
             mav.addObject("title", "Editar Persona");
             mav.addObject("action", "modificar");
         } catch(Exception e) {

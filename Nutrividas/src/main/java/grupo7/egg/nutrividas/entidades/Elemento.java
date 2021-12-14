@@ -9,6 +9,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 
@@ -27,11 +30,19 @@ public class Elemento {
 
     @ManyToOne
     private Producto producto;
+
+    @NotNull(message = "La cantidad necesaria es obligatoria")
+    @Positive(message = "La cantidad no puede ser menor a 1")
     private Integer cantidadNecesaria;
     private Integer cantidadComprada;
-    private Boolean fueComprado; // actua como alta asi que saco el flag de alta
+    private Boolean fueComprado;
     @ManyToOne
     private Canasta canasta;
+    @OneToOne
+    private Usuario usuario;
+
+    private Boolean asignado;
+
     @CreatedDate
     @Column( updatable = false)
     private LocalDateTime creacion;

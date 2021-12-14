@@ -9,13 +9,14 @@
   <title>Inicio - Nutrividas</title>
 
   <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}"/>
+  <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
   <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap"
+  <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
+  <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin>
+  <link
+    th:href="@{https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap}"
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
@@ -59,13 +60,29 @@
             </ul>
           </li>
           <li><a th:href="@{/comedor}">Comedores</a></li>
-          <!-- <li><a href="#testimonials">Testimonios</a></li>
-          <li><a href="#team">Nuestro Equipo</a></li>
-          <li><a href="#faq">Preguntas Frecuentes</a></li> -->
           <li><a href="#contact">Contáctanos</a></li>&nbsp;&nbsp;&nbsp;
+          <!-- Botón Usuario si está loggeado -->
+          <li class="drop-down" sec:authorize="isAuthenticated()">
+            <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
+              style="margin-top: -13px;" role="button float-right">
+              <img class="rounded-circle" th:src="@{/img/user-nopic.png}" width="50">
+            </a>
+            <ul>
+              <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
+              <li class="dropdown-divider"></li>
+
+              <li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar perfil</a></li>
+              <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+            </ul>
+          </li>
+          <!-- Fin Botón Usuario si está loggeado -->
         </ul>
+
       </nav><!-- .nav-menu -->
-      <a th:href="@{/login}" class="botonform scrollto">Inicia Sesión</a>
+
+      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+      <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a>
+      <!-- End Botón Inicio Sesión -->
     </div>
   </header><!-- End Header -->
 
@@ -133,7 +150,7 @@
             <div class="icon"><i class="bx bx-detail"></i></div>
             <h4 class="title"><a href="">Regístrate</a></h4>
             <p class="description">Para comenzar a alimentar sonrisas, completa el formulario de registro desde <a
-                th:href="@{/signup}"> aquí.</a>
+                th:href="@{/signup/usuario}" target="_blank"> aquí.</a>
             </p>
           </div>
         </div>
@@ -202,12 +219,12 @@
         <div class="testimonial-item">
           <p>
             <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-            Un día estábamos con mi esposa sentados afuera de nuestra casa y veíamos a los chicos que pedían casa por
+            Un día estábamos con mi esposa sentados afuera de nuestra casa y vimos a unos chicos que pedían casa por
             casa algo para cocinar. Fue así que nos acercamos a Nutrividas para que nunca falte un plato de comida a
-            ningún chico.
+            ningún niño más.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img th:src="@{/img/testimonial01.}" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial01.png}" class="testimonial-img" alt="">
           <h3>Gabriel Pereyra</h3>
           <h4>Comedor Nuestros Pekes</h4>
         </div>
@@ -216,8 +233,8 @@
           <p>
             <i class="bx bxs-quote-alt-left quote-icon-left"></i>
             Tuve una infancia dura y sé lo que es que te falte la comida y la leche, ir a dormir con el estómago
-            estrujando del hambre. Por eso me comprometí con esta
-            causa para que otros nenes no pasen por esta situación y podamos llenar sus pancitas.
+            vacío. Por eso me comprometí con esta
+            causa para que otros niños no pasen por esta situación y podamos llenar sus pancitas.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
           <img th:src="@{/img/testimonial03.png}" class="testimonial-img" alt="">
@@ -229,7 +246,7 @@
           <p>
             <i class="bx bxs-quote-alt-left quote-icon-left"></i>
             Cuando empecé con el merendero, eran 15 niños. Al año eran 30 y hoy en día ya estamos en los
-            120. Mantenía mi merendero con ayuda de las redes sociales y los vecinos. De esta manera ahora podremos
+            120. Mantenía mi merendero con ayuda de las redes sociales y los vecinos. De esta manera, ahora podremos
             llegar a muchas más personas.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
@@ -284,13 +301,14 @@
           <div class="member">
             <img th:src="@{/img/team-eva.png}" alt="">
             <h4>Eva Sarapura</h4>
-            <span>FrontEnd Developer</span>
+            <span>Developer</span>
             <p>
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
               <a href="mailto:evyy.sarapura@gmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/eva-s-74335b1b2/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/eva-s-74335b1b2/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -299,13 +317,14 @@
           <div class="member">
             <img th:src="@{/img/team-flor.png}" alt="">
             <h4>Florencia Zabala</h4>
-            <span>BackEnd Developer</span>
+            <span>Developer</span>
             <p>
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
               <a href="mailto:zabalaflorencia.it@gmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/florencia-agustina-zabala/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/florencia-agustina-zabala/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -314,13 +333,14 @@
           <div class="member">
             <img th:src="@{/img/team-franco.jpeg}" alt="">
             <h4>Franco Scolari</h4>
-            <span>BackEnd Developer</span>
+            <span>Developer</span>
             <p>
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
               <a href="mailto:franco.scolari@hotmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/franco-scolari-b11bb5162/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/franco-scolari-b11bb5162/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -328,13 +348,14 @@
           <div class="member">
             <img th:src="@{/img/team-jorge.jpeg}" alt="">
             <h4>Jorge Nogueira</h4>
-            <span>FrontEnd Developer</span>
+            <span>Developer</span>
             <p>
               "Me encanta la vida al aire libre y pasar tiempo con mis perros."
             </p>
             <div class="social">
               <a href="mailto:nogueira.jorgea@gmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/jorge-alberto-nogueira/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/jorge-alberto-nogueira/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -343,13 +364,14 @@
           <div class="member">
             <img th:src="@{/img/team-juan.jpeg}" alt="">
             <h4>Juan Telis</h4>
-            <span>FrontEnd Developer</span>
+            <span>Developer</span>
             <p>
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
               <a href="mailto:juantelisg@hotmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/juan-telis-6535a11a3/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/juan-telis-6535a11a3/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -358,13 +380,14 @@
           <div class="member">
             <img th:src="@{/img/team-juana.png}" alt="">
             <h4>Juana Morinigo</h4>
-            <span>FrontEnd Developer</span>
+            <span>Developer</span>
             <p>
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
               <a href="mailto:lissetmorinigo24@gmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/juana-lisset-morinigo-molinas/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/juana-lisset-morinigo-molinas/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -373,13 +396,14 @@
           <div class="member">
             <img th:src="@{/img/team-lucas.jpeg}" alt="">
             <h4>Lucas Moyano</h4>
-            <span>BackEnd Developer</span>
+            <span>Developer</span>
             <p>
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
               <a href="mailto:lmoyano.tec@gmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/lucas-moyano-b9713b190/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/lucas-moyano-b9713b190/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -388,13 +412,14 @@
           <div class="member">
             <img th:src="@{/img/team-silvia.png}" alt="">
             <h4>Silvia Otaka</h4>
-            <span>FrontEnd Developer</span>
+            <span>Developer</span>
             <p>
               Mamá 24/7 <br> y fan de Harry Potter
             </p>
             <div class="social">
               <a href="mailto:srotaka@gmail.com"><i class="icofont-email"></i></a>
-              <a href="www.linkedin.com/in/silvia-raquel-otaka"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{http://www.linkedin.com/in/silvia-raquel-otaka}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -410,7 +435,7 @@
 
       <div class="section-title " data-aos="fade-up">
         <h2>Preguntas Frecuentes</h2>
-        <p>Aquí encontrarás información sobre las cuestiones más consultadas. <br> Si no encuentras tu respuesta, pueden
+        <p>Aquí encontrarás información sobre las cuestiones más consultadas. <br> Si no encuentras tu respuesta, puedes
           enviarnos una consulta desde <a href="#contact"> aquí</a>.</p>
       </div>
 
@@ -425,7 +450,7 @@
                 Nutrividas es una organización sin fines de lucro, sin afiliación política ni religiosa cuya misión es
                 hacer llegar alimentos a los Comedores registrados. El objetivo de Nutrividas es facilitar el
                 establecimiento de lazos de solidaridad entre los ciudadanos y los niños más necesitados de nuestro país
-                de manera fácil y transparente. De esta forma lograr que los Comedores puedan conseguir los alimentos
+                de manera fácil y transparente. De esta forma logramos que los Comedores puedan conseguir los alimentos
                 necesarios para alimentar a sus niños. Asimismo, contamos con un equipo de nutricionistas que dedican su
                 tiempo a elaborar distintos menús de acuerdo a las necesidades de cada miembro.
               </p>
@@ -452,7 +477,7 @@
             <div id="faq-list-3" class="collapse" data-parent=".faq-list">
               <p>
                 El mecanismo de entrega de alimentos a Comedores es simple y transparente. A fin de cada semana se hace
-                un recuento de las contribuciones individuales para cada comedor y se realiza la compra de los alimentos
+                un recuento de las contribuciones individuales para cada comedor y se hace la entrega de los alimentos
                 donados. Los comedores no reciben dinero sino alimentos, de esta manera podemos garantizar que las
                 donaciones son utilizadas efectivamente para la alimentación de los niños.
               </p>
@@ -465,9 +490,9 @@
                 class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
             <div id="faq-list-4" class="collapse" data-parent=".faq-list">
               <p>
-                Cuando un comedor publicado en Nutrividas no alcanza el nivel 100% de ayuda de parte de los ususario,
-                esto no significa que van a haber chicos que se quedan sin comer en el comedor. Nutrividas cuenta con
-                fondos de reserva (donados por empresas) que son utilizados para abastecer a los comedores con los
+                Cuando un Comedor publicado en Nutrividas no alcanza el nivel 100% de ayuda de parte de los ususarios,
+                esto no significa que van a haber niños que se quedan sin comer en el Comedor. Nutrividas cuenta con
+                fondos de reserva (donados por empresas) que son utilizados para abastecer a los Comedores con los
                 requerimientos alimenticios que cada niño necesita.
               </p>
             </div>
@@ -482,7 +507,7 @@
                 Los comedores a los que se destina ayuda se encuentran registrados en Nutrividas. Para ello, el Comedor
                 se pone en contacto a través de nuestro formulario de consulta. Nuestro equipo se comunica a la brevedad
                 con el responsable a cargo para corroborar la veracidad de los datos. Estos comedores registran un
-                número distintos de chicos necesitados de asistencia alimenticia diaria. Por otro lado hacemos una
+                número distintos de niños necesitados de asistencia alimenticia diaria. Por otro lado, hacemos una
                 evaluación previa del comedor para asegurarnos de que podemos confiar plenamente en su funcionamiento y
                 transparencia. Actualmente contamos con una lista de comedores que están siendo evaluados para la pronta
                 incorporación. Para sugerir nuevos comedores, por favor escríbenos a info@nutrividas.com.
@@ -498,10 +523,10 @@
               <p>
                 ¡Absolutamente! Todos sus datos personales son tratados con la máxima confidencialidad y no son
                 compartidos con nadie. Del mismo modo, tomamos muy seriamente el correcto uso y manejo de los datos de
-                tarjeta de crédito. Entendemos que esta información debe ser manejada con la mayor de las precauciones.
+                tarjetas de crédito. Entendemos que esta información debe ser manejada con la mayor de las precauciones.
                 Es por ello que estos datos son encriptados para que puedan ser accedidos solamente cuando es necesario
                 y no puedan ser visualizados por nadie. Para mayor información, puede leer nuestra Política de
-                privacidad.
+                Privacidad.
               </p>
             </div>
           </li>
@@ -530,7 +555,7 @@
       <div class="row justify-left-center">
 
         <div class="col-lg-12 col-sm-12 cos-xs-4">
-          <div class="wrapper img" style="background-image: url(../static/img/children06.jpg)">
+          <div class="wrapper img" style="background-image: url(../img/children06.jpg)">
             <div class="row">
               <div class="col-md-9 col-lg-7">
                 <div class="contact-wrap w-100 p-md-5">
@@ -618,10 +643,10 @@
               <li><i class="bx bx-chevron-right"></i> <a href="#">Inicio</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">¿Qué hacemos?</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Nuestro Equipo</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="terminos-condiciones.html" target="_blank">Términos y
+              <li><i class="bx bx-chevron-right"></i> <a th:href="@{/condiciones}" target="_blank">Términos y
                   condiciones</a>
               </li>
-              <li><i class="bx bx-chevron-right"></i> <a href="politica-privacidad.html" target="_blank">Política de
+              <li><i class="bx bx-chevron-right"></i> <a th:href="@{/politica}" target="_blank">Política de
                   privacidad</a></li>
             </ul>
           </div>

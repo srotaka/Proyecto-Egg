@@ -2,6 +2,7 @@ package grupo7.egg.nutrividas.repositorios;
 
 import grupo7.egg.nutrividas.entidades.Canasta;
 import grupo7.egg.nutrividas.entidades.Comedor;
+import grupo7.egg.nutrividas.entidades.Foto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +22,8 @@ public interface CanastaRepository extends JpaRepository<Canasta,Long> {
     Canasta findByDescripcionAndComedor(String descripcion, Comedor comedor);
 
     List<Canasta> findByComedor(Comedor comedor);
+
+    @Modifying
+    @Query("UPDATE Canasta c SET c.foto = :foto WHERE c.id = :id")
+    void actualizarFoto(Foto foto, Long id);
 }
