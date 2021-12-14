@@ -43,7 +43,7 @@ public class ComedorControlador {
                                          @RequestParam(value = "size", required = false, defaultValue = "8") int size,
                                          @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                          HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("pruebac");
+        ModelAndView mav = new ModelAndView("comedores");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
