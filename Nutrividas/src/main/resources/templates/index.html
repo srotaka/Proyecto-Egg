@@ -59,7 +59,19 @@
               <li><a href="#faq">Preguntas Frecuentes</a></li>
             </ul>
           </li>
-          <li><a th:href="@{/comedor}">Comedores</a></li>
+          <li class="drop-down"><a href="#">Mostrar</a>
+            <ul>
+              <li><a th:href="@{/comedor}">Comedores Registrados</a>
+              <li><a th:href="@{/producto}">Lista de Productos</a>
+            </ul>
+          </li>
+          <li class="drop-down"><a href="#">Registrar</a>
+            <ul>
+              <li><a th:href="@{/comedor/crear}">Nuevo Comedor</a>
+              <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
+              <li><a th:href="@{/canasta/crear}">Nueva Canasta</a>
+            </ul>
+          </li>
           <li><a href="#contact">Contáctanos</a></li>&nbsp;&nbsp;&nbsp;
           <!-- Botón Usuario si está loggeado -->
           <li class="drop-down" sec:authorize="isAuthenticated()">
@@ -644,10 +656,11 @@
               <li><i class="bx bx-chevron-right"></i> <a href="#">¿Qué hacemos?</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Nuestro Equipo</a></li>
               <li><i class="bx bx-chevron-right"></i> <a th:href="@{/condiciones}" target="_blank">Términos y
-                  condiciones</a>
+                  Condiciones</a>
               </li>
               <li><i class="bx bx-chevron-right"></i> <a th:href="@{/politica}" target="_blank">Política de
-                  privacidad</a></li>
+                  Privacidad</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a th:href="@{/confirmacion}" target="_blank">Confirmacion de Registro</a></li>
             </ul>
           </div>
 

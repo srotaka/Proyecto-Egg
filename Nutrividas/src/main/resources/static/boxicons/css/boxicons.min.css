@@ -856,6 +856,7 @@
   }
   .bx-basket:before {
     content: "\e99f";
+    color: #1bac91;
   }
   .bx-basketball:before {
     content: "\e9a0";

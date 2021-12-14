@@ -131,13 +131,13 @@ public class ProductoContolador {
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable("id") Long id){
         productoServicio.habilitarProducto(id);
-        return new RedirectView("/productosFlor");
+        return new RedirectView("/productosSil");
     }
 
     @PostMapping("/eliminar/{id}")
     public RedirectView deshabilitar(@PathVariable("id") Long id){
         productoServicio.deshabilitarProducto(id);
-        return new RedirectView("/productosFlor");
+        return new RedirectView("/productosSil");
     }
 
     @GetMapping
@@ -146,7 +146,7 @@ public class ProductoContolador {
                                         @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                                     HttpServletRequest request) {
 
-        ModelAndView mav = new ModelAndView("productosFlor");
+        ModelAndView mav = new ModelAndView("productosSil");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -165,7 +165,7 @@ public class ProductoContolador {
                                            @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                               HttpServletRequest request){
 
-        ModelAndView mav = new ModelAndView("productosFlor");
+        ModelAndView mav = new ModelAndView("productosSil");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -204,7 +204,7 @@ public class ProductoContolador {
                                             @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                             HttpServletRequest request){
 
-        ModelAndView mav = new ModelAndView("productosFlor");
+        ModelAndView mav = new ModelAndView("productosSil");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {

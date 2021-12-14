@@ -12,7 +12,7 @@
     <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
     <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts -->   
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap"
@@ -29,8 +29,6 @@
     <!-- Template Main CSS File -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <link th:href="@{/css/comedores.css}" rel="stylesheet">
-
-
 </head>
 
 <body>
@@ -61,7 +59,20 @@
                 <ul>
                     <li><a th:href="@{/}">Inicio</a></li>
                     <li><a th:href="@{/#contact}">Contáctanos</a></li>
-                    <li><a th:href="@{/comedor/crear}">Registrar Comedores</a></li>&nbsp;&nbsp;&nbsp;
+                    <li class="drop-down"><a href="#">Mostrar</a>
+                        <ul>
+                            <li><a th:href="@{/producto}">Lista de Productos</a>
+                            
+                        </ul>
+                    </li>
+                    <li class="drop-down"><a href="#">Registrar</a>
+                        <ul>
+                            <li><a th:href="@{/comedor/crear}">Nuevo Comedor</a>
+                            <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
+                            <li><a th:href="@{/canasta/crear}">Nueva Canasta</a>
+                        </ul>
+                    </li>&nbsp;&nbsp;&nbsp;
+
                     <!-- Botón Usuario si está loggeado -->
                     <li class="drop-down" sec:authorize="isAuthenticated()">
                         <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#"
@@ -112,6 +123,7 @@
                         <th scope="row">Provincia</th>
                         <th scope="row">Cantidad de Personas</th>
                         <th scope="row">Editar Comedor</th>
+                        <th scope="row">Canastas</th>
                     </tr>
                 </thead>
                 <tbody id="myTable" th:each="comedor : ${comedores.page}">
@@ -124,6 +136,11 @@
                         <td th:text="${comedor.direccion.provincia}"></td>
                         <td th:text="${comedor.cantidadDePersonas}"></td>
                         <td> Editar</td>
+                        <td class="text-center">
+                            <a th:href="@{/comedor/crear}">
+                              <box-icon name='basket' type='solid' animation='tada-hover' color='#444444'></box-icon>
+                            </a>
+                          </td>
 
                     </tr>
                 </tbody>
@@ -156,10 +173,8 @@
             <!-- ******************** -->
 
         </div> <!-- End Tabla productos -->
-
-
-
     </section>
+    
     <!-- ======= Footer ======= -->
     <footer id="footer2">
         <div class="copyright2">
@@ -181,6 +196,7 @@
     <script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
     <script th:src="@{/venobox/venobox.min.js}"></script>
     <script th:src="@{/aos/aos.js}"></script>
+    <script th:src="@{https://unpkg.com/boxicons@2.1.1/dist/boxicons.js}"></script>
 
     <!-- Template Main JS File -->
     <script th:src="@{/js/main.js}"></script>

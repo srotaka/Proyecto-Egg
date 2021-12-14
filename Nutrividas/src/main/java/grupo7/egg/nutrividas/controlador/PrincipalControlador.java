@@ -52,6 +52,11 @@ public class PrincipalControlador {
     public ModelAndView contacto(){
         return new ModelAndView("contacto");
     }
+    
+    @GetMapping("/confirmacion")
+    public ModelAndView confirmacion(){
+        return new ModelAndView("confirmacion-mail");
+    }
 
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false) String error, @RequestParam(required = false)String logout, Principal principal, HttpServletRequest request){

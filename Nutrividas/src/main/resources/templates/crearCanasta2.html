@@ -6,7 +6,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta content="ie=edge" http-equiv="X-UA-Compatible" />
   <meta content="Nutrividas" name="Grupo7" />
-  <title>Nutrividas - Productos</title>
+  <title>Nutrividas - Crear Canasta</title>
 
   <!-- Favicons -->
   <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
@@ -28,7 +28,7 @@
 
   <!-- Template Main CSS File -->
   <link th:href="@{/css/style.css}" rel="stylesheet">
-  <link rel="stylesheet" th:href="@{/css/productos.css}">
+  <link th:href="@{/css/comedores.css}" rel="stylesheet">
 
 
 </head>
@@ -40,7 +40,7 @@
   <div class="container d-flex">
 
     <div class="logo">
-      <a href="index.html"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
+      <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
     </div>
 
     <div class="logo mr-auto">
@@ -49,8 +49,23 @@
 
     <nav class="nav-menu d-none d-lg-block">
       <ul>
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="#contact">Contáctanos</a></li>
+        <li><a th:href="@{/}">Inicio</a></li>
+        <li><a th:href="@{/#contact}">Contáctanos</a></li>&nbsp;&nbsp;&nbsp;
+        <!-- Botón Usuario si está loggeado -->
+        <li class="drop-down" sec:authorize="isAuthenticated()">
+          <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
+            style="margin-top: -13px;" role="button float-right">
+            <img class="rounded-circle" th:src="@{/img/user-nopic.png}" width="50">
+          </a>
+          <ul>
+            <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
+            <li class="dropdown-divider"></li>
+
+            <li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar perfil</a></li>
+            <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+          </ul>
+        </li>
+        <!-- Fin Botón Usuario si está loggeado -->
 
       </ul>
     </nav><!-- .nav-menu -->
