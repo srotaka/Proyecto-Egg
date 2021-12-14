@@ -1,6 +1,7 @@
 package grupo7.egg.nutrividas.controlador;
 
 import grupo7.egg.nutrividas.entidades.Canasta;
+import grupo7.egg.nutrividas.entidades.Elemento;
 import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.servicios.*;
@@ -43,6 +44,7 @@ public class CanastaControlador {
     private ProductoServicio productoServicio;
 
 
+
     @GetMapping("/crear")
     public ModelAndView crear(HttpServletRequest request, HttpSession session){
         ModelAndView mav = new ModelAndView("crearCanasta2");
@@ -52,11 +54,12 @@ public class CanastaControlador {
             mav.addObject("error", flashMap.get("error"));
             mav.addObject("canasta", flashMap.get("canasta"));
         } else {
-            mav.addObject("canasta", new Canasta());
+            Canasta canasta = new Canasta();
+            canasta.setElementos(elementoServicio.obtenerElemntosSesion(session.getAttribute("emailSession").toString()));
+            mav.addObject("canasta", canasta);
         }
 
         mav.addObject("comedores", comedorServicio.listarComedores());
-        mav.addObject("elementos", elementoServicio.obtenerElemntosSesion(session.getAttribute("emailSession").toString()));
         mav.addObject("titulo", "Crear Canasta");
         mav.addObject("accion", "guardar");
         return mav;
@@ -71,12 +74,14 @@ public class CanastaControlador {
     }
 
     @PostMapping("/guardar")
-    public ModelAndView guardar(@Valid @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes) {
+    public ModelAndView guardar( @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes, HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
         if (result.hasErrors()) {
             mav.addObject("comedores", comedorServicio.listarComedores());
-            mav.addObject("productos", getMapElemento());
+            Canasta canastaNueva = new Canasta();
+            canastaNueva.setElementos(elementoServicio.obtenerElemntosSesion(session.getAttribute("emailSession").toString()));
+            mav.addObject("canasta", canasta);
             mav.addObject("titulo", "Crear Canasta");
             mav.addObject("accion", "guardar");
             mav.setViewName("crearCanasta2");
@@ -84,10 +89,12 @@ public class CanastaControlador {
         }
 
         try {
-            Canasta canastaCreada = canastaServicio.crearCanasta(canasta.getDescripcion(), canasta.getCantidadDePersonas(), canasta.getElementos(), canasta.getComedor());
-
+            List<Elemento> elementos = elementoServicio.obtenerElemntosSesion(session.getAttribute("emailSession").toString());
+            Canasta canastaCreada = canastaServicio.crearCanasta(canasta.getDescripcion(), canasta.getCantidadDePersonas(), elementos, canasta.getComedor());
+            elementos.stream().forEach(e -> elementoServicio.asignarACanasta(e,canastaCreada));
             attributes.addFlashAttribute("exito", "La creación ha sido realizada satisfactoriamente");
-            mav.setViewName("redirect:/canasta");
+            mav.setViewName("redirect:/canasta/");
+
         } catch (Exception e) {
             attributes.addFlashAttribute("canasta", canasta);
             attributes.addFlashAttribute("error", e.getMessage());
@@ -100,20 +107,32 @@ public class CanastaControlador {
 /*
     @PostMapping("/guardar/2")
     public ModelAndView guarda2(@RequestParam RedirectAttributes attributes) {
-        ModelAndView mav = new ModelAndView();
+       RedirectView redirectView = new RedirectView("/canasta");
+
+        try{
 
 
-        try {
-            canastaServicio.crearCanasta(canasta.getDescripcion(), canasta.getCantidadDePersonas(), canasta.getElementos(), canasta.getComedor());
-            attributes.addFlashAttribute("exito", "La creación ha sido realizada satisfactoriamente");
-            mav.setViewName("redirect:/canasta");
-        } catch (Exception e) {
-            attributes.addFlashAttribute("canasta", canasta);
-            attributes.addFlashAttribute("error", e.getMessage());
-            mav.setViewName("redirect:/canasta/crear");
+            customerService.update(id,document,name,lastName,mail,telephone);
+            userService.update(username,mail,password,rolesVO);
+
+            //customerService.create(document,name,lastName,mail,telephone,userService.create(username,mail,password, Collections.emptyList()));
+            redirectAttributes.addFlashAttribute("success","Los cambios se han efectuado correctamente");
+
+        }catch (FieldAlreadyExistException | FieldInvalidException e){
+            redirectAttributes.addFlashAttribute("error",e.getMessage());
+            redirectAttributes.addFlashAttribute("id", id);
+            redirectAttributes.addFlashAttribute("name", name);
+            redirectAttributes.addFlashAttribute("lastName", lastName);
+            redirectAttributes.addFlashAttribute("document", document);
+            redirectAttributes.addFlashAttribute("mail", mail);
+            redirectAttributes.addFlashAttribute("telephone", telephone);
+            redirectAttributes.addFlashAttribute("username", username);
+            redirectAttributes.addFlashAttribute("password", password);
+
+            redirectView.setUrl("/customers/update/"+id);
         }
 
-        return mav;
+        return redirectView;
     }*/
 
     @GetMapping("/editar/{id}")

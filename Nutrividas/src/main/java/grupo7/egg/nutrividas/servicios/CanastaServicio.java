@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
+
 
 @Service
 public class CanastaServicio {
@@ -29,8 +27,7 @@ public class CanastaServicio {
         if(canastaRepository.existsByDescripcionAndComedor(descripcion,comedor)){
             throw new FieldAlreadyExistException("La canasta que desea crear ya existe");
         }
-        System.out.println("Elemento: "+elementos.size());
-        System.out.println("Elemento id:"+elementos.get(0).getId());
+
         Canasta canasta = new Canasta();
         canasta.setDescripcion(descripcion);
         canasta.setCantidadDePersonas(cantidadPersonas);
@@ -39,12 +36,8 @@ public class CanastaServicio {
         canasta.setAlta(true);
         Double precioFinal = 0.0;
         for (Elemento e: elementos) {
-            System.out.println("Precio :"+e.getProducto().getPrecio());
             precioFinal += (e.getProducto().getPrecio() * e.getCantidadNecesaria());
         }
-       /* for (Map.Entry<Producto, Integer> entry : productos.entrySet()) {
-           precioFinal += entry.getKey().getPrecio() * entry.getValue();
-        }*/
         canasta.setPrecio(precioFinal);
         return canastaRepository.save(canasta);
     }

@@ -28,7 +28,7 @@
 
   <!-- Template Main CSS File -->
   <link th:href="@{/css/style.css}" rel="stylesheet">
-  <link rel="stylesheet" th:href="@{/css/productos.css}">
+  <link rel="stylesheet" th:href="@{/css/canasta.css}">
 
 
 </head>
@@ -82,9 +82,9 @@
     </div>
     <!-- *************** -->
     <div class="row">
-      <div class="col col-md-6" style="background-color: #F8F9FA;">
-        <h4 th:text="${titulo}"></h4>
-        <form th:action="@{/canasta/__${accion}__}" th:object="${canasta}" method="POST">
+      <div class="col col-md-6 mb-5" style="background-color: #F8F9FA;">
+        <h4 th:text="${titulo}" class="mt-5 text-center" ></h4>
+        <form class="m-5" th:action="@{/canasta/__${accion}__}" th:object="${canasta}" method="POST">
 
           <input th:if="${canasta.id} != null" th:field="*{id}" type="hidden"
                  class="form-control rounded-pill border-0 shadow-sm px-4">
@@ -96,56 +96,90 @@
           <div class="error text-start" th:if="${#fields.hasErrors('descripcion')}"
                th:errors="*{descripcion}"></div>
 
-          <select th:with="comedor=*{comedor}" name="comedor" id="comedor" class="form-control rounded-pill border-0 shadow-sm px-4 mb-3" style="width: auto;" >
-            <option th:each="comedor : ${comedores}"
-                    th:value="${comedor.id}"
-                    th:text="${comedor.nombre}"
-                    th:selected="${canasta.comedor != null} ? ${comedor.nombre} == *{comedor.nombre} : false">
-            </option>
-          </select>
-
-          <div class="form-group mb-4">
-            <input th:field="*{cantidadDePersonas}" type="number" placeholder="Cantidad de personas" required="" autofocus=""
-                   class="form-control rounded-pill border-0 shadow-sm px-4">
-          </div>
-          <div class="error text-start" th:if="${#fields.hasErrors('cantidadDePersonas')}"
-               th:errors="*{cantidadDePersonas}"></div>
-
-            <div th:each="elemento : ${elementos}" class="form-check">
-              <input th:id="${elemento.id}"
-                     th:value="${elemento}"
-                     th:text="${elemento.producto.nombre}"
-                     th:field="*{elementos}" type="checkbox" checked>
+          <div class="row">
+            <div class="col-md-5 mr-3">
+              <select th:with="comedor=*{comedor}" name="comedor" id="comedor" class="form-control rounded-pill border-0 shadow-sm px-4 mb-3" style="width: auto;" >
+                <option th:each="comedor : ${comedores}"
+                        th:value="${comedor.id}"
+                        th:text="${comedor.nombre}"
+                        th:selected="${canasta.comedor != null} ? ${comedor.nombre} == *{comedor.nombre} : false">
+                </option>
+              </select>
             </div>
-
-
-              <div th:unless="${elementos == null}"  th:each="elemento, stat : ${elementos}" class="basket-product">
-
-                <div class="item">
-                  <div>
-                     <!-- <img th:src="http://localhost:8080/fotos/'+${#strings.toString(elemento.producto.foto.id)}+'">-->
-                  </div>
-
-                  <div class="product-details">
-                    <h1><span class="item-quantity" th:text="${elemento.producto.nombre}"></span></h1>
-                  </div>
-                </div>
-                <div class="price" th:text="${elemento.producto.precio}"></div>
-                <div class="quantity">
-                  <!--<input th:field="*{elementos[__${stat.index}__].cantidadNecesaria}" th:value="${elemento.producto.cantidadNecesaria}" type="number"  min="1" class="quantity-field">-->
-                </div>
-                <div class="subtotal">0</div>
-                <!-- <div class="remove">
-                  <button>Eliminar</button>
-                </div> -->
+            <div class="col-md-6">
+              <div class="form-group mb-4">
+                <input th:field="*{cantidadDePersonas}" type="number" placeholder="Cantidad de personas" required="" autofocus=""
+                       class="form-control rounded-pill border-0 shadow-sm px-4">
               </div>
+              <div class="error text-start" th:if="${#fields.hasErrors('cantidadDePersonas')}"
+                   th:errors="*{cantidadDePersonas}"></div>
+            </div>
+          </div>
+
+          <!--<div th:each="elemento : ${canasta.elementos}" class="form-check">
+            <input th:id="${elemento.id}" th:name="${elemento.id}" th:field="${elementos}" th:field="*{elementos}"
+                   class="form-check-input" type="checkbox"  id="flexCheckDefault">
+            <label th:for="${elemento}"  th:text="${elemento}" class="form-check-label" for="flexCheckDefault">
+            </label>
+          </div>
+
+          <tr th:each="elemento,status : ${canasta.elementos}">
+            <td><input type="checkbox" th:checked="${elemento}" th:value="*{elementos[__${status.index}__]}" th:field="*{elementos[__${status.index}__]}"/></td>
+          </tr>-->
 
           <button type="submit"
                   class="btn btn-primary btn-block text-uppercase  rounded-pill shadow-sm mb-2 mt-4"
                   id="boton-SignIn" th:text="${action == 'guardar'} ? 'Crear canasta' : 'Guardar cambios'"></button>
         </form>
+
+        <!-- TARJETA -->
+          <div class="card mb-3 ml-3" style="max-width: 540px;" th:unless="${canasta.elementos == null}"  th:each="elemento : ${canasta.elementos}">
+            <div class="row g-0">
+              <div class="col-md-4" th:if="${elemento.producto.foto == null}"
+                   th:style="'width:80px !important; heigth: 40px !important; z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
+              background-position: center;background-size: cover;'"></div>
+              <div class="col-md-4" th:unless="${elemento.producto.foto == null}" th:style="'background-image:url(http://localhost:8080/fotos/'+${elemento.producto.foto.id}+') !important;background-repeat: no-repeat;
+                background-position: center; background-size: cover;'"></div>
+              <div class="col-md-6">
+                <div class="card-body">
+                  <h5 th:text="${elemento.producto.nombre}" class="card-title"></h5>
+                  <p th:text="| $ ${elemento.producto.precio}|" class="card-text"></p></br>
+                  <p class="card-text">Cantidad:</p>
+                  <input type="number" th:id="cantidad+${elemento.producto.id}" th:name="cantidad+${elemento.producto.id}" th:value="${elemento.cantidadNecesaria}" disabled>
+                  <button th:id="editarCantidad+${elemento.producto.id}"  th:onclick="'javascript:editarCantidad(' + ${elemento.producto.id} + ')'" class=" habilitado p-0"><box-icon name='pencil'   th:id="editarIcono+${elemento.producto.id}"></box-icon></button>
+                  <button th:id="confirmarCantidad+${elemento.producto.id}"  disabled th:onclick="'javascript:confirmarCantidad(' + ${elemento.producto.id} + ')'" class=" deshabilitado p-0"><box-icon  name='check-circle' th:id="confirmarIcono+${elemento.producto.id}"></box-icon></button>
+                </div>
+              </div>
+              <div class="col-md-2 align-self-center">
+                  <form method="POST" th:action="@{/elemento/eliminar/__${elemento.id}__}">
+                      <a type="submit"><box-icon name='trash-alt' type='solid' animation='tada-hover'></box-icon></a>
+                  </form>
+              </div>
+            </div>
+          </div>
       </div>
-    </div>
+      <div class="col col-md-5 mb-5 ml-5" style="background-color: #F8F9FA;">
+        <aside>
+          <div class="summary mt-4 text-center">
+
+            <div class="summary-subtotal">
+              <div class="subtotal-title">Subtotal</div>
+              <div class="subtotal-value final-value" id="basket-subtotal">0</div>
+            </div>
+            <div class="summary-delivery">
+              <div class="summary-total-items"> Productos Seleccionados: <span class="total-items"></span></div>
+            </div>
+            <div class="summary-total">
+              <div class="total-title">Total</div>
+              <div class="total-value final-value" id="basket-total">0</div>
+            </div>
+            <div class="summary-checkout">
+              <button class="checkout-cta">Finalizar Compra</button>
+            </div>
+          </div>
+        </aside>
+
+      </div>
   </div>
 
 </section>
@@ -185,14 +219,35 @@
 
 <!-- BUSCADOR DE PRODUCTOS -->
 <script>
-        $(document).ready(function () {
-            $("#buscador").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
+
+         function editarCantidad(id){
+            var inputCantidad = document.getElementById('cantidad'+id);
+             var botonEditar = document.getElementById('editarCantidad'+id);
+             var botonConfirmar = document.getElementById('confirmarCantidad'+id);
+
+            console.log(id);
+            inputCantidad.disabled = false;
+            botonConfirmar.disabled = false;
+            botonEditar.disabled = true;
+        }
+
+        function confirmarCantidad(id){
+
+            var inputCantidad = document.getElementById('cantidad'+id);
+            var botonEditar = document.getElementById('editarCantidad'+id);
+            var botonConfirmar = document.getElementById('confirmarCantidad'+id);
+
+            inputCantidad.disabled = true;
+            botonConfirmar.disabled = true;
+            botonEditar.disabled = false;
+
+
+            var cantidad = inputCantidad.value
+            $.ajax({
+                type: 'GET',
+                url:'/elemento/editar_cantidad/'+id+'/'+cantidad
             });
-        });
+        }
 
  </script>
 </body>
