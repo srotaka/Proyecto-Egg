@@ -1,9 +1,6 @@
 package grupo7.egg.nutrividas.servicios;
 
-import grupo7.egg.nutrividas.entidades.Biografia;
-import grupo7.egg.nutrividas.entidades.Comedor;
-import grupo7.egg.nutrividas.entidades.Direccion;
-import grupo7.egg.nutrividas.entidades.Producto;
+import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.enums.Provincia;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
@@ -19,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -34,9 +32,18 @@ public class ComedorServicio {
     @Autowired
     private DireccionSevicio direccionSevicio;
 
+    @Autowired
+    private RolServicio rolServicio;
+
+    @Autowired
+    private CredencialServicio credencialServicio;
+
+    private final String ROL = "COMEDOR";
+
     @Transactional
     public Comedor crearComedor(String nombre, String calle, Integer numero, Integer codigoPostal, String localidad,String provincia,
-                                Integer cantidadDePersonas, Long telefono, String detalleBiografia){
+                                Integer cantidadDePersonas, Long telefono, String detalleBiografia,
+                                String username, String mail, String password){
 
         if(direccionSevicio.existeDireccion(calle, numero, localidad)){
             throw new FieldAlreadyExistException("La dirección '"+calle+" "+numero+","+localidad+" ya se encuentra registrada");
@@ -51,12 +58,19 @@ public class ComedorServicio {
         comedor.setTelefono(telefono);
         comedor.setBiografia(biografia);
         comedor.setAlta(true);
+
+        List<Rol> roles = new ArrayList<>();
+        roles.add(rolServicio.buscarPorNombre(ROL));
+        Credencial credencial = credencialServicio.crear(username,mail,password,roles);
+        comedor.setCredencial(credencial);
         return comedorRepository.save(comedor);
     }
 
     @Transactional
     public Comedor modificarComedor(Long id,String nombre, String calle, Integer numero, Integer codigoPostal, String localidad,String provincia,
-                                    Integer cantidadDePersonas, Long telefono, String detalleBiografia){
+                                    Integer cantidadDePersonas, Long telefono, String detalleBiografia,
+                                    String username, String mail, String password){
+
         Comedor comedor = comedorRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("El comedor que desa modificar no existe"));
 
@@ -68,6 +82,10 @@ public class ComedorServicio {
         comedor.setCantidadDePersonas(cantidadDePersonas);
         comedor.setTelefono(telefono);
         comedor.setAlta(true);
+        List<Rol> roles = new ArrayList<>();
+        roles.add(rolServicio.buscarPorNombre(ROL));
+        Credencial credencial = credencialServicio.crear(username,mail,password,roles);
+        comedor.setCredencial(credencial);
         return comedorRepository.save(comedor);
     }
 
@@ -98,9 +116,16 @@ public class ComedorServicio {
             throw new FieldInvalidException("El telefono es obligatorio");
         }
 
-        if(comedorRepository.buscarComedorPorNombre(nombre) != null){
+        if(comedorRepository.findByNombre(nombre) != null){
             throw new FieldInvalidException("Ya existe un comedor con ese nombre");
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Comedor buscarPorId(Long id){
+        return comedorRepository.findById(id).orElseThrow(
+                ()-> new NoSuchElementException("No existe un comedor asociado al id '"+id+"' ")
+        );
     }
 
     @Transactional(readOnly = true)
@@ -110,14 +135,25 @@ public class ComedorServicio {
 
 
     @Transactional(readOnly = true)
-    public Paged<Comedor> listarComedores(int page, int size, Sort order){
+    public Paged<Comedor> listarPaginaComedores(int page, int size, Sort order){
         Pageable request = PageRequest.of(page - 1, size, order);
         Page<Comedor> comedorPage = comedorRepository.findAll(request);
         return new Paged(comedorPage, Paging.of(comedorPage.getTotalPages(), page, size));
     }
 
     @Transactional
-    public List<Comedor> mostrarTodosLosComedores(){
+    public List<Comedor> listarComedores(){
         return comedorRepository.findAll();
+    }
+
+    @Transactional
+    public void guardarFoto(Foto foto, Long id){
+        if(foto == null){
+            throw new FieldInvalidException("La imagen no puede ser nula");
+        }
+        comedorRepository.findById(id).orElseThrow(
+                ()->new NoSuchElementException("No se halló un comedor con el id '"+id+"'"));
+
+        comedorRepository.actualizarFoto(foto,id);
     }
 }

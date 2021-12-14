@@ -2,7 +2,6 @@ package grupo7.egg.nutrividas.controlador;
 
 import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Nutricionista;
-import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.exeptions.InvalidDataException;
 import grupo7.egg.nutrividas.servicios.ComedorServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;

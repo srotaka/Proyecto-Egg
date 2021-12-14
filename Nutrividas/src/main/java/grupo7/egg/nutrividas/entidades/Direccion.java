@@ -10,8 +10,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,16 +25,20 @@ public class Direccion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "El campo 'calle' es obligatorio")
+    @NotBlank(message = "El campo 'calle' es obligatorio")
     private String calle;
-    @Pattern(regexp="\\d{4}",message = "El número debe contener 4 dígitos")
+
+    @NotNull(message = "El campo 'número' es obligatorio")
+    @Max(value = 9999,message = "El campo 'número' debe contener como máximo 4 dígitos")
     private Integer numero;
-    @NotEmpty(message = "El campo 'código postal' es obligatorio")
-    @Pattern(regexp="\\d{4}",message = "El código postal debe contener 4 dígitos")
+
+    @NotNull(message = "El  'código postal' es obligatorio")
+    @Min(value = 1000,message = "El campo ''código postal' debe contener 4 dígitos")
+    @Max(value = 9999,message = "El campo ''código postal' debe contener 4 dígitos")
     private Integer codigoPostal;
-    @NotEmpty(message = "El campo 'localidad' es obligatorio")
+    @NotBlank(message = "El campo 'localidad' es obligatorio")
     private String localidad;
-    @NotEmpty(message = "El campo 'provincia' es obligatorio")
+    @NotBlank(message = "El campo 'provincia' es obligatorio")
     private String provincia;
     private String pais;
     private Boolean alta;

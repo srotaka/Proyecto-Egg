@@ -10,13 +10,14 @@
 .signup-section {
   padding-left: 12%;
   padding-right: 12%;
-  padding-top: 10%;
-  margin-bottom: 50px;
+  padding-top: 6.5%;
+  margin-bottom: 3%;
+  
 }
 
 .login,
 .image {
-  min-height: 100vh;
+  min-height: auto;
 }
 
 .bg-image {
@@ -33,14 +34,22 @@ body {
 }
 
 #boton-SignIn {
-    background-color:  #1bac91 !important;
-    border-color: #1bac91 !important;
-    width: auto !important
+  color: white !important;
+  background-color: #1bac91 !important;
+  border: 1px solid #1fc5a7;
+  margin-top: 1px;
+  border-radius: 6px  !important;
+  padding: 6px 15px 4px 15px !important;
+  max-height: 40px !important;
+  text-align: center !important;
+  vertical-align: center !important;
 }
 
 #boton-SignIn:hover {
-    background-color:  #08493d !important;
-    transition: 1.5s;
+  background-color:  #1a8673 !important;
+  border-radius: 6px !important;
+  border: 1px solid #1fc5a7;
+  transition: 1s;
 }
 
 #boton-SignIn:not(:hover) {   
@@ -80,7 +89,8 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
 #mensaje-Bienvenida-SignUp {
-    font-size: 2.9rem;
+    font-size: 40px;
+    text-align: center;
 }
 
 #mensaje-Secundario-SignUp {
@@ -97,7 +107,7 @@ input[type="number"]::-webkit-outer-spin-button {
   color: #fff;
   font-size: 14px;
   text-align: center;
-  
+  position: fixed;
   height: 50px;
   background-color: #1d1d1d;
   bottom: 0px;
@@ -107,3 +117,4 @@ input[type="number"]::-webkit-outer-spin-button {
   padding-top: 15px;
   
 }
+

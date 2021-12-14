@@ -69,11 +69,22 @@ p {
   font: "Montserrat", sans-serif;
   text-align: justify;
 }
-/*--------------------------------------------------------------
-  # Footer
-  --------------------------------------------------------------*/
 
-#footer .copyright {
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+
+#footer2 .copyright2 {
+  color: #fff;
+  font-size: 14px;
   text-align: center;
-  padding-top: 30px;
+  position: fixed;
+  height: 50px;
+  background-color: #1d1d1d;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+  padding-top: 15px;
+  
 }

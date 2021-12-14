@@ -9,8 +9,8 @@
     <title>Nutrividas - Productos</title>
 
     <!-- Favicons -->
-    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" />
-    <link href="../static/img/favicon.ico" rel="apple-touch-icon">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
+    <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,16 +19,16 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/icofont/icofont.min.css" rel="stylesheet">
-    <link href="../static/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="../static/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="../static/venobox/venobox.css" rel="stylesheet">
-    <link href="../static/aos/aos.css" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/icofont/icofont.min.css}" rel="stylesheet">
+    <link th:href="@{/boxicons/css/boxicons.min.css}" rel="stylesheet">
+    <link th:href="@{/owl.carousel/assets/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/venobox/venobox.css}" rel="stylesheet">
+    <link th:href="@{/aos/aos.css}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="../static/css/style.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/productos.css">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/productos.css}">
 
 
 </head>
@@ -80,6 +80,7 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
+                    <th class="text-center">Foto</th>
                     <th class="text-center">Nombre</th>
                     <th class="text-center">Marca</th>
                     <!-- <th>Categoría</th> -->
@@ -93,6 +94,7 @@
             </thead>
             <tbody id="myTable">
                 <tr>
+                    <td></td>
                     <td>Cereales Integrales Frutal</td>
                     <td>Trix</td>
 
@@ -161,24 +163,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Vendor JS Files -->
-    <script src="../static/jquery/jquery.min.js"></script>
-    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../static/jquery.easing/jquery.easing.min.js"></script>
-    <script src="../static/php-email-form/validate.js"></script>
-    <script src="../static/owl.carousel/owl.carousel.min.js"></script>
-    <script src="../static/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="../static/venobox/venobox.min.js"></script>
-    <script src="../static/aos/aos.js"></script>
-    <script src="../static/js/loader.js"> </script>
+    <script th:href="@{/jquery/jquery.min.js}"></script>
+    <script th:href="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:href="@{/jquery.easing/jquery.easing.min.js}"></script>
+    <script th:href="@{/php-email-form/validate.js}"></script>
+    <script th:href="@{/owl.carousel/owl.carousel.min.js}"></script>
+    <script th:href="@{/isotope-layout/isotope.pkgd.min.js}"></script>
+    <script th:href="@{/venobox/venobox.min.js}"></script>
+    <script th:href="@{/aos/aos.js}"></script>
+    <script th:href="@{/js/loader.js}"> </script>
 
     <!-- Template Main JS File -->
-    <script src="../static/js/main.js"></script>
+    <script th:href="@{/js/main.js}"></script>
 
     <!--  JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- JS PARA TITULO -->
-     <script src="../static/js/titulo.js"></script>
+     <script th:href="@{/js/titulo.js}"></script>
 
     <!-- BUSCADOR DE PRODUCTOS -->
     <script>

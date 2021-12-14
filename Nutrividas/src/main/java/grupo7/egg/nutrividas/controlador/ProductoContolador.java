@@ -8,10 +8,10 @@ import grupo7.egg.nutrividas.exeptions.InvalidDataException;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.MarcaServicio;
 import grupo7.egg.nutrividas.servicios.ProductoServicio;
-import grupo7.egg.nutrividas.util.paginacion.Paged;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-@RestController
+@Controller
 @RequestMapping("/producto")
 public class ProductoContolador {
 
@@ -42,7 +42,7 @@ public class ProductoContolador {
 
     @GetMapping("/crear")
     public ModelAndView crearProducto(HttpServletRequest request){
-        ModelAndView mav= new ModelAndView("");
+        ModelAndView mav= new ModelAndView("crearProductoFlor");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -53,13 +53,13 @@ public class ProductoContolador {
         }
         mav.addObject("marcas", marcaServicio.listarMarcas());
         mav.addObject("titulo", "Crear producto");
-        mav.addObject("action", "guardar");
+        mav.addObject("accion", "guardar");
         return mav;
     }
 
     @GetMapping("/editar/{id}")
     public ModelAndView editarProducto(@PathVariable("id")Long id,HttpServletRequest request,RedirectAttributes attributes){
-        ModelAndView mav= new ModelAndView("");
+        ModelAndView mav= new ModelAndView("crearProductoFlor");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         try{
@@ -68,12 +68,12 @@ public class ProductoContolador {
                 mav.addObject("error", flashMap.get("error"));
                 mav.addObject("producto", flashMap.get("producto"));
             } else {
-                mav.addObject("producto", new Producto());
+                mav.addObject("producto", productoServicio.obtenerProductoPorId(id));
             }
 
             mav.addObject("marcas", marcaServicio.listarMarcas());
             mav.addObject("titulo", "Editar producto");
-            mav.addObject("action", "modificar");
+            mav.addObject("accion", "modificar");
 
         }catch (Exception e){
             attributes.addFlashAttribute("error", e.getMessage());
@@ -129,53 +129,112 @@ public class ProductoContolador {
     }
 
     @PostMapping("/habilitar/{id}")
-    public RedirectView habilitar(@PathVariable Long id){
+    public RedirectView habilitar(@PathVariable("id") Long id){
         productoServicio.habilitarProducto(id);
-        return new RedirectView("/producto");
+        return new RedirectView("/productosSil");
     }
 
     @PostMapping("/eliminar/{id}")
-    public RedirectView deshabilitar(@PathVariable Long id){
+    public RedirectView deshabilitar(@PathVariable("id") Long id){
         productoServicio.deshabilitarProducto(id);
-        return new RedirectView("/producto");
+        return new RedirectView("/productosSil");
     }
 
-    @GetMapping(value = "",params = {"page","size","order"})
+    @GetMapping
     public ModelAndView buscarProductos(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                         @RequestParam(value = "size", required = false, defaultValue = "5") int size,
                                         @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                                     HttpServletRequest request) {
 
-        ModelAndView mav = new ModelAndView("");
+        ModelAndView mav = new ModelAndView("productosSil");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
         }
-        mav.addObject("productoPagina", productoServicio.buscarTodos(page,size,getSort(order)));
+        mav.addObject("productos", productoServicio.buscarTodos(page,size,getSort(order)));
+        mav.addObject("rutaActual",obtenerRutaActual(""));
         return mav;
     }
 
-    @GetMapping(value = "",params = {"categoria","page","size","order"})
-    public Paged<Producto> buscarCategoria(@RequestParam(value = "categoria") String categoria,
+    @GetMapping(value = "/filtrar")
+    public ModelAndView buscarPorTodosCaompos(@RequestParam(value = "busqueda") String busqueda,
+                                           @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                           @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                                           @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
+                                              HttpServletRequest request){
+
+        ModelAndView mav = new ModelAndView("productosSil");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+        }
+
+        mav.addObject("productos", productoServicio.buscarPorTodosCampos(busqueda,page,size,getSort(order)));
+        mav.addObject("rutaActual", obtenerRutaActual(request.getRequestURL()+"?busqueda="+busqueda));
+        return mav;
+    }
+    @GetMapping(value = "/apto")
+    public ModelAndView buscarAptoPatologías(@RequestParam(value = "apto") String apto,
+                                              @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                              @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                                              @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
+                                              HttpServletRequest request){
+
+        ModelAndView mav = new ModelAndView("productosFlor");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+        }
+
+        mav.addObject("productos", productoServicio.buscarApto(true,apto,page,size,getSort(order)));
+        mav.addObject("rutaActual", obtenerRutaActual(request.getRequestURL()+"?apto="+apto));
+        return mav;
+    }
+
+    @GetMapping(value = "/cat")
+    public ModelAndView buscarCategoria(@RequestParam(value = "categoria") String categoria,
                                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                             @RequestParam(value = "size", required = false, defaultValue = "5") int size,
-                                            @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order
-                                            ){
+                                            @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
+                                            HttpServletRequest request){
 
-        return productoServicio.buscarPorCategoria(categoria,page,size,getSort(order));
+        ModelAndView mav = new ModelAndView("productosSil");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+        }
+
+        mav.addObject("productos", productoServicio.buscarPorCategoria(categoria,page,size,getSort(order)));
+
+        mav.addObject("rutaActual", obtenerRutaActual(request.getRequestURL()+"?categoria="+categoria));
+
+        return mav;
     }
+
 
     @Value("${picture.products.location}")
     public String PRODUCTOS_UPLOADED_FOLDER;
 
-    @PostMapping("/imagen/crear")
+    @PostMapping("/imagen/actualizar")
     public void  uploadImage(@RequestParam("id")Long id,@RequestParam("imagen") MultipartFile multipartFile,
                              UriComponentsBuilder componentsBuilder){
 
         Producto producto = productoServicio.obtenerProductoPorId(id);
-        Foto foto = fotoServicio.crearFoto(PRODUCTOS_UPLOADED_FOLDER ,String.valueOf(id),producto.getNombre()+"-"+producto.getMarca(),multipartFile);
+        Foto foto;
+        if(producto.getFoto() == null){
+            foto = fotoServicio.crearFoto(PRODUCTOS_UPLOADED_FOLDER ,String.valueOf(id),producto.getNombre()+"-"+producto.getMarca(),multipartFile);
+        }else{
+            foto = fotoServicio.actualizarFoto(producto.getFoto(),PRODUCTOS_UPLOADED_FOLDER ,String.valueOf(id),producto.getNombre()+"-"+producto.getMarca(),multipartFile);
+        }
+
         productoServicio.crearFoto(foto,id);
     }
 
@@ -198,8 +257,29 @@ public class ProductoContolador {
         }
     }
 
+    public static String obtenerRutaActual(String ruta) {
+
+        String uri = "";
+        System.out.println("ruta: "+ruta);
+        if(ruta.length() > 29){
+            uri = ruta.substring(30);
+        }
+        String removeParameterPage = "";
+        if(!uri.equals("")){
+            removeParameterPage = uri.replaceAll("/[&?]page=\\d+/","");
+        }
+
+        if(removeParameterPage.contains("?")){
+            return removeParameterPage.concat("&");
+        }else{
+            return removeParameterPage.concat("?");
+        }
+
+    }
 
 
+
+    /*
     @PostMapping("/guardarRest")
     public Producto crearProducto(@RequestBody @Valid Producto producto,BindingResult result){
 
@@ -213,5 +293,5 @@ public class ProductoContolador {
                 producto.getAptoIntoleranteLactosa(),producto.getAptoCeliacos(),producto.getAptoHipertensos(),
                 producto.getAptoDiabeticos());
 
-    }
+    }*/
 }

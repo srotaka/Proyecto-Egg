@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/marcas")
@@ -29,7 +30,12 @@ public class MarcaControlador {
     }
 
     @GetMapping(value = "/exists",params = {"nombre"})
-    public boolean existsByNombre(@RequestParam("nombrgit ae")String nombre){
+    public boolean existsByNombre(@RequestParam("nombre")String nombre){
         return marcaServicio.existsByNombre(nombre);
+    }
+
+    @GetMapping(value = "")
+    public List<Marca> verTodas(){
+        return marcaServicio.listarMarcas();
     }
 }

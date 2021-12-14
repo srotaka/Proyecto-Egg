@@ -1,0 +1,110 @@
+:root {
+    --background-dark: #2d3548;
+    --text-light: rgba(255, 255, 255, 0.6);
+    --text-lighter: rgba(255, 255, 255, 0.9);
+    --spacing-s: 8px;
+    --spacing-m: 16px;
+    --spacing-l: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 64px;
+    --width-container: 1200px;
+  }
+  .confirmation-section {
+    padding-left: 12%;
+    padding-right: 12%;
+    padding-top: 10%;
+    margin-bottom: 50px;
+  }
+  
+  .bg-image {
+    background-image: url("../img/children24.jpg");
+    background-size: cover;
+    background-position: center center;
+    border-radius: 20px;
+  }
+
+  * {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    height: 100%;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+  }
+  
+  body {
+    color: #444444 !important;
+    font-family: "Newsreader", serif !important;
+    padding-top: 6rem;
+    height: 100%;
+    
+  }
+  
+  #mensaje-registro {
+    font-size: 35px;
+    text-align: center;
+}
+  /*--------------------------------------------------------------
+    # TÍTULO
+    --------------------------------------------------------------*/
+  
+  #titulo {
+    text-align: center !important;  
+    color: #444444;
+    font: normal 40px/50px "Montserrat", sans-serif;
+    background: url("../img/cover01.jpg") center center;
+    background-size: cover;
+    padding-bottom: 2rem;
+  }
+  
+  .texto-titulo {
+    margin-top: -40px;
+    font-family: "Monserrat", serif;
+    font-size: 50px;
+  }
+  
+  p {
+    display: inline-block;
+    vertical-align: top;
+    align-items: center;
+  }
+  
+  /*--------------------------------------------------------------
+    # Mensaje Agradecimiento
+  --------------------------------------------------------------*/
+  #thanks-msg {
+    padding-left: 8rem;
+    padding-right: 8rem;
+    text-align: justify;
+  }
+  
+  .p {
+    color: #444444;
+    font: "Montserrat", sans-serif;
+    text-align: justify;
+  }
+  
+  /*--------------------------------------------------------------
+  # Footer
+  --------------------------------------------------------------*/
+  
+  #footer2 .copyright2 {
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    position: fixed;
+    height: 50px;
+    background-color: #1d1d1d;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+    padding-top: 15px;
+    
+  }
+  
+  
