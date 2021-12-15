@@ -162,6 +162,7 @@
                                                     th:if="${#fields.hasErrors('direccion.calle')}" th:errors="*{calle}"
                                                     style="color:red;"></div>
                                             </div>
+
                                             <div class="col">
                                                 <label for="numero">Número</label>
                                                 <div class="form-group mb-3">
@@ -173,86 +174,86 @@
                                                     th:if="${#fields.hasErrors('direccion.numero')}"
                                                     th:errors="*{numero}" style="color:red;"></div>
                                             </div>
-
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="localidad">Localidad</label>
-                                                    <div class="form-group mb-3">
-                                                        <input th:field="*{direccion.localidad}" id="inputLocaliad"
-                                                            type="text" placeholder="" required="" autofocus=""
-                                                            class="form-control border-0 shadow-sm px-4">
-                                                    </div>
-                                                    <div class="error text-start"
-                                                        th:if="${#fields.hasErrors('direccion.localidad')}"
-                                                        th:errors="*{direccion.localidad}" style="color:red;"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="localidad">Localidad</label>
+                                                <div class="form-group mb-3">
+                                                    <input th:field="*{direccion.localidad}" id="inputLocaliad"
+                                                        type="text" placeholder="" required="" autofocus=""
+                                                        class="form-control border-0 shadow-sm px-4">
                                                 </div>
-                                                <div class="col">
-                                                    <label for="provincia">Provincia</label>
-                                                    <div class="form-group mb-3">
-                                                        <input th:field="*{direccion.provincia}" id="inputProvincia"
-                                                            type="text" placeholder="" required="" autofocus=""
-                                                            class="form-control border-0 shadow-sm px-4">
-                                                    </div>
-                                                    <div class="error text-start"
-                                                        th:if="${#fields.hasErrors('direccion.provincia')}"
-                                                        th:errors="*{direccion.provincia}" style="color:red;"></div>
-                                                </div>
+                                                <div class="error text-start"
+                                                    th:if="${#fields.hasErrors('direccion.localidad')}"
+                                                    th:errors="*{direccion.localidad}" style="color:red;"></div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="codigoPostal">Código Postal</label>
-                                                    <div class="form-group mb-3">
-                                                        <input th:field="*{direccion.codigoPostal}" id="inputLocaliad"
-                                                            type="number" placeholder="" required="" autofocus=""
-                                                            class="form-control border-0 shadow-sm px-4">
-                                                    </div>
-                                                    <div class="error text-start"
-                                                        th:if="${#fields.hasErrors('direccion.codigoPostal')}"
-                                                        th:errors="*{direccion.codigoPostal}" style="color:red;"></div>
+                                            <div class="col">
+                                                <label for="provincia">Provincia</label>
+                                                <div class="form-group mb-3">
+                                                    <input th:field="*{direccion.provincia}" id="inputProvincia"
+                                                        type="text" placeholder="" required="" autofocus=""
+                                                        class="form-control border-0 shadow-sm px-4">
                                                 </div>
-                                                <div class="col">
-                                                    <label for="cantidad_de_personas">Cantidad de niños</label>
-                                                    <div class="form-group mb-3">
-                                                        <input th:field="*{cantidadDePersonas}"
-                                                            id="inputCantidadPersonas" type="number" placeholder=""
-                                                            required="" autofocus=""
-                                                            class="form-control border-0 shadow-sm px-4">
-                                                    </div>
-                                                    <div class="error text-start"
-                                                        th:if="${#fields.hasErrors('cantidadDePersonas')}"
-                                                        th:errors="*{cantidadDePersonas}" style="color:red;"></div>
+                                                <div class="error text-start"
+                                                    th:if="${#fields.hasErrors('direccion.provincia')}"
+                                                    th:errors="*{direccion.provincia}" style="color:red;"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="codigoPostal">Código Postal</label>
+                                                <div class="form-group mb-3">
+                                                    <input th:field="*{direccion.codigoPostal}" id="inputLocaliad"
+                                                        type="number" placeholder="" required="" autofocus=""
+                                                        class="form-control border-0 shadow-sm px-4">
                                                 </div>
+                                                <div class="error text-start"
+                                                    th:if="${#fields.hasErrors('direccion.codigoPostal')}"
+                                                    th:errors="*{direccion.codigoPostal}" style="color:red;"></div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="cantidad_de_personas">Cantidad de niños</label>
+                                                <div class="form-group mb-3">
+                                                    <input th:field="*{cantidadDePersonas}" id="inputCantidadPersonas"
+                                                        type="number" placeholder="" required="" autofocus=""
+                                                        class="form-control border-0 shadow-sm px-4">
+                                                </div>
+                                                <div class="error text-start"
+                                                    th:if="${#fields.hasErrors('cantidadDePersonas')}"
+                                                    th:errors="*{cantidadDePersonas}" style="color:red;"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="mail">Correo Electrónico</label>
+                                                <div class="form-group mb-3">
+                                                    <input th:field="*{credencial.mail}" id="inputmail" type="email"
+                                                        placeholder="" required="" autofocus=""
+                                                        class="form-control border-0 shadow-sm px-4">
+                                                </div>
+                                                <div class="error text-start"
+                                                    th:if="${#fields.hasErrors('credencial.mail')}"
+                                                    th:errors="*{credencial.mail}" style="color:red;"></div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="password">Contraseña</label>
+                                                <div class="form-group mb-3">
+                                                    <input th:field="*{credencial.password}" id="inputPassword"
+                                                        type="password" placeholder="" required="" autofocus=""
+                                                        class="form-control border-0 shadow-sm px-4">
+                                                </div>
+                                                <div class="error text-start"
+                                                    th:if="${#fields.hasErrors('credencial.password')}"
+                                                    th:errors="*{credencial.password}" style="color:red;"></div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col">
-                                                    <label for="mail">Correo Electrónico</label>
-                                                    <div class="form-group mb-3">
-                                                        <input th:field="*{credencial.mail}" id="inputmail" type="email"
-                                                            placeholder="" required="" autofocus=""
-                                                            class="form-control border-0 shadow-sm px-4">
-                                                    </div>
-                                                    <div class="error text-start"
-                                                        th:if="${#fields.hasErrors('credencial.mail')}"
-                                                        th:errors="*{credencial.mail}" style="color:red;"></div>
-                                                </div>
-                                                <div class="col">
-                                                    <label for="password">Contraseña</label>
-                                                    <div class="form-group mb-3">
-                                                        <input th:field="*{credencial.password}" id="inputPassword"
-                                                            type="password" placeholder="" required="" autofocus=""
-                                                            class="form-control border-0 shadow-sm px-4">
-                                                    </div>
-                                                    <div class="error text-start"
-                                                        th:if="${#fields.hasErrors('credencial.password')}"
-                                                        th:errors="*{credencial.password}" style="color:red;"></div>
-                                                </div>
+                                        </div>
 
-                                            </div>
-
-                                            <button type="submit" class="bbtn btn-primary"
-                                                id="boton-SignIn">REGISTRAR</button>
+                                        <button type="submit" class="btn btn-primary"
+                                            id="boton-SignIn">REGISTRAR</button>
 
                                     </form>
                                 </div>
@@ -262,9 +263,7 @@
                     </div>
                 </div><!-- End -->
 
-
             </div>
-        </div>
     </section>
     <!-- ======= END FORMULARIO REGISTRO COMEDORES ======= -->
 

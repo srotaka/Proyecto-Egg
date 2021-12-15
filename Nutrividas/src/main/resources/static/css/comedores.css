@@ -127,14 +127,26 @@ body {
 
 .card__heading {
   color: var(--text-lighter);
-  font-size: auto;
+  font-size: 2.5rem;
   text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
   line-height: 1.2;
   text-align: center !important;
   vertical-align: center center !important;
-  margin-top: 50%;
-  
+  margin-top: 50%;   
 }
+/* Por debajo de 700px */
+@media screen and (max-width: 700px){
+  .card__heading{
+  font-size:12px;
+  }
+}
+  /* Por debajo de 400px */
+  @media screen and (max-width: 400px){
+  .card__heading{
+  font-size:10px;
+  } 
+  }
+
 .card__heading2 {
   color: var(--text-lighter);
   font-size: 2.5rem;
@@ -251,10 +263,11 @@ p {
 --------------------------------------------------------------*/
 .btn-modal-trigger{
   background-color: #1bac91;
+  border-color: #2f8f80;
   color: white;
   margin-top: 18px;
   border-radius: 5px;
-  
+  font-size: 13px;
 }
 
 .btn-modal-trigger:hover{
@@ -269,10 +282,24 @@ p {
   text-align: center !important;
 }
 
+
+/* Por debajo de 700px */
+@media screen and (max-width: 700px){
+  .btn-modal-trigger{
+  font-size:10px;
+  }
+}
+  /* Por debajo de 400px */
+  @media screen and (max-width: 400px){
+  .btn-modal-trigger{
+  font-size:6px;
+  } 
+  }
 /*--------------------------------------------------------------
 # PAGING
 --------------------------------------------------------------*/
 .pagination{
-  
-  padding-bottom: 5% !important;
+  padding-top: 0%;
+  padding-left: 23%;
+  padding-bottom: 15% !important;
 }
