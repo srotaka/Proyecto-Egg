@@ -1653,11 +1653,11 @@
   .table td,
   .table th {
     padding: 0.75rem;
-    vertical-align: top;
+    vertical-align: center;
     border-top: 1px solid #dee2e6;
   }
   .table thead th {
-    vertical-align: bottom;
+    vertical-align: center;
     border-bottom: 2px solid #dee2e6;
   }
   .table tbody + tbody {
@@ -1668,7 +1668,7 @@
     padding: 0.3rem;
   }
   .table-bordered {
-    border: 1px solid #dee2e6;
+    border: 0px solid #dee2e6;
   }
   .table-bordered td,
   .table-bordered th {
@@ -4461,6 +4461,7 @@
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
   }
+
   .card > hr {
     margin-right: 0;
     margin-left: 0;
