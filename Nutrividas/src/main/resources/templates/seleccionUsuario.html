@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta content="Nutrividas" name="Grupo7" />
+    <title>Nutrividas - Comedores</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
+    <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap"
+          rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/icofont/icofont.min.css}" rel="stylesheet">
+    <link th:href="@{/boxicons/css/boxicons.min.css}" rel="stylesheet">
+    <link th:href="@{/owl.carousel/assets/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/venobox/venobox.css}" rel="stylesheet">
+    <link th:href="@{/aos/aos.css}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/comedores.css}" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+
+    <!-- PRELOADER -->
+    <div class="loader-center" id="onload">
+        <div class="loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+    <!-- END PRELOADER -->
+
+    <div class="container d-flex">
+        <div class="logo">
+            <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
+        </div>
+        <div class="logo mr-auto">
+            <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
+        </div>
+        <nav class="nav-menu d-none d-lg-block">
+            <ul>
+                <li><a th:href="@{/}">Inicio</a></li>
+                <li><a th:href="@{/#contact}">Contáctanos</a></li>
+                <li><a th:href="@{/comedor/crear}">Comedores</a></li>
+            </ul>
+        </nav><!-- .nav-menu -->
+    </div>
+</header><!-- End Header -->
+
+<!-- ======= TÍTULO ======= -->
+
+<section class="titulo" id="titulo">
+    <div class="texto-comedores">
+        <p> Comedores que alimentan</p>
+        <p>
+            <span class="word color">sonrisas</span>
+        </p>
+    </div>
+        <p> Seleccione su rol</p>
+</section><!-- End TÍTULO -->
+
+<!-- ======= COMEDORES CARDS ======= -->
+<section class="hero-section">
+    <div class="card-grid">
+        <a class="card" id="usuario" >
+            <div class="card__background" th:style="'background-image:url(../img/donante.jpg)'"> </div>
+            <div class="card__content" style="text-align: center;">
+                <h2 class="card__heading" th:text="Donante"></h2>
+                <a class="text-decoration-none" th:href="@{/signup/usuario}">Donante</a>
+
+            </div>
+
+        </a>
+        <a class="card" id="nutricionista">
+            <div class="card__background" th:style="'background-image:url(/img/nutricionistaCard.jpg)'"> </div>
+            <div class="card__content" style="text-align: center;" th:href="@{/signup/usuario}">
+                <h2 class="card__heading" th:text="Nutricionista"></h2>
+                <a class="text-decoration-none" th:href="@{/signup/nutricionista}">Nutricionista</a>
+            </div>
+
+        </a>
+
+        <a class="card" id="comedor">
+            <div class="card__background" th:style="'background-image:url(/img/comedorCard.jpg)'"> </div>
+            <div class="card__content" style="text-align: center;">
+                <h2 class="card__heading" th:text="Comedor"></h2>
+
+                <a class="text-decoration-none" th:href="@{/signup/comedor}">Comedor</a>
+            </div>
+
+        </a>
+
+        <div>
+            <p>ROLES</p>
+                <a class="text-decoration-none" th:href="@{/signup/usuario}">Donante</a>
+                <a class="text-decoration-none" th:href="@{/signup/nutricionista}">Nutricionista</a>
+                <a class="text-decoration-none" th:href="@{/signup/comedor}">Comedor</a>
+
+        </div>
+    </div>
+</section> <!-- End Comedores Cards -->
+
+
+<!-- ======= Footer ======= -->
+<footer id="footer2">
+    <div class="copyright2">
+        Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
+        reservados
+    </div>
+</footer><!-- End Footer -->
+
+
+
+<!-- ======= BACK TO TOP ======= -->
+<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+<!-- ======= BACK TO TOP ======= -->
+
+<!-- Vendor JS Files -->
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/jquery.easing/jquery.easing.min.js}"></script>
+<script th:src="@{/php-email-form/validate.js}"></script>
+<script th:src="@{/owl.carousel/owl.carousel.min.js}"></script>
+<script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
+<script th:src="@{/venobox/venobox.min.js}"></script>
+<script th:src="@{/aos/aos.js}"></script>
+
+<!-- Template Main JS File -->
+<script th:src="@{/js/main.js}"></script>
+
+<!-- JS PARA TITULO -->
+<script th:src="@{/js/titulo.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

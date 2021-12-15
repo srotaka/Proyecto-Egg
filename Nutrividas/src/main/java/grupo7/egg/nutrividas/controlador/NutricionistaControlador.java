@@ -73,7 +73,7 @@ public class NutricionistaControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView crearProducto(@ModelAttribute @Valid Nutricionista nutricionista, BindingResult result, RedirectAttributes attributes){
+    public RedirectView guardarNutricionista(@ModelAttribute @Valid Nutricionista nutricionista, BindingResult result, RedirectAttributes attributes){
 
         RedirectView redirectView = new RedirectView("/nutricionista");
         try{
@@ -83,7 +83,10 @@ public class NutricionistaControlador {
                 throw new InvalidDataException(errorMsg,result);
             }
 
-            nutricionistaServicio.crearNutricionista(nutricionista);
+            nutricionistaServicio.crearNutricionista(nutricionista.getDocumento(), nutricionista.getNombre(),
+                    nutricionista.getApellido(), nutricionista.getMatricula(), nutricionista.getFechaNacimiento(),
+                    nutricionista.getTelefono(), nutricionista.getCredencial().getMail(),
+                    nutricionista.getCredencial().getUsername(),nutricionista.getCredencial().getPassword());
             attributes.addFlashAttribute("exito", "El nutricionista se ha creado con éxito");
         }catch (Exception e){
             attributes.addFlashAttribute("nutricionista", nutricionista);
@@ -94,7 +97,7 @@ public class NutricionistaControlador {
     }
 
     @PostMapping("/modificar")
-    public RedirectView guardarProducto(@ModelAttribute @Valid Nutricionista nutricionista, BindingResult result,RedirectAttributes attributes){
+    public RedirectView modificarNutricionista(@ModelAttribute @Valid Nutricionista nutricionista, BindingResult result,RedirectAttributes attributes){
 
         RedirectView redirectView = new RedirectView("/nutricionista");
         try{
@@ -104,7 +107,11 @@ public class NutricionistaControlador {
                 throw new InvalidDataException(errorMsg,result);
             }
 
-            nutricionistaServicio.crearNutricionista(nutricionista);
+            nutricionistaServicio.crearNutricionista(nutricionista.getDocumento(), nutricionista.getNombre(),
+                    nutricionista.getApellido(), nutricionista.getMatricula(),
+                    nutricionista.getFechaNacimiento(), nutricionista.getTelefono(),
+                    nutricionista.getCredencial().getMail(), nutricionista.getCredencial().getUsername(),
+                    nutricionista.getCredencial().getPassword());
             attributes.addFlashAttribute("exito", "El nutricionista se ha actualizado con éxito");
         }catch (Exception e){
             attributes.addFlashAttribute("nutricionista", nutricionista);
