@@ -1,7 +1,9 @@
 package grupo7.egg.nutrividas.servicios;
 
+import grupo7.egg.nutrividas.entidades.Credencial;
 import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Nutricionista;
+import grupo7.egg.nutrividas.entidades.Rol;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.NutricionistaRepository;
@@ -14,6 +16,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -23,18 +29,36 @@ public class NutricionistaServicio {
     @Autowired
     private NutricionistaRepository nutricionistaRepository;
 
-    @Transactional
-    public Nutricionista crearNutricionista(Nutricionista dto){
+    @Autowired
+    private CredencialServicio credencialServicio;
 
-        if(nutricionistaRepository.existsByMatriculaOrDocumento(dto.getMatricula(),dto.getDocumento())){
+    @Autowired
+    private RolServicio rolServicio;
+
+    private final String ROL = "NUTRICIONISTA";
+
+    @Transactional
+    public Nutricionista crearNutricionista(Long documento, String nombre, String apellido, Long matricula, LocalDate nacimiento, Long telefono, String mail, String username, String password){
+
+        Nutricionista nutricionista = new Nutricionista();
+        if(!(nutricionistaRepository.findByMatricula(matricula).isEmpty()) ||
+                !(nutricionistaRepository.findByDocumento(documento).isEmpty())){
             throw new FieldAlreadyExistException("Ya existe un nutricionista registrado con la misma matrícula o documento");
         }
+        Validations.validDateBirth(nacimiento);
+        nutricionista.setDocumento(documento);
+        nutricionista.setNombre(Validations.formatNames(nombre));
+        nutricionista.setApellido(Validations.formatNames(apellido));
+        nutricionista.setFechaNacimiento(nacimiento);
+        nutricionista.setMatricula(matricula);
+        nutricionista.setTelefono(telefono);
+        nutricionista.setAlta(true);
 
-        Validations.validDateBirth(dto.getFechaNacimiento());
-        dto.setNombre(Validations.formatNames(dto.getNombre()));
-        dto.setApellido(Validations.formatNames(dto.getApellido()));
-        dto.setAlta(true);
-        return nutricionistaRepository.save(dto);
+        List<Rol> roles = new ArrayList<>();
+        roles.add(rolServicio.buscarPorNombre(ROL));
+        Credencial credencial = credencialServicio.crear(username,mail,password,roles);
+        nutricionista.setCredencial(credencial);
+        return nutricionistaRepository.save(nutricionista);
     }
 
     @Transactional
@@ -42,8 +66,8 @@ public class NutricionistaServicio {
         Nutricionista nutricionista = nutricionistaRepository.findById(dto.getId()).orElseThrow(()->
                 new NoSuchElementException("El nutricionista que desea editar no existe"));
 
-        if(nutricionistaRepository.existsByMatriculaOrDocumento(dto.getMatricula(),dto.getDocumento()) &&
-                nutricionistaRepository.findByMatriculaOrDocumento(dto.getMatricula(),dto.getDocumento()).get().getId() != dto.getId()){
+        if(!(nutricionistaRepository.findByMatricula(dto.getMatricula()).isEmpty()) ||
+                !(nutricionistaRepository.findByDocumento(dto.getDocumento()).isEmpty())){
             throw new FieldAlreadyExistException("Ya existe un nutricionista registrado con la misma matrícula o documento");
         }
 

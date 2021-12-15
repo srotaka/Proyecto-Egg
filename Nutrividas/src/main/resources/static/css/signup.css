@@ -27,6 +27,13 @@
   border-radius: 20px;
 }
 
+.bg-image2 {
+  background-image: url("../img/nutricionistaCard.jpg");
+  background-size: cover;
+  background-position: center center;
+  border-radius: 20px;
+}
+
 body {
     color: #444444 !important;
     font-family: 'Newsreader', serif !important;

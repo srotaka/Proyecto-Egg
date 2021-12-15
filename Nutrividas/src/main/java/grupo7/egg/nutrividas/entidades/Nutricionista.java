@@ -27,37 +27,23 @@ public class Nutricionista {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @NotBlank(message = "El campo nombre es obligatorio")
-    @Pattern(regexp = "^[\\p{L} .'-]+$",message="solo se permiten letras" )
     private String nombre;
 
     @NotBlank(message = "El campo 'apellido' es obligatorio")
-    @Pattern(regexp = "^[\\p{L} .'-]+$",message="solo se permiten letras" )
     private String apellido;
 
-    @NotNull(message = "El campo 'documento' es obligatorio")
-    @Min(value = 10000000,message = "El campo 'dni' debe contener 8 dígitos")
-    @Max(value = 99999999,message = "El campo 'dni' debe contener 8 dígitos")
     private Long documento;
 
-    @NotNull(message = "El campo 'matricula' es obligatorio")
-    @Min(value = 100000000000L,message = "El campo 'matrícula' debe contener 12 caracteres")
-    @Max(value = 999999999999L,message = "El campo 'matrícula' debe contener 12 caracteres")
+
     private Long matricula;
 
-    @NotBlank(message = "El campo 'fecha de nacimiento' es obligatorio")
     private LocalDate fechaNacimiento;
 
-    @NotNull(message = "El campo 'telefono' es obligatorio")
-    @Min(value = 10000000,message = "El campo 'teléfono' debe contener 8 dígitos")
-    @Max(value = 99999999,message = "El campo 'teléfono' debe contener 8 dígitos")
     private Long telefono;
 
-    @NotBlank(message = "El campo 'mail' es obligatorio")
-    @Email(message = "El formato de email debe ser válido")
-    private String mail;
 
-    @NotEmpty(message = "Debe seleccionar al menos un comedor")
     @OneToMany(mappedBy = "nutricionista")
     private List<Comedor> comedores;
 

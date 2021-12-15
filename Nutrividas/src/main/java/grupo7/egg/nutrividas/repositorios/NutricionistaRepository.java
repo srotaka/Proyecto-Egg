@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,6 +25,12 @@ public interface NutricionistaRepository extends JpaRepository<Nutricionista,Lon
     /*
     Optional<Nutricionista> findByDocumento(Long documento);
     Optional<Comedor> findByComedor_Nombre(String comedor);*/
+
+    @Query("SELECT n FROM Nutricionista n WHERE n.matricula = :matricula")
+    List<Nutricionista> findByMatricula(Long matricula);
+
+    @Query("SELECT n FROM Nutricionista n WHERE n.documento = :documento")
+    List<Nutricionista> findByDocumento(Long documento);
 
     @Modifying
     @Query("UPDATE Nutricionista n SET n.alta = true WHERE n.id = :id")
