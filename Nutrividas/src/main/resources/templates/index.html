@@ -9,26 +9,27 @@
   <title>Inicio - Nutrividas</title>
 
   <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" />
-  <link href="../static/img/favicon.ico" rel="apple-touch-icon">
+  <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
+  <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap"
+  <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
+  <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin>
+  <link
+    th:href="@{https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap}"
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../static/icofont/icofont.min.css" rel="stylesheet">
-  <link href="../static/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../static/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="../static/venobox/venobox.css" rel="stylesheet">
-  <link href="../static/aos/aos.css" rel="stylesheet">
+  <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/icofont/icofont.min.css}" rel="stylesheet">
+  <link th:href="@{/boxicons/css/boxicons.min.css}" rel="stylesheet">
+  <link th:href="@{/owl.carousel/assets/owl.carousel.min.css}" rel="stylesheet">
+  <link th:href="@{/venobox/venobox.css}" rel="stylesheet">
+  <link th:href="@{/aos/aos.css}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="../static/css/preloader.css" rel="stylesheet">
-  <link href="../static/css/style.css" rel="stylesheet">
+  <link th:href="@{/css/preloader.css}" rel="stylesheet">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
 
 </head>
 
@@ -40,11 +41,11 @@
     <div class="container d-flex">
 
       <div class="logo">
-        <a href="index.html"><img src="../static/img/logo.png" alt="" class="img-fluid"></a>
+        <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
       </div>
 
       <div class="logo mr-auto">
-        <h2 class="text-light mt-0" style="color: #1bac91 !important;" href="index.html">&nbsp;Nutrividas</h2>
+        <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
       </div>
 
       <nav class="nav-menu d-none d-lg-block">
@@ -58,14 +59,42 @@
               <li><a href="#faq">Preguntas Frecuentes</a></li>
             </ul>
           </li>
-          <li><a href="comedores.html">Comedores</a></li>
-          <!-- <li><a href="#testimonials">Testimonios</a></li>
-          <li><a href="#team">Nuestro Equipo</a></li>
-          <li><a href="#faq">Preguntas Frecuentes</a></li> -->
+          <li class="drop-down"><a href="#">Mostrar</a>
+            <ul>
+              <li><a th:href="@{/comedor}">Comedores Registrados</a>
+              <li><a th:href="@{/producto}">Lista de Productos</a>
+            </ul>
+          </li>
+          <li class="drop-down"><a href="#">Registrar</a>
+            <ul>
+              <li><a th:href="@{/comedor/crear}">Nuevo Comedor</a>
+              <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
+              <li><a th:href="@{/canasta/crear}">Nueva Canasta</a>
+            </ul>
+          </li>
           <li><a href="#contact">Contáctanos</a></li>&nbsp;&nbsp;&nbsp;
+          <!-- Botón Usuario si está loggeado -->
+          <li class="drop-down" sec:authorize="isAuthenticated()">
+            <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
+              style="margin-top: -13px;" role="button float-right">
+              <img class="rounded-circle" th:src="@{/img/user-nopic.png}" width="50">
+            </a>
+            <ul>
+              <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
+              <li class="dropdown-divider"></li>
+
+              <li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar perfil</a></li>
+              <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+            </ul>
+          </li>
+          <!-- Fin Botón Usuario si está loggeado -->
         </ul>
+
       </nav><!-- .nav-menu -->
-      <a href="login.html" class="botonform scrollto">Inicia Sesión</a>
+
+      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+      <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a>
+      <!-- End Botón Inicio Sesión -->
     </div>
   </header><!-- End Header -->
 
@@ -74,7 +103,7 @@
     <div class="container text-center text-md-left" data-aos="fade-up">
       <h1>Bienvenidos a Nutrividas</h1>
       <h2>Alimentando sonrisas</h2>
-      <a href="login.html" class="btn-get-started scrollto">¡COMENCEMOS!</a>
+      <a th:href="@{/login}" class="btn-get-started scrollto">¡COMENCEMOS!</a>
     </div>
   </section>
   <!-- ======= End Hero Section ======= -->
@@ -85,7 +114,7 @@
 
       <div class="row">
         <div class="col-xl-6 col-lg-7" data-aos="fade-right">
-          <img src="../static/img/children10.jpg" class="img-fluid" alt="donaciones">
+          <img th:src="@{/img/children10.jpg}" class="img-fluid" alt="donaciones">
         </div>
         <div class="col-xl-6 col-lg-5 pt-5 pt-lg-0">
           <h3 data-aos="fade-up" style="text-align: center;">¡Ayúdanos a ayudar!</h3>
@@ -133,7 +162,7 @@
             <div class="icon"><i class="bx bx-detail"></i></div>
             <h4 class="title"><a href="">Regístrate</a></h4>
             <p class="description">Para comenzar a alimentar sonrisas, completa el formulario de registro desde <a
-                href="signup.html"> aquí.</a>
+                th:href="@{/signup/usuario}" target="_blank"> aquí.</a>
             </p>
           </div>
         </div>
@@ -194,7 +223,7 @@
             que podíamos esperar.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img src="../static/img/testimonial02.png" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial02.png}" class="testimonial-img" alt="">
           <h3>Eliana Paniagua</h3>
           <h4>Comedor Estoy Creciendo</h4>
         </div>
@@ -202,12 +231,12 @@
         <div class="testimonial-item">
           <p>
             <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-            Un día estábamos con mi esposa sentados afuera de nuestra casa y veíamos a los chicos que pedían casa por
+            Un día estábamos con mi esposa sentados afuera de nuestra casa y vimos a unos chicos que pedían casa por
             casa algo para cocinar. Fue así que nos acercamos a Nutrividas para que nunca falte un plato de comida a
-            ningún chico.
+            ningún niño más.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img src="../static/img/testimonial01.png" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial01.png}" class="testimonial-img" alt="">
           <h3>Gabriel Pereyra</h3>
           <h4>Comedor Nuestros Pekes</h4>
         </div>
@@ -216,11 +245,11 @@
           <p>
             <i class="bx bxs-quote-alt-left quote-icon-left"></i>
             Tuve una infancia dura y sé lo que es que te falte la comida y la leche, ir a dormir con el estómago
-            estrujando del hambre. Por eso me comprometí con esta
-            causa para que otros nenes no pasen por esta situación y podamos llenar sus pancitas.
+            vacío. Por eso me comprometí con esta
+            causa para que otros niños no pasen por esta situación y podamos llenar sus pancitas.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img src="../static/img/testimonial03.png" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial03.png}" class="testimonial-img" alt="">
           <h3>Silvia Palacios</h3>
           <h4>Comedor Caritas Sucias</h4>
         </div>
@@ -229,11 +258,11 @@
           <p>
             <i class="bx bxs-quote-alt-left quote-icon-left"></i>
             Cuando empecé con el merendero, eran 15 niños. Al año eran 30 y hoy en día ya estamos en los
-            120. Mantenía mi merendero con ayuda de las redes sociales y los vecinos. De esta manera ahora podremos
+            120. Mantenía mi merendero con ayuda de las redes sociales y los vecinos. De esta manera, ahora podremos
             llegar a muchas más personas.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img src="../static/img/testimonial04.png" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial04.png}" class="testimonial-img" alt="">
           <h3>Giuliana Cerván</h3>
           <h4>Comedor Pancitas Llenas</h4>
         </div>
@@ -246,7 +275,7 @@
             a todas las familias.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img src="../static/img/testimonial05.png" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial05.png}" class="testimonial-img" alt="">
           <h3>Cristian Solís</h3>
           <h4>Comedor Caminando de la Mano</h4>
         </div>
@@ -259,7 +288,7 @@
             por ellos recibo mucho más de lo merezco.
             <i class="bx bxs-quote-alt-right quote-icon-right"></i>
           </p>
-          <img src="../static/img/testimonial06.png" class="testimonial-img" alt="">
+          <img th:src="@{/img/testimonial06.png}" class="testimonial-img" alt="">
           <h3>Julieta Villarruel</h3>
           <h4>Comedor Juntando Esperanzas</h4>
         </div>
@@ -282,119 +311,127 @@
       <div class="row">
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-eva.png" alt="">
+            <img th:src="@{/img/team-eva.png}" alt="">
             <h4>Eva Sarapura</h4>
-            <span>FrontEnd Developer</span>
+            <span>Developer</span>
             <p>
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
               <a href="mailto:evyy.sarapura@gmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/eva-s-74335b1b2/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/eva-s-74335b1b2/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-flor.png" alt="">
+            <img th:src="@{/img/team-flor.png}" alt="">
             <h4>Florencia Zabala</h4>
-            <span>BackEnd Developer</span>
+            <span>Developer</span>
             <p>
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
               <a href="mailto:zabalaflorencia.it@gmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/florencia-agustina-zabala/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/florencia-agustina-zabala/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-franco.jpeg" alt="">
+            <img th:src="@{/img/team-franco.jpeg}" alt="">
             <h4>Franco Scolari</h4>
-            <span>BackEnd Developer</span>
+            <span>Developer</span>
             <p>
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
               <a href="mailto:franco.scolari@hotmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/franco-scolari-b11bb5162/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/franco-scolari-b11bb5162/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-jorge.jpeg" alt="">
+            <img th:src="@{/img/team-jorge.jpeg}" alt="">
             <h4>Jorge Nogueira</h4>
-            <span>FrontEnd Developer</span>
+            <span>Developer</span>
             <p>
               "Me encanta la vida al aire libre y pasar tiempo con mis perros."
             </p>
             <div class="social">
               <a href="mailto:nogueira.jorgea@gmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/jorge-alberto-nogueira/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/jorge-alberto-nogueira/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-juan.jpeg" alt="">
+            <img th:src="@{/img/team-juan.jpeg}" alt="">
             <h4>Juan Telis</h4>
-            <span>FrontEnd Developer</span>
+            <span>Developer</span>
             <p>
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
               <a href="mailto:juantelisg@hotmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/juan-telis-6535a11a3/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/juan-telis-6535a11a3/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-juana.png" alt="">
+            <img th:src="@{/img/team-juana.png}" alt="">
             <h4>Juana Morinigo</h4>
-            <span>FrontEnd Developer</span>
+            <span>Developer</span>
             <p>
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
               <a href="mailto:lissetmorinigo24@gmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/juana-lisset-morinigo-molinas/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/juana-lisset-morinigo-molinas/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-lucas.jpeg" alt="">
+            <img th:src="@{/img/team-lucas.jpeg}" alt="">
             <h4>Lucas Moyano</h4>
-            <span>BackEnd Developer</span>
+            <span>Developer</span>
             <p>
               Alguna breve descripción o comentario personal
             </p>
             <div class="social">
               <a href="mailto:lmoyano.tec@gmail.com"><i class="icofont-email"></i></a>
-              <a href="https://www.linkedin.com/in/lucas-moyano-b9713b190/"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/lucas-moyano-b9713b190/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
-            <img src="../static/img/team-silvia.png" alt="">
+            <img th:src="@{/img/team-silvia.png}" alt="">
             <h4>Silvia Otaka</h4>
-            <span>FrontEnd Developer</span>
+            <span>Developer</span>
             <p>
               Mamá 24/7 <br> y fan de Harry Potter
             </p>
             <div class="social">
               <a href="mailto:srotaka@gmail.com"><i class="icofont-email"></i></a>
-              <a href="www.linkedin.com/in/silvia-raquel-otaka"><i class="icofont-linkedin"></i></a>
+              <a th:href="@{http://www.linkedin.com/in/silvia-raquel-otaka}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -410,7 +447,7 @@
 
       <div class="section-title " data-aos="fade-up">
         <h2>Preguntas Frecuentes</h2>
-        <p>Aquí encontrarás información sobre las cuestiones más consultadas. <br> Si no encuentras tu respuesta, pueden
+        <p>Aquí encontrarás información sobre las cuestiones más consultadas. <br> Si no encuentras tu respuesta, puedes
           enviarnos una consulta desde <a href="#contact"> aquí</a>.</p>
       </div>
 
@@ -425,7 +462,7 @@
                 Nutrividas es una organización sin fines de lucro, sin afiliación política ni religiosa cuya misión es
                 hacer llegar alimentos a los Comedores registrados. El objetivo de Nutrividas es facilitar el
                 establecimiento de lazos de solidaridad entre los ciudadanos y los niños más necesitados de nuestro país
-                de manera fácil y transparente. De esta forma lograr que los Comedores puedan conseguir los alimentos
+                de manera fácil y transparente. De esta forma logramos que los Comedores puedan conseguir los alimentos
                 necesarios para alimentar a sus niños. Asimismo, contamos con un equipo de nutricionistas que dedican su
                 tiempo a elaborar distintos menús de acuerdo a las necesidades de cada miembro.
               </p>
@@ -452,7 +489,7 @@
             <div id="faq-list-3" class="collapse" data-parent=".faq-list">
               <p>
                 El mecanismo de entrega de alimentos a Comedores es simple y transparente. A fin de cada semana se hace
-                un recuento de las contribuciones individuales para cada comedor y se realiza la compra de los alimentos
+                un recuento de las contribuciones individuales para cada comedor y se hace la entrega de los alimentos
                 donados. Los comedores no reciben dinero sino alimentos, de esta manera podemos garantizar que las
                 donaciones son utilizadas efectivamente para la alimentación de los niños.
               </p>
@@ -465,9 +502,9 @@
                 class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
             <div id="faq-list-4" class="collapse" data-parent=".faq-list">
               <p>
-                Cuando un comedor publicado en Nutrividas no alcanza el nivel 100% de ayuda de parte de los ususario,
-                esto no significa que van a haber chicos que se quedan sin comer en el comedor. Nutrividas cuenta con
-                fondos de reserva (donados por empresas) que son utilizados para abastecer a los comedores con los
+                Cuando un Comedor publicado en Nutrividas no alcanza el nivel 100% de ayuda de parte de los ususarios,
+                esto no significa que van a haber niños que se quedan sin comer en el Comedor. Nutrividas cuenta con
+                fondos de reserva (donados por empresas) que son utilizados para abastecer a los Comedores con los
                 requerimientos alimenticios que cada niño necesita.
               </p>
             </div>
@@ -482,7 +519,7 @@
                 Los comedores a los que se destina ayuda se encuentran registrados en Nutrividas. Para ello, el Comedor
                 se pone en contacto a través de nuestro formulario de consulta. Nuestro equipo se comunica a la brevedad
                 con el responsable a cargo para corroborar la veracidad de los datos. Estos comedores registran un
-                número distintos de chicos necesitados de asistencia alimenticia diaria. Por otro lado hacemos una
+                número distintos de niños necesitados de asistencia alimenticia diaria. Por otro lado, hacemos una
                 evaluación previa del comedor para asegurarnos de que podemos confiar plenamente en su funcionamiento y
                 transparencia. Actualmente contamos con una lista de comedores que están siendo evaluados para la pronta
                 incorporación. Para sugerir nuevos comedores, por favor escríbenos a info@nutrividas.com.
@@ -498,10 +535,10 @@
               <p>
                 ¡Absolutamente! Todos sus datos personales son tratados con la máxima confidencialidad y no son
                 compartidos con nadie. Del mismo modo, tomamos muy seriamente el correcto uso y manejo de los datos de
-                tarjeta de crédito. Entendemos que esta información debe ser manejada con la mayor de las precauciones.
+                tarjetas de crédito. Entendemos que esta información debe ser manejada con la mayor de las precauciones.
                 Es por ello que estos datos son encriptados para que puedan ser accedidos solamente cuando es necesario
                 y no puedan ser visualizados por nadie. Para mayor información, puede leer nuestra Política de
-                privacidad.
+                Privacidad.
               </p>
             </div>
           </li>
@@ -530,7 +567,7 @@
       <div class="row justify-left-center">
 
         <div class="col-lg-12 col-sm-12 cos-xs-4">
-          <div class="wrapper img" style="background-image: url(../static/img/children06.jpg)">
+          <div class="wrapper img" style="background-image: url(../img/children06.jpg)">
             <div class="row">
               <div class="col-md-9 col-lg-7">
                 <div class="contact-wrap w-100 p-md-5">
@@ -618,11 +655,12 @@
               <li><i class="bx bx-chevron-right"></i> <a href="#">Inicio</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">¿Qué hacemos?</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Nuestro Equipo</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="terminos-condiciones.html" target="_blank">Términos y
-                  condiciones</a>
+              <li><i class="bx bx-chevron-right"></i> <a th:href="@{/condiciones}" target="_blank">Términos y
+                  Condiciones</a>
               </li>
-              <li><i class="bx bx-chevron-right"></i> <a href="politica-privacidad.html" target="_blank">Política de
-                  privacidad</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a th:href="@{/politica}" target="_blank">Política de
+                  Privacidad</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a th:href="@{/confirmacion}" target="_blank">Confirmacion de Registro</a></li>
             </ul>
           </div>
 
@@ -657,18 +695,18 @@
     </div>
   </div>
   <!-- Vendor JS Files -->
-  <script src="../static/jquery/jquery.min.js"></script>
-  <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../static/jquery.easing/jquery.easing.min.js"></script>
-  <script src="../static/php-email-form/validate.js"></script>
-  <script src="../static/owl.carousel/owl.carousel.min.js"></script>
-  <script src="../static/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="../static/venobox/venobox.min.js"></script>
-  <script src="../static/aos/aos.js"></script>
-  <script src="../static/js/loader.js"> </script>
+  <script th:src="@{/jquery/jquery.min.js}"></script>
+  <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/jquery.easing/jquery.easing.min.js}"></script>
+  <script th:src="@{/php-email-form/validate.js}"></script>
+  <script th:src="@{/owl.carousel/owl.carousel.min.js}"></script>
+  <script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
+  <script th:src="@{/venobox/venobox.min.js}"></script>
+  <script th:src="@{/aos/aos.js}"></script>
+  <script th:src="@{/js/loader.js}"> </script>
 
   <!-- Template Main JS File -->
-  <script src="../static/js/main.js"></script>
+  <script th:src="@{/js/main.js}"></script>
 
 </body>
 

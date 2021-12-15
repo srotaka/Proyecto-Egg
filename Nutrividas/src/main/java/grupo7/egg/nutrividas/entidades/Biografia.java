@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="biografias")
@@ -18,6 +19,7 @@ public class Biografia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "La descripción es obligatoria")
     private String descripcion;
 
     @OneToOne

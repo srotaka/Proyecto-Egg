@@ -1,7 +1,7 @@
 package grupo7.egg.nutrividas.exeptions;
 
 public class ConflictException extends RuntimeException{
-    private static final String DESCRIPTION ="Conflict Exception (409)";
+    private static final String DESCRIPTION ="";
 
     public ConflictException(String message) {
         super(DESCRIPTION+". "+message);

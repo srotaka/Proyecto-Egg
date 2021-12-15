@@ -1,24 +1,28 @@
 
 package grupo7.egg.nutrividas.controlador;
 
+import grupo7.egg.nutrividas.entidades.Foto;
+import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.entidades.Tarjeta;
 import grupo7.egg.nutrividas.entidades.Usuario;
+import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.UsuarioServicio;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("usuario")
@@ -26,7 +30,9 @@ public class UsuarioControlador {
     
     @Autowired
     private UsuarioServicio usuarioServicio;
-    
+
+    @Autowired
+    private FotoServicio fotoServicio;
     
     @GetMapping("/crear")
     public ModelAndView crear(HttpServletRequest request){
@@ -65,12 +71,13 @@ public class UsuarioControlador {
     
     
     @PostMapping("/modificar")
-    public RedirectView modificar(@ModelAttribute Usuario usuario, RedirectAttributes attributes){
+    public RedirectView modificar(@Valid @ModelAttribute Usuario usuario, RedirectAttributes attributes){
         RedirectView redirectview = new RedirectView("/usuario");
         
         try{
             usuarioServicio.modificarUsuario(usuario.getId(), usuario.getDni(), usuario.getNombre(),
-                    usuario.getApellido(), usuario.getMail(), usuario.getTelefono());
+                    usuario.getApellido(), usuario.getTelefono(),usuario.getCredencial().getMail(),
+                    usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
             attributes.addFlashAttribute("exito", "La actualizacion se realizo con exito");
         }catch(Exception e){
             attributes.addFlashAttribute("usuario", usuario);
@@ -87,7 +94,7 @@ public class UsuarioControlador {
         RedirectView redirectView = new RedirectView("/usuario");
         
         try{
-            usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getMail(), usuario.getTelefono());
+            usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
             attributes.addFlashAttribute("exito", "La creacion se realizo con exito");
         }catch(Exception e){
             attributes.addFlashAttribute("usuario", usuario);
@@ -118,6 +125,24 @@ public class UsuarioControlador {
            attributes.addFlashAttribute("error", e.getMessage());
         }
         return new RedirectView("/usuario");
+    }
+
+    @Value("${picture.users.location}")
+    public String USUARIOS_UPLOADED_FOLDER;
+
+    @PostMapping("/imagen/actualizar")
+    public void  uploadImage(@RequestParam("id")Long id, @RequestParam("imagen") MultipartFile multipartFile,
+                             UriComponentsBuilder componentsBuilder){
+
+        Usuario usuario = usuarioServicio.buscarPorId(id);
+        Foto foto;
+        if(usuario.getFoto() == null){
+            foto = fotoServicio.crearFoto(USUARIOS_UPLOADED_FOLDER,String.valueOf(id),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
+        }else{
+            foto = fotoServicio.actualizarFoto(usuario.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(id),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
+        }
+
+        usuarioServicio.crearFoto(foto,id);
     }
     
 }

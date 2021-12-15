@@ -127,7 +127,7 @@ body {
 
 .card__heading {
   color: var(--text-lighter);
-  font-size: 2.5rem;
+  font-size: auto;
   text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
   line-height: 1.2;
   text-align: center !important;
@@ -165,6 +165,7 @@ body {
   
 }
 
+
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
@@ -184,14 +185,12 @@ body {
   
 }
 
-
 /*--------------------------------------------------------------
 # TÍTULO
 --------------------------------------------------------------*/
 
 #titulo{
   text-align: center !important;
-  
   color: #444444;
   font: normal 40px/50px "Montserrat", sans-serif;
   background: url("../img/cover01.jpg") center center;
@@ -243,4 +242,37 @@ p {
 
 .color {
   color: #1bac91;
+}
+
+
+
+/*--------------------------------------------------------------
+# MODAL
+--------------------------------------------------------------*/
+.btn-modal-trigger{
+  background-color: #1bac91;
+  color: white;
+  margin-top: 18px;
+  border-radius: 5px;
+  
+}
+
+.btn-modal-trigger:hover{
+  border-color: #2f8f80;
+  background: #3e9e8d;
+  color: white;
+
+}
+
+#modal-comedor{
+  font-size: 24px;
+  text-align: center !important;
+}
+
+/*--------------------------------------------------------------
+# PAGING
+--------------------------------------------------------------*/
+.pagination{
+  
+  padding-bottom: 5% !important;
 }

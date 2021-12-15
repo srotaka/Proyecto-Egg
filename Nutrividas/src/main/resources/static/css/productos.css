@@ -26,6 +26,7 @@ html {
 body {
   padding-top: 6rem;
   height: 100%;
+  
 }
 .m-4{
   margin-top: 5rem !important;
@@ -34,13 +35,28 @@ body {
 }
 
 #tabla-productos{
-  margin-top: 3rem;
+  margin-top: 3rem;    
+  vertical-align: center !important;
+  
 }
 
+.th{
+  color: #444444 !important;
+  font-weight: 50 !important;
+}
+#myTable{
+  color: #444444 !important;
+  font-weight: 50 !important;
+}
 #precio-producto:before{
 content: '$ ';
 }
 
+#precio-producto{
+  color: #444444 !important;
+  font-weight: 100 !important;
+  font-size: 12px !important;
+  }
 .product-image {
   width: 5%;
   

@@ -10,8 +10,8 @@
     <title>Nutividas - Términos y Condiciones</title>
 
     <!-- Favicons -->
-    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" />
-    <link href="../static/img/favicon.ico" rel="apple-touch-icon">
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
+    <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,14 +20,13 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/icofont/icofont.min.css" rel="stylesheet">
-    <link href="../static/boxicons/css/boxicons.min.css" rel="stylesheet">
-    
-    <!-- Template Main CSS File -->
-    <link href="../static/css/style.css" rel="stylesheet">
-    <link href="../static/css/policies.css" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/icofont/icofont.min.css}" rel="stylesheet">
+    <link th:href="@{/boxicons/css/boxicons.min.css}" rel="stylesheet">
 
+    <!-- Template Main CSS File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/policies.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -35,26 +34,20 @@
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
         <div class="container d-flex">
-
             <div class="logo">
-                <a href="index.html"><img src="../static/img/logo.png" alt="" class="img-fluid"></a>
+                <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
             </div>
-
             <div class="logo mr-auto">
-                <h2 class="text-light mt-0" style="color: #1bac91 !important;" href="index.html">&nbsp;Nutrividas</h2>
+                <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
             </div>
-
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
-                    <li class="active"><a href="index.html">Inicio</a></li>
-                    <li><a href="index.html#contactanos">Contáctanos</a></li>
-
+                    <li><a th:href="@{/}">Inicio</a></li>
+                    <li><a th:href="@{/#contact}">Contáctanos</a></li>
                 </ul>
             </nav><!-- .nav-menu -->
-
         </div>
     </header><!-- End Header -->
-
     <!-- ======= TÍTULO ======= -->
 
     <section class="titulo" id="titulo">
@@ -68,136 +61,250 @@
     <section class="disclaimer" id="disclaimer">
 
 
-<p> El uso del sitio web www.nutrividas.com.ar y las aplicaciones publicadas en las tiendas vinculadas de Apple y Google (en lo sucesivo, la "Web, las Aplicaciones web y las Aplicaciones"), se regirán por estos términos y condiciones generales (en lo sucesivo, los "Términos y condiciones generales"). Si no está de acuerdo con la totalidad o parte de los Términos y condiciones generales, debe abstenerse de iniciar sesión como usuario de la Web y las Aplicaciones web y de hacer uso de las mismas en modo alguno. </p>
+        <p> El uso del sitio web www.nutrividas.com.ar y las aplicaciones publicadas en las tiendas vinculadas de Apple
+            y Google (en lo sucesivo, la "Web, las Aplicaciones web y las Aplicaciones"), se regirán por estos términos
+            y condiciones generales (en lo sucesivo, los "Términos y condiciones generales"). Si no está de acuerdo con
+            la totalidad o parte de los Términos y condiciones generales, debe abstenerse de iniciar sesión como usuario
+            de la Web y las Aplicaciones web y de hacer uso de las mismas en modo alguno. </p>
 
-<br><br>
-<h3> <strong> Uso de la Web y de las Aplicaciones web </strong></h3>
+        <br><br>
+        <h3> <strong> Uso de la Web y de las Aplicaciones web </strong></h3>
 
-<p> La Web y las Aplicaciones web ofrecidas por Nutrividas se dirigen a personas que actúen como usuarios finales. Por ello, queda terminantemente prohibido su uso por parte de alguien que pretenda aplicarlas a sus actividades comerciales o empresariales o en relación con su ocupación o profesión. </p>
+        <p> La Web y las Aplicaciones web ofrecidas por Nutrividas se dirigen a personas que actúen como usuarios
+            finales. Por ello, queda terminantemente prohibido su uso por parte de alguien que pretenda aplicarlas a sus
+            actividades comerciales o empresariales o en relación con su ocupación o profesión. </p>
 
-<p> El uso básico de la Web y de las Aplicaciones web no requiere un inicio de sesión previo, pero el usuario no podrá disfrutar de todos los servicios que puedan ofrecerse en el sitio. En cualquier caso, el usuario se compromete a utilizar la Web y las Aplicaciones web conforme a la ley, las buenas costumbres, los usos y las prácticas generalmente aceptados, el orden público vigente y estos Términos y condiciones generales. En concreto, aunque sin limitación, el usuario se compromete a abstenerse de emplearlas con fines ilícitos, aquellos contrarios a las leyes y normativas en vigor o que pudiesen dañar o perjudicar cualquier derecho o participación de Nutrividas o de cualesquiera terceros; y/o que puedan dañar, inutilizar, sobrecargar o dañar la Web y las Aplicaciones web o dificultar el uso normal del sitio. En concreto, el usuario únicamente podrá usar todos los materiales y datos a los que tenga acceso al navegar y usar la Web y las Aplicaciones web con fines particulares y se compromete a no aplicar dicho material e información, ya sea de modo directo o indirecto, a cualquier actividad empresarial. </p>
+        <p> El uso básico de la Web y de las Aplicaciones web no requiere un inicio de sesión previo, pero el usuario no
+            podrá disfrutar de todos los servicios que puedan ofrecerse en el sitio. En cualquier caso, el usuario se
+            compromete a utilizar la Web y las Aplicaciones web conforme a la ley, las buenas costumbres, los usos y las
+            prácticas generalmente aceptados, el orden público vigente y estos Términos y condiciones generales. En
+            concreto, aunque sin limitación, el usuario se compromete a abstenerse de emplearlas con fines ilícitos,
+            aquellos contrarios a las leyes y normativas en vigor o que pudiesen dañar o perjudicar cualquier derecho o
+            participación de Nutrividas o de cualesquiera terceros; y/o que puedan dañar, inutilizar, sobrecargar o
+            dañar la Web y las Aplicaciones web o dificultar el uso normal del sitio. En concreto, el usuario únicamente
+            podrá usar todos los materiales y datos a los que tenga acceso al navegar y usar la Web y las Aplicaciones
+            web con fines particulares y se compromete a no aplicar dicho material e información, ya sea de modo directo
+            o indirecto, a cualquier actividad empresarial. </p>
 
-<p> En cualquier momento, y sin necesidad de notificación previa, Nutrividas se reserva el derecho a negar el acceso a la Web y las Aplicaciones web a los usuarios que infrinjan lo dispuesto en el párrafo anterior de este artículo o, en general, en estos Términos y condiciones generales.</p>
+        <p> En cualquier momento, y sin necesidad de notificación previa, Nutrividas se reserva el derecho a negar el
+            acceso a la Web y las Aplicaciones web a los usuarios que infrinjan lo dispuesto en el párrafo anterior de
+            este artículo o, en general, en estos Términos y condiciones generales.</p>
 
-<br><br>
-<h3> <strong>Registro </strong></h3>
+        <br><br>
+        <h3> <strong>Registro </strong></h3>
 
-<p> En primer lugar, el usuario iniciará sesión para poder utilizar y disfrutar de algunos de los servicios ofrecidos en la Web y la Aplicación web. Dichos servicios se ofrecen únicamente a personas mayores de edad, por lo que, al iniciar sesión en la Web y en las Aplicaciones web, el usuario declara y garantiza que es mayor de edad conforme a las leyes de la jurisdicción desde donde se conecta a Internet. </p>
-<br><br>
-<h3><strong> Información disponible </strong></h3>
+        <p> En primer lugar, el usuario iniciará sesión para poder utilizar y disfrutar de algunos de los servicios
+            ofrecidos en la Web y la Aplicación web. Dichos servicios se ofrecen únicamente a personas mayores de edad,
+            por lo que, al iniciar sesión en la Web y en las Aplicaciones web, el usuario declara y garantiza que es
+            mayor de edad conforme a las leyes de la jurisdicción desde donde se conecta a Internet. </p>
+        <br><br>
+        <h3><strong> Información disponible </strong></h3>
 
-<p> Empleamos todos los esfuerzos posibles para garantizar que toda la información general y empresarial disponible en la Web y las Aplicaciones Web sea completa y no contenga errores. Asimismo, revisamos periódicamente el contenido, la información y cualquier otro dato de cualquier tipo incluido en la Web y las Aplicaciones Web. Sin embargo, usted reconoce y acepta que todos los datos disponibles en la Web y las Aplicaciones web se ofrecen únicamente a efectos informativos y que Nutrividas no garantiza ni asegura la precisión, idoneidad, integridad ni veracidad de ningún tipo de información disponible en la Web y las Aplicaciones web. El Usuario asume todos los riesgos relacionados con el uso de cualquier contenido, incluida su precisión, totalidad, integridad o utilidad.</p>
-<br><br>
-<h3><strong> Responsabilidad </strong></h3>
+        <p> Empleamos todos los esfuerzos posibles para garantizar que toda la información general y empresarial
+            disponible en la Web y las Aplicaciones Web sea completa y no contenga errores. Asimismo, revisamos
+            periódicamente el contenido, la información y cualquier otro dato de cualquier tipo incluido en la Web y las
+            Aplicaciones Web. Sin embargo, usted reconoce y acepta que todos los datos disponibles en la Web y las
+            Aplicaciones web se ofrecen únicamente a efectos informativos y que Nutrividas no garantiza ni asegura la
+            precisión, idoneidad, integridad ni veracidad de ningún tipo de información disponible en la Web y las
+            Aplicaciones web. El Usuario asume todos los riesgos relacionados con el uso de cualquier contenido,
+            incluida su precisión, totalidad, integridad o utilidad.</p>
+        <br><br>
+        <h3><strong> Responsabilidad </strong></h3>
 
-<p> Nutrividas acepta emplear todos los esfuerzos necesarios para garantizar la disponibilidad de la Web y de las Aplicaciones web. No obstante, en la máxima medida permitida por la legislación aplicable, Nutrividas no puede asegurar un uso rápido, ininterrumpido y sin errores de la Web y de las Aplicaciones web. La Web y las Aplicaciones Web funcionan "TAL CUAL", "CON TODOS SUS FALLOS" y según su "DISPONIBILIDAD" y, por tanto, Nutrividas no ofrece ningún tipo de garantía, por lo que el usuario utilizará la Web y las Aplicaciones Web a su propio riesgo.</p>
+        <p> Nutrividas acepta emplear todos los esfuerzos necesarios para garantizar la disponibilidad de la Web y de
+            las Aplicaciones web. No obstante, en la máxima medida permitida por la legislación aplicable, Nutrividas no
+            puede asegurar un uso rápido, ininterrumpido y sin errores de la Web y de las Aplicaciones web. La Web y las
+            Aplicaciones Web funcionan "TAL CUAL", "CON TODOS SUS FALLOS" y según su "DISPONIBILIDAD" y, por tanto,
+            Nutrividas no ofrece ningún tipo de garantía, por lo que el usuario utilizará la Web y las Aplicaciones Web
+            a su propio riesgo.</p>
 
-<p> En concreto, aunque sin limitación, Nutrividas declina cualquier tipo de responsabilidad en los siguientes casos:</p>
+        <p> En concreto, aunque sin limitación, Nutrividas declina cualquier tipo de responsabilidad en los siguientes
+            casos:</p>
 
-	<ul> 
-     <li>   fallos técnicos que, debido a fuerza mayor, caso fortuito o de otro tipo, eviten el funcionamiento normal de la Web y de las Aplicaciones web;</li>
-	<li> daños causados por virus informáticos o riesgos similares o aquellos generados por un uso inadecuado de la Web y de las Aplicaciones web; e</li>
-	<li> interferencia de terceras personas con el servicio. De cara al desarrollo técnico, terceras personas pueden acceder a la Web y a las Aplicaciones web e interferir en ellas. Sin perjuicio de lo anterior, Nutrividas emplea todos sus recursos técnicos en la introducción de medidas tecnológicas necesarias para reducir este tipo de riesgos. No obstante, por medio del presente, se notifica al usuario que dichas interferencias pueden producirse y que Nutrividas no será responsable de los daños que puedan ocasionar.</li>
-    </ul>
-<p> Los enlaces que puedan existir en la Web y en las Aplicaciones web relacionadas con publicidad u otro tipo de contenido propiedad de, o que sean responsabilidad de, terceros distintos de Nutrividas no serán responsabilidad de esta última, la cual en ningún caso se compromete a controlar o aprobar los servicios, contenidos, datos, archivos, productos o cualquier tipo de material existente en las aplicaciones o en el sitio o sitios web de terceros. Por ello, Nutrividas no será responsable, bajo ninguna circunstancia, de la legalidad de los contenidos de dichas páginas y el tercero será el único responsable de todo lo relacionado con dicho enlace, especialmente en lo relativo al cumplimiento de la ley, las buenas costumbres, las buenas prácticas y los usos y el orden público. La existencia de enlaces, si procede, no presupone ningún tipo de relación entre Nutrividas y el propietario de los sitios web de los enlaces.</p>
-<br><br>
-<h3> <strong>Derechos de propiedad industrial e intelectual</strong></h3>
+        <ul>
+            <li> fallos técnicos que, debido a fuerza mayor, caso fortuito o de otro tipo, eviten el funcionamiento
+                normal de la Web y de las Aplicaciones web;</li>
+            <li> daños causados por virus informáticos o riesgos similares o aquellos generados por un uso inadecuado de
+                la Web y de las Aplicaciones web; e</li>
+            <li> interferencia de terceras personas con el servicio. De cara al desarrollo técnico, terceras personas
+                pueden acceder a la Web y a las Aplicaciones web e interferir en ellas. Sin perjuicio de lo anterior,
+                Nutrividas emplea todos sus recursos técnicos en la introducción de medidas tecnológicas necesarias para
+                reducir este tipo de riesgos. No obstante, por medio del presente, se notifica al usuario que dichas
+                interferencias pueden producirse y que Nutrividas no será responsable de los daños que puedan ocasionar.
+            </li>
+        </ul>
+        <p> Los enlaces que puedan existir en la Web y en las Aplicaciones web relacionadas con publicidad u otro tipo
+            de contenido propiedad de, o que sean responsabilidad de, terceros distintos de Nutrividas no serán
+            responsabilidad de esta última, la cual en ningún caso se compromete a controlar o aprobar los servicios,
+            contenidos, datos, archivos, productos o cualquier tipo de material existente en las aplicaciones o en el
+            sitio o sitios web de terceros. Por ello, Nutrividas no será responsable, bajo ninguna circunstancia, de la
+            legalidad de los contenidos de dichas páginas y el tercero será el único responsable de todo lo relacionado
+            con dicho enlace, especialmente en lo relativo al cumplimiento de la ley, las buenas costumbres, las buenas
+            prácticas y los usos y el orden público. La existencia de enlaces, si procede, no presupone ningún tipo de
+            relación entre Nutrividas y el propietario de los sitios web de los enlaces.</p>
+        <br><br>
+        <h3> <strong>Derechos de propiedad industrial e intelectual</strong></h3>
 
-<p> El usuario reconoce que todos los elementos de la Web y de las Aplicaciones web, la información y los materiales incluidos en el sitio, las marcas comerciales, los signos, los logotipos, el diseño, los derechos de imagen, así como la estructura, la selección, la disposición y la visualización de sus contenidos, así como el software utilizado, están protegidos por derechos de autor y derechos de protección industrial propiedad de Nutrividas o de terceros, o por normativas de derechos de imagen, y que el acceso del usuario a la Web y a las Aplicaciones web no otorga al usuario ningún derechos sobre ellos.</p>
+        <p> El usuario reconoce que todos los elementos de la Web y de las Aplicaciones web, la información y los
+            materiales incluidos en el sitio, las marcas comerciales, los signos, los logotipos, el diseño, los derechos
+            de imagen, así como la estructura, la selección, la disposición y la visualización de sus contenidos, así
+            como el software utilizado, están protegidos por derechos de autor y derechos de protección industrial
+            propiedad de Nutrividas o de terceros, o por normativas de derechos de imagen, y que el acceso del usuario a
+            la Web y a las Aplicaciones web no otorga al usuario ningún derechos sobre ellos.</p>
 
-<p> A menos que Nutrividas o los terceros titulares de los derechos correspondientes lo autoricen expresamente, los usuarios no podrán reproducir, convertir, modificar, desmontar, realizar ingeniería inversa, distribuir, arrendar o alquilar, prestar, poner a disposición ni permitir el acceso público a través de cualquier tipo de comunicación pública de ninguno de los elementos mencionados en el párrafo anterior. El usuario empleará los materiales, los elementos y la información a la que puede acceder mediante la navegación por la Web y las Aplicaciones web, así como a través de su uso, exclusivamente con fines personales, y se compromete a no usar dichos materiales, elementos e información para ningún fin comercial o empresarial.</p>
-<br><br>
-<h3> <strong>Prácticas para el uso del sitio web </strong></h3>
+        <p> A menos que Nutrividas o los terceros titulares de los derechos correspondientes lo autoricen expresamente,
+            los usuarios no podrán reproducir, convertir, modificar, desmontar, realizar ingeniería inversa, distribuir,
+            arrendar o alquilar, prestar, poner a disposición ni permitir el acceso público a través de cualquier tipo
+            de comunicación pública de ninguno de los elementos mencionados en el párrafo anterior. El usuario empleará
+            los materiales, los elementos y la información a la que puede acceder mediante la navegación por la Web y
+            las Aplicaciones web, así como a través de su uso, exclusivamente con fines personales, y se compromete a no
+            usar dichos materiales, elementos e información para ningún fin comercial o empresarial.</p>
+        <br><br>
+        <h3> <strong>Prácticas para el uso del sitio web </strong></h3>
 
-<p> El usuario reconoce que Nutrividas posee el poder exclusivo de establecer límites y condiciones para el uso de la Web y de las Aplicaciones web.</p>
+        <p> El usuario reconoce que Nutrividas posee el poder exclusivo de establecer límites y condiciones para el uso
+            de la Web y de las Aplicaciones web.</p>
 
-   <ol> a) Control del contenido. El usuario reconoce que Nutrividas posee plenos y absolutos poderes discrecionales para realizar una selección previa, rechazar, eliminar y/o modificar cualquier contenido de la Web y de las Aplicaciones web. Además, Nutrividas no será responsable ni ante el usuario ni ante terceros por cualquier daño, infracción, delito, faltas o cualquier otro tipo de actos ilícitos que puedan cometerse, ya sean en relación con los derechos de propiedad intelectual o contra el honor y la reputación de las personas, sus datos personales, la información acerca de su grado de solvencia, sus derechos como consumidor o contra cualquier otro derecho que pueda haber sido infringido por el uso inadecuado de los usuarios de la Web y de las Aplicaciones web;</ol>
+        <ol> a) Control del contenido. El usuario reconoce que Nutrividas posee plenos y absolutos poderes
+            discrecionales para realizar una selección previa, rechazar, eliminar y/o modificar cualquier contenido de
+            la Web y de las Aplicaciones web. Además, Nutrividas no será responsable ni ante el usuario ni ante terceros
+            por cualquier daño, infracción, delito, faltas o cualquier otro tipo de actos ilícitos que puedan cometerse,
+            ya sean en relación con los derechos de propiedad intelectual o contra el honor y la reputación de las
+            personas, sus datos personales, la información acerca de su grado de solvencia, sus derechos como consumidor
+            o contra cualquier otro derecho que pueda haber sido infringido por el uso inadecuado de los usuarios de la
+            Web y de las Aplicaciones web;</ol>
 
-<ol> b) Acceso a la información. El usuario acepta que Nutrividas, a su única discreción, puede acceder, conservar, revelar, eliminar y modificar cualquier contenido incluido en la Web y en las Aplicaciones web;</ol>
+        <ol> b) Acceso a la información. El usuario acepta que Nutrividas, a su única discreción, puede acceder,
+            conservar, revelar, eliminar y modificar cualquier contenido incluido en la Web y en las Aplicaciones web;
+        </ol>
 
-<ol> c) Extinción. El usuario acepta que Nutrividas se reserve el derecho de modificar de cualquier forma, suspender, interrumpir y/o extinguir el servicio de la Web y de las Aplicaciones web sin causa ni notificación previa, a su única discreción. En dicho caso, el usuario no tendrá derecho a reclamar ningún tipo de indemnización por daños.</ol>
-<br><br>
-<h3><strong> Limitación de responsabilidad</strong></h3>
+        <ol> c) Extinción. El usuario acepta que Nutrividas se reserve el derecho de modificar de cualquier forma,
+            suspender, interrumpir y/o extinguir el servicio de la Web y de las Aplicaciones web sin causa ni
+            notificación previa, a su única discreción. En dicho caso, el usuario no tendrá derecho a reclamar ningún
+            tipo de indemnización por daños.</ol>
+        <br><br>
+        <h3><strong> Limitación de responsabilidad</strong></h3>
 
-<p> El usuario reconoce expresamente que Nutrividas no lleva a cabo una revisión previa de todos los contenidos que los usuarios pueden cargar en la Web y en las Aplicaciones web.</p>
+        <p> El usuario reconoce expresamente que Nutrividas no lleva a cabo una revisión previa de todos los contenidos
+            que los usuarios pueden cargar en la Web y en las Aplicaciones web.</p>
 
-<p> El usuario reconoce que Nutrividas no asume la responsabilidad, ni directa ni indirecta, prevista o no, por ningún tipo de daños, ya sean compensatorios o pérdida de beneficios, que surjan de cualquier uso inadecuado de la Web y de las Aplicaciones web o de sus contenidos cargados por los usuarios o terceros.</p>
+        <p> El usuario reconoce que Nutrividas no asume la responsabilidad, ni directa ni indirecta, prevista o no, por
+            ningún tipo de daños, ya sean compensatorios o pérdida de beneficios, que surjan de cualquier uso inadecuado
+            de la Web y de las Aplicaciones web o de sus contenidos cargados por los usuarios o terceros.</p>
 
-<p> Nutrividas no será responsable bajo ninguna circunstancia de ningún contenido de la Web ni de las Aplicaciones web, incluido, sin limitación, cualquier error u omisión relacionada con los contenidos o la pérdida o el perjuicio de cualquier contenido.</p>
+        <p> Nutrividas no será responsable bajo ninguna circunstancia de ningún contenido de la Web ni de las
+            Aplicaciones web, incluido, sin limitación, cualquier error u omisión relacionada con los contenidos o la
+            pérdida o el perjuicio de cualquier contenido.</p>
 
-<p> El usuario acepta expresamente que Nutrividas no será responsable de los daños causados por cualquier fallo o interrupción producida en la Web y en las Aplicaciones web.</p>
+        <p> El usuario acepta expresamente que Nutrividas no será responsable de los daños causados por cualquier fallo
+            o interrupción producida en la Web y en las Aplicaciones web.</p>
 
-<p> El usuario acepta específicamente que Nutrividas no será responsable del acceso no autorizado, las copias, la alteración o la supresión de datos por ningún tercero en la Web y en las Aplicaciones web o por sus consecuencias y/o daños.</p>
+        <p> El usuario acepta específicamente que Nutrividas no será responsable del acceso no autorizado, las copias,
+            la alteración o la supresión de datos por ningún tercero en la Web y en las Aplicaciones web o por sus
+            consecuencias y/o daños.</p>
 
-<p> El usuario reconoce y acepta que Nutrividas no será responsable por los servicios que puedan proporcionar los enlaces de la Web y de las Aplicaciones web ni por los productos o bienes que publiciten.</p>
+        <p> El usuario reconoce y acepta que Nutrividas no será responsable por los servicios que puedan proporcionar
+            los enlaces de la Web y de las Aplicaciones web ni por los productos o bienes que publiciten.</p>
 
-<p> El usuario acepta y reconoce que Nutrividas no será responsable de los premios y/o bienes concedidos, adquiridos, vendidos, ganados o mencionados en la Web y en las Aplicaciones web ni por las consecuencias que surjan de su uso ni por los daños que puedan derivarse de su uso o disfrute.</p>
+        <p> El usuario acepta y reconoce que Nutrividas no será responsable de los premios y/o bienes concedidos,
+            adquiridos, vendidos, ganados o mencionados en la Web y en las Aplicaciones web ni por las consecuencias que
+            surjan de su uso ni por los daños que puedan derivarse de su uso o disfrute.</p>
 
-<br><br>
-<h3> <strong> Uso de la autorización concedida a Nutrividas</strong></h3>
+        <br><br>
+        <h3> <strong> Uso de la autorización concedida a Nutrividas</strong></h3>
 
-<p> Toda la información o ficheros que el usuario cargue a la Web y a las Aplicaciones web en modo alguno se considerarán cubiertos por una licencia irrevocable concedida a Nutrividas para su reproducción, distribución, visualización, transmisión, retransmisión, comercialización, difusión, almacenamiento, digitalización, licitación, traducción, adaptación, acuerdo o cualquier otra modificación durante toda la vigencia de la protección de los derechos de autor especificada por la ley. Además, el usuario comprende que la autorización se concede de forma gratuita y renuncia expresamente a cualquier reclamación de remuneración contra Nutrividas.</p>
+        <p> Toda la información o ficheros que el usuario cargue a la Web y a las Aplicaciones web en modo alguno se
+            considerarán cubiertos por una licencia irrevocable concedida a Nutrividas para su reproducción,
+            distribución, visualización, transmisión, retransmisión, comercialización, difusión, almacenamiento,
+            digitalización, licitación, traducción, adaptación, acuerdo o cualquier otra modificación durante toda la
+            vigencia de la protección de los derechos de autor especificada por la ley. Además, el usuario comprende que
+            la autorización se concede de forma gratuita y renuncia expresamente a cualquier reclamación de remuneración
+            contra Nutrividas.</p>
 
-<p> El usuario acepta mantener exentos de responsabilidad a Nutrividas, a sus sociedades de control, controladas y vinculadas, a los administradores, gestores y empleados en el supuesto de que el uso de la información, archivos o demás contenidos proporcionados por el usuario infrinja derechos de terceros, independientemente de su naturaleza y clase.</p>
+        <p> El usuario acepta mantener exentos de responsabilidad a Nutrividas, a sus sociedades de control, controladas
+            y vinculadas, a los administradores, gestores y empleados en el supuesto de que el uso de la información,
+            archivos o demás contenidos proporcionados por el usuario infrinja derechos de terceros, independientemente
+            de su naturaleza y clase.</p>
 
-<p> Por consiguiente, el usuario reconoce que Nutrividas tiene derecho a modificar, alterar o editar cualquier información o archivo cargado por el usuario a la Web y a las Aplicaciones web, y, en ese caso, se considerará que no existe ningún tipo de daño ni violación de los derechos morales de autor que pueda tener el usuario.</p>
+        <p> Por consiguiente, el usuario reconoce que Nutrividas tiene derecho a modificar, alterar o editar cualquier
+            información o archivo cargado por el usuario a la Web y a las Aplicaciones web, y, en ese caso, se
+            considerará que no existe ningún tipo de daño ni violación de los derechos morales de autor que pueda tener
+            el usuario.</p>
 
-<br><br>
-<h3> <strong>Usos prohibidos. Enlaces</strong></h3>
+        <br><br>
+        <h3> <strong>Usos prohibidos. Enlaces</strong></h3>
 
-<p> El usuario reconoce que queda terminantemente prohibido el uso de cualquier medio técnico que sea el resultado de los esfuerzos de Nutrividas y, a través del cual, el usuario o cualquier tercero puedan beneficiarse, ya sea de modo directo o indirecto, con o sin fines de lucro, de la totalidad o parte de la Web y de las Aplicaciones web.</p>
+        <p> El usuario reconoce que queda terminantemente prohibido el uso de cualquier medio técnico que sea el
+            resultado de los esfuerzos de Nutrividas y, a través del cual, el usuario o cualquier tercero puedan
+            beneficiarse, ya sea de modo directo o indirecto, con o sin fines de lucro, de la totalidad o parte de la
+            Web y de las Aplicaciones web.</p>
 
-<p> De modo específico, el añadido de cualquier enlace, hipervínculo, trama o dispositivo similar a la Web o a las Aplicaciones web sin el consentimiento previo por escrito de Nutrividas está prohibido. Cualquier infracción de esta disposición se considerará una infracción de los derechos de propiedad intelectual de Nutrividas.</p>
+        <p> De modo específico, el añadido de cualquier enlace, hipervínculo, trama o dispositivo similar a la Web o a
+            las Aplicaciones web sin el consentimiento previo por escrito de Nutrividas está prohibido. Cualquier
+            infracción de esta disposición se considerará una infracción de los derechos de propiedad intelectual de
+            Nutrividas.</p>
 
-<p> Además, el usuario acepta y reconoce que Nutrividas no se responsabiliza de los contenidos, servicios, productos, etc. de terceros a los que se pueda acceder directamente o a través de banners, enlaces, hipervínculos, tramas o similares desde los sitios web de Nutrividas.</p>
+        <p> Además, el usuario acepta y reconoce que Nutrividas no se responsabiliza de los contenidos, servicios,
+            productos, etc. de terceros a los que se pueda acceder directamente o a través de banners, enlaces,
+            hipervínculos, tramas o similares desde los sitios web de Nutrividas.</p>
 
-<p> El usuario se compromete a no reproducir, duplicar, copiar, vender, comercializar ni explotar ninguna parte de la Web ni de las Aplicaciones web con fines empresariales.</p>
+        <p> El usuario se compromete a no reproducir, duplicar, copiar, vender, comercializar ni explotar ninguna parte
+            de la Web ni de las Aplicaciones web con fines empresariales.</p>
 
-<br><br>
-<h3> <strong>Actualización de la Web y de las Aplicaciones web</strong></h3>
+        <br><br>
+        <h3> <strong>Actualización de la Web y de las Aplicaciones web</strong></h3>
 
-<p> La información que aparece en esta Web y en las Aplicaciones web es la vigente desde la última actualización. Para mejorar el servicio en beneficio de los usuarios, Nutrividas se reserva el derecho de actualizar, modificar o eliminar información existente en la Web y en las Aplicaciones web o sus condiciones de funcionamiento, técnicas o de uso y los usuarios tendrán que seguir las instrucciones que Nutrividas les pueda ofrecer a tal fin a través de la Web y las Aplicaciones web o mediante personal debidamente autorizado. Nutrividas notificará con una antelación razonable en caso de que las modificaciones a realizar impliquen una alteración sustancial del rendimiento o funcionamiento de la Web y de las Aplicaciones web.</p>
+        <p> La información que aparece en esta Web y en las Aplicaciones web es la vigente desde la última
+            actualización. Para mejorar el servicio en beneficio de los usuarios, Nutrividas se reserva el derecho de
+            actualizar, modificar o eliminar información existente en la Web y en las Aplicaciones web o sus condiciones
+            de funcionamiento, técnicas o de uso y los usuarios tendrán que seguir las instrucciones que Nutrividas les
+            pueda ofrecer a tal fin a través de la Web y las Aplicaciones web o mediante personal debidamente
+            autorizado. Nutrividas notificará con una antelación razonable en caso de que las modificaciones a realizar
+            impliquen una alteración sustancial del rendimiento o funcionamiento de la Web y de las Aplicaciones web.
+        </p>
 
-<p> Si se modifican estos Términos y condiciones generales, Nutrividas notificará con una antelación razonable a los usuarios para que puedan conocer los nuevos términos aplicables y, si el cambio es sustancial, aceptarlos o abstenerse de usar la Web y las Aplicaciones web y cancelar su cuenta de usuario registrado.</p>
+        <p> Si se modifican estos Términos y condiciones generales, Nutrividas notificará con una antelación razonable a
+            los usuarios para que puedan conocer los nuevos términos aplicables y, si el cambio es sustancial,
+            aceptarlos o abstenerse de usar la Web y las Aplicaciones web y cancelar su cuenta de usuario registrado.
+        </p>
 
-<br><br>
-<h3> <strong>Interoperabilidad y funcionalidad de la Web y de las Aplicaciones web</strong></h3>
+        <br><br>
+        <h3> <strong>Interoperabilidad y funcionalidad de la Web y de las Aplicaciones web</strong></h3>
 
-<p> La Web se ejecuta en las plataformas Safari, Firefox, Edge, Opera y Chrome actualizadas en 2021. Está especialmente optimizada para Firefox.</p>
+        <p> La Web se ejecuta en las plataformas Safari, Firefox, Edge, Opera y Chrome actualizadas en 2021. Está
+            especialmente optimizada para Firefox.</p>
 
-<br><br>
-<h3> <strong>Servicios del usuario</strong></h3>
+        <br><br>
+        <h3> <strong>Servicios del usuario</strong></h3>
 
-<p> Los usuarios de la Web y de las Aplicaciones web podrán ponerse en contacto con Nutrividas mediante el envío de un correo electrónico a: info@nutrividas.com.</p>
+        <p> Los usuarios de la Web y de las Aplicaciones web podrán ponerse en contacto con Nutrividas mediante el envío
+            de un correo electrónico a: info@nutrividas.com.</p>
 
-<br><br>
-<h3> <strong>Integridad</strong></h3>
+        <br><br>
+        <h3> <strong>Integridad</strong></h3>
 
-<p> Si se anulase o considerase no válido alguno de estos Términos y condiciones generales, el resto no se verá afectado, sino que continuarán con plena vigencia y validez.</p>
+        <p> Si se anulase o considerase no válido alguno de estos Términos y condiciones generales, el resto no se verá
+            afectado, sino que continuarán con plena vigencia y validez.</p>
 
-<br><br>
-<h3> <strong>Ley aplicable</strong></h3>
+        <br><br>
+        <h3> <strong>Ley aplicable</strong></h3>
 
-<p> Cualquier controversia que pueda surgir de la aplicación de estos términos se regirá por la legislación de Argentina. Esto no evitará la aplicación de aquellos derechos obligatorios a los que pueda tener derecho en virtud de la legislación aplicable en el supuesto de que esté actuando como consumidor.  </p>
+        <p> Cualquier controversia que pueda surgir de la aplicación de estos términos se regirá por la legislación de
+            Argentina. Esto no evitará la aplicación de aquellos derechos obligatorios a los que pueda tener derecho en
+            virtud de la legislación aplicable en el supuesto de que esté actuando como consumidor. </p>
 
-</section>
-<!-- ======= Footer ======= -->
-<footer id="footer">
-    <div class="copyright">
-        Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
-        reservados
-</footer><!-- End Footer -->
+    </section>
 
+    <!-- ======= Footer ======= -->
+    <footer id="footer2">
+        <div class="copyright2">
+            Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
+            reservados
+    </footer><!-- End Footer -->
 
-
-<!-- ======= BACK TO TOP ======= -->
-<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-<!-- ======= BACK TO TOP ======= -->
-
-   <!-- Vendor JS Files -->
-   <script src="../static/jquery/jquery.min.js"></script>
-   <script src="../static/js/main.js"></script>
-
+    <!-- ======= BACK TO TOP ======= -->
+    <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+    <!-- ======= BACK TO TOP ======= -->
 
 </body>
 

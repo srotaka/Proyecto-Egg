@@ -1,7 +1,7 @@
 package grupo7.egg.nutrividas.exeptions;
 
 public class NotFoundException extends RuntimeException{
-    private static final String DESCRIPTION ="Not Found Exception (404)";
+    private static final String DESCRIPTION ="";
 
     public NotFoundException(String message) {
         super(DESCRIPTION+". "+message);

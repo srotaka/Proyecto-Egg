@@ -1,8 +1,6 @@
 package grupo7.egg.nutrividas.servicios;
 
-import grupo7.egg.nutrividas.entidades.Canasta;
-import grupo7.egg.nutrividas.entidades.Comedor;
-import grupo7.egg.nutrividas.entidades.Elemento;
+import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.CanastaRepository;
@@ -11,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
+
 
 @Service
 public class CanastaServicio {
@@ -29,19 +28,23 @@ public class CanastaServicio {
             throw new FieldAlreadyExistException("La canasta que desea crear ya existe");
         }
 
-        validarDatosCanasta(descripcion,cantidadPersonas,elementos,comedor);
         Canasta canasta = new Canasta();
         canasta.setDescripcion(descripcion);
         canasta.setCantidadDePersonas(cantidadPersonas);
         canasta.setElementos(elementos);
         canasta.setComedor(comedor);
         canasta.setAlta(true);
+        Double precioFinal = 0.0;
+        for (Elemento e: elementos) {
+            precioFinal += (e.getProducto().getPrecio() * e.getCantidadNecesaria());
+        }
+        canasta.setPrecio(precioFinal);
         return canastaRepository.save(canasta);
     }
 
     @Transactional
     public Canasta modificarCanasta(Long id,String descripcion, Integer cantidadPersonas,
-                                List<Elemento> elementos, Comedor comedor){
+                                    List<Elemento> elementos, Comedor comedor){
 
         Canasta canasta = canastaRepository.findById(id).orElseThrow(
                 ()-> new NoSuchElementException("La canasta que desea modificar no existe"));
@@ -51,35 +54,19 @@ public class CanastaServicio {
             +comedor+"' ");
         }
 
-        validarDatosCanasta(descripcion,cantidadPersonas,elementos,comedor);
         canasta.setDescripcion(descripcion);
         canasta.setCantidadDePersonas(cantidadPersonas);
         canasta.setElementos(elementos);
         canasta.setComedor(comedor);
         canasta.setAlta(true);
+        Double precioFinal = 0.0;
+        for (Elemento e: elementos) {
+            precioFinal += (e.getProducto().getPrecio() * e.getCantidadNecesaria());
+        }
+        canasta.setPrecio(precioFinal);
         return canastaRepository.save(canasta);
     }
 
-    public void validarDatosCanasta(String descripcion, Integer cantidadPersonas,
-                                 List<Elemento> elementos, Comedor comedor) {
-        if(descripcion == null || descripcion.trim().isEmpty()){
-            throw new FieldInvalidException("La descripción del producto es obligatorio");
-        }
-        if(cantidadPersonas == null || cantidadPersonas<0){
-            throw new FieldInvalidException("La cantidad de personas indicada es inválida");
-        }
-        if(elementos == null || elementos.isEmpty()){
-            throw new FieldInvalidException("Debe agregar al menos un producto a la canasta");
-        }
-        if(comedor == null){
-            throw new FieldInvalidException("El comedor es obligatorio");
-        }
-    }
-
-    @Transactional(readOnly = true)
-    public List<Canasta> listarCanastas(){
-        return canastaRepository.findAll();
-    }
 
     @Transactional(readOnly = true)
     public Canasta buscarPorId(Long id){
@@ -90,6 +77,12 @@ public class CanastaServicio {
     @Transactional(readOnly = true)
     public List<Canasta> buscarCanastasPorComedor(Comedor comedor){
         return canastaRepository.findByComedor(comedor);
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<Canasta> listarCanastas(){
+        return canastaRepository.findAll();
     }
 
     @Transactional
@@ -103,8 +96,19 @@ public class CanastaServicio {
     public void deshabilitarCanasta(Long id){
         Canasta canasta = canastaRepository.findById(id).orElseThrow(
                 () -> new NoSuchElementException("La canasta que desea modificar no existe"));
-        canasta.getElementos().forEach(e -> elementoServicio.deshabilitarElemento(e.getId()));
+        /*canasta.getElementos().forEach(e -> elementoServicio.deshabilitarElemento(e.getId()));*/
         canastaRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void crearFoto(Foto foto, Long id){
+        if(foto == null){
+            throw new FieldInvalidException("La imagen no puede ser nula");
+        }
+        canastaRepository.findById(id).orElseThrow(
+                ()->new NoSuchElementException("No se halló una canasta con el id '"+id+"'"));
+
+        canastaRepository.actualizarFoto(foto,id);
     }
 
 }
