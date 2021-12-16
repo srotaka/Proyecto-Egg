@@ -76,14 +76,14 @@ formulario.inputNumero.addEventListener('keyup', (e) => {
 		logoMarca.innerHTML = '';
         logoMarca2.innerHTML = '';
 		const imagen = document.createElement('img');
-		imagen.src = "../static/img/visa.png";
+		imagen.src = "/img/visa.png";
 		logoMarca.appendChild(imagen);
         
         delantera.setAttribute("style", " background-color: #0093E9; background-image: linear-gradient(160deg, #0093E9 0%, #06192f 100%);")
 	} else if(valorInput[0] == 5){
 		logoMarca.innerHTML = '';
 		const imagen = document.createElement('img');
-		imagen.src = "../static/img/mastercard.png";
+		imagen.src = "/img/mastercard.png";
 		logoMarca.appendChild(imagen);
        
         delantera.setAttribute("style", "background-color: #000000; background-image: linear-gradient(315deg, #000000 0%, #839e9e 100%);")

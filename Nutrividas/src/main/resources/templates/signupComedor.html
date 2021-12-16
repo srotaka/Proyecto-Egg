@@ -177,6 +177,17 @@
                                         </div>
                                         <div class="row">
                                             <div class="col">
+                                                <label for="provincia">Provincia</label>
+                                                <div class="form-group mb-3">
+                                                    <input th:field="*{direccion.provincia}" id="inputProvincia"
+                                                        type="text" placeholder="" required="" autofocus=""
+                                                        class="form-control border-0 shadow-sm px-4">
+                                                </div>
+                                                <div class="error text-start"
+                                                    th:if="${#fields.hasErrors('direccion.provincia')}"
+                                                    th:errors="*{direccion.provincia}" style="color:red;"></div>
+                                            </div>
+                                            <div class="col">
                                                 <label for="localidad">Localidad</label>
                                                 <div class="form-group mb-3">
                                                     <input th:field="*{direccion.localidad}" id="inputLocaliad"
@@ -188,17 +199,7 @@
                                                     th:errors="*{direccion.localidad}" style="color:red;"></div>
                                             </div>
 
-                                            <div class="col">
-                                                <label for="provincia">Provincia</label>
-                                                <div class="form-group mb-3">
-                                                    <input th:field="*{direccion.provincia}" id="inputProvincia"
-                                                        type="text" placeholder="" required="" autofocus=""
-                                                        class="form-control border-0 shadow-sm px-4">
-                                                </div>
-                                                <div class="error text-start"
-                                                    th:if="${#fields.hasErrors('direccion.provincia')}"
-                                                    th:errors="*{direccion.provincia}" style="color:red;"></div>
-                                            </div>
+                                           
                                         </div>
 
                                         <div class="row">

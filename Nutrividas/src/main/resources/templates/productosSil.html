@@ -281,7 +281,8 @@
               th:href="@{'/producto'+${rutaActual}+'page=' + ${productos.paging.pageNumber + 1}}">Siguiente</a>
           </li>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button th:href="@{/canasta/crear}" class="btn btn-primary text-uppercase shadow-sm mb-2 mt-0" id="boton-guardar"  >Ir a la Canasta</button>
+          <button class="btn btn-secondary mt-0" id="boton-guardar"> <a th:href="@{/canasta/crear}"> VER CANASTA
+          </a></button>
         </ul>
       </nav>
       <!-- ******************** -->

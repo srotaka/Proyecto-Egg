@@ -96,12 +96,12 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
 #mensaje-Bienvenida-SignUp {
-    font-size: 40px;
+    font-size: 30px;
     text-align: center;
 }
 
 #mensaje-Secundario-SignUp {
-    font-size: 1.5rem;
+    font-size: 15px;
     text-align: center;
 }
 
