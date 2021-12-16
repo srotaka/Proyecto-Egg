@@ -91,19 +91,20 @@
       </div>
 
       <!-- PRODUCTO 4 -->
-      <div class="basket-product">
-        <div class="item">
+      <div class="basket-product" th:each="canasta : ${canastas}">
+        <div class="item" >
           <div class="product-image">
             <img th:src="@{/img/food-basket04.jpg}" alt="Canasta" class="product-frame">
           </div>
           <div class="product-details">
-            <h1><span class="item-quantity"></span> Canasta</h1>
+            <h1><span th:text="${canasta.descripcion}" class="item-quantity"></span></h1>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal"
+                    th:attr="data-target='#customerModel'+${canasta.id}"  th:onclick="'javascript:verModal(' + ${canasta.id} + ')'">
               Detalle de productos
             </button>
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" th:id="${canasta.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -125,23 +126,11 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>2</td>
-                            <td>Fideos Tirabuzón</td>
-                            <td>Terrabusi</td>
-                            <td id="precio-modal">57.85</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>Aceite Girasol</td>
-                            <td>Cocinero</td>
-                            <td id="precio-modal">135.05</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>Puré de tomate</td>
-                            <td>Arcor</td>
-                            <td id="precio-modal">51.98</td>
+                          <tr th:each="elemento, step : ${canasta.elementos}">
+                            <td th:text="${step.count}"></td>
+                            <td th:text="${elemento.producto.nombre}"></td>
+                            <td th:text="${elemento.producto.marca.nombre}"></td>
+                            <td th:text="${elemento.producto.precio}" id="precio-modal"></td>
                           </tr>
                         </tbody>
                       </table>
@@ -158,11 +147,12 @@
             <!-- Fin modal detalles productos -->
           </div>
         </div>
-        <div class="price">900</div>
+        <div th:text="${canasta.precio}" class="price"></div>
         <div class="quantity">
           <input type="number" value="0" min="0" class="quantity-field">
         </div>
         <div class="subtotal">0</div>
+
         <!-- <div class="remove">
           <button>Eliminar</button>
         </div> -->
@@ -225,6 +215,15 @@
 
     <!-- JS PARA TITULO -->
     <script th:src="@{/js/titulo.js}"></script>
+
+  <script>
+
+        function verModal(id){
+            $('#'+id).modal('show');
+        }
+
+
+    </script>
 
 
 </body>

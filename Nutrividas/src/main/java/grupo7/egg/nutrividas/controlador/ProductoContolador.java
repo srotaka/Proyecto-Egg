@@ -5,9 +5,11 @@ import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.exeptions.InvalidDataException;
+import grupo7.egg.nutrividas.servicios.ElementoServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.MarcaServicio;
 import grupo7.egg.nutrividas.servicios.ProductoServicio;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
@@ -39,6 +41,9 @@ public class ProductoContolador {
 
     @Autowired
     private MarcaServicio marcaServicio;
+
+    @Autowired
+    private ElementoServicio elementoServicio;
 
     @GetMapping("/crear")
     public ModelAndView crearProducto(HttpServletRequest request){
@@ -131,13 +136,14 @@ public class ProductoContolador {
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable("id") Long id){
         productoServicio.habilitarProducto(id);
-        return new RedirectView("/productosSil");
+        return new RedirectView("/producto");
     }
 
     @PostMapping("/eliminar/{id}")
     public RedirectView deshabilitar(@PathVariable("id") Long id){
+        elementoServicio.eliminarElementosProducto(id);
         productoServicio.deshabilitarProducto(id);
-        return new RedirectView("/productosSil");
+        return new RedirectView("/producto");
     }
 
     @GetMapping

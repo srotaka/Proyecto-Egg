@@ -1,9 +1,6 @@
 package grupo7.egg.nutrividas.servicios;
 
-import grupo7.egg.nutrividas.entidades.Foto;
-import grupo7.egg.nutrividas.entidades.Marca;
-import grupo7.egg.nutrividas.entidades.Nutricionista;
-import grupo7.egg.nutrividas.entidades.Producto;
+import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.enums.Categoria;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
@@ -11,6 +8,7 @@ import grupo7.egg.nutrividas.repositorios.ProductoRepository;
 import grupo7.egg.nutrividas.util.Validations;
 import grupo7.egg.nutrividas.util.paginacion.Paged;
 import grupo7.egg.nutrividas.util.paginacion.Paging;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,14 +20,13 @@ import java.util.NoSuchElementException;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ProductoServicio {
 
-    @Autowired
+
     private ProductoRepository productoRepository;
 
-    @Autowired
     private MarcaServicio marcaServicio;
-
 
     @Transactional
     public Producto crearProducto(String nombre, Long idMarca, Double precio, Categoria categoria,
@@ -86,7 +83,9 @@ public class ProductoServicio {
 
     @Transactional
     public void deshabilitarProducto(Long id) {
-        productoRepository.deleteById(id);
+        Producto producto = productoRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("No se existe un producto asociado al id"+id));
+        productoRepository.deleteById(producto.getId());
     }
 
     @Transactional

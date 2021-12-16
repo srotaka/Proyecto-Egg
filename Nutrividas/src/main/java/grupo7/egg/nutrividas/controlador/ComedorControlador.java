@@ -38,12 +38,28 @@ public class ComedorControlador {
     @Autowired
     private FotoServicio fotoServicio;
 
+    @GetMapping(value ="/{id}")
+    public ModelAndView mostrarComedor(@PathVariable("id") Long id,
+                                         HttpServletRequest request) {
+
+        ModelAndView mav = new ModelAndView("comedores");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+        }
+
+        mav.addObject("comedor", comedorServicio.buscarPorId(id));
+        return mav;
+    }
+
     @GetMapping
     public ModelAndView mostrarComedores(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                          @RequestParam(value = "size", required = false, defaultValue = "8") int size,
                                          @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                          HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("comedores");
+        ModelAndView mav = new ModelAndView("comedores2");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {

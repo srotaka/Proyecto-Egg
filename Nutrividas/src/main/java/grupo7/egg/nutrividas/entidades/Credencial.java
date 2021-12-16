@@ -54,4 +54,6 @@ public class Credencial {
 
     @LastModifiedDate
     private LocalDateTime modificacion;
+
+    private Boolean habilitado;
 }

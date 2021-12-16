@@ -1,9 +1,6 @@
 package grupo7.egg.nutrividas.controlador;
 
-import grupo7.egg.nutrividas.entidades.Canasta;
-import grupo7.egg.nutrividas.entidades.Elemento;
-import grupo7.egg.nutrividas.entidades.Foto;
-import grupo7.egg.nutrividas.entidades.Producto;
+import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +40,19 @@ public class CanastaControlador {
     @Autowired
     private ProductoServicio productoServicio;
 
+    @GetMapping
+    public ModelAndView canastasComedor(HttpServletRequest request){
+        ModelAndView mav = new ModelAndView("carrito");
 
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("success", flashMap.get("success-name"));
+        }
+
+        mav.addObject("canastas",  canastaServicio.listarCanastas());
+        return mav;
+    }
 
     @GetMapping("/crear")
     public ModelAndView crear(HttpServletRequest request, HttpSession session){
@@ -195,6 +204,21 @@ public class CanastaControlador {
     public RedirectView eliminar(@PathVariable Long id) {
         canastaServicio.deshabilitarCanasta(id);
         return new RedirectView("/canasta");
+    }
+
+    @GetMapping("/{id}")
+    public ModelAndView canastasComedor(@PathVariable("id")Long id,HttpServletRequest request){
+        ModelAndView mav = new ModelAndView("carrito");
+
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("success", flashMap.get("success-name"));
+        }
+        Comedor comedor = comedorServicio.buscarPorId(id);
+
+        mav.addObject("canastas",  canastaServicio.buscarCanastasPorComedor(comedor));
+        return mav;
     }
 
     @Value("${picture.canastas.location}")

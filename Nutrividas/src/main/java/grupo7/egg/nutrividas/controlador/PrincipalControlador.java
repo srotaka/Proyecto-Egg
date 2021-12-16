@@ -1,7 +1,7 @@
 package grupo7.egg.nutrividas.controlador;
 
-import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Usuario;
+import grupo7.egg.nutrividas.mail.MailNotificationService;
 import grupo7.egg.nutrividas.servicios.CredencialServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.UsuarioServicio;
@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -53,8 +50,8 @@ public class PrincipalControlador {
         return new ModelAndView("contacto");
     }
     
-    @GetMapping("/confirmacion")
-    public ModelAndView confirmacion(){
+    @GetMapping("/confirmacion/{id}")
+    public ModelAndView confirmacion(@PathVariable("id")Long id){
         return new ModelAndView("confirmacion-mail");
     }
 
@@ -119,15 +116,6 @@ public class PrincipalControlador {
         try {
 
             Usuario usuarioCreado =usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
-
-            /*Foto foto;
-            if(usuario.getFoto() == null){
-                foto = fotoServicio.crearFoto(USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),usuario.getFoto());
-            }else{
-                foto = fotoServicio.actualizarFoto(usuarioCreado.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
-            }
-            usuarioServicio.crearFoto(foto,usuario.getId());*/
-
             request.login(usuario.getCredencial().getMail(), usuario.getCredencial().getPassword());
             mav.setViewName("redirect:/");
         } catch (ServletException e) {

@@ -67,7 +67,7 @@ public class ElementoControlador {
     }
 
     @PostMapping("/eliminar/{id}")
-    public RedirectView editarCandidad(@PathVariable("id")Long id){
+    public RedirectView eliminarCandidad(@PathVariable("id")Long id){
         elementoServicio.eliminarElemento(id);
         return new RedirectView("/canasta/crear");
     }

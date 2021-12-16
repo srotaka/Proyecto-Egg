@@ -190,9 +190,9 @@
                   </a>
                 </td>
                 <td class="text-center">
-                  <a th:href="@{/producto/eliminar/__${producto.id}__}">
-                    <box-icon name='trash-alt' type='solid' animation='tada-hover' color='#F55C5C'></box-icon>
-                  </a>
+                  <form method="POST" th:action="${producto.alta} == true ? @{/producto/eliminar/__${producto.id}__} : @{/producto/habilitar/__${producto.id}__}">
+                    <button type="submit"><box-icon th:name="${producto.alta} == true ? 'trash-alt' : 'up-arrow-circle'" type='solid' animation='tada-hover' th:color="${producto.alta} == true ? '#F55C5C' : '#1bac91'"></box-icon></button>
+                  </form>
                 </td>
               </tr>
             </tbody>
@@ -318,6 +318,16 @@
 
     <!-- JS PARA TITULO -->
     <script th:src="@{/js/titulo.js}"></script>
+
+<script>
+    function addBasket(id){
+            var element = document.getElementById('element'+id);
+            $.ajax({
+                type: 'GET',
+                url:'/elemento/agregar/'+id
+            });
+    }
+</script>
 
 </body>
 
