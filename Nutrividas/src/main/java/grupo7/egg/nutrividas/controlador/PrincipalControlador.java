@@ -5,6 +5,7 @@ import grupo7.egg.nutrividas.servicios.CredencialServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.UsuarioServicio;
 import grupo7.egg.nutrividas.entidades.Comedor;
+import grupo7.egg.nutrividas.enums.Provincia;
 import grupo7.egg.nutrividas.servicios.ComedorServicio;
 import grupo7.egg.nutrividas.entidades.Nutricionista;
 import grupo7.egg.nutrividas.servicios.*;
@@ -27,7 +28,7 @@ import java.util.Map;
 public class PrincipalControlador {
 
     @Autowired
-    private CredencialServicio credencialServicio;
+    private ProvinciaServicio provinciaServicio;
 
     @Autowired
     private FotoServicio fotoServicio;
@@ -223,6 +224,7 @@ public class PrincipalControlador {
     public ModelAndView signupComedor(HttpServletRequest request,Principal principal){
         ModelAndView mav = new ModelAndView("signupComedor");
         Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        mav.addObject("provincias", provinciaServicio.obtenerProvincias());
 
         if (principal != null) {
             mav.setViewName("redirect:/ ");
@@ -232,6 +234,7 @@ public class PrincipalControlador {
             mav.addObject("error", flashMap.get("error"));
             mav.addObject("comedor", flashMap.get("comedor"));
         } else {
+
             mav.addObject("comedor", new Comedor());
         }
 
@@ -249,8 +252,7 @@ public class PrincipalControlador {
         }
 
         try {
-
-            Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getBiografia().getDescripcion(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
+            Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
 
             /*Foto foto;
             if(usuario.getFoto() == null){

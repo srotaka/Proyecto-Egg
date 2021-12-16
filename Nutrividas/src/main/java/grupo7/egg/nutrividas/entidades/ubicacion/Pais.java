@@ -14,6 +14,6 @@ import java.util.List;
 public class Pais {
 
     private Integer cantidad;
-    private List<Provincia> provincias;
+    private List<Provincias> provincias;
 
 }
