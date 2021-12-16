@@ -1,10 +1,13 @@
 package grupo7.egg.nutrividas.controlador;
 
 import grupo7.egg.nutrividas.entidades.Usuario;
-import grupo7.egg.nutrividas.mail.MailNotificationService;
 import grupo7.egg.nutrividas.servicios.CredencialServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.UsuarioServicio;
+import grupo7.egg.nutrividas.entidades.Comedor;
+import grupo7.egg.nutrividas.servicios.ComedorServicio;
+import grupo7.egg.nutrividas.entidades.Nutricionista;
+import grupo7.egg.nutrividas.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -31,6 +34,12 @@ public class PrincipalControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    private NutricionistaServicio nutricionistaServicio;
+
+    @Autowired
+    private ComedorServicio comedorServicio;
 
     @GetMapping("/")
     public ModelAndView inicio(){
@@ -69,6 +78,26 @@ public class PrincipalControlador {
             modelAndView.addObject("logout", "Ha salido correctamente de la plataforma");
              modelAndView.setViewName("redirect:/");
         }
+        if(flashMap != null){
+            modelAndView.addObject("success", flashMap.get("success"));
+        }
+
+        if (principal != null) {
+            modelAndView.setViewName("redirect:/ ");
+        }
+
+        return modelAndView;
+    }
+
+    @GetMapping(value= "/seleccion")
+    public ModelAndView seleccion(@RequestParam(required = false) String error, HttpServletRequest request, Principal principal){
+        ModelAndView modelAndView = new ModelAndView("seleccionUsuario");
+
+        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (error != null) {
+            modelAndView.addObject("error", "Usuario o contraseña incorrectos");
+        }
+
         if(flashMap != null){
             modelAndView.addObject("success", flashMap.get("success"));
         }
@@ -130,23 +159,117 @@ public class PrincipalControlador {
         return mav;
     }
 
+    @GetMapping(value = "/signup/nutricionista")
+    public ModelAndView signupNutricionista(HttpServletRequest request,Principal principal){
+        ModelAndView mav = new ModelAndView("signupNutricionista");
+        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (principal != null) {
+            mav.setViewName("redirect:/ ");
+        }
+
+        if (flashMap != null) {
+            mav.addObject("error", flashMap.get("error"));
+            mav.addObject("nutricionista", flashMap.get("nutricionista"));
+        } else {
+            mav.addObject("nutricionista", new Nutricionista());
+        }
+
+        return mav;
+    }
+
+    @PostMapping(value = "/registro/nutricionista")
+    public ModelAndView saveNutricionista(@Valid @ModelAttribute Nutricionista nutricionista, BindingResult result, HttpServletRequest request, RedirectAttributes attributes){
+
+        ModelAndView mav = new ModelAndView();
+
+
+        if (result.hasErrors()) {
+            mav.addObject("nutricionista", nutricionista);
+            mav.setViewName("signupNutricionista");
+            return mav;
+        }
+
+        try {
+
+            Nutricionista nutricionistaCreado =nutricionistaServicio.crearNutricionista(nutricionista.getDocumento(), nutricionista.getNombre(),
+                    nutricionista.getApellido(), nutricionista.getMatricula(), nutricionista.getFechaNacimiento(),
+                    nutricionista.getTelefono(), nutricionista.getCredencial().getMail(),
+                    nutricionista.getCredencial().getUsername(),nutricionista.getCredencial().getPassword());
+
+            /*Foto foto;
+            if(usuario.getFoto() == null){
+                foto = fotoServicio.crearFoto(USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),usuario.getFoto());
+            }else{
+                foto = fotoServicio.actualizarFoto(usuarioCreado.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
+            }
+            usuarioServicio.crearFoto(foto,usuario.getId());*/
+
+            request.login(nutricionista.getCredencial().getMail(), nutricionista.getCredencial().getPassword());
+            mav.setViewName("redirect:/");
+        } catch (ServletException e) {
+            attributes.addFlashAttribute("error", "Error al realizar auto-login");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("nutricionista", nutricionista);
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/signup/nutricionista");
+        }
+
+
+        return mav;
+    }
+
     @GetMapping(value = "/signup/comedor")
     public ModelAndView signupComedor(HttpServletRequest request,Principal principal){
         ModelAndView mav = new ModelAndView("signupComedor");
         Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (principal != null) {
-            mav.setViewName("redirect:/");
+            mav.setViewName("redirect:/ ");
         }
 
         if (flashMap != null) {
             mav.addObject("error", flashMap.get("error"));
-            mav.addObject("usuario", flashMap.get("usuario"));
+            mav.addObject("comedor", flashMap.get("comedor"));
         } else {
-            Usuario usuario = new Usuario();
-            //usuario.setRol(Rol.USER);
-            mav.addObject("usuario", usuario);
+            mav.addObject("comedor", new Comedor());
         }
+
+        return mav;
+    }
+
+    @PostMapping(value = "/registro/comedor")
+    public ModelAndView saveComedor(@Valid @ModelAttribute Comedor comedor, BindingResult result, HttpServletRequest request, RedirectAttributes attributes){
+
+        ModelAndView mav = new ModelAndView();
+        if (result.hasErrors()) {
+            mav.addObject("comedor", comedor);
+            mav.setViewName("signupComedor");
+            return mav;
+        }
+
+        try {
+
+            Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getBiografia().getDescripcion(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
+
+            /*Foto foto;
+            if(usuario.getFoto() == null){
+                foto = fotoServicio.crearFoto(USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),usuario.getFoto());
+            }else{
+                foto = fotoServicio.actualizarFoto(usuarioCreado.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
+            }
+            usuarioServicio.crearFoto(foto,usuario.getId());*/
+
+            request.login(comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
+            mav.setViewName("redirect:/");
+        } catch (ServletException e) {
+            attributes.addFlashAttribute("error", "Error al realizar auto-login");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("comedor", comedor);
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/signup/comedor");
+        }
+
 
         return mav;
     }

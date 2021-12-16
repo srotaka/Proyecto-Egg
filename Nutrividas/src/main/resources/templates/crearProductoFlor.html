@@ -111,7 +111,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <!-- *************** -->
-                
+
                 <!-- The image half -->
                 <div class="col-md-6 d-none d-md-flex" th:style="'z-index: 100; background-image:url( '+@{/img/productos.jpg}+' ) !important;background-repeat: no-repeat;
               background-position: center;background-size: cover; border-radius: 20px;'"></div>
@@ -142,7 +142,7 @@
                                             <div class="col">
                                                 <label for="calle">Seleccione Marca</label>
                                                 <select name="marca" id="marca" th:with="marca=*{marca}"
-                                                    class="form-control border-0 shadow-sm px-4" style="width: auto;">
+                                                    class="form-control border-0 shadow-sm px-4" style="width: 150px;">
                                                     <option th:each="marca : ${marcas}" th:value="${marca.id}"
                                                         th:text="${marca.nombre}"
                                                         th:selected="${producto.marca != null} ? ${marca.nombre} == *{marca.nombre} : false">
@@ -169,7 +169,7 @@
                                             <div class="col">
                                                 <label for="numero">Seleccione Categoría</label>
                                                 <select name="categoria" id="categoria"
-                                                    class="form-control  border-0 shadow-sm px-4" style="width: auto;"
+                                                    class="form-control border-0 shadow-sm px-4" style="width: 150px;"
                                                     th:with="categoria=*{categoria}">
                                                     <option
                                                         th:each="categoria : ${T(grupo7.egg.nutrividas.enums.Categoria).values()}"
@@ -218,11 +218,7 @@
                                                 </div>
                                             </div>
 
-
-
-                                            <button type="submit"
-                                                class="btn btn-secondary mb-2"
-                                                id="boton-SignIn"
+                                            <button type="submit" class="btn btn-secondary mb-2" style="width: auto;" id="boton-SignIn"
                                                 th:text="${action == 'guardar'} ? 'INGRESAR PRODUCTO' : 'GUARDAR CAMBIOS'"></button>
                                     </form>
                                 </div>
