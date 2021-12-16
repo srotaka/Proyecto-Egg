@@ -8,20 +8,19 @@ const tarjeta = document.querySelector('#tarjeta'),
 	  mesExpiracion = document.querySelector('#tarjeta .mes'),
 	  yearExpiracion = document.querySelector('#tarjeta .year');
 	  ccv = document.querySelector('#tarjeta .ccv');
+	  var chip = document.createElement("img");
 
 // * Volteamos la tarjeta para mostrar el frente.
 const mostrarFrente = () => {
 	if(tarjeta.classList.contains('active')){
-		tarjeta.classList.remove('active');
-        chip.setAttribute("style", "display: block;")
+		tarjeta.classList.remove('active');		
 	}
 }
 
 // * Rotacion de la tarjeta
 tarjeta.addEventListener('click', () => {
-	tarjeta.classList.toggle('active');
-    let chip = document.getElementById("chip");
-    chip.setAttribute("style", "display: none;")
+	tarjeta.classList.toggle('active'); 
+	
 });
 
 // * Boton de abrir formulario
