@@ -24,6 +24,7 @@ public interface ComedorRepository extends JpaRepository<Comedor,Long> {
 
     boolean existsByDireccion(Direccion direccion);
     Comedor findByDireccion(Direccion direccion);
+    Optional<Comedor> findByCredencial_mail(String mail);
 
     List<Comedor> findByNutricionistaIsNull();
 

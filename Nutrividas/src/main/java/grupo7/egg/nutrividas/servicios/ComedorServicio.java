@@ -129,6 +129,13 @@ public class ComedorServicio {
     }
 
     @Transactional(readOnly = true)
+    public Comedor buscarPorMail(String mail){
+        return comedorRepository.findByCredencial_mail(mail).orElseThrow(
+                ()-> new NoSuchElementException("No existe un comedor asociado al mail '"+mail+"' ")
+        );
+    }
+
+    @Transactional(readOnly = true)
     public List<Comedor> listarComedoresSinNutricionista(){
         return comedorRepository.findByNutricionistaIsNull();
     }
