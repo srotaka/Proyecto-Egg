@@ -159,10 +159,7 @@
                 <th th:if="${producto.foto == null}" width="30px" heigth="25px" class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
               background-position: center;background-size: cover;'">
                 </th>
-                <!--<th th:unless="${producto.foto == null}" width="30px" heigth="25px" class="text-center" th:style="'z-index: 100
-            ;background-image:url(' + ${producto.foto.ruta}+ ') !important;background-repeat: no-repeat;
-            background-position: center;background-size: cover;'">
-            </th>-->
+
                 <th th:unless="${producto.foto == null}" width="40px" heigth="25px" class="text-center" th:style="'z-index: 100
           ;background-image:url(http://localhost:8080/fotos/'+${producto.foto.id}+') !important;background-repeat: no-repeat;
           background-position: center;background-size: cover;'">

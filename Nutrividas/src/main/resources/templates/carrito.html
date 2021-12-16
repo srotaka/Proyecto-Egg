@@ -149,6 +149,7 @@
                       <table class="table table-striped">
                         <thead>
                           <tr>
+                            <th></th>
                             <th>Cantidad</th>
                             <th>Nombre</th>
                             <th>Marca</th>
@@ -157,7 +158,13 @@
                         </thead>
                         <tbody>
                           <tr th:each="elemento, step : ${canasta.elementos}">
-                            <td th:text="${step.count}"></td>
+                            <th th:if="${elemento.producto.foto == null}" width="30px" heigth="25px" class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
+                                background-position: center;background-size: cover;'">
+                            </th>
+                            <th th:unless="${elemento.producto.foto == null}" width="40px" heigth="25px" class="text-center" th:style="'z-index: 100
+                                ;background-image:url(http://localhost:8080/fotos/'+${elemento.producto.foto.id}+') !important;background-repeat: no-repeat;
+                                 background-position: center;background-size: cover;'">
+                            <td th:text="${elemento.cantidadNecesaria}"></td>
                             <td th:text="${elemento.producto.nombre}"></td>
                             <td th:text="${elemento.producto.marca.nombre}"></td>
                             <td th:text="${elemento.producto.precio}" id="precio-modal"></td>
