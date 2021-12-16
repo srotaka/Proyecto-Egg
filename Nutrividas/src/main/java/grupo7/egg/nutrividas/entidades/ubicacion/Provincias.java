@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Provincia {
+public class Provincias {
     private  Integer id;
     private String nombre;
 }

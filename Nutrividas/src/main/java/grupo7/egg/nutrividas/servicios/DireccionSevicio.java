@@ -4,7 +4,7 @@ import grupo7.egg.nutrividas.entidades.Direccion;
 import grupo7.egg.nutrividas.entidades.ubicacion.Localidad;
 import grupo7.egg.nutrividas.entidades.ubicacion.MunicipioProvincia;
 import grupo7.egg.nutrividas.entidades.ubicacion.Pais;
-import grupo7.egg.nutrividas.entidades.ubicacion.Provincia;
+import grupo7.egg.nutrividas.entidades.ubicacion.Provincias;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.repositorios.DireccionRepository;
 import grupo7.egg.nutrividas.util.Validations;
@@ -89,7 +89,7 @@ public class DireccionSevicio {
                 "https://apis.datos.gob.ar/georef/api/provincias", Pais.class);
 
         return pais.getProvincias().stream().collect(
-                Collectors.toMap(Provincia::getId, Provincia::getNombre ));
+                Collectors.toMap(Provincias::getId, Provincias::getNombre ));
     }
 
     public List<String> listarMunicipios(Integer idProvincia){

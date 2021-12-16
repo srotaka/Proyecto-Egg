@@ -38,8 +38,8 @@ public interface ElementoRepository extends JpaRepository<Elemento,Long> {
 
     boolean existsByProducto_IdAndCanasta_Id(Long prductoId, Long canastaId);
     Optional<Elemento> findByProducto_IdAndCanasta_id(Long prductoId, Long canastaId);
+    List<Elemento> findByProducto_Id(Long prductoId);
 
-    //Crear, Eliminar, actualizar cantidad;
     @Query("SELECT e FROM Elemento e WHERE e.usuario.credencial.mail = :usuarioMail AND e.asignado=false")
     List<Elemento> obtenerElementosSesion(@Param("usuarioMail") String mail);
     @Query("SELECT e FROM Elemento e WHERE e.producto= :producto AND e.usuario = :usuario AND e.asignado=false")

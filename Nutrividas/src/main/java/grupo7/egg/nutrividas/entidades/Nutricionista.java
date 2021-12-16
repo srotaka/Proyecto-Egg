@@ -61,4 +61,5 @@ public class Nutricionista {
     private LocalDateTime modificacion;
 
     private Boolean alta;
+
 }

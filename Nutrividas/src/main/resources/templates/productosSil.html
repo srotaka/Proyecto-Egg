@@ -159,10 +159,7 @@
                 <th th:if="${producto.foto == null}" width="30px" heigth="25px" class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
               background-position: center;background-size: cover;'">
                 </th>
-                <!--<th th:unless="${producto.foto == null}" width="30px" heigth="25px" class="text-center" th:style="'z-index: 100
-            ;background-image:url(' + ${producto.foto.ruta}+ ') !important;background-repeat: no-repeat;
-            background-position: center;background-size: cover;'">
-            </th>-->
+
                 <th th:unless="${producto.foto == null}" width="40px" heigth="25px" class="text-center" th:style="'z-index: 100
           ;background-image:url(http://localhost:8080/fotos/'+${producto.foto.id}+') !important;background-repeat: no-repeat;
           background-position: center;background-size: cover;'">
@@ -189,9 +186,9 @@
                   </a>
                 </td>
                 <td class="text-center">
-                  <a th:href="@{/producto/eliminar/__${producto.id}__}">
-                    <box-icon name='trash-alt' type='solid' animation='tada-hover' color='#F55C5C'></box-icon>
-                  </a>
+                  <form method="POST" th:action="${producto.alta} == true ? @{/producto/eliminar/__${producto.id}__} : @{/producto/habilitar/__${producto.id}__}">
+                    <button type="submit"><box-icon th:name="${producto.alta} == true ? 'trash-alt' : 'up-arrow-circle'" type='solid' animation='tada-hover' th:color="${producto.alta} == true ? '#F55C5C' : '#1bac91'"></box-icon></button>
+                  </form>
                 </td>
               </tr>
             </tbody>
@@ -325,23 +322,15 @@
     <script th:src="@{/js/titulo.js}"></script>
 
 <script>
-    $(document).ready(function () {
-      $("#myInput").on("keyup", function () {
-        var value = $(this).val().toLowerCase();
-        $("#myTable tr").filter(function () {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-      });
-    });
-  
-    function addBasket(id) {
-      var element = document.getElementById('element' + id);
-      $.ajax({
-        type: 'GET',
-        url: '/elemento/agregar/' + id
-      });
+    function addBasket(id){
+            var element = document.getElementById('element'+id);
+            $.ajax({
+                type: 'GET',
+                url:'/elemento/agregar/'+id
+            });
     }
 </script>
+
 </body>
 
 </html>

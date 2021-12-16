@@ -1,18 +1,19 @@
 package grupo7.egg.nutrividas.controlador;
 
+import grupo7.egg.nutrividas.entidades.Usuario;
+import grupo7.egg.nutrividas.servicios.CredencialServicio;
+import grupo7.egg.nutrividas.servicios.FotoServicio;
+import grupo7.egg.nutrividas.servicios.UsuarioServicio;
 import grupo7.egg.nutrividas.entidades.Comedor;
+import grupo7.egg.nutrividas.enums.Provincia;
 import grupo7.egg.nutrividas.servicios.ComedorServicio;
 import grupo7.egg.nutrividas.entidades.Nutricionista;
-import grupo7.egg.nutrividas.entidades.Usuario;
 import grupo7.egg.nutrividas.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -27,7 +28,7 @@ import java.util.Map;
 public class PrincipalControlador {
 
     @Autowired
-    private CredencialServicio credencialServicio;
+    private ProvinciaServicio provinciaServicio;
 
     @Autowired
     private FotoServicio fotoServicio;
@@ -59,8 +60,8 @@ public class PrincipalControlador {
         return new ModelAndView("contacto");
     }
     
-    @GetMapping("/confirmacion")
-    public ModelAndView confirmacion(){
+    @GetMapping("/confirmacion/{id}")
+    public ModelAndView confirmacion(@PathVariable("id")Long id){
         return new ModelAndView("confirmacion-mail");
     }
     
@@ -150,15 +151,6 @@ public class PrincipalControlador {
         try {
 
             Usuario usuarioCreado =usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
-
-            /*Foto foto;
-            if(usuario.getFoto() == null){
-                foto = fotoServicio.crearFoto(USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),usuario.getFoto());
-            }else{
-                foto = fotoServicio.actualizarFoto(usuarioCreado.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
-            }
-            usuarioServicio.crearFoto(foto,usuario.getId());*/
-
             request.login(usuario.getCredencial().getMail(), usuario.getCredencial().getPassword());
             mav.setViewName("redirect:/");
         } catch (ServletException e) {
@@ -237,6 +229,7 @@ public class PrincipalControlador {
     public ModelAndView signupComedor(HttpServletRequest request,Principal principal){
         ModelAndView mav = new ModelAndView("signupComedor");
         Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        mav.addObject("provincias", provinciaServicio.obtenerProvincias());
 
         if (principal != null) {
             mav.setViewName("redirect:/ ");
@@ -246,6 +239,7 @@ public class PrincipalControlador {
             mav.addObject("error", flashMap.get("error"));
             mav.addObject("comedor", flashMap.get("comedor"));
         } else {
+
             mav.addObject("comedor", new Comedor());
         }
 
@@ -263,8 +257,7 @@ public class PrincipalControlador {
         }
 
         try {
-
-            Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getBiografia().getDescripcion(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
+            Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
 
             /*Foto foto;
             if(usuario.getFoto() == null){

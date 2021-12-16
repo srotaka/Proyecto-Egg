@@ -11,7 +11,7 @@
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico" />
-    <link href="../static/img/favicon.ico" rel="apple-touch-icon">
+    <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,16 +20,16 @@
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
-    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/icofont/icofont.min.css" rel="stylesheet">
-    <link href="../static/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="../static/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="../static/venobox/venobox.css" rel="stylesheet">
-    <link href="../static/aos/aos.css" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/icofont/icofont.min.css}" rel="stylesheet">
+    <link th:href="@{/boxicons/css/boxicons.min.css}" rel="stylesheet">
+    <link th:href="@{/owl.carousel/assets/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/venobox/venobox.css}" rel="stylesheet">
+    <link th:href="@{//aos/aos.css}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="../static/css/style.css" rel="stylesheet">
-    <link href="../static/css/comedores.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{//css/comedores.css}" rel="stylesheet">
 
 </head>
 
@@ -88,42 +88,18 @@
 
     <!-- ======= CANASTAS CARDS ======= -->
     <section class="hero-section-canastas">
-        <div class="card-grid">
+        <div class="card-grid" th:each="canasta : ${canastas}">
             <a class="card" href="#">
                 <div class="card__background"
                     style="background-image:url('../static/img/food-basket01.jpg');">
                 </div>
                 <div class="card__content">
-                    <h3 class="card__heading2">Canasta 1</h3>
-                    <p class="card__precio">$2964</p>
-                    
+                    <h3 th:text="${canasta.descripcion}" class="card__heading2"></h3>
+                    <p th:text="${canasta.precio}" class="card__precio"></p>
+                    <p th:text="${canasta.comedor.nombre}"></p>
                 </div>
             </a>
-            <a class="card" href="#">
-                <div class="card__background"
-                    style="background-image:url('../static/img/food-basket02.jpg');"></div>
-                <div class="card__content">
-                    <h3 class="card__heading2">Canasta 2</h3>
-                    <p class="card__precio">$4325</p>
-                </div>
-            </a>
-            <a class="card" href="#">
-                <div class="card__background"
-                    style="background-image:url('../static/img/food-basket03.jpg');"></div>
-                <div class="card__content">
-                    <h3 class="card__heading2">Canasta 3</h3>
-                    <p class="card__precio">$6781</p>
-                </div>
-            </a>
-            <a class="card" href="#">
-                <div class="card__background"
-                    style="background-image:url('../static/img/food-basket04.jpg');"></div>
-                <div class="card__content">
-                    <h3 class="card__heading2">Canasta 4</h3>
-                    <p class="card__precio">$1147</p>
-                </div>
-            </a>
-        </div>
+
     </section> <!-- End Canastas Cards -->
 
     <!-- ======= Footer ======= -->

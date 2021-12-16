@@ -27,9 +27,9 @@ public enum Provincia {
     TUCUMAN("Tucuman"),
     SANTIAGODELESTERO("Santiago del Estero");
 
-    private String valor;
+    private String provincia;
 
-    Provincia(String valor) {
-        this.valor = valor;
+    Provincia(String provincia) {
+        this.provincia = provincia;
     }
 }

@@ -19,4 +19,6 @@ public class Rol {
     private Integer id;
     private String nombre;
 
+
+
 }

@@ -107,74 +107,98 @@
         </div>
     </section><!-- End TÍTULO -->
 
-    <!-- ======= TABLA COMEDORES ======= -->
-    <section>
-        <div class="container" id="tabla-comedores">
+    <!-- ======= COMEDORES CARDS ======= -->
+    <section class="hero-section">
 
-            <div class="col col-12">
+        <div class="card-grid" th:unless="${comedores.page.isEmpty()}">
+            <a class="card" th:each="comedor : ${comedores.page}">
+                <div class="card__background" th:style="'background-image:url(' + ${comedor.foto.ruta}+ ')'"> </div>
+                <div class="card__content" style="text-align: center;">
+                    <h2 class="card__heading" th:text="${comedor.nombre}"></h2>
 
-            <table th:unless="${comedores.page.isEmpty()}" class="table table-responsive table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th scope="row">Nombre</th>
-                        <th scope="row">Teléfono</th>
-                        <th scope="row">Calle</th>
-                        <th scope="row">Número</th>
-                        <th scope="row">Localidad</th>
-                        <th scope="row">Provincia</th>
-                        <th scope="row">Cantidad de Personas</th>
-                        <th scope="row">Editar Comedor</th>
-                        <th scope="row">Canastas</th>
-                    </tr>
-                </thead>
-                <tbody id="myTable" th:each="comedor : ${comedores.page}">
-                    <tr>
-                        <td th:text="${comedor.nombre}"></td>
-                        <td th:text="${comedor.telefono}"></td>
-                        <td th:text="${comedor.direccion.calle}"></td>
-                        <td th:text="${comedor.direccion.numero}"></td>
-                        <td th:text="${comedor.direccion.localidad}"></td>
-                        <td th:text="${comedor.direccion.provincia}"></td>
-                        <td th:text="${comedor.cantidadDePersonas}"></td>
-                        <td> Editar</td>
-                        <td class="text-center">
-                            <a th:href="@{/canasta/crear}">
-                                <box-icon name='basket' type='solid' animation='tada-hover' color='#444444'>
-                                </box-icon>
-                            </a>
-                        </td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal"
+                            th:attr="data-target='#customerModel'+${comedor.id}"  th:onclick="'javascript:verModal(' + ${comedor.id} + ')'">Conozca más...</button>
+                    <!-- Modal -->
+                    <div class="modal fade" th:id="${comedor.id}"  tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modal-comedor" th:text="${comedor.nombre}"></h5>
+                                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Tabla de detalles Comedores -->
+                                    <div class="container">
+                                        <p>Información</p>
+                                        <table class="table table-striped table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="row">Nombre</th>
+                                                    <th scope="row">Teléfono</th>
+                                                    <th scope="row">Calle</th>
+                                                    <th scope="row">Número</th>
+                                                    <th scope="row">Localidad</th>
+                                                    <th scope="row">Provincia</th>
+                                                    <th scope="row">Cantidad de Personas</th>
+                                                    <th scope="row">Editar Comedor</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td th:text="${comedor.nombre}"></td>
+                                                    <td th:text="${comedor.telefono}"></td>
+                                                    <td th:text="${comedor.direccion.calle}"></td>
+                                                    <td th:text="${comedor.direccion.numero}"></td>
+                                                    <td th:text="${comedor.direccion.localidad}"></td>
+                                                    <td th:text="${comedor.direccion.provincia}"></td>
+                                                    <td th:text="${comedor.cantidadDePersonas}"></td>
+                                                    <td> Editar</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- Fin Tabla detalle Comedores -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-modal-trigger"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        </div>
 
-                    </tr>
-                </tbody>
-            </table>
+                    </div>
+                    <!-- Fin modal detalles comedores -->
 
-            <!-- Paginacion -->
-            <nav aria-label="Page navigation" class="paging">
-                <ul class="pagination" th:if="${comedores.page.totalPages > 1}">
-                    <li class="page-item" th:classappend="${!comedores.paging.isPrevEnabled()? 'disabled' : ''}">
-                        <a class="page-link" th:href="@{'/comedor?page=' + ${comedores.paging.pageNumber - 1}}"
-                            tabindex="-1">Anterior</a>
-                    </li>
-                    <th:block th:each="item : ${comedores.paging.getItems()}">
-                        <li class="page-item"
-                            th:classappend="${item.index == comedores.paging.pageNumber? 'active' : ''}"
-                            th:if="${item.pageItemType.name() == 'PAGE'}">
-                            <a class="page-link" th:href="@{'/comedor?page=' + ${item.index}}"
-                                th:text="${item.index}"></a>
-                        </li>
-                        <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
-                            <a class="page-link" href="#">...</a>
-                        </li>
-                    </th:block>
-                    <li class="page-item" th:classappend="${!comedores.paging.isNextEnabled()? 'disabled' : ''}">
-                        <a class="page-link"
-                            th:href="@{'/comedor?page=' + ${comedores.paging.pageNumber + 1}}">Siguiente</a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- ******************** -->
-        </div> <!-- End Tabla productos --></div>
-    </section>
+                </div>
+
+            </a>
+        </div>
+    </section> <!-- End Comedores Cards -->
+    <!-- Paginacion -->
+  <nav aria-label="Page navigation" class="paging">
+        <ul class="pagination" th:if="${comedores.page.totalPages > 1}">
+            <li class="page-item" th:classappend="${!comedores.paging.isPrevEnabled()? 'disabled' : ''}">
+                <a class="page-link" th:href="@{'/comedor?page=' + ${comedores.paging.pageNumber - 1}}"
+                    tabindex="-1">Anterior</a>
+            </li>
+            <th:block th:each="item : ${comedores.paging.getItems()}">
+                <li class="page-item" th:classappend="${item.index == comedores.paging.pageNumber? 'active' : ''}"
+                    th:if="${item.pageItemType.name() == 'PAGE'}">
+                    <a class="page-link" th:href="@{'/comedor?page=' + ${item.index}}" th:text="${item.index}"></a>
+                </li>
+                <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            </th:block>
+            <li class="page-item" th:classappend="${!comedores.paging.isNextEnabled()? 'disabled' : ''}">
+                <a class="page-link" th:href="@{'/comedor?page=' + ${comedores.paging.pageNumber + 1}}">Siguiente</a>
+            </li>
+        </ul>
+    </nav> 
+    <!-- ** -->
 
     <!-- ======= Footer ======= -->
     <footer id="footer2">
@@ -204,6 +228,15 @@
 
     <!-- JS PARA TITULO -->
     <script th:src="@{/js/titulo.js}"></script>
+
+    <script>
+
+        function verModal(id){
+            $('#'+id).modal('show');
+        }
+
+
+    </script>
 
 </body>
 
