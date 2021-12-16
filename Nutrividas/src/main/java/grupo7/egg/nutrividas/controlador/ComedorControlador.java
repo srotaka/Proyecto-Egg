@@ -2,10 +2,12 @@ package grupo7.egg.nutrividas.controlador;
 
 import grupo7.egg.nutrividas.entidades.Comedor;
 import grupo7.egg.nutrividas.entidades.Foto;
+import grupo7.egg.nutrividas.entidades.Provincia;
 import grupo7.egg.nutrividas.enums.Sexo;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.servicios.ComedorServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
+import grupo7.egg.nutrividas.servicios.ProvinciaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
@@ -19,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,6 +30,9 @@ public class ComedorControlador {
 
     @Autowired
     private ComedorServicio comedorServicio;
+
+    @Autowired
+    private ProvinciaServicio provinciaServicio;
 
     @Autowired
     private FotoServicio fotoServicio;
@@ -51,6 +57,7 @@ public class ComedorControlador {
 
     @GetMapping("/crear")
     public ModelAndView crearComedor(HttpServletRequest request) {
+
         ModelAndView mav = new ModelAndView("signupComedor");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
@@ -58,9 +65,9 @@ public class ComedorControlador {
             mav.addObject("error", flashMap.get("error"));
             mav.addObject("comedor", flashMap.get("comedor"));
         } else {
+            mav.addObject("provincias", provinciaServicio.obtenerProvincias());
             mav.addObject("comedor", new Comedor());
         }
-
         mav.addObject("title", "Ingresar Comedor");
         mav.addObject("action", "guardar");
         return mav;

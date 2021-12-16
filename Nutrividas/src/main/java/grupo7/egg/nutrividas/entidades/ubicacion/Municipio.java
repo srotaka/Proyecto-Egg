@@ -13,5 +13,5 @@ public class Municipio {
 
     private Integer id;
     private String nombre;
-    private Provincia provincia;
+    private Provincias provincia;
 }

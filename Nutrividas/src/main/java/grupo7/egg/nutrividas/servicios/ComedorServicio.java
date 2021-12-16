@@ -42,12 +42,13 @@ public class ComedorServicio {
 
     @Transactional
     public Comedor crearComedor(String nombre, String calle, Integer numero, Integer codigoPostal, String localidad,String provincia,
-                                Integer cantidadDePersonas, Long telefono, String detalleBiografia,
+                                Integer cantidadDePersonas, Long telefono,
                                 String username, String mail, String password){
-
         if(direccionSevicio.existeDireccion(calle, numero, localidad)){
             throw new FieldAlreadyExistException("La dirección '"+calle+" "+numero+","+localidad+" ya se encuentra registrada");
         }
+
+        String detalleBiografia = "";
         validarDatosDeComedor(nombre, cantidadDePersonas,telefono);
         Direccion direccion = direccionSevicio.createDireccion(calle,numero,codigoPostal,localidad,provincia);
         Biografia biografia = biografiaServicio.crearBiografia(detalleBiografia);
@@ -107,16 +108,13 @@ public class ComedorServicio {
         if(nombre==null || nombre.trim().isEmpty()){
             throw new FieldInvalidException("El nombre del comedor es obligatorio");
         }
-
         if(cantidadDePersonas < 0 || cantidadDePersonas == null){
             throw new FieldInvalidException("La cantidad de personas es invalida");
         }
-
         if(telefono == null){
             throw new FieldInvalidException("El telefono es obligatorio");
         }
-
-        if(comedorRepository.findByNombre(nombre) != null){
+        if(!comedorRepository.buscarComedorPorNombre(nombre).isEmpty()){
             throw new FieldInvalidException("Ya existe un comedor con ese nombre");
         }
     }

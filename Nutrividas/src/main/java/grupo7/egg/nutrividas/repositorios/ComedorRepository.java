@@ -17,6 +17,9 @@ public interface ComedorRepository extends JpaRepository<Comedor,Long> {
 
     Optional<Comedor> findByNombre(String nombre);
 
+    @Query("SELECT c FROM Comedor c WHERE c.nombre = :nombre")
+    List<Comedor>buscarComedorPorNombre(@Param("nombre") String nombre);
+
     @Modifying
     @Query("UPDATE Comedor c SET c.alta = true WHERE c.id = :id")
     void habilitarComedor(@Param("id") Long id);
