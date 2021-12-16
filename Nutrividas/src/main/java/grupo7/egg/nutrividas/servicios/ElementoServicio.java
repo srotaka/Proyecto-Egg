@@ -10,6 +10,7 @@ import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.CanastaRepository;
 import grupo7.egg.nutrividas.repositorios.ElementoRepository;
 import grupo7.egg.nutrividas.repositorios.ProductoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +20,11 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ElementoServicio {
 
-    @Autowired
     private ElementoRepository elementoRepository;
 
-    @Autowired
     private ProductoServicio productoServicio;
 
     @Transactional
@@ -76,10 +76,21 @@ public class ElementoServicio {
         elementoRepository.deleteById(elemento.getId());
     }
 
+    @Transactional
+    public void eliminarElementosProducto(Long idProducto){
+        List<Elemento> elementos = elementoRepository.findByProducto_Id(idProducto);
+        elementos.forEach(e -> elementoRepository.deleteById(e.getId()));
+    }
+
     @Transactional(readOnly = true)
     public Optional<Elemento> existeElementoSesion(Long idProducto, Usuario usuario){
         Producto producto = productoServicio.obtenerProductoPorId(idProducto);
         return elementoRepository.existeElementoSesion(producto,usuario);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Elemento> buscarPorProducto(Long idProducto){
+        return elementoRepository.findByProducto_Id(idProducto);
     }
 
     @Transactional(readOnly = true)

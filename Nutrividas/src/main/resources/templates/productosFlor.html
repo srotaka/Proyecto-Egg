@@ -63,7 +63,7 @@
               <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
               <li><a th:href="@{/canasta/crear}">Nueva Canasta</a>
             </ul>
-          </li>&nbsp;&nbsp;&nbsp;
+          </li>
         </ul>
       </nav><!-- .nav-menu -->
 
@@ -137,7 +137,7 @@
                 <th class="text-center">Hipertenso</th>
                 <th class="text-center">Intolerante Lactosa</th>
                 <th class="text-center">Editar</th>
-                <th class="text-center">Elimnar</th>
+                <th class="text-center">Eliminar</th>
               </tr>
             </thead>
             <tbody id="myTable" th:each="producto : ${productos.page}">
@@ -178,9 +178,9 @@
                   </a>
                 </td>
                 <td class="text-center">
-                  <a th:href="@{/producto/eliminar/__${producto.id}__}">
-                    <box-icon name='trash-alt' type='solid' animation='tada-hover' color='#F55C5C'></box-icon>
-                  </a>
+                  <form method="POST" th:action="@{/producto/eliminar/__${producto.id}__}">
+                    <a type="submit"><box-icon name='trash-alt' type='solid' animation='tada-hover' color='#F55C5C'></box-icon></a>
+                  </form>
                 </td>
               </tr>
             </tbody>
@@ -306,6 +306,17 @@
   <script th:href="@{/js/main.js}"></script>
   <!-- JS PARA TITULO -->
   <script th:href="@{/js/titulo.js}"></script>
+
+  <script>
+      function addBasket(id){
+            var element = document.getElementById('element'+id);
+            $.ajax({
+                type: 'GET',
+                url:'/elemento/agregar/'+id
+            });
+      }
+
+  </script>
 </body>
 
 </html>

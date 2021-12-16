@@ -106,8 +106,7 @@
             </p>
         </div>
     </section><!-- End TÍTULO -->
-
-    <!-- ======= TABLA PRODUCTOS ======= -->
+    
    <!-- ======= TABLA PRODUCTOS ======= -->
   <section>
 
@@ -160,15 +159,12 @@
                 <th th:if="${producto.foto == null}" width="30px" heigth="25px" class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
               background-position: center;background-size: cover;'">
                 </th>
-                <!--<th th:unless="${producto.foto == null}" width="30px" heigth="25px" class="text-center" th:style="'z-index: 100
-            ;background-image:url(' + ${producto.foto.ruta}+ ') !important;background-repeat: no-repeat;
-            background-position: center;background-size: cover;'">
-            </th>-->
+
                 <th th:unless="${producto.foto == null}" width="40px" heigth="25px" class="text-center" th:style="'z-index: 100
           ;background-image:url(http://localhost:8080/fotos/'+${producto.foto.id}+') !important;background-repeat: no-repeat;
           background-position: center;background-size: cover;'">
-                <th th:text="|${producto.nombre}|" class="text-center"></th>
-                <th th:text="|${producto.marca.nombre}|" class="text-center"></th>
+                <th th:text="|${producto.nombre}|" class="text-center" id="producto-txt"></th>
+                <th th:text="|${producto.marca.nombre}|" class="text-center" id="producto-txt"></th>
                 <!-- <th>Categoría</th> -->
                 <th th:text="|${producto.precio}|" class="text-center" id="precio-producto"></th>
                 <th class="text-center">
@@ -190,9 +186,9 @@
                   </a>
                 </td>
                 <td class="text-center">
-                  <a th:href="@{/producto/eliminar/__${producto.id}__}">
-                    <box-icon name='trash-alt' type='solid' animation='tada-hover' color='#F55C5C'></box-icon>
-                  </a>
+                  <form method="POST" th:action="${producto.alta} == true ? @{/producto/eliminar/__${producto.id}__} : @{/producto/habilitar/__${producto.id}__}">
+                    <button type="submit"><box-icon th:name="${producto.alta} == true ? 'trash-alt' : 'up-arrow-circle'" type='solid' animation='tada-hover' th:color="${producto.alta} == true ? '#F55C5C' : '#1bac91'"></box-icon></button>
+                  </form>
                 </td>
               </tr>
             </tbody>
@@ -281,12 +277,14 @@
             <a class="page-link"
               th:href="@{'/producto'+${rutaActual}+'page=' + ${productos.paging.pageNumber + 1}}">Siguiente</a>
           </li>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button th:href="@{/canasta/crear}" class="btn btn-primary text-uppercase shadow-sm mb-2 mt-0" id="boton-guardar"  >Ir a la Canasta</button>
         </ul>
       </nav>
       <!-- ******************** -->
-
+     
     </div>
-
+   
   </section>
 
 
@@ -315,9 +313,22 @@
 
     <!-- Template Main JS File -->
     <script th:src="@{/js/main.js}"></script>
+    
+  <!-- JS BUSCADOR DE PRODUCTOS -->
+  <script th:href="@{/js/buscador-productos.js}"></script>
 
     <!-- JS PARA TITULO -->
     <script th:src="@{/js/titulo.js}"></script>
+
+<script>
+    function addBasket(id){
+            var element = document.getElementById('element'+id);
+            $.ajax({
+                type: 'GET',
+                url:'/elemento/agregar/'+id
+            });
+    }
+</script>
 
 </body>
 

@@ -59,12 +59,42 @@
         <ul>
           <li><a th:href="@{/}">Inicio</a></li>
           <li><a th:href="@{/#contact}">Contáctanos</a></li>
+          <li class="drop-down"><a href="#">Mostrar</a>
+            <ul>
+              <li><a th:href="@{/comedor}">Lista de Comedores</a>
+              <li><a th:href="@{/producto}">Lista de Productos</a>
+            </ul>
+          </li>
+          <li class="drop-down"><a href="#">Registrar</a>
+            <ul>
+              <li><a th:href="@{/comedor/crear}">Nuevo Comedor</a>
+              <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
+              <li><a th:href="@{/canasta/crear}">Nueva Canasta</a>
+            </ul>
+          </li>&nbsp;&nbsp;&nbsp;
+
+          <!-- Botón Usuario si está loggeado -->
+          <li class="drop-down" sec:authorize="isAuthenticated()">
+            <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
+              style="margin-top: -13px;" role="button float-right">
+              <img class="rounded-circle" th:src="@{/img/user-nopic.png}" width="50">
+            </a>
+            <ul>
+              <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
+              <li class="dropdown-divider"></li>
+
+              <li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar perfil</a>
+              </li>
+              <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+            </ul>
+          </li>
+          <!-- Fin Botón Usuario si está loggeado -->
         </ul>
       </nav><!-- .nav-menu -->
+      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+      <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a>
+      <!-- End Botón Inicio Sesión -->
     </div>
-  </header><!-- End Header -->
-
-  </div>
   </header><!-- End Header -->
 
   <!-- ======= TÍTULO ======= -->
@@ -91,19 +121,20 @@
       </div>
 
       <!-- PRODUCTO 4 -->
-      <div class="basket-product">
-        <div class="item">
+      <div class="basket-product" th:each="canasta : ${canastas}">
+        <div class="item" >
           <div class="product-image">
             <img th:src="@{/img/food-basket04.jpg}" alt="Canasta" class="product-frame">
           </div>
           <div class="product-details">
-            <h1><span class="item-quantity"></span> Canasta</h1>
+            <h1><span th:text="${canasta.descripcion}" class="item-quantity"></span></h1>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal"
+                    th:attr="data-target='#customerModel'+${canasta.id}"  th:onclick="'javascript:verModal(' + ${canasta.id} + ')'">
               Detalle de productos
             </button>
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" th:id="${canasta.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -118,6 +149,7 @@
                       <table class="table table-striped">
                         <thead>
                           <tr>
+                            <th></th>
                             <th>Cantidad</th>
                             <th>Nombre</th>
                             <th>Marca</th>
@@ -125,23 +157,17 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>2</td>
-                            <td>Fideos Tirabuzón</td>
-                            <td>Terrabusi</td>
-                            <td id="precio-modal">57.85</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>Aceite Girasol</td>
-                            <td>Cocinero</td>
-                            <td id="precio-modal">135.05</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>Puré de tomate</td>
-                            <td>Arcor</td>
-                            <td id="precio-modal">51.98</td>
+                          <tr th:each="elemento, step : ${canasta.elementos}">
+                            <th th:if="${elemento.producto.foto == null}" width="30px" heigth="25px" class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
+                                background-position: center;background-size: cover;'">
+                            </th>
+                            <th th:unless="${elemento.producto.foto == null}" width="40px" heigth="25px" class="text-center" th:style="'z-index: 100
+                                ;background-image:url(http://localhost:8080/fotos/'+${elemento.producto.foto.id}+') !important;background-repeat: no-repeat;
+                                 background-position: center;background-size: cover;'">
+                            <td th:text="${elemento.cantidadNecesaria}"></td>
+                            <td th:text="${elemento.producto.nombre}"></td>
+                            <td th:text="${elemento.producto.marca.nombre}"></td>
+                            <td th:text="${elemento.producto.precio}" id="precio-modal"></td>
                           </tr>
                         </tbody>
                       </table>
@@ -158,11 +184,12 @@
             <!-- Fin modal detalles productos -->
           </div>
         </div>
-        <div class="price">900</div>
+        <div th:text="${canasta.precio}" class="price"></div>
         <div class="quantity">
           <input type="number" value="0" min="0" class="quantity-field">
         </div>
         <div class="subtotal">0</div>
+
         <!-- <div class="remove">
           <button>Eliminar</button>
         </div> -->
@@ -225,6 +252,15 @@
 
     <!-- JS PARA TITULO -->
     <script th:src="@{/js/titulo.js}"></script>
+
+  <script>
+
+        function verModal(id){
+            $('#'+id).modal('show');
+        }
+
+
+    </script>
 
 
 </body>

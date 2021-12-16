@@ -170,6 +170,7 @@
                                                        placeholder="" required=""
                                                        class="form-control border-0 shadow-sm px-4 text">
                                             </div>
+
                                             <div class="error text-start"
                                                  th:if="${#fields.hasErrors('direccion.numero')}"
                                                  th:errors="*{numero}" style="color:red;"></div>
@@ -268,7 +269,6 @@
                                                  th:errors="*{credencial.password}" style="color:red;"></div>
                                         </div>
                                     </div>
-
                                     <button type="submit" class="btn btn-primary"
                                             id="boton-SignIn">REGISTRAR</button>
 
@@ -276,21 +276,17 @@
                             </div>
                         </div>
                     </div><!-- End -->
+            </div>
+    </section>
+    <!-- ======= END FORMULARIO REGISTRO COMEDORES ======= -->
 
-                </div>
-            </div><!-- End -->
-
+    <!-- ======= Footer ======= -->
+    <footer id="footer2">
+        <div class="copyright2">
+            Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
+            reservados
         </div>
-</section>
-<!-- ======= END FORMULARIO REGISTRO COMEDORES ======= -->
-
-<!-- ======= Footer ======= -->
-<footer id="footer2">
-    <div class="copyright2">
-        Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
-        reservados
-    </div>
-</footer><!-- End Footer -->
+    </footer><!-- End Footer -->
 
 <!-- Vendor JS Files -->
 <script th:src="@{/jquery/jquery.min.js}"></script>

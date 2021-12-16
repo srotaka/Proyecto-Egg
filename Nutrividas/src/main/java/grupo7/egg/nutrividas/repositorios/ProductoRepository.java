@@ -38,4 +38,7 @@ public interface ProductoRepository extends JpaRepository<Producto,Long> {
     @Query("UPDATE Producto p SET p.foto = :foto WHERE p.id = :id")
     void actualizarFoto(Foto foto, Long id);
 
+    @Query(value = "SELECT p FROM Producto p WHERE p.alta = true")
+    List<Producto> findAll();
+
 }
