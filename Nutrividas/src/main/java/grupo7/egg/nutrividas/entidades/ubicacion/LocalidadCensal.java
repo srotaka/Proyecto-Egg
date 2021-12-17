@@ -14,5 +14,5 @@ public class LocalidadCensal {
     private Integer id;
     private String nombre;
     private Municipio municipio;
-    private Provincia provincia;
+    private Provincias provincia;
 }
