@@ -1,6 +1,8 @@
 package grupo7.egg.nutrividas.controlador;
 
 import grupo7.egg.nutrividas.entidades.Usuario;
+import grupo7.egg.nutrividas.exeptions.BadCredentialsException;
+import grupo7.egg.nutrividas.mail.MailService;
 import grupo7.egg.nutrividas.servicios.CredencialServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.UsuarioServicio;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -41,26 +44,38 @@ public class PrincipalControlador {
     @Autowired
     private ComedorServicio comedorServicio;
 
+    @Autowired
+    private MailService mailService;
+
+
     @GetMapping("/")
     public ModelAndView inicio(){
         return new ModelAndView("index");
     }
     
-      @GetMapping("/politica")
+    @GetMapping("/politica")
     public ModelAndView politica(){
         return new ModelAndView("politica-privacidad");
     }
-      @GetMapping("/condiciones")
+
+    @GetMapping("/condiciones")
     public ModelAndView condiciones(){
         return new ModelAndView("terminos-condiciones");
     }
+
     @GetMapping("/contacto")
     public ModelAndView contacto(){
         return new ModelAndView("contacto");
     }
     
-    @GetMapping("/confirmacion/{id}")
-    public ModelAndView confirmacion(@PathVariable("id")Long id){
+    @PostMapping("/confirmar")
+    public RedirectView confirmacion(@RequestParam("tokenMail")Long tokenMail){
+        credencialServicio.habilitarCuenta(tokenMail);
+        return new RedirectView("/confirmado");
+    }
+
+    @GetMapping("/confirmado")
+    public ModelAndView confirmado(){
         return new ModelAndView("confirmacion-mail");
     }
 
@@ -84,6 +99,12 @@ public class PrincipalControlador {
 
         if (principal != null) {
             modelAndView.setViewName("redirect:/ ");
+        }
+
+
+        if(principal!= null && credencialServicio.findByMail(principal.getName()).getHabilitado() == false ){
+            System.out.println("Mail: "+principal.getName());
+            throw new BadCredentialsException("La cuenta se encuentra inhabilitada");
         }
 
         return modelAndView;
@@ -145,10 +166,9 @@ public class PrincipalControlador {
         try {
 
             Usuario usuarioCreado =usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
-            request.login(usuario.getCredencial().getMail(), usuario.getCredencial().getPassword());
+            mailService.sendWelcomeMail("Bienvenida",usuario.getCredencial().getMail(),usuario.getCredencial().getUsername(),usuarioCreado.getCredencial().getId(),"USUARIO");
+            //request.login(usuario.getCredencial().getMail(), usuario.getCredencial().getPassword());
             mav.setViewName("redirect:/");
-        } catch (ServletException e) {
-            attributes.addFlashAttribute("error", "Error al realizar auto-login");
         } catch (Exception e) {
             attributes.addFlashAttribute("usuario", usuario);
             attributes.addFlashAttribute("error", e.getMessage());
@@ -204,11 +224,10 @@ public class PrincipalControlador {
                 foto = fotoServicio.actualizarFoto(usuarioCreado.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
             }
             usuarioServicio.crearFoto(foto,usuario.getId());*/
-
-            request.login(nutricionista.getCredencial().getMail(), nutricionista.getCredencial().getPassword());
+            mailService.sendWelcomeMail("Bienvenida",nutricionistaCreado.getCredencial().getMail(),nutricionista.getCredencial().getUsername(),nutricionista.getCredencial().getId(),"NUTRICIONISTA");
+            //request.login(nutricionista.getCredencial().getMail(), nutricionista.getCredencial().getPassword());
             mav.setViewName("redirect:/");
-        } catch (ServletException e) {
-            attributes.addFlashAttribute("error", "Error al realizar auto-login");
+
         } catch (Exception e) {
             attributes.addFlashAttribute("nutricionista", nutricionista);
             attributes.addFlashAttribute("error", e.getMessage());
@@ -251,14 +270,6 @@ public class PrincipalControlador {
         try {
 
             Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getBiografia().getDescripcion(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
-
-            /*Foto foto;
-            if(usuario.getFoto() == null){
-                foto = fotoServicio.crearFoto(USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),usuario.getFoto());
-            }else{
-                foto = fotoServicio.actualizarFoto(usuarioCreado.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
-            }
-            usuarioServicio.crearFoto(foto,usuario.getId());*/
 
             request.login(comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
             mav.setViewName("redirect:/");

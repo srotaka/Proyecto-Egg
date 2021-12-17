@@ -4,6 +4,6 @@ public class NotFoundException extends RuntimeException{
     private static final String DESCRIPTION ="";
 
     public NotFoundException(String message) {
-        super(DESCRIPTION+". "+message);
+        super(DESCRIPTION+""+message);
     }
 }

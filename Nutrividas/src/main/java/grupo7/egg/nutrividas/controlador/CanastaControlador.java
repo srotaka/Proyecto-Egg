@@ -83,7 +83,7 @@ public class CanastaControlador {
     }
 
     @PostMapping("/guardar")
-    public ModelAndView guardar( @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes, HttpSession session) {
+    public ModelAndView guardar( @Valid @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes, HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
         if (result.hasErrors()) {
@@ -113,36 +113,6 @@ public class CanastaControlador {
 
         return mav;
     }
-/*
-    @PostMapping("/guardar/2")
-    public ModelAndView guarda2(@RequestParam RedirectAttributes attributes) {
-       RedirectView redirectView = new RedirectView("/canasta");
-
-        try{
-
-
-            customerService.update(id,document,name,lastName,mail,telephone);
-            userService.update(username,mail,password,rolesVO);
-
-            //customerService.create(document,name,lastName,mail,telephone,userService.create(username,mail,password, Collections.emptyList()));
-            redirectAttributes.addFlashAttribute("success","Los cambios se han efectuado correctamente");
-
-        }catch (FieldAlreadyExistException | FieldInvalidException e){
-            redirectAttributes.addFlashAttribute("error",e.getMessage());
-            redirectAttributes.addFlashAttribute("id", id);
-            redirectAttributes.addFlashAttribute("name", name);
-            redirectAttributes.addFlashAttribute("lastName", lastName);
-            redirectAttributes.addFlashAttribute("document", document);
-            redirectAttributes.addFlashAttribute("mail", mail);
-            redirectAttributes.addFlashAttribute("telephone", telephone);
-            redirectAttributes.addFlashAttribute("username", username);
-            redirectAttributes.addFlashAttribute("password", password);
-
-            redirectView.setUrl("/customers/update/"+id);
-        }
-
-        return redirectView;
-    }*/
 
     @GetMapping("/editar/{id}")
     public ModelAndView editar(@PathVariable("id") Long id, HttpServletRequest request,RedirectAttributes attributes){

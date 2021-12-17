@@ -1,6 +1,5 @@
 package grupo7.egg.nutrividas.servicios;
 import grupo7.egg.nutrividas.entidades.*;
-import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.repositorios.CompraRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ public class CompraServicio {
     private CompraRepository compraRepository;
 
     @Transactional
-    public Compra crearCompra(List<DetalleCompra> detallesCompras, Usuario usuario){
+    public Compra crearCompra(List<DetalleCompra> detallesCompras, Usuario usuario, Tarjeta tarjeta){
 
         Compra compra = new Compra();
         compra.setDetalleCompras(detallesCompras);
@@ -26,6 +25,7 @@ public class CompraServicio {
             precioFinal += d.getSubtotal();
         }
         compra.setPrecioFinal(precioFinal);
+        compra.setTarjeta(tarjeta);
         return compraRepository.save(compra);
     }
 

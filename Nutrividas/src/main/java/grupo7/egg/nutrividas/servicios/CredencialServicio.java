@@ -141,9 +141,6 @@ public class CredencialServicio implements UserDetailsService {
         Credencial credencial = credencialRepository.findByMailOrUsername(username,username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(MESSAGE, username)));
 
-        /*if(credencial.getHabilitado() == false ){
-            throw new BadCredentialsException("La cuenta se encuentra inhabilitada");
-        }*/
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attributes.getRequest().getSession(true);

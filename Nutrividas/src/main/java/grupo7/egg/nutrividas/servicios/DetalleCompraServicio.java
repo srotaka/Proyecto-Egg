@@ -72,13 +72,14 @@ public class DetalleCompraServicio {
         return detalleCompraRepository.findByCanasta_id(idCanasta);
     }
 
+
     @Transactional(readOnly = true)
     public List<DetalleCompra> obtenerDetalleCompraSesion(String mail){
         return detalleCompraRepository.obtenerDetallesCompraSesion(mail);
     }
 
     @Transactional
-    public void eliminarElemento(Long id){
+    public void eliminarDetalleCompra(Long id){
         DetalleCompra detalleCompra = detalleCompraRepository.findById(id).orElseThrow(
                 ()-> new NoSuchElementException("El detalle de compra que desea eliminar no existe"));
         detalleCompraRepository.delete(detalleCompra);

@@ -25,10 +25,15 @@ public class Compra {
     @OneToMany(mappedBy = "compra")
     private List<DetalleCompra> detalleCompras;
 
+    private Double precioFinal;
+
     @ManyToOne
     private Usuario usuario;
 
-    private Double precioFinal;
+    @ManyToOne
+    private Tarjeta tarjeta;
+
 
     private Boolean alta;
+
 }
