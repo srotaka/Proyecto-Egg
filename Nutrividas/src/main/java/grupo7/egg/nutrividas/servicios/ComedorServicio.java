@@ -69,7 +69,7 @@ public class ComedorServicio {
         foto.setMime("image/jpeg");
         foto.setNombre("imagen");
         foto.setModificacion(LocalDateTime.now());
-        foto.setRuta("/img/comedores/10-Comiendo-Rico-2021-12-16-19-58-41.jpeg");
+        foto.setRuta("/img/children01.jpg");
         comedor.setFoto(fotoServicio.crearFto(foto));
         List<Rol> roles = new ArrayList<>();
         roles.add(rolServicio.buscarPorNombre(ROL));

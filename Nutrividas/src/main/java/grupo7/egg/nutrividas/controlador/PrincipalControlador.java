@@ -255,7 +255,7 @@ public class PrincipalControlador {
     @PostMapping(value = "/registro/comedor")
     public ModelAndView saveComedor(@Valid @ModelAttribute Comedor comedor, BindingResult result, HttpServletRequest request, RedirectAttributes attributes){
 
-        ModelAndView mav = new ModelAndView();
+        ModelAndView mav = new ModelAndView("signupComedor");
         if (result.hasErrors()) {
             mav.addObject("comedor", comedor);
             mav.setViewName("signupComedor");
@@ -301,11 +301,13 @@ public class PrincipalControlador {
 
             }else if(comedorServicio.buscarComedorPorCredencial(id) != null){
                 Comedor comedor = comedorServicio.buscarComedorPorCredencial(id);
-                mav = new ModelAndView("editarComedor");
-
+                mav = new ModelAndView("editarComedores");
+                mav.addObject("comedor", comedorServicio.buscarComedorPorCredencial(id));
+                return mav;
                 }else{
                     Nutricionista nutricionista = nutricionistaServicio.buscarNutricionistaPorCredencial(id);
                     mav = new ModelAndView("editarNutricionista");
+
                 }
         return mav;
     }
@@ -340,6 +342,37 @@ public class PrincipalControlador {
         }
         return redirectView;
     }
+
+    public ModelAndView modificarComedor(Long id, ModelAndView mav, Map<String, ?> flashMap, RedirectAttributes attributes){
+        try {
+            if(flashMap != null){
+                mav.addObject("error", flashMap.get("error"));
+            }else {
+                mav.addObject("comedor", comedorServicio.buscarComedorPorCredencial(id));
+            }
+            mav.addObject("title", "Editar Comedor");
+        }catch (Exception e) {
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/");
+        }
+        return mav;
+    }
+
+    /*@PostMapping("/modificar/comedor")
+    public RedirectView modificar(@RequestParam Long id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Long dni, @RequestParam Long telefono, RedirectAttributes redirect, RedirectAttributes attributes){
+        RedirectView redirectView = new RedirectView("/");
+        Comedor comedor = comedorServicio.buscarPorId(id);
+
+        try{
+            comedorServicio.modificarComedor(id, nombre, calle, numero, codigoPostal, apellido, telefono);
+
+        }catch(Exception e){
+            redirect.addFlashAttribute("error", e.getMessage());
+            redirectView.setUrl("/modificar/{" + comedor.getCredencial().getUsername()+"}");
+            return redirectView;
+        }
+        return redirectView;
+    }*/
 
 
 }

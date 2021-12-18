@@ -106,6 +106,7 @@ public class ComedorControlador {
         try {
             //comedorServicio.crearComedor(nombre, apellido, documento, fechaNacimiento, peso, altura, aptoIntoleranteLactosa, aptoCeliacos, aptoHipertensos, aptoDiabeticos, sexo, idComedor);
             attributes.addFlashAttribute("exito", "La creación ha sido realizada satisfactoriamente");
+            redirectView.setUrl("/comedor");
         } catch (Exception e) {
             attributes.addFlashAttribute("error", e.getMessage());
             redirectView.setUrl("/comedor/crear");

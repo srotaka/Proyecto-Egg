@@ -17,8 +17,8 @@
     <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
     <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin>
     <link
-        th:href="@{https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap}"
-        rel="stylesheet">
+            th:href="@{https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap}"
+            rel="stylesheet">
 
     <!-- Template Main CSS File -->
     <link rel="stylesheet" th:href="@{/assets/bootstrap.min.css}" />
@@ -28,56 +28,55 @@
 
 <body>
 
+<div class="not-found parallax">
+    <div class="sky-bg"></div>
+    <div class="wave-7"></div>
+    <div class="wave-6"></div>
+    <a class="wave-island" th:href="@{/}">
+        <img src="http://res.cloudinary.com/andrewhani/image/upload/v1524501929/404/island.svg" alt="Island">
+    </a>
+    <div class="wave-5"></div>
 
-    <div class="not-found parallax">
-        <div class="sky-bg"></div>
-        <div class="wave-7"></div>
-        <div class="wave-6"></div>
-        <a class="wave-island" th:href="@{/}">
-            <img src="http://res.cloudinary.com/andrewhani/image/upload/v1524501929/404/island.svg" alt="Island">
-        </a>
-        <div class="wave-5"></div>
-
-        <div class="wave-lost wrp">
-            <span>D</span>
-            <span>i</span>
-            <span>s</span>
-            <span>c</span>
-            <span>u</span>
-            <span>l</span>
-            <span>p</span>
-            <span>e</span>
-            <span>.</span>
-            <span>.</span>
-            <span>.</span>
-        </div>
-        <div class="wave-4"></div>
-        <div class="wave-boat">
-            <img class="boat" src="http://res.cloudinary.com/andrewhani/image/upload/v1524501894/404/boat.svg"
-                alt="Boat">
-        </div>
-        <div class="wave-3"></div>
-        <div class="wave-2"></div>
-        <div class="wave-1"></div>
-        <div class="wave-message">
-            <h2 th:text=" 'Error ' + ${codigo}" class="mt-3"></h2>
-            <h5 th:text="${mensaje}"></h5>
-            <h6>Haga click en la isla para regresar</h6>
-        </div>
+    <div class="wave-lost wrp">
+        <span>D</span>
+        <span>i</span>
+        <span>s</span>
+        <span>c</span>
+        <span>u</span>
+        <span>l</span>
+        <span>p</span>
+        <span>e</span>
+        <span>.</span>
+        <span>.</span>
+        <span>.</span>
     </div>
-
-
-    <div class="text-center mt-5" id="mensaje-error">
-        <!-- <img th:src="@{/img/error.png}" width="175"> -->
-        <h2 th:text="${codigo}" class="mt-3"></h2>
-        <h2 th:text="${mensaje}"></h2>
-        <h2 th:href="@{/home}" class="btn btn-primary">Home</h2>
+    <div class="wave-4"></div>
+    <div class="wave-boat">
+        <img class="boat" src="http://res.cloudinary.com/andrewhani/image/upload/v1524501894/404/boat.svg"
+             alt="Boat">
     </div>
+    <div class="wave-3"></div>
+    <div class="wave-2"></div>
+    <div class="wave-1"></div>
+    <div class="wave-message">
+        <h2 th:text=" 'Error ' + ${codigo}" class="mt-3"></h2>
+        <h5 th:text="${mensaje}"></h5>
+        <h6>Haga click en la isla para regresar</h6>
+    </div>
+</div>
+
+
+<div class="text-center mt-5" id="mensaje-error">
+    <!-- <img th:src="@{/img/error.png}" width="175"> -->
+    <h2 th:text="${codigo}" class="mt-3"></h2>
+    <h2 th:text="${mensaje}"></h2>
+    <h2 th:href="@{/home}" class="btn btn-primary">Home</h2>
+</div>
 
 
 
-    <script th:src="@{/assets/bootstrap.bundle.min.js}"></script>
-    <script>
+<script th:src="@{/assets/bootstrap.bundle.min.js}"></script>
+<script>
         var parallax = function (e) {
             var windowWidth = $(window).width();
             if (windowWidth < 768) return;
@@ -112,7 +111,6 @@
 
 
     </script>
-
 </body>
 
 </html>
