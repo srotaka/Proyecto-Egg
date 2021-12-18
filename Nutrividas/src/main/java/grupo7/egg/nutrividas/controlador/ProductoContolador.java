@@ -47,7 +47,7 @@ public class ProductoContolador {
 
     @GetMapping("/crear")
     public ModelAndView crearProducto(HttpServletRequest request){
-        ModelAndView mav= new ModelAndView("crearProductoFlor");
+        ModelAndView mav= new ModelAndView("crearProducto");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -64,7 +64,7 @@ public class ProductoContolador {
 
     @GetMapping("/editar/{id}")
     public ModelAndView editarProducto(@PathVariable("id")Long id,HttpServletRequest request,RedirectAttributes attributes){
-        ModelAndView mav= new ModelAndView("crearProductoFlor");
+        ModelAndView mav= new ModelAndView("crearProducto");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         try{
@@ -190,7 +190,7 @@ public class ProductoContolador {
                                               @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                               HttpServletRequest request){
 
-        ModelAndView mav = new ModelAndView("productosFlor");
+        ModelAndView mav = new ModelAndView("productos");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {

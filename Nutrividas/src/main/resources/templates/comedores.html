@@ -84,9 +84,8 @@
                         <ul>
                             <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
                             <li class="dropdown-divider"></li>
-
-                            <li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar perfil</a>
-                            </li>
+                            <li><a class="dropdown-item" th:href="@{/modificar/${session.usernameSession}}">Editar perfil</a></li>                           
+                           
                             <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
                         </ul>
                     </li>
@@ -103,8 +102,8 @@
 
     <section class="titulo" id="titulo">
         <div class="texto-comedores">
-            <p> Comedores que alimentan</p>
-            <p>
+            <p id="comedores-que-alimentan"> Comedores que alimentan</p>
+            <p id="comedores-que-alimentan">
                 <span class="word color">sonrisas</span>
             </p>
         </div>
@@ -117,8 +116,8 @@
             <a class="card" th:each="comedor : ${comedores.page}">
                 <div class="card__background" th:style="'background-image:url(' + ${comedor.foto.ruta}+ ')'"> </div>
                 <div class="card__content" style="text-align: center;">
-                    <p class="card__heading" th:text="${comedor.nombre}"></p>
-
+                    <p class="card__heading" th:text="${comedor.nombre}"></p> 
+                    
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-modal-trigger btn-primary" data-bs-toggle="modal"
                         th:attr="data-target='#customerModel'+${comedor.id}"
