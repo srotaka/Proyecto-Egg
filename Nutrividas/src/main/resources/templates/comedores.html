@@ -64,7 +64,7 @@
                     <li class="drop-down"><a href="#">Mostrar</a>
                         <ul>
                             <li><a th:href="@{/producto}">Lista de Productos</a>
-
+                            <li><a th:href="@{/canasta}">Lista de Canastas</a>
                         </ul>
                     </li>
                     <li class="drop-down"><a href="#">Registrar</a>
@@ -167,8 +167,9 @@
                                                         </a>
                                                     </td>
                                                     <td class="text-center">
-                                                        <a th:href="@{/canasta/crear}">
-                                                            <box-icon name='basket' type='solid' animation='tada-hover' color='#1bac91'>
+                                                        <a th:href="@{/canasta/__${comedor.id}__}">
+                                                            <box-icon name='basket' type='solid' animation='tada-hover'
+                                                                color='#1bac91'>
                                                             </box-icon>
                                                         </a>
                                                     </td>

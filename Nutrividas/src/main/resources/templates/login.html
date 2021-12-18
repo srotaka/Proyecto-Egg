@@ -62,26 +62,31 @@
             <a th:href="@{/seleccion}" sec:authorize="isAnonymous()" class="botonform scrollto">Registrarse</a>
             <!-- End Botón Inicio Sesión -->
         </div>
+
     </header><!-- End Header -->
+
+
+
+
     <section class="login-section">
+         <!-- Mensaje éxito y error-->
+ <div th:if="${error != null} OR ${logout != null}"
+ th:classappend="${error != null} ? 'alert-danger' : 'alert-warning'"
+ class="alert alert-warning alert-dismissible fade show" role="alert">
+ <i th:classappend="${error != null} ? 'fa-times-circle' : 'fa-check-circle'" class="fas "></i>
+ [[${error != null} ? ${error} : ${logout}]]
+ <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div th:if="${success != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+ <i class="fas fa-check-circle"></i>[[${success}]]
+ <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<!-- ************ -->
         <div class="container-fluid">
             <div class="row no-gutter">
 
-                <!-- Mensaje éxito y error-->
-                <div th:if="${error != null} OR ${logout != null}"
-                    th:classappend="${error != null} ? 'alert-danger' : 'alert-warning'"
-                    class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <i th:classappend="${error != null} ? 'fa-times-circle' : 'fa-check-circle'" class="fas "></i>
-                    [[${error != null} ? ${error} : ${logout}]]
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-
-                <div th:if="${success != null}" class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fas fa-check-circle"></i>[[${success}]]
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <!-- ************ -->
-
+               
 
                 <!-- The image half -->
                 <div class="col-md-6 d-none d-md-flex bg-image"></div>
