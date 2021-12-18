@@ -175,7 +175,7 @@
                             <td th:text="${elemento.cantidadNecesaria}"></td>
                             <td th:text="${elemento.producto.nombre}"></td>
                             <td th:text="${elemento.producto.marca.nombre}"></td>
-                            <td th:text="${elemento.producto.precio}" id="precio-modal"></td>
+                            <td th:text="${#numbers.formatDecimal(elemento.producto.precio,0,2)}" id="precio-modal"></td>
                           </tr>
                         </tbody>
                       </table>
@@ -192,7 +192,7 @@
             <!-- Fin modal detalles productos -->
           </div>
         </div>
-        <div th:text="${detalleCompra.canasta.precio}" class="price"></div>
+        <div th:text="${#numbers.formatDecimal(detalleCompra.canasta.precio,0,2)}" class="price"></div>
         <div class="quantity">
           <input type="hidden"  th:field="*{detalleCompras[__${rowStat.index}__].canasta}">
           <input type="number" th:field="*{detalleCompras[__${rowStat.index}__].cantidad}"  value="${detalleCompras.cantidad}" min="0" class="quantity-field">

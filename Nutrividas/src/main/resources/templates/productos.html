@@ -35,7 +35,6 @@
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
-
     <!-- PRELOADER -->
     <div class="loader-center" id="onload">
       <div class="loader">
@@ -110,9 +109,13 @@
   <!-- ======= TABLA PRODUCTOS ======= -->
   <section>
 
-      <p>[[${#lists.size(session.listaElementos)}]]</p>
-
     <div class="container" id="tabla-productos">
+      <!-- Alert -->
+      <div class="alert alert-success" id="success-alert">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>Operación existosa!</strong>
+        El producto fue agregado ala canasta
+      </div>
 
       <div class="row">
         <div class="col-md-2 offset-md-10">
@@ -328,13 +331,23 @@
   <script th:src="@{/js/titulo.js}"></script>
 
   <script>
+
+     $("#success-alert").hide();
+
     function addBasket(id) {
       var element = document.getElementById('element' + id);
       $.ajax({
         type: 'GET',
         url: '/elemento/agregar/' + id
       });
+
+      $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+          $("#success-alert").slideUp(500);
+           $("#success-alert").html('Se agregó el producto '+id);
+        });
     }
+
+
   </script>
 
 </body>
