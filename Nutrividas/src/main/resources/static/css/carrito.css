@@ -32,12 +32,12 @@ p {
 }
 
 h1 {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: normal;
   margin: 0;
   padding: 0;
 }
-
+ 
 input,
 button {
   border: 0 none;
@@ -63,6 +63,7 @@ img,
   width: 100%;
   border-radius: 8px;
 }
+
 
 input,
 button,
@@ -93,11 +94,11 @@ button,
 
 main {
   clear: both;
-  font-size: 14px;
+  font-size: 16px;
   margin: 0 auto;
   overflow: hidden;
   padding: 1rem 0;
-  width: 960px;
+  width: 1300px;
 }
 
 .basket,
@@ -150,10 +151,11 @@ ul {
   margin: 0;
   padding: 0;
 }
+ 
 
 li {
   color: #444444;
-  display: inline-block;
+  /* display: inline-block; */
   padding: 0.625rem 0;
 }
 
@@ -235,6 +237,9 @@ li.subtotal:before {
   width: 3.75rem;
 }
 
+.item-quantity::before{
+  content: 'Canastas seleccionadas: ';
+}
 aside {
   float: right;
   position: relative;
@@ -315,41 +320,53 @@ aside {
   .remove {
     width: 100%;
   }
+  
   .basket-labels {
     display: none;
   }
+  
   .basket-module {
     margin-bottom: 1rem;
   }
+  
   .item {
     margin-bottom: 1rem;
   }
+  
   .product-image {
     width: 40%;
   }
+  
   .product-details {
     width: 60%;
   }
+  
   .price,
   .subtotal {
     width: 33%;
   }
+  
   .quantity {
     text-align: center;
     width: 34%;
   }
+  
   .quantity-field {
     float: none;
   }
+
   .remove {
     bottom: 0;
     text-align: left;
     margin-top: 0.75rem;
     position: relative;
   }
+  
+
   .remove button {
     padding: 0;
   }
+  
   .summary {
     margin-top: 1.25rem;
     position: relative;
@@ -372,7 +389,7 @@ aside {
   .product-details {
     padding: 0 1rem;
   }
-}
+} 
 
 
 /*--------------------------------------------------------------
@@ -477,5 +494,35 @@ p {
 
 .color {
   color: #1bac91;
+} 
+
+/*--------------------------------------------------------------
+# BOTÓN GURDAR
+--------------------------------------------------------------*/
+
+#boton-guardar {
+  color: white !important;
+  background-color: #1bac91 !important;
+  border: 1px solid #1fc5a7;
+  margin-top: 1px;
+  border-radius: 6px  !important;
+  padding: 6px 15px 4px 15px !important;
+  max-height: 40px !important;
+  text-align: center !important;
+  vertical-align: center !important;
 }
 
+#boton-guardar:hover {
+  background-color:  #1a8673 !important;
+  border-radius: 6px !important;
+  border: 1px solid #1fc5a7;
+  transition: 1s;
+}
+
+#boton-guardar:not(:hover) {   
+    transition: 1.6s;
+}
+
+#link-guardar:hover {
+  text-decoration: underline;
+} 
