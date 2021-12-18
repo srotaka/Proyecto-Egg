@@ -1,6 +1,7 @@
 package grupo7.egg.nutrividas.controlador;
 
 import grupo7.egg.nutrividas.entidades.*;
+import grupo7.egg.nutrividas.servicios.CanastaServicio;
 import grupo7.egg.nutrividas.servicios.CompraServicio;
 import grupo7.egg.nutrividas.servicios.DetalleCompraServicio;
 import lombok.AllArgsConstructor;
@@ -16,8 +17,10 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/compra")
@@ -27,6 +30,7 @@ public class CompraControlador {
     private CompraServicio compraServicio;
 
     private DetalleCompraServicio detalleCompraServicio;
+
 
     @GetMapping("/crear")
     public ModelAndView crear(HttpServletRequest request, HttpSession session){
@@ -51,32 +55,31 @@ public class CompraControlador {
     public ModelAndView guardar(@Valid @ModelAttribute Compra compra, BindingResult result, RedirectAttributes attributes, HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
+        //compra.getDetalleCompras().forEach(c -> System.out.println(c.getCanasta().getDescripcion()+" "+c.getCantidad()));
+
         if (result.hasErrors()) {
-            //Listar tarjetas
-            Compra nuevaCompra = new Compra();
-            nuevaCompra.setDetalleCompras(detalleCompraServicio.obtenerDetalleCompraSesion(session.getAttribute("emailSession").toString()));
             mav.addObject("compra", compra);
-            mav.addObject("titulo", "Finalizar compra");
-            mav.addObject("accion", "guardar");
-            mav.setViewName("crearCompra");
+            mav.setViewName("carrito2");
             return mav;
         }
 
         try {
-            List<DetalleCompra> detallesCompras =detalleCompraServicio.obtenerDetalleCompraSesion(session.getAttribute("emailSession").toString());
-            Compra conpraEfectuada = compraServicio.crearCompra(detallesCompras, compra.getUsuario(),compra.getTarjeta());
-            detallesCompras.stream().forEach(c -> detalleCompraServicio.asignarACompra(c,conpraEfectuada));
+            //List<DetalleCompra> detallesCompras =detalleCompraServicio.obtenerDetalleCompraSesion(session.getAttribute("emailSession").toString());
+            Compra compraEfectuada = compraServicio.crearCompra(compra.getDetalleCompras(), compra.getUsuario());
+            compraEfectuada.getDetalleCompras().stream().forEach(c -> detalleCompraServicio.asignarACompra(c,compraEfectuada));
+            //detallesCompras.stream().forEach(c -> detalleCompraServicio.asignarACompra(c,compraEfectuada));
             attributes.addFlashAttribute("exito", "La compra ha sido realizada satisfactoriamente");
-            mav.setViewName("redirect:/");
+            mav.setViewName("redirect:/comedor");
 
         } catch (Exception e) {
             attributes.addFlashAttribute("compra", compra);
             attributes.addFlashAttribute("error", e.getMessage());
             System.out.println(e.getMessage());
-            mav.setViewName("redirect:/");
+            mav.setViewName("redirect:/canasta");
         }
 
         return mav;
     }
+
 
 }

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -15,19 +16,25 @@ public class CompraServicio {
     private CompraRepository compraRepository;
 
     @Transactional
-    public Compra crearCompra(List<DetalleCompra> detallesCompras, Usuario usuario, Tarjeta tarjeta){
+    public Compra crearCompra(List<DetalleCompra> detallesCompras, Usuario usuario){
+
+        List<DetalleCompra> detallesComprasFinal = detallesCompras.stream().filter(d -> d.getCantidad() > 0).collect(Collectors.toList());
+        detallesComprasFinal.stream().forEach(d -> d.setSubtotal(d.getCanasta().getPrecio() * d.getCantidad()));
 
         Compra compra = new Compra();
-        compra.setDetalleCompras(detallesCompras);
+        compra.setDetalleCompras(detallesComprasFinal);
         compra.setUsuario(usuario);
         Double precioFinal = 0.0;
-        for (DetalleCompra d: detallesCompras) {
+
+        for (DetalleCompra d: detallesComprasFinal) {
             precioFinal += d.getSubtotal();
         }
+
         compra.setPrecioFinal(precioFinal);
-        compra.setTarjeta(tarjeta);
+        compra.setAsignada(false);
         return compraRepository.save(compra);
     }
+
 
     @Transactional(readOnly = true)
     public List<Compra> listarcomprasUsuario(Long idUsaurio){

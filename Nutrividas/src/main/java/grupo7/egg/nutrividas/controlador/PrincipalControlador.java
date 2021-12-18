@@ -48,6 +48,9 @@ public class PrincipalControlador {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private CredencialServicio credencialServicio;
+
 
     @GetMapping("/")
     public ModelAndView inicio(){

@@ -1,5 +1,6 @@
 package grupo7.egg.nutrividas.controlador;
 
+import grupo7.egg.nutrividas.entidades.Canasta;
 import grupo7.egg.nutrividas.entidades.DetalleCompra;
 import grupo7.egg.nutrividas.entidades.Usuario;
 import grupo7.egg.nutrividas.servicios.DetalleCompraServicio;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -35,7 +38,7 @@ public class DetalleCompraControlador {
         return usuarioServicio.buscarPorMail(mail);
     }
 
-    @GetMapping("/agregar/{id}/{cantidad}")
+    /*@GetMapping("/agregar/{id}/{cantidad}")
     public void crearDetalleCompra(@PathVariable("id")Long idCanasta,@PathVariable("cantidad")Integer cantidad, HttpServletRequest request, HttpSession session){
         Optional<DetalleCompra> detalleCompra = detalleCompraServicio.existeDetalleCompraSesion(idCanasta,getCustomerLogged());
         if(detalleCompra.isPresent()){
@@ -43,6 +46,29 @@ public class DetalleCompraControlador {
         }else{
             detalleCompraServicio.crearDetalleCompra(idCanasta,cantidad,getCustomerLogged());
         }
+
+    }*/
+
+   /* @PostMapping("/agregar")
+    public void crearDetalleCompra(@RequestParam("canastaChecked") Map<Canasta,Integer> canasta, HttpServletRequest request, HttpSession session){
+        Optional<DetalleCompra> detalleCompra = detalleCompraServicio.existeDetalleCompraSesion(idCanasta,getCustomerLogged());
+        if(detalleCompra.isPresent()){
+            detalleCompraServicio.editarCantidad(detalleCompra.get().getId(),cantidad);
+        }else{
+            detalleCompraServicio.crearDetalleCompra(idCanasta,cantidad,getCustomerLogged());
+        }
+
+    }*/
+
+    @PostMapping("/agregar")
+    public void crearDetalleCompra(@RequestParam("canastaChecked")List<DetalleCompra> detalleCompras, HttpServletRequest request, HttpSession session){
+
+        /* Optional<DetalleCompra> detalleCompra = detalleCompraServicio.existeDetalleCompraSesion(idCanasta,getCustomerLogged());
+        if(detalleCompra.isPresent()){
+            detalleCompraServicio.editarCantidad(detalleCompra.get().getId(),cantidad);
+        }else{
+            detalleCompraServicio.crearDetalleCompra(idCanasta,cantidad,getCustomerLogged());
+        }*/
 
     }
 

@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="canastas")
+@Table(name="compra")
 @SQLDelete(sql = "UPDATE compra SET alta = false WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
@@ -35,5 +35,7 @@ public class Compra {
 
 
     private Boolean alta;
+
+    private Boolean asignada;
 
 }
