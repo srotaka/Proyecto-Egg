@@ -6,7 +6,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta content="ie=edge" http-equiv="X-UA-Compatible" />
   <meta content="Nutrividas" name="Grupo7" />
-  <title>Nutrividas - Productos</title>
+  <title>Nutrividas - Crear Canasta</title>
 
   <!-- Favicons -->
   <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
@@ -63,6 +63,7 @@
             <ul>
               <li><a th:href="@{/comedor}">Lista de Comedores</a>
               <li><a th:href="@{/producto}">Lista de Productos</a>
+              <li><a th:href="@{/canasta}">Lista de Canastas</a>
             </ul>
           </li>
           <li class="drop-down"><a href="#">Registrar</a>
@@ -166,14 +167,23 @@
               <tr th:each="elemento,status : ${canasta.elementos}">
                 <td><input type="checkbox" th:checked="${elemento}" th:value="*{elementos[__${status.index}__]}" th:field="*{elementos[__${status.index}__]}"/></td>
               </tr>-->
-
-            <button type="submit" class="btn btn-primary text-uppercase shadow-sm mb-2 mt-4" id="boton-guardar"
-              th:text="${action == 'guardar'} ? 'Crear canasta' : 'Guardar cambios'"></button>
+            <div class="row">
+              <div class="col-md-6">
+                <button type="submit" class="btn btn-primary text-uppercase shadow-sm mb-2 mt-4" id="boton-guardar"
+                  th:text="${action == 'guardar'} ? 'Crear canasta' : 'Guardar cambios'"></button>
+              </div>
+              <div class="col-md-6">
+                <button th:onclick="location.href='/productos'" id="boton-guardar" style="margin-top: 22px;;"> VER
+                  PRODUCTOS
+                  </a></button>
+              </div>
+            </div>
           </form>
 
           <!-- TARJETA -->
           <div class="card mb-3 ml-3" th:unless="${canasta.elementos == null}"
             th:each="elemento : ${canasta.elementos}">
+
             <div class="row">
               <div class="col-md-4" th:if="${elemento.producto.foto == null}" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
                   background-position: center;background-size: 40%;'"></div>
@@ -188,7 +198,8 @@
                     th:name="cantidad+${elemento.producto.id}" th:value="${elemento.cantidadNecesaria}" disabled>
                   <button th:id="editarCantidad+${elemento.producto.id}"
                     th:onclick="'javascript:editarCantidad(' + ${elemento.producto.id} + ')'" class=" habilitado p-0">
-                    <box-icon name='pencil' type='solid' animation='tada-hover' color='#1bac91' th:id="editarIcono+${elemento.producto.id}"></box-icon>
+                    <box-icon name='pencil' type='solid' animation='tada-hover' color='#1bac91'
+                      th:id="editarIcono+${elemento.producto.id}"></box-icon>
                   </button>
                   <button th:id="confirmarCantidad+${elemento.producto.id}" disabled
                     th:onclick="'javascript:confirmarCantidad(' + ${elemento.producto.id} + ')'"
@@ -198,41 +209,46 @@
                 </div>
               </div>
               <div class="col-md-2 align-self-center">
-                  <form method="POST" th:action="@{/elemento/eliminar/__${elemento.id}__}">
-                      <button type="submit"> <box-icon name='trash-alt' type='solid' animation='tada-hover'></box-icon></button>
-                  </form>
+                <form method="POST" th:action="@{/elemento/eliminar/__${elemento.id}__}">
+                  <button type="submit">
+                    <box-icon name='trash-alt' type='solid' animation='tada-hover'></box-icon>
+                  </button>
+                </form>
               </div>
             </div>
           </div>
         </div>
+        <!-- SUBTOTAL -->
         <div class="col col-md-5 mb-5 ml-5" style="background-color: #F8F9FA; height: fit-content; padding-bottom: 2%;">
           <aside>
             <div class="summary mt-4 text-center">
               <div class="summary-subtotal">
-                <div class="subtotal-title">Subtotal</div>
+                <label for="cantidad">Subtotal:</label>
                 <div class="subtotal-value final-value" id="basket-subtotal">0</div>
               </div>
               <div class="summary-delivery">
-                <div class="summary-total-items"> Productos Seleccionados: <span class="total-items"></span></div>
-              </div>
-              <div class="summary-total">
-                <div class="total-title">Total</div>
-                <div class="total-value final-value" id="basket-total">0</div>
-              </div>
-              <div class="summary-checkout">
-                <button class="checkout-cta">Finalizar Compra</button>
+                <label for="cantidad">Productos Seleccionados:</label>
+                <span class="total-items"></span>
               </div>
             </div>
-          </aside>
+            <div class="summary-total">
+              <div class="total-title">Total</div>
+              <div class="total-value final-value" id="basket-total">0</div>
+            </div>
+            <div class="summary-checkout">
+              <button th:onclick="location.href='/pago'" id="boton-guardar"> FINALIZAR COMPRA
+                </a></button>
+            </div>
         </div>
+        </aside>
       </div>
+      <!-- FIN SUBTOTAL -->
+    </div>
     </div>
   </section>
 
-
-
-
   <!-- ======= END TABLA PRODUCTOS ======= -->
+
   <!-- ======= Footer ======= -->
   <footer id="footer2">
     <div class="copyright2">

@@ -68,27 +68,7 @@ public class UsuarioControlador {
         
         return mav;
     }
-    
-    
-    @PostMapping("/modificar")
-    public RedirectView modificar(@Valid @ModelAttribute Usuario usuario, RedirectAttributes attributes){
-        RedirectView redirectview = new RedirectView("/usuario");
-        
-        try{
-            usuarioServicio.modificarUsuario(usuario.getId(), usuario.getDni(), usuario.getNombre(),
-                    usuario.getApellido(), usuario.getTelefono(),usuario.getCredencial().getMail(),
-                    usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
-            attributes.addFlashAttribute("exito", "La actualizacion se realizo con exito");
-        }catch(Exception e){
-            attributes.addFlashAttribute("usuario", usuario);
-            attributes.addFlashAttribute("error", e.getMessage());
-            redirectview.setUrl("/usuario/editar/" + usuario.getId());        
-        }
-        
-        return redirectview;
-    }
-    
-    
+
      @PostMapping("/guardar")
     public RedirectView guardar(@ModelAttribute Usuario usuario, RedirectAttributes attributes){
         RedirectView redirectView = new RedirectView("/usuario");

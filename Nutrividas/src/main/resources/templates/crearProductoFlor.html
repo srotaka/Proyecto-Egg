@@ -54,6 +54,7 @@
                         <ul>
                             <li><a th:href="@{/comedor}">Comedores Registrados</a>
                             <li><a th:href="@{/producto}">Lista de Productos</a>
+                            <li><a th:href="@{/canasta}">Lista de Canastas</a>
 
                         </ul>
                     </li>
@@ -218,8 +219,10 @@
                                                 </div>
                                             </div>
 
-                                            <button type="submit" class="btn btn-secondary mb-2" style="width: auto;" id="boton-SignIn"
+                                            <button type="submit" class="btn btn-secondary mb-2" style="width: auto;"
+                                                id="boton-SignIn"
                                                 th:text="${action == 'guardar'} ? 'INGRESAR PRODUCTO' : 'GUARDAR CAMBIOS'"></button>
+
                                     </form>
                                 </div>
                             </div>

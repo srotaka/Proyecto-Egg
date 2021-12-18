@@ -1,20 +1,118 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${codigo}"></title>
-    <link rel="stylesheet" th:href="@{/assets/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/style.css}"/>
-</head>
-<body>
-    
-<div class="text-center mt-5">
-    <img th:src="@{/img/error.png}" width="175">
-    <h2 th:text="${codigo}" class="mt-3"></h2>
-    <p th:text="${mensaje}"></p>
-    <a th:href="@{/}" class="btn btn-primary">Home</a>
-</div>
 
-<script th:src="@{/assets/bootstrap.bundle.min.js}"></script>
+<head>
+
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <meta content="Nutrividas" name="Grupo7" />
+    <title th:text="'Error ' + ${codigo}"></title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
+    <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
+    <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin>
+    <link
+        th:href="@{https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap}"
+        rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link rel="stylesheet" th:href="@{/assets/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/error.css}" />
+</head>
+
+<body>
+
+
+    <div class="not-found parallax">
+        <div class="sky-bg"></div>
+        <div class="wave-7"></div>
+        <div class="wave-6"></div>
+        <a class="wave-island" th:href="@{/}">
+            <img src="http://res.cloudinary.com/andrewhani/image/upload/v1524501929/404/island.svg" alt="Island">
+        </a>
+        <div class="wave-5"></div>
+
+        <div class="wave-lost wrp">
+            <span>D</span>
+            <span>i</span>
+            <span>s</span>
+            <span>c</span>
+            <span>u</span>
+            <span>l</span>
+            <span>p</span>
+            <span>e</span>
+            <span>.</span>
+            <span>.</span>
+            <span>.</span>
+        </div>
+        <div class="wave-4"></div>
+        <div class="wave-boat">
+            <img class="boat" src="http://res.cloudinary.com/andrewhani/image/upload/v1524501894/404/boat.svg"
+                alt="Boat">
+        </div>
+        <div class="wave-3"></div>
+        <div class="wave-2"></div>
+        <div class="wave-1"></div>
+        <div class="wave-message">
+            <h2 th:text=" 'Error ' + ${codigo}" class="mt-3"></h2>
+            <h5 th:text="${mensaje}"></h5>
+            <h6>Haga click en la isla para regresar</h6>
+        </div>
+    </div>
+
+
+    <div class="text-center mt-5" id="mensaje-error">
+        <!-- <img th:src="@{/img/error.png}" width="175"> -->
+        <h2 th:text="${codigo}" class="mt-3"></h2>
+        <h2 th:text="${mensaje}"></h2>
+        <h2 th:href="@{/home}" class="btn btn-primary">Home</h2>
+    </div>
+
+
+
+    <script th:src="@{/assets/bootstrap.bundle.min.js}"></script>
+    <script>
+        var parallax = function (e) {
+            var windowWidth = $(window).width();
+            if (windowWidth < 768) return;
+            var halfFieldWidth = $(".parallax").width() / 2,
+                halfFieldHeight = $(".parallax").height() / 2,
+                fieldPos = $(".parallax").offset(),
+                x = e.pageX,
+                y = e.pageY - fieldPos.top,
+                newX = (x - halfFieldWidth) / 30,
+                newY = (y - halfFieldHeight) / 30;
+            $('.parallax [class*="wave"]').each(function (index) {
+                $(this).css({
+                    transition: "",
+                    transform:
+                        "translate3d(" + index * newX + "px," + index * newY + "px,0px)"
+                });
+            });
+        },
+            stopParallax = function () {
+                $('.parallax [class*="wave"]').css({
+                    transform: "translate(0px,0px)",
+                    transition: "all .7s"
+                });
+                $timeout(function () {
+                    $('.parallax [class*="wave"]').css("transition", "");
+                }, 700);
+            };
+        $(document).ready(function () {
+            $(".not-found").on("mousemove", parallax);
+            $(".not-found").on("mouseleave", stopParallax);
+        });
+
+
+    </script>
+
 </body>
+
 </html>

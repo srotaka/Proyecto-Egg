@@ -50,9 +50,53 @@
     </div>
     <!-- END PRELOADER -->
 
-    <div class="container d-flex">
-        <div class="logo">
-            <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
+        <div class="container d-flex">
+            <div class="logo">
+                <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
+            </div>
+            <div class="logo mr-auto">
+                <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
+            </div>
+            <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+
+                    <li class="drop-down"><a href="#">Mostrar</a>
+                        <ul>
+                            <li><a th:href="@{/producto}">Lista de Productos</a>
+                            <li><a th:href="@{/canasta}">Lista de Canastas</a>
+                        </ul>
+                    </li>
+                    <li class="drop-down"><a href="#">Registrar</a>
+                        <ul>
+                            <li><a th:href="@{/comedor/crear}">Nuevo Comedor</a>
+                            <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
+                            <li><a th:href="@{/canasta/crear}">Nueva Canasta</a>
+                        </ul>
+                    </li>&nbsp;&nbsp;&nbsp;
+
+                    <!-- Botón Usuario si está loggeado -->
+                    <li class="drop-down" sec:authorize="isAuthenticated()">
+                        <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#"
+                            id="dropdown-avatar" style="margin-top: -13px;" role="button float-right">
+                            <img class="rounded-circle" th:src="@{/img/user-nopic.png}" width="50">
+                        </a>
+                        <ul>
+                            <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
+                            <li class="dropdown-divider"></li>
+
+                            <li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar perfil</a>
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                    <!-- Fin Botón Usuario si está loggeado -->
+                </ul>
+            </nav><!-- .nav-menu -->
+            <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+            <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a>
+            <!-- End Botón Inicio Sesión -->
+
         </div>
         <div class="logo mr-auto">
             <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
@@ -178,10 +222,56 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <!-- Fin Tabla detalle Comedores -->
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-modal-trigger"
+
+                                <div class="modal-body">
+                                    <!-- Tabla de detalles Comedores -->
+                                    <div class="container">
+                                        <p>Información</p>
+                                        <table class="table table-striped table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="row">Nombre</th>
+                                                    <th scope="row">Teléfono</th>
+                                                    <th scope="row">Calle</th>
+                                                    <th scope="row">Número</th>
+                                                    <th scope="row">Localidad</th>
+                                                    <th scope="row">Provincia</th>
+                                                    <th scope="row">Cantidad de Personas</th>
+                                                    <th scope="row">Editar</th>
+                                                    <th scope="row">Canastas</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td th:text="${comedor.nombre}"></td>
+                                                    <td th:text="${comedor.telefono}"></td>
+                                                    <td th:text="${comedor.direccion.calle}"></td>
+                                                    <td th:text="${comedor.direccion.numero}"></td>
+                                                    <td th:text="${comedor.direccion.localidad}"></td>
+                                                    <td th:text="${comedor.direccion.provincia}"></td>
+                                                    <td th:text="${comedor.cantidadDePersonas}"></td>
+                                                    <td class="text-center">
+                                                        <a th:href="@{/comedor/editar/__${comedor.id}__}">
+                                                            <box-icon name='pencil' type='solid' animation='tada-hover'
+                                                                color='#1bac91'></box-icon>
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a th:href="@{/canasta/__${comedor.id}__}">
+                                                            <box-icon name='basket' type='solid' animation='tada-hover'
+                                                                color='#1bac91'>
+                                                            </box-icon>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- Fin Tabla detalle Comedores -->
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-modal-trigger"
+
                                         data-bs-dismiss="modal">Cerrar</button>
                             </div>
                         </div>

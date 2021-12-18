@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <meta content="ie=edge" http-equiv="X-UA-Compatible" />
     <meta content="Nutrividas" name="Grupo7" />
-    <title>Nutrividas - Comedores</title>
+    <title>Nutrividas - Selección de Perfil</title>
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
@@ -28,7 +28,7 @@
 
     <!-- Template Main CSS File -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
-    <link th:href="@{/css/comedores.css}" rel="stylesheet">
+    <link th:href="@{/css/seleccionUsuario.css}" rel="stylesheet">
 
 
 </head>
@@ -61,7 +61,12 @@
             <ul>
                 <li><a th:href="@{/}">Inicio</a></li>
                 <li><a th:href="@{/#contact}">Contáctanos</a></li>
-                <li><a th:href="@{/comedor/crear}">Comedores</a></li>
+                <li class="drop-down"><a href="#">Mostrar</a>
+                    <ul>
+                        <li><a th:href="@{/comedor}">Comedores Registrados</a>
+                        <li><a th:href="@{/producto}">Lista de Productos</a>
+                    </ul>
+                </li>&nbsp;&nbsp;&nbsp;
             </ul>
         </nav><!-- .nav-menu -->
     </div>
@@ -71,55 +76,57 @@
 
 <section class="titulo" id="titulo">
     <div class="texto-comedores">
-        <p> Comedores que alimentan</p>
+        <p> Seleccione su perfil de </p>
         <p>
-            <span class="word color">sonrisas</span>
+            <span class="word color">Nutrividas</span>
         </p>
     </div>
-        <p> Seleccione su rol</p>
+        
 </section><!-- End TÍTULO -->
 
 <!-- ======= COMEDORES CARDS ======= -->
 <section class="hero-section">
-    <div class="card-grid">
-        <a class="card" id="usuario" >
-            <div class="card__background" th:style="'background-image:url(../img/donante.jpg)'"> </div>
+    <div class="card-grid" >
+        
+        <a class="card" id="donante-perfil" th:href="@{/signup/usuario}">
+            <div class="card__background" th:style="'background-image:url(/img/donante.jpg)'"> </div>
             <div class="card__content" style="text-align: center;">
-                <h2 class="card__heading" th:text="Donante"></h2>
-                <a class="text-decoration-none" th:href="@{/signup/usuario}">Donante</a>
-
+                <div class="card__content" style="text-align: center;">
+                    <p class="card__heading">Donante</p>               
+                </div>
             </div>
-
         </a>
-        <a class="card" id="nutricionista">
+        
+        <a class="card" id="nutricionista-perfil" th:href="@{/signup/nutricionista}">
             <div class="card__background" th:style="'background-image:url(/img/nutricionistaCard.jpg)'"> </div>
-            <div class="card__content" style="text-align: center;" th:href="@{/signup/usuario}">
-                <h2 class="card__heading" th:text="Nutricionista"></h2>
-                <a class="text-decoration-none" th:href="@{/signup/nutricionista}">Nutricionista</a>
+            <div class="card__content" style="text-align: center;">
+                <div class="card__content" style="text-align: center;">
+                    <p class="card__heading">Nutricionista</p>               
+                </div>
             </div>
-
         </a>
 
-        <a class="card" id="comedor">
+        <a class="card" id="comedor-perfil" th:href="@{/signup/comedor}">
             <div class="card__background" th:style="'background-image:url(/img/comedorCard.jpg)'"> </div>
             <div class="card__content" style="text-align: center;">
-                <h2 class="card__heading" th:text="Comedor"></h2>
-
-                <a class="text-decoration-none" th:href="@{/signup/comedor}">Comedor</a>
+                <div class="card__content" style="text-align: center;">
+                    <p class="card__heading">Comedor</p>               
+                </div>
             </div>
-
         </a>
 
-        <div>
+        <!-- <div>
             <p>ROLES</p>
                 <a class="text-decoration-none" th:href="@{/signup/usuario}">Donante</a>
                 <a class="text-decoration-none" th:href="@{/signup/nutricionista}">Nutricionista</a>
                 <a class="text-decoration-none" th:href="@{/signup/comedor}">Comedor</a>
 
-        </div>
+        </div> -->
     </div>
+    
 </section> <!-- End Comedores Cards -->
-
+<p class="text-muted mb-4" id="inicie-sesion">¿Ya tiene cuenta en Nutrividas? <a
+    th:href="@{/login}" id="link-SignUp">Inicie Sesión</a></p>
 
 <!-- ======= Footer ======= -->
 <footer id="footer2">

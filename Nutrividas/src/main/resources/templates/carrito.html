@@ -58,11 +58,12 @@
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <li><a th:href="@{/}">Inicio</a></li>
-          <li><a th:href="@{/#contact}">Contáctanos</a></li>
+
           <li class="drop-down"><a href="#">Mostrar</a>
             <ul>
               <li><a th:href="@{/comedor}">Lista de Comedores</a>
               <li><a th:href="@{/producto}">Lista de Productos</a>
+
             </ul>
           </li>
           <li class="drop-down"><a href="#">Registrar</a>
@@ -122,15 +123,17 @@
 
       <!-- PRODUCTO 4 -->
       <div class="basket-product" th:each="canasta : ${canastas}">
-        <div class="item" >
+        <div class="item">
           <div class="product-image">
             <img th:src="@{/img/food-basket04.jpg}" alt="Canasta" class="product-frame">
           </div>
           <div class="product-details">
-            <h1><span th:text="${canasta.descripcion}" class="item-quantity"></span></h1>
+            <h1><span th:text="${canasta.descripcion}"></span></h1>
+            <h1><span  class="item-quantity"></span></h1>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal"
-                    th:attr="data-target='#customerModel'+${canasta.id}"  th:onclick="'javascript:verModal(' + ${canasta.id} + ')'">
+              th:attr="data-target='#customerModel'+${canasta.id}"
+              th:onclick="'javascript:verModal(' + ${canasta.id} + ')'">
               Detalle de productos
             </button>
             <!-- Modal -->
@@ -158,10 +161,12 @@
                         </thead>
                         <tbody>
                           <tr th:each="elemento, step : ${canasta.elementos}">
-                            <th th:if="${elemento.producto.foto == null}" width="30px" heigth="25px" class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
+                            <th th:if="${elemento.producto.foto == null}" width="30px" heigth="25px" class="text-center"
+                              th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
                                 background-position: center;background-size: cover;'">
                             </th>
-                            <th th:unless="${elemento.producto.foto == null}" width="40px" heigth="25px" class="text-center" th:style="'z-index: 100
+                            <th th:unless="${elemento.producto.foto == null}" width="40px" heigth="25px"
+                              class="text-center" th:style="'z-index: 100
                                 ;background-image:url(http://localhost:8080/fotos/'+${elemento.producto.foto.id}+') !important;background-repeat: no-repeat;
                                  background-position: center;background-size: cover;'">
                             <td th:text="${elemento.cantidadNecesaria}"></td>
@@ -207,14 +212,16 @@
           <div class="subtotal-value final-value" id="basket-subtotal">0</div>
         </div>
         <div class="summary-delivery">
-          <div class="summary-total-items"> Productos Seleccionados: <span class="total-items"></span></div>
+          <div class="summary-total-items"> Canastas Seleccionados: <span class="total-items"></span></div>
         </div>
         <div class="summary-total">
           <div class="total-title">Total</div>
           <div class="total-value final-value" id="basket-total">0</div>
         </div>
         <div class="summary-checkout">
-          <button class="checkout-cta">Finalizar Compra</button>
+          <button th:onclick="location.href='/pago'" id="boton-guardar"> FINALIZAR COMPRA
+          </a></button>
+          
         </div>
       </div>
     </aside>
@@ -233,9 +240,9 @@
 
 
   <!-- JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  <script src="../static/js/carrito.js"> </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js}"></script>
+  <script th:src="@{/js/carrito.js}"> </script>
+  <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js}"></script>
 
   <!-- Vendor JS Files -->
   <script th:src="@{/jquery/jquery.min.js}"></script>
@@ -247,20 +254,20 @@
   <script th:src="@{/venobox/venobox.min.js}"></script>
   <script th:src="@{/aos/aos.js}"></script>
 
-    <!-- Template Main JS File -->
-    <script th:src="@{/js/main.js}"></script>
+  <!-- Template Main JS File -->
+  <script th:src="@{/js/main.js}"></script>
 
-    <!-- JS PARA TITULO -->
-    <script th:src="@{/js/titulo.js}"></script>
+  <!-- JS PARA TITULO -->
+  <script th:src="@{/js/titulo.js}"></script>
 
   <script>
 
-        function verModal(id){
-            $('#'+id).modal('show');
-        }
+    function verModal(id) {
+      $('#' + id).modal('show');
+    }
 
 
-    </script>
+  </script>
 
 
 </body>
