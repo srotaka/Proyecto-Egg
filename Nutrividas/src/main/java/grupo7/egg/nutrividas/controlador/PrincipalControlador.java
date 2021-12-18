@@ -83,7 +83,7 @@ public class PrincipalControlador {
         return new ModelAndView("confirmacion-mail");
     }
     
-       @GetMapping("/pago")
+    @GetMapping("/pago")
     public ModelAndView pago(){
         return new ModelAndView("pago");
     }

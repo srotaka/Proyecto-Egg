@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="compra")
+@Table(name="compras")
 @SQLDelete(sql = "UPDATE compra SET alta = false WHERE id = ?")
 @EntityListeners(AuditingEntityListener.class)
 @Getter

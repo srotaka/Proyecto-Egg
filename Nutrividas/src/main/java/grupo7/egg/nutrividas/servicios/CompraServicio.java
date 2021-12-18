@@ -2,6 +2,8 @@ package grupo7.egg.nutrividas.servicios;
 import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.repositorios.CompraRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 public class CompraServicio {
 
     private CompraRepository compraRepository;
+
 
     @Transactional
     public Compra crearCompra(List<DetalleCompra> detallesCompras, Usuario usuario){
@@ -31,6 +34,7 @@ public class CompraServicio {
         }
 
         compra.setPrecioFinal(precioFinal);
+        compra.setAlta(true);
         compra.setAsignada(false);
         return compraRepository.save(compra);
     }

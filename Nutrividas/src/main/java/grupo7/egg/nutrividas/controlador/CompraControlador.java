@@ -4,7 +4,10 @@ import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.servicios.CanastaServicio;
 import grupo7.egg.nutrividas.servicios.CompraServicio;
 import grupo7.egg.nutrividas.servicios.DetalleCompraServicio;
+import grupo7.egg.nutrividas.servicios.UsuarioServicio;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +34,21 @@ public class CompraControlador {
 
     private DetalleCompraServicio detalleCompraServicio;
 
+    private UsuarioServicio usuarioServicio;
+
+
+    public Usuario getCustomerLogged(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String mail;
+        if (principal instanceof UserDetails){
+            mail = ((UserDetails) principal).getUsername();
+        }else{
+            mail = principal.toString();
+        }
+
+        return usuarioServicio.buscarPorMail(mail);
+    }
+
 
     @GetMapping("/crear")
     public ModelAndView crear(HttpServletRequest request, HttpSession session){
@@ -55,8 +73,6 @@ public class CompraControlador {
     public ModelAndView guardar(@Valid @ModelAttribute Compra compra, BindingResult result, RedirectAttributes attributes, HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
-        //compra.getDetalleCompras().forEach(c -> System.out.println(c.getCanasta().getDescripcion()+" "+c.getCantidad()));
-
         if (result.hasErrors()) {
             mav.addObject("compra", compra);
             mav.setViewName("carrito2");
@@ -64,10 +80,8 @@ public class CompraControlador {
         }
 
         try {
-            //List<DetalleCompra> detallesCompras =detalleCompraServicio.obtenerDetalleCompraSesion(session.getAttribute("emailSession").toString());
-            Compra compraEfectuada = compraServicio.crearCompra(compra.getDetalleCompras(), compra.getUsuario());
+            Compra compraEfectuada = compraServicio.crearCompra(compra.getDetalleCompras(), getCustomerLogged());
             compraEfectuada.getDetalleCompras().stream().forEach(c -> detalleCompraServicio.asignarACompra(c,compraEfectuada));
-            //detallesCompras.stream().forEach(c -> detalleCompraServicio.asignarACompra(c,compraEfectuada));
             attributes.addFlashAttribute("exito", "La compra ha sido realizada satisfactoriamente");
             mav.setViewName("redirect:/comedor");
 
