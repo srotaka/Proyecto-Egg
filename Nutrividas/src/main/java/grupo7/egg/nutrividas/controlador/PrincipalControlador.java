@@ -1,5 +1,6 @@
 package grupo7.egg.nutrividas.controlador;
 
+import grupo7.egg.nutrividas.entidades.Credencial;
 import grupo7.egg.nutrividas.entidades.Usuario;
 import grupo7.egg.nutrividas.servicios.CredencialServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
@@ -12,11 +13,13 @@ import grupo7.egg.nutrividas.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +44,9 @@ public class PrincipalControlador {
 
     @Autowired
     private ComedorServicio comedorServicio;
+
+    @Autowired
+    private CredencialServicio credencialServicio;
 
     @GetMapping("/")
     public ModelAndView inicio(){
@@ -281,4 +287,61 @@ public class PrincipalControlador {
         return mav;
     }
 
+    @GetMapping(value = "/modificar/{username}")
+    public ModelAndView editarPerfil(@PathVariable String username, HttpServletRequest request, RedirectAttributes attributes){
+
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        ModelAndView mav;
+        Credencial credencial = credencialServicio.buscarCredencialPorUsername(username);
+        Long id = credencial.getId();
+
+        if(usuarioServicio.buscarUsuarioPorCredencial(id) != null){
+            mav = new ModelAndView("editarUsuario");
+            return modificarUsuario(id, mav, flashMap, attributes);
+
+            }else if(comedorServicio.buscarComedorPorCredencial(id) != null){
+                Comedor comedor = comedorServicio.buscarComedorPorCredencial(id);
+                mav = new ModelAndView("editarComedor");
+
+                }else{
+                    Nutricionista nutricionista = nutricionistaServicio.buscarNutricionistaPorCredencial(id);
+                    mav = new ModelAndView("editarNutricionista");
+                }
+        return mav;
+    }
+
+    public ModelAndView modificarUsuario(Long id, ModelAndView mav, Map<String, ?> flashMap, RedirectAttributes attributes){
+        try {
+            if(flashMap != null){
+                mav.addObject("error", flashMap.get("error"));
+            }else {
+                mav.addObject("usuario", usuarioServicio.buscarUsuarioPorCredencial(id));
+            }
+            mav.addObject("title", "Editar Usuario");
+        }catch (Exception e) {
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/");
+        }
+        return mav;
+    }
+
+    @PostMapping("/modificar/usuario")
+    public RedirectView modificar(@RequestParam Long id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Long dni, @RequestParam Long telefono, RedirectAttributes redirect, RedirectAttributes attributes){
+        RedirectView redirectView = new RedirectView("/");
+        Usuario usuario = usuarioServicio.buscarPorId(id);
+
+        try{
+           usuarioServicio.modificarUsuario(id, dni, nombre, apellido, telefono);
+
+        }catch(Exception e){
+            redirect.addFlashAttribute("error", e.getMessage());
+            redirectView.setUrl("/modificar/{" + usuario.getCredencial().getUsername()+"}");
+            return redirectView;
+        }
+        return redirectView;
+    }
+
+
 }
+
+

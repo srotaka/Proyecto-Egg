@@ -84,7 +84,7 @@
               <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
               <li class="dropdown-divider"></li>
 
-              <li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar perfil</a></li>
+              <li><a class="dropdown-item" th:href="@{/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
             </ul>
           </li>

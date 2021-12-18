@@ -154,4 +154,13 @@ public class ComedorServicio {
 
         comedorRepository.actualizarFoto(foto,id);
     }
+
+    @Transactional
+    public Comedor buscarComedorPorCredencial(Long id){
+        if(comedorRepository.buscarComedorPorCredencial(id) != null){
+            return comedorRepository.buscarComedorPorCredencial(id);
+        }else{
+            return null;
+        }
+    }
 }
