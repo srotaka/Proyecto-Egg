@@ -50,23 +50,22 @@ public class UsuarioControlador {
         
         return mav;
     }
-    
-    
-    @GetMapping("/editar/{id}")
-    public ModelAndView editar(@PathVariable("id")Long id, HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("usuario-formulario");
-        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
-        
-        if(flashMap != null){
-            mav.addObject("error", flashMap.get("error"));
-            mav.addObject("usuario", flashMap.get("usuario"));
-        }else{
-            mav.addObject("usuario", new Usuario());
-        }    
-        mav.addObject("title", "editar usuario");
-        mav.addObject("action", "guardar");
-        
-        return mav;
+
+
+    @PostMapping("/modificar")
+    public RedirectView modificarUsuario(@RequestParam Long id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Long dni, @RequestParam Long telefono, RedirectAttributes redirect, RedirectAttributes attributes){
+        RedirectView redirectView = new RedirectView("/");
+        Usuario usuario = usuarioServicio.buscarPorId(id);
+
+        try{
+            usuarioServicio.modificarUsuario(id, dni, nombre, apellido, telefono);
+
+        }catch(Exception e){
+            redirect.addFlashAttribute("error", e.getMessage());
+            redirectView.setUrl("/modificar/{" + usuario.getCredencial().getUsername()+"}");
+            return redirectView;
+        }
+        return redirectView;
     }
 
      @PostMapping("/guardar")
