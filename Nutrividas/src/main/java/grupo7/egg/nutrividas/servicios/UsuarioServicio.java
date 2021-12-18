@@ -58,27 +58,16 @@ public class UsuarioServicio {
     }
 
     @Transactional
-    public Usuario modificarUsuario(Long id, Long dni, String nombre, String apellido,Long telefono,String mail, String username, String password){
-
-        if(usuarioRepository.findById(id).isPresent() || usuarioRepository.findById(id) != null){
-            throw new NoSuchElementException("No existe un usuario registrado con el DNI '"+dni+"' ");
-        }
-        if(usuarioRepository.findByDni(dni).isPresent() && usuarioRepository.findByDni(dni).get().getId() != id){
-            throw new FieldAlreadyExistException("Ya existe un usuario registrado con el DNI '"+dni+"' ");
-        }
+    public Usuario modificarUsuario(Long id, Long dni, String nombre, String apellido, Long telefono){
 
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(
                 ()->new NoSuchElementException("No existe un usuario vinculado al id '"+id+"'"));
+
         usuario.setDni(dni);
         usuario.setNombre(Validations.formatNames(nombre));
         usuario.setApellido(Validations.formatNames(apellido));
         usuario.setTelefono(telefono);
-        usuario.setAlta(true);
 
-        List<Rol> roles = new ArrayList<>();
-        roles.add(rolServicio.buscarPorNombre(ROL));
-        Credencial credencial = credencialServicio.crear(username,mail,password,roles);
-        usuario.setCredencial(credencial);
         return usuarioRepository.save(usuario);
     }
 
@@ -169,8 +158,18 @@ public class UsuarioServicio {
         usuarioRepository.actualizarFoto(foto,id);
     }
 
+    @Transactional
     public Usuario buscarPorMail(String mail){
         return usuarioRepository.findByCredencial_mail(mail).orElseThrow(
                 ()->new NoSuchElementException("No se halló un usuario con el email '"+mail+"'"));
+    }
+
+    @Transactional
+    public Usuario buscarUsuarioPorCredencial(Long id){
+        if(usuarioRepository.buscarUsuarioPorCredencial(id) != null){
+            return usuarioRepository.buscarUsuarioPorCredencial(id);
+        }else{
+            return null;
+        }
     }
 }

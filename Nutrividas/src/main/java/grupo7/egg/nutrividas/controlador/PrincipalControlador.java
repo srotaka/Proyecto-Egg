@@ -1,6 +1,9 @@
 package grupo7.egg.nutrividas.controlador;
 
+import grupo7.egg.nutrividas.entidades.Credencial;
 import grupo7.egg.nutrividas.entidades.Usuario;
+import grupo7.egg.nutrividas.exeptions.BadCredentialsException;
+import grupo7.egg.nutrividas.mail.MailService;
 import grupo7.egg.nutrividas.servicios.CredencialServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.UsuarioServicio;
@@ -12,11 +15,13 @@ import grupo7.egg.nutrividas.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -42,31 +47,51 @@ public class PrincipalControlador {
     @Autowired
     private ComedorServicio comedorServicio;
 
+    @Autowired
+    private MailService mailService;
+
+    @Autowired
+    private CredencialServicio credencialServicio;
+
+
+
     @GetMapping("/")
     public ModelAndView inicio(){
         return new ModelAndView("index");
     }
     
-      @GetMapping("/politica")
+    @GetMapping("/politica")
     public ModelAndView politica(){
         return new ModelAndView("politica-privacidad");
     }
-      @GetMapping("/condiciones")
+
+    @GetMapping("/condiciones")
     public ModelAndView condiciones(){
         return new ModelAndView("terminos-condiciones");
     }
+
     @GetMapping("/contacto")
     public ModelAndView contacto(){
         return new ModelAndView("contacto");
     }
     
-    @GetMapping("/confirmacion/{id}")
-    public ModelAndView confirmacion(@PathVariable("id")Long id){
+    @PostMapping("/confirmar")
+    public RedirectView confirmacion(@RequestParam("tokenMail")Long tokenMail){
+        credencialServicio.habilitarCuenta(tokenMail);
+        return new RedirectView("/confirmado");
+    }
+
+    @GetMapping("/confirmado")
+    public ModelAndView confirmado(){
         return new ModelAndView("confirmacion-mail");
     }
     
     @GetMapping("/pago")
+<<<<<<< HEAD
     public ModelAndView pago() {
+=======
+    public ModelAndView pago(){
+>>>>>>> develop
         return new ModelAndView("pago");
     }
 
@@ -90,6 +115,12 @@ public class PrincipalControlador {
 
         if (principal != null) {
             modelAndView.setViewName("redirect:/ ");
+        }
+
+
+        if(principal!= null && credencialServicio.findByMail(principal.getName()).getHabilitado() == false ){
+            System.out.println("Mail: "+principal.getName());
+            throw new BadCredentialsException("La cuenta se encuentra inhabilitada");
         }
 
         return modelAndView;
@@ -151,10 +182,9 @@ public class PrincipalControlador {
         try {
 
             Usuario usuarioCreado =usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
-            request.login(usuario.getCredencial().getMail(), usuario.getCredencial().getPassword());
+            mailService.sendWelcomeMail("Bienvenida",usuario.getCredencial().getMail(),usuario.getCredencial().getUsername(),usuarioCreado.getCredencial().getId(),"USUARIO");
+            //request.login(usuario.getCredencial().getMail(), usuario.getCredencial().getPassword());
             mav.setViewName("redirect:/");
-        } catch (ServletException e) {
-            attributes.addFlashAttribute("error", "Error al realizar auto-login");
         } catch (Exception e) {
             attributes.addFlashAttribute("usuario", usuario);
             attributes.addFlashAttribute("error", e.getMessage());
@@ -210,11 +240,10 @@ public class PrincipalControlador {
                 foto = fotoServicio.actualizarFoto(usuarioCreado.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
             }
             usuarioServicio.crearFoto(foto,usuario.getId());*/
-
-            request.login(nutricionista.getCredencial().getMail(), nutricionista.getCredencial().getPassword());
+            mailService.sendWelcomeMail("Bienvenida",nutricionistaCreado.getCredencial().getMail(),nutricionista.getCredencial().getUsername(),nutricionista.getCredencial().getId(),"NUTRICIONISTA");
+            //request.login(nutricionista.getCredencial().getMail(), nutricionista.getCredencial().getPassword());
             mav.setViewName("redirect:/");
-        } catch (ServletException e) {
-            attributes.addFlashAttribute("error", "Error al realizar auto-login");
+
         } catch (Exception e) {
             attributes.addFlashAttribute("nutricionista", nutricionista);
             attributes.addFlashAttribute("error", e.getMessage());
@@ -249,7 +278,7 @@ public class PrincipalControlador {
     @PostMapping(value = "/registro/comedor")
     public ModelAndView saveComedor(@Valid @ModelAttribute Comedor comedor, BindingResult result, HttpServletRequest request, RedirectAttributes attributes){
 
-        ModelAndView mav = new ModelAndView();
+        ModelAndView mav = new ModelAndView("signupComedor");
         if (result.hasErrors()) {
             mav.addObject("comedor", comedor);
             mav.setViewName("signupComedor");
@@ -258,14 +287,6 @@ public class PrincipalControlador {
 
         try {
             Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
-
-            /*Foto foto;
-            if(usuario.getFoto() == null){
-                foto = fotoServicio.crearFoto(USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),usuario.getFoto());
-            }else{
-                foto = fotoServicio.actualizarFoto(usuarioCreado.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
-            }
-            usuarioServicio.crearFoto(foto,usuario.getId());*/
 
             request.login(comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
             mav.setViewName("redirect:/");
@@ -281,4 +302,94 @@ public class PrincipalControlador {
         return mav;
     }
 
+    @GetMapping(value = "/modificar/{username}")
+    public ModelAndView editarPerfil(@PathVariable String username, HttpServletRequest request, RedirectAttributes attributes){
+
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        ModelAndView mav;
+        Credencial credencial = credencialServicio.buscarCredencialPorUsername(username);
+        Long id = credencial.getId();
+
+        if(usuarioServicio.buscarUsuarioPorCredencial(id) != null){
+            mav = new ModelAndView("editarUsuario");
+            return modificarUsuario(id, mav, flashMap, attributes);
+
+            }else if(comedorServicio.buscarComedorPorCredencial(id) != null){
+                Comedor comedor = comedorServicio.buscarComedorPorCredencial(id);
+                mav = new ModelAndView("editarComedores");
+                mav.addObject("comedor", comedorServicio.buscarComedorPorCredencial(id));
+                return mav;
+                }else{
+                    Nutricionista nutricionista = nutricionistaServicio.buscarNutricionistaPorCredencial(id);
+                    mav = new ModelAndView("editarNutricionista");
+
+                }
+        return mav;
+    }
+
+    public ModelAndView modificarUsuario(Long id, ModelAndView mav, Map<String, ?> flashMap, RedirectAttributes attributes){
+        try {
+            if(flashMap != null){
+                mav.addObject("error", flashMap.get("error"));
+            }else {
+                mav.addObject("usuario", usuarioServicio.buscarUsuarioPorCredencial(id));
+            }
+            mav.addObject("title", "Editar Usuario");
+        }catch (Exception e) {
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/");
+        }
+        return mav;
+    }
+
+    @PostMapping("/modificar/usuario")
+    public RedirectView modificar(@RequestParam Long id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Long dni, @RequestParam Long telefono, RedirectAttributes redirect, RedirectAttributes attributes){
+        RedirectView redirectView = new RedirectView("/");
+        Usuario usuario = usuarioServicio.buscarPorId(id);
+
+        try{
+           usuarioServicio.modificarUsuario(id, dni, nombre, apellido, telefono);
+
+        }catch(Exception e){
+            redirect.addFlashAttribute("error", e.getMessage());
+            redirectView.setUrl("/modificar/{" + usuario.getCredencial().getUsername()+"}");
+            return redirectView;
+        }
+        return redirectView;
+    }
+
+    public ModelAndView modificarComedor(Long id, ModelAndView mav, Map<String, ?> flashMap, RedirectAttributes attributes){
+        try {
+            if(flashMap != null){
+                mav.addObject("error", flashMap.get("error"));
+            }else {
+                mav.addObject("comedor", comedorServicio.buscarComedorPorCredencial(id));
+            }
+            mav.addObject("title", "Editar Comedor");
+        }catch (Exception e) {
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/");
+        }
+        return mav;
+    }
+
+    /*@PostMapping("/modificar/comedor")
+    public RedirectView modificar(@RequestParam Long id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Long dni, @RequestParam Long telefono, RedirectAttributes redirect, RedirectAttributes attributes){
+        RedirectView redirectView = new RedirectView("/");
+        Comedor comedor = comedorServicio.buscarPorId(id);
+
+        try{
+            comedorServicio.modificarComedor(id, nombre, calle, numero, codigoPostal, apellido, telefono);
+
+        }catch(Exception e){
+            redirect.addFlashAttribute("error", e.getMessage());
+            redirectView.setUrl("/modificar/{" + comedor.getCredencial().getUsername()+"}");
+            return redirectView;
+        }
+        return redirectView;
+    }*/
+
+
 }
+
+

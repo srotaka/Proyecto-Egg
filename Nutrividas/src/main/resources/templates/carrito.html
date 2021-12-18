@@ -75,7 +75,7 @@
           </li>&nbsp;&nbsp;&nbsp;
 
           <!-- Botón Usuario si está loggeado -->
-          <li class="drop-down" sec:authorize="isAuthenticated()">
+          <!--<li class="drop-down" sec:authorize="isAuthenticated()">
             <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
               style="margin-top: -13px;" role="button float-right">
               <img class="rounded-circle" th:src="@{/img/user-nopic.png}" width="50">
@@ -86,7 +86,7 @@
               <li><a class="dropdown-item" th:href="@{/modificar/${session.usernameSession}}">Editar perfil</a></li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
             </ul>
-          </li>
+          </li>-->
           <!-- Fin Botón Usuario si está loggeado -->
         </ul>
       </nav><!-- .nav-menu -->
@@ -108,34 +108,37 @@
 
   <!-- ======= CANASTAS ======= -->
   <main>
+
+    <div class="basket-labels">
+      <ul>
+        <li class="item item-heading">Canasta</li>
+        <li class="price">Precio</li>
+        <li class="quantity">Cantidad</li>
+        <li class="subtotal">Subtotal</li>
+      </ul>
+    </div>
+
+    <form method="POST" action="/compra/guardar" th:object="${compra}">
     <div class="basket">
 
-      <div class="basket-labels">
-        <ul>
-          <li class="item item-heading">Canasta</li>
-          <li class="price">Precio</li>
-          <li class="quantity">Cantidad</li>
-          <li class="subtotal">Subtotal</li>
-        </ul>
-      </div>
 
       <!-- PRODUCTO 4 -->
-      <div class="basket-product" th:each="canasta : ${canastas}">
+      <div class="basket-product" th:each="detalleCompra, rowStat : ${compra.detalleCompras}">
         <div class="item">
           <div class="product-image">
             <img th:src="@{/img/food-basket04.jpg}" alt="Canasta" class="product-frame">
           </div>
           <div class="product-details">
-            <h1><span th:text="${canasta.descripcion}"></span></h1>
+            <h1><span th:text="${detalleCompra.canasta.descripcion}"></span></h1>
             <h1><span  class="item-quantity"></span></h1>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal"
-              th:attr="data-target='#customerModel'+${canasta.id}"
-              th:onclick="'javascript:verModal(' + ${canasta.id} + ')'">
+              th:attr="data-target='#customerModel'+${detalleCompra.canasta.id}"
+              th:onclick="'javascript:verModal(' + ${detalleCompra.canasta.id} + ')'">
               Detalle de productos
             </button>
             <!-- Modal -->
-            <div class="modal fade" th:id="${canasta.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" th:id="${detalleCompra.canasta.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
               aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -158,7 +161,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr th:each="elemento, step : ${canasta.elementos}">
+                          <tr th:each="elemento, step : ${detalleCompra.canasta.elementos}">
                             <th th:if="${elemento.producto.foto == null}" width="30px" heigth="25px" class="text-center"
                               th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
                                 background-position: center;background-size: cover;'">
@@ -187,9 +190,10 @@
             <!-- Fin modal detalles productos -->
           </div>
         </div>
-        <div th:text="${canasta.precio}" class="price"></div>
+        <div th:text="${detalleCompra.canasta.precio}" class="price"></div>
         <div class="quantity">
-          <input type="number" value="0" min="0" class="quantity-field">
+          <input type="hidden"  th:field="*{detalleCompras[__${rowStat.index}__].canasta}">
+          <input type="number" th:field="*{detalleCompras[__${rowStat.index}__].cantidad}"  value="${detalleCompras.cantidad}" min="0" class="quantity-field">
         </div>
         <div class="subtotal">0</div>
 
@@ -217,12 +221,15 @@
           <div class="total-value final-value" id="basket-total">0</div>
         </div>
         <div class="summary-checkout">
-          <button th:onclick="location.href='/pago'" id="boton-guardar"> FINALIZAR COMPRA
+          <button  th:onclick="location.href='/pago'" id="boton-guardar"> FINALIZAR COMPRA
           </a></button>
+          <!--<button type="submit" id="boton-guardar"> FINALIZAR COMPRA
+            </a></button>-->
           
         </div>
       </div>
     </aside>
+   </form>
   </main>
   <!-- End RESUMEN COMPRA --> <br><br>
 

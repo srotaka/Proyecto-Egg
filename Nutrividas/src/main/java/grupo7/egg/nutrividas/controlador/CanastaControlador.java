@@ -13,10 +13,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +40,7 @@ public class CanastaControlador {
     @Autowired
     private ProductoServicio productoServicio;
 
-    @GetMapping
+    /*@GetMapping
     public ModelAndView canastasComedor(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("carrito");
 
@@ -52,7 +52,58 @@ public class CanastaControlador {
 
         mav.addObject("canastas",  canastaServicio.listarCanastas());
         return mav;
+    }*/
+
+    @GetMapping
+    public ModelAndView canastasComedor(HttpServletRequest request){
+        ModelAndView mav = new ModelAndView("carrito");
+
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("success", flashMap.get("success-name"));
+        }
+
+        Compra compra = new Compra();
+        compra.setDetalleCompras(obtenerDetalleCompras());
+        mav.addObject("compra", compra);
+        //mav.addObject("detallesCompra",detallesCompras);
+        return mav;
     }
+
+    public List<DetalleCompra> obtenerDetalleCompras(){
+        List<Canasta> canastas = canastaServicio.listarCanastas();
+
+        List<DetalleCompra> detallesCompras = new ArrayList<>();
+        for (Canasta c : canastas){
+            DetalleCompra detalleCompra = new DetalleCompra();
+            detalleCompra.setCanasta(c);
+            detalleCompra.setCantidad(0);
+            detallesCompras.add(detalleCompra);
+        }
+        return detallesCompras;
+    }
+
+   /*@GetMapping
+   public ModelAndView canastasComedor(HttpServletRequest request){
+       ModelAndView mav = new ModelAndView("carrito2");
+
+       Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+       if (flashMap != null) {
+           mav.addObject("success", flashMap.get("success-name"));
+       }
+
+       Map<Canasta,Integer> canastasDetalle = new HashMap<>();
+       List<Canasta> canastas = canastaServicio.listarCanastas();
+       for (Canasta c : canastas){
+           canastasDetalle.put(c,0);
+       }
+
+       mav.addObject("detallesCompra",canastasDetalle);
+       return mav;
+   }*/
+
 
     @GetMapping("/crear")
     public ModelAndView crear(HttpServletRequest request, HttpSession session){
@@ -83,7 +134,7 @@ public class CanastaControlador {
     }
 
     @PostMapping("/guardar")
-    public ModelAndView guardar( @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes, HttpSession session) {
+    public ModelAndView guardar( @Valid @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes, HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
         if (result.hasErrors()) {
@@ -113,36 +164,6 @@ public class CanastaControlador {
 
         return mav;
     }
-/*
-    @PostMapping("/guardar/2")
-    public ModelAndView guarda2(@RequestParam RedirectAttributes attributes) {
-       RedirectView redirectView = new RedirectView("/canasta");
-
-        try{
-
-
-            customerService.update(id,document,name,lastName,mail,telephone);
-            userService.update(username,mail,password,rolesVO);
-
-            //customerService.create(document,name,lastName,mail,telephone,userService.create(username,mail,password, Collections.emptyList()));
-            redirectAttributes.addFlashAttribute("success","Los cambios se han efectuado correctamente");
-
-        }catch (FieldAlreadyExistException | FieldInvalidException e){
-            redirectAttributes.addFlashAttribute("error",e.getMessage());
-            redirectAttributes.addFlashAttribute("id", id);
-            redirectAttributes.addFlashAttribute("name", name);
-            redirectAttributes.addFlashAttribute("lastName", lastName);
-            redirectAttributes.addFlashAttribute("document", document);
-            redirectAttributes.addFlashAttribute("mail", mail);
-            redirectAttributes.addFlashAttribute("telephone", telephone);
-            redirectAttributes.addFlashAttribute("username", username);
-            redirectAttributes.addFlashAttribute("password", password);
-
-            redirectView.setUrl("/customers/update/"+id);
-        }
-
-        return redirectView;
-    }*/
 
     @GetMapping("/editar/{id}")
     public ModelAndView editar(@PathVariable("id") Long id, HttpServletRequest request,RedirectAttributes attributes){

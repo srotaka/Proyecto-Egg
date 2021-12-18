@@ -27,6 +27,7 @@ public interface ComedorRepository extends JpaRepository<Comedor,Long> {
 
     boolean existsByDireccion(Direccion direccion);
     Comedor findByDireccion(Direccion direccion);
+    Optional<Comedor> findByCredencial_mail(String mail);
 
     List<Comedor> findByNutricionistaIsNull();
 
@@ -36,4 +37,8 @@ public interface ComedorRepository extends JpaRepository<Comedor,Long> {
 
     @Query(value = "SELECT c FROM Comedor c WHERE c.alta = true")
     List<Comedor> findAll();
+
+    @Query("SELECT c FROM Comedor c WHERE c.credencial.id = :id")
+    Comedor buscarComedorPorCredencial(@Param("id") Long id);
+
 }

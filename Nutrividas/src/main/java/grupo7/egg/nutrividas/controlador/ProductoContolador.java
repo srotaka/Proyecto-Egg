@@ -24,6 +24,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -283,21 +284,4 @@ public class ProductoContolador {
 
     }
 
-
-
-    /*
-    @PostMapping("/guardarRest")
-    public Producto crearProducto(@RequestBody @Valid Producto producto,BindingResult result){
-
-        String errorMsg = result.getFieldErrors().stream().map(FieldError::getDefaultMessage)
-                .collect(Collectors.joining(","));
-        if (result.hasErrors()){
-            throw new InvalidDataException(errorMsg,result);
-        }
-
-       return productoServicio.crearProducto(producto.getNombre(),producto.getMarca().getId(),producto.getPrecio(),producto.getCategoria(),
-                producto.getAptoIntoleranteLactosa(),producto.getAptoCeliacos(),producto.getAptoHipertensos(),
-                producto.getAptoDiabeticos());
-
-    }*/
 }
