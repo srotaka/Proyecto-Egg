@@ -76,7 +76,7 @@
                         <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
                         <li class="dropdown-divider"></li>
 
-                        <li><a class="dropdown-item" th:href="@{/comedor/editar/__${session.id}__}">Editar perfil</a>
+                        <li><a class="dropdown-item" th:href="@{/comedor/editar/__${session.usernameSession}__}">Editar perfil</a>
                         </li>
                         <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
                     </ul>
@@ -130,10 +130,8 @@
                             <div class="col-lg-8 mx-auto">
                                 <p class="text-muted mb-4" id="titulo-form">Editar Comedor</p>
                                 <form th:action="@{/comedor/modificar}" th:object="${comedor}" method="POST">
+                                    <input th:field="*{id}" type="hidden"/>
                                     <div class="row">
-                                        <input th:field="*{id}" id="inputId" type="hidden"
-                                               placeholder="" required="" autofocus=""
-                                               class="form-control border-0 shadow-sm px-4">
                                         <div class="col">
                                             <label for="nombre">Nombre del Comedor</label>
                                             <div class="form-group mb-3">

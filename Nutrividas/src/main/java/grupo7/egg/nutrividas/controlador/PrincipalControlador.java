@@ -308,19 +308,20 @@ public class PrincipalControlador {
 
         if(usuarioServicio.buscarUsuarioPorCredencial(id) != null){
             mav = new ModelAndView("editarUsuario");
+            mav.addObject("usuario", usuarioServicio.buscarUsuarioPorCredencial(id));
             return modificarUsuario(id, mav, flashMap, attributes);
 
             }else if(comedorServicio.buscarComedorPorCredencial(id) != null){
-                Comedor comedor = comedorServicio.buscarComedorPorCredencial(id);
                 mav = new ModelAndView("editarComedores");
                 mav.addObject("comedor", comedorServicio.buscarComedorPorCredencial(id));
-                return mav;
+                mav.addObject("provincias", provinciaServicio.obtenerProvincias());
+                return modificarComedor(id, mav, flashMap, attributes);
                 }else{
-                    Nutricionista nutricionista = nutricionistaServicio.buscarNutricionistaPorCredencial(id);
                     mav = new ModelAndView("editarNutricionista");
-
+                    mav.addObject("usuario", nutricionistaServicio.buscarNutricionistaPorCredencial(id));
+                    return modificarNutricionista(id, mav, flashMap, attributes);
                 }
-        return mav;
+
     }
 
     public ModelAndView modificarUsuario(Long id, ModelAndView mav, Map<String, ?> flashMap, RedirectAttributes attributes){
@@ -338,22 +339,6 @@ public class PrincipalControlador {
         return mav;
     }
 
-    @PostMapping("/modificar/usuario")
-    public RedirectView modificar(@RequestParam Long id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Long dni, @RequestParam Long telefono, RedirectAttributes redirect, RedirectAttributes attributes){
-        RedirectView redirectView = new RedirectView("/");
-        Usuario usuario = usuarioServicio.buscarPorId(id);
-
-        try{
-           usuarioServicio.modificarUsuario(id, dni, nombre, apellido, telefono);
-
-        }catch(Exception e){
-            redirect.addFlashAttribute("error", e.getMessage());
-            redirectView.setUrl("/modificar/{" + usuario.getCredencial().getUsername()+"}");
-            return redirectView;
-        }
-        return redirectView;
-    }
-
     public ModelAndView modificarComedor(Long id, ModelAndView mav, Map<String, ?> flashMap, RedirectAttributes attributes){
         try {
             if(flashMap != null){
@@ -369,21 +354,20 @@ public class PrincipalControlador {
         return mav;
     }
 
-    /*@PostMapping("/modificar/comedor")
-    public RedirectView modificar(@RequestParam Long id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Long dni, @RequestParam Long telefono, RedirectAttributes redirect, RedirectAttributes attributes){
-        RedirectView redirectView = new RedirectView("/");
-        Comedor comedor = comedorServicio.buscarPorId(id);
-
-        try{
-            comedorServicio.modificarComedor(id, nombre, calle, numero, codigoPostal, apellido, telefono);
-
-        }catch(Exception e){
-            redirect.addFlashAttribute("error", e.getMessage());
-            redirectView.setUrl("/modificar/{" + comedor.getCredencial().getUsername()+"}");
-            return redirectView;
+    public ModelAndView modificarNutricionista(Long id, ModelAndView mav, Map<String, ?> flashMap, RedirectAttributes attributes){
+        try {
+            if(flashMap != null){
+                mav.addObject("error", flashMap.get("error"));
+            }else {
+                mav.addObject("nutricionista", nutricionistaServicio.buscarNutricionistaPorCredencial(id));
+            }
+            mav.addObject("title", "Editar Nutricionista");
+        }catch (Exception e) {
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/");
         }
-        return redirectView;
-    }*/
+        return mav;
+    }
 
 
 }

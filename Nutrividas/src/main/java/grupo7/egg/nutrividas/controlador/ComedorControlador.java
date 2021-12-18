@@ -1,9 +1,6 @@
 package grupo7.egg.nutrividas.controlador;
 
-import grupo7.egg.nutrividas.entidades.Canasta;
-import grupo7.egg.nutrividas.entidades.Comedor;
-import grupo7.egg.nutrividas.entidades.Foto;
-import grupo7.egg.nutrividas.entidades.Provincia;
+import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.enums.Sexo;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.servicios.ComedorServicio;
@@ -99,28 +96,6 @@ public class ComedorControlador {
     }
 
 
-    //ver como crea el id comedor
-    @PostMapping("/guardar")
-    public RedirectView guardarComedor(@RequestParam String nombre, @RequestParam String apellido, @RequestParam Long documento, @RequestParam LocalDate fechaNacimiento,
-                                       @RequestParam Double altura, @RequestParam Double peso,
-                                       @RequestParam Boolean aptoCeliacos, @RequestParam Boolean aptoHipertensos,
-                                       @RequestParam Boolean aptoDiabeticos, @RequestParam Boolean aptoIntoleranteLactosa,
-                                       @RequestParam Sexo sexo, @RequestParam Long idComedor, RedirectAttributes attributes){
-        RedirectView redirectView = new RedirectView("/comedor");
-
-        //modificar parametros
-        try {
-            //comedorServicio.crearComedor(nombre, apellido, documento, fechaNacimiento, peso, altura, aptoIntoleranteLactosa, aptoCeliacos, aptoHipertensos, aptoDiabeticos, sexo, idComedor);
-            attributes.addFlashAttribute("exito", "La creación ha sido realizada satisfactoriamente");
-            redirectView.setUrl("/comedor");
-        } catch (Exception e) {
-            attributes.addFlashAttribute("error", e.getMessage());
-            redirectView.setUrl("/comedor/crear");
-        }
-
-        return redirectView;
-    }
-
     @GetMapping("/editar/{id}")
     public ModelAndView editarComedor(@PathVariable("id") Long id, HttpServletRequest request){
 
@@ -138,26 +113,6 @@ public class ComedorControlador {
         mav.addObject("action", "modificar");
         return mav;
     }
-
-   /* @PostMapping("/modificar")
-    public RedirectView modificarComedor(@RequestParam String nombre, @RequestParam String apellido, @RequestParam Long documento, @RequestParam LocalDate fechaNacimiento,
-                                       @RequestParam Double altura, @RequestParam Double peso,
-                                       @RequestParam Boolean aptoCeliacos, @RequestParam Boolean aptoHipertensos,
-                                       @RequestParam Boolean aptoDiabeticos, @RequestParam Boolean aptoIntoleranteLactosa,
-                                       @RequestParam Sexo sexo, @RequestParam Long idComedor, RedirectAttributes attributes){
-        RedirectView redirectView = new RedirectView("/comedor");
-
-        //modificar parametros
-        try {
-            //comedorServicio.crearComedor(nombre, apellido, documento, fechaNacimiento, peso, altura, aptoIntoleranteLactosa, aptoCeliacos, aptoHipertensos, aptoDiabeticos, sexo, idComedor);
-            attributes.addFlashAttribute("exito", "La edicion ha sido realizada satisfactoriamente");
-        } catch (Exception e) {
-            attributes.addFlashAttribute("error", e.getMessage());
-            redirectView.setUrl("/comedor/editar/" + idComedor);
-        }
-
-        return redirectView;
-    }*/
 
     @PostMapping("/modificar")
     public ModelAndView modificar(@Valid @ModelAttribute Comedor comedor, BindingResult result, RedirectAttributes attributes) {
@@ -179,7 +134,7 @@ public class ComedorControlador {
             attributes.addFlashAttribute("provincias", provinciaServicio.obtenerProvincias());
             attributes.addFlashAttribute("comedor", comedor);
             attributes.addFlashAttribute("error", e.getMessage());
-            mav.setViewName("redirect:/comedor/editar/"+comedor.getId());
+            mav.setViewName("redirect:/modificar/{" + comedor.getCredencial().getUsername()+"}");
         }
 
         return mav;

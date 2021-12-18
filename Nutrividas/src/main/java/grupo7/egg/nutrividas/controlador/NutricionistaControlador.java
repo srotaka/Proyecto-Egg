@@ -1,5 +1,6 @@
 package grupo7.egg.nutrividas.controlador;
 
+import grupo7.egg.nutrividas.entidades.Comedor;
 import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Nutricionista;
 import grupo7.egg.nutrividas.exeptions.InvalidDataException;
@@ -8,6 +9,7 @@ import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.NutricionistaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +25,8 @@ import javax.validation.Valid;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping("/nutricionista")
+@Controller
+@RequestMapping("nutricionista")
 public class NutricionistaControlador {
 
     @Autowired
@@ -50,6 +52,31 @@ public class NutricionistaControlador {
         mav.addObject("comedores",comedorServicio.listarComedoresSinNutricionista());
         mav.addObject("titulo", "Crear nutricionista");
         mav.addObject("action", "guardar");
+        return mav;
+    }
+
+    @PostMapping("/modificar")
+    public ModelAndView modificar(@Valid @ModelAttribute Nutricionista nutricionista, BindingResult result, RedirectAttributes attributes) {
+
+        ModelAndView mav = new ModelAndView();
+        if(result.hasErrors()){
+            mav.addObject("nutricionista",nutricionistaServicio.buscarPorId(nutricionista.getId()));
+            mav.addObject("titulo", "Editar Nutricionista");
+            mav.addObject("accion", "guardar");
+            mav.setViewName("editarNutricionista");
+        }
+        try {
+            nutricionistaServicio.modificarNutricionista(nutricionista.getId(), nutricionista.getNombre(), nutricionista.getApellido(), nutricionista.getDocumento(),
+                    nutricionista.getMatricula(), nutricionista.getFechaNacimiento(),
+                    nutricionista.getTelefono());
+            attributes.addFlashAttribute("exito", "La edicion ha sido realizada satisfactoriamente");
+            mav.setViewName("redirect:/");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("nutricionista", nutricionista);
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/modificar/{" + nutricionista.getCredencial().getUsername()+"}");
+        }
+
         return mav;
     }
 
@@ -92,31 +119,6 @@ public class NutricionistaControlador {
             attributes.addFlashAttribute("nutricionista", nutricionista);
             attributes.addFlashAttribute("error", e.getMessage());
             redirectView.setUrl("/nutricionista/crear");
-        }
-        return redirectView;
-    }
-
-    @PostMapping("/modificar")
-    public RedirectView modificarNutricionista(@ModelAttribute @Valid Nutricionista nutricionista, BindingResult result,RedirectAttributes attributes){
-
-        RedirectView redirectView = new RedirectView("/nutricionista");
-        try{
-            String errorMsg = result.getFieldErrors().stream().map(FieldError::getDefaultMessage)
-                    .collect(Collectors.joining(","));
-            if (result.hasErrors()){
-                throw new InvalidDataException(errorMsg,result);
-            }
-
-            nutricionistaServicio.crearNutricionista(nutricionista.getDocumento(), nutricionista.getNombre(),
-                    nutricionista.getApellido(), nutricionista.getMatricula(),
-                    nutricionista.getFechaNacimiento(), nutricionista.getTelefono(),
-                    nutricionista.getCredencial().getMail(), nutricionista.getCredencial().getUsername(),
-                    nutricionista.getCredencial().getPassword());
-            attributes.addFlashAttribute("exito", "El nutricionista se ha actualizado con éxito");
-        }catch (Exception e){
-            attributes.addFlashAttribute("nutricionista", nutricionista);
-            attributes.addFlashAttribute("error", e.getMessage());
-            redirectView.setUrl("/nutricionista/modificar");
         }
         return redirectView;
     }
