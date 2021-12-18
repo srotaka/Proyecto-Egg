@@ -35,4 +35,8 @@ public interface CredencialRepository extends JpaRepository<Credencial,Long> {
     @Modifying
     @Query("UPDATE Credencial c SET c.habilitado = true WHERE c.id = :id")
     void habilitarCuenta(@Param("id")Long id);
+
+    @Query("SELECT c FROM Credencial c WHERE c.username = :username")
+    Credencial buscarCredencialPorUsername(@Param("username") String username);
+
 }

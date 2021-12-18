@@ -63,6 +63,7 @@
             <ul>
               <li><a th:href="@{/comedor}">Lista de Comedores</a>
               <li><a th:href="@{/producto}">Lista de Productos</a>
+              <li><a th:href="@{/canasta}">Lista de Canastas</a>
             </ul>
           </li>
           <li class="drop-down"><a href="#">Registrar</a>
@@ -172,12 +173,13 @@
                   th:text="${action == 'guardar'} ? 'Crear canasta' : 'Guardar cambios'"></button>
               </div>
               <div class="col-md-6">
-                <button class="btn btn-secondary mt-4" id="boton-guardar"> <a th:href="@{/producto}"> VER PRODUCTOS
+                <button th:onclick="location.href='/productos'" id="boton-guardar" style="margin-top: 22px;;"> VER
+                  PRODUCTOS
                   </a></button>
               </div>
             </div>
           </form>
-          
+
           <!-- TARJETA -->
           <div class="card mb-3 ml-3" th:unless="${canasta.elementos == null}"
             th:each="elemento : ${canasta.elementos}">
@@ -207,14 +209,16 @@
                 </div>
               </div>
               <div class="col-md-2 align-self-center">
-                  <form method="POST" th:action="@{/elemento/eliminar/__${elemento.id}__}">
-                      <button type="submit"> <box-icon name='trash-alt' type='solid' animation='tada-hover'></box-icon></button>
-                  </form>
+                <form method="POST" th:action="@{/elemento/eliminar/__${elemento.id}__}">
+                  <button type="submit">
+                    <box-icon name='trash-alt' type='solid' animation='tada-hover'></box-icon>
+                  </button>
+                </form>
               </div>
             </div>
           </div>
         </div>
-          <!-- SUBTOTAL -->
+        <!-- SUBTOTAL -->
         <div class="col col-md-5 mb-5 ml-5" style="background-color: #F8F9FA; height: fit-content; padding-bottom: 2%;">
           <aside>
             <div class="summary mt-4 text-center">
@@ -223,29 +227,28 @@
                 <div class="subtotal-value final-value" id="basket-subtotal">0</div>
               </div>
               <div class="summary-delivery">
-                <label for="cantidad">Productos Seleccionados:</label> 
-                <span class="total-items"></span></div>
-              </div>
-              <div class="summary-total">
-                <div class="total-title">Total</div>
-                <div class="total-value final-value" id="basket-total">0</div>
-              </div>
-              <div class="summary-checkout">
-                <button class="btn btn-secondary mt-4" id="boton-guardar"> <a th:href="@{/pago}"> FINALIZAR COMPRA
-                </a></button>
+                <label for="cantidad">Productos Seleccionados:</label>
+                <span class="total-items"></span>
               </div>
             </div>
-          </aside>
+            <div class="summary-total">
+              <div class="total-title">Total</div>
+              <div class="total-value final-value" id="basket-total">0</div>
+            </div>
+            <div class="summary-checkout">
+              <button th:onclick="location.href='/pago'" id="boton-guardar"> FINALIZAR COMPRA
+                </a></button>
+            </div>
         </div>
-        <!-- FIN SUBTOTAL -->
+        </aside>
       </div>
+      <!-- FIN SUBTOTAL -->
+    </div>
     </div>
   </section>
 
-
-
-
   <!-- ======= END TABLA PRODUCTOS ======= -->
+
   <!-- ======= Footer ======= -->
   <footer id="footer2">
     <div class="copyright2">

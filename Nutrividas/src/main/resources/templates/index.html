@@ -63,7 +63,8 @@
             <ul>
               <li><a th:href="@{/comedor}">Comedores Registrados</a>
               <li><a th:href="@{/producto}">Lista de Productos</a>
-            </ul>
+              <li><a th:href="@{/canasta}">Lista de Canastas</a>
+            </ul> 
           </li>
           <li class="drop-down"><a href="#">Registrar</a>
             <ul>
@@ -84,7 +85,7 @@
               <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
               <li class="dropdown-divider"></li>
 
-              <li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar perfil</a></li>
+              <li><a class="dropdown-item" th:href="@{/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
             </ul>
           </li>

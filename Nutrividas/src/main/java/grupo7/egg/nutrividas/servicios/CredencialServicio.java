@@ -200,4 +200,9 @@ public class CredencialServicio implements UserDetailsService {
         }
         credencialRepository.habilitarCuenta(id);
     }
+
+    @Transactional
+    public Credencial buscarCredencialPorUsername(String username){
+        return credencialRepository.buscarCredencialPorUsername(username);
+    }
 }

@@ -153,7 +153,7 @@ public class ProductoContolador {
                                         @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                                     HttpServletRequest request) {
 
-        ModelAndView mav = new ModelAndView("productosSil");
+        ModelAndView mav = new ModelAndView("productos");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -172,7 +172,7 @@ public class ProductoContolador {
                                            @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                               HttpServletRequest request){
 
-        ModelAndView mav = new ModelAndView("productosSil");
+        ModelAndView mav = new ModelAndView("productos");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -211,7 +211,7 @@ public class ProductoContolador {
                                             @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                             HttpServletRequest request){
 
-        ModelAndView mav = new ModelAndView("productosSil");
+        ModelAndView mav = new ModelAndView("productos");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {

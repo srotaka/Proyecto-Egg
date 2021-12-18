@@ -238,7 +238,7 @@ public class CanastaControlador {
         }
         Comedor comedor = comedorServicio.buscarPorId(id);
 
-        mav.addObject("canastas",  canastaServicio.buscarCanastasPorComedor(comedor));
+            mav.addObject("canastas",  canastaServicio.buscarCanastasPorComedor(comedor));
         return mav;
     }
 
