@@ -39,15 +39,8 @@ public class Canasta {
     @Column(nullable = false)
     private Double precio;
 
-
     @OneToMany(mappedBy = "canasta")
     List<Elemento> elementos;
-
-    /*@ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "elementos_canasta", joinColumns = @JoinColumn(name = "elementos_canasta"))
-    @MapKeyColumn(name = "producto_key", length = 50)
-    @Column(name = "producto_val", length = 100)
-    private Map<Producto,Integer> productos;*/
 
     @ManyToOne
     private Comedor comedor;

@@ -11,7 +11,7 @@ public class InvalidDataException extends BadRequestException{
         super("");
         this.result = result;
     }
-    public InvalidDataException(String message, BindingResult result){super((DESCRIPTION+". "+message));
+    public InvalidDataException(String message, BindingResult result){super((DESCRIPTION+""+message));
         this.result = result;
     }
 }

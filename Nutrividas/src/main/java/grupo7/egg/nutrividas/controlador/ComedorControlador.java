@@ -7,6 +7,7 @@ import grupo7.egg.nutrividas.entidades.Provincia;
 import grupo7.egg.nutrividas.enums.Sexo;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.servicios.ComedorServicio;
+import grupo7.egg.nutrividas.servicios.DireccionSevicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.ProvinciaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ public class ComedorControlador {
 
     @Autowired
     private FotoServicio fotoServicio;
+
+    private DireccionSevicio direccionSevicio;
 
     @GetMapping(value ="/{id}")
     public ModelAndView mostrarComedor(@PathVariable("id") Long id,
@@ -87,6 +90,9 @@ public class ComedorControlador {
             mav.addObject("provincias", provinciaServicio.obtenerProvincias());
             mav.addObject("comedor", new Comedor());
         }
+
+        mav.addObject("provincias",direccionSevicio.listarProvincias());
+
         mav.addObject("title", "Ingresar Comedor");
         mav.addObject("action", "guardar");
         return mav;

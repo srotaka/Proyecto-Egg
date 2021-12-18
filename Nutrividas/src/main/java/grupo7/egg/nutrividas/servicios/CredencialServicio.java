@@ -42,6 +42,12 @@ public class CredencialServicio implements UserDetailsService {
     @Autowired
     private ElementoServicio elementoServicio;
 
+    //@Autowired
+    //private UsuarioServicio usuarioServicio;
+
+    //@Autowired
+    //private ComedorServicio comedorServicio;
+
 
     @Transactional
     public Credencial crear(String usename, String mail, String password, List<Rol> roles){
@@ -135,10 +141,6 @@ public class CredencialServicio implements UserDetailsService {
         Credencial credencial = credencialRepository.findByMailOrUsername(username,username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(MESSAGE, username)));
 
-        /*if(credencial.getHabilitado() == false ){
-            throw new BadCredentialsException("La cuenta se encuentra inhabilitada");
-        }*/
-
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attributes.getRequest().getSession(true);
@@ -147,8 +149,13 @@ public class CredencialServicio implements UserDetailsService {
 
         if(credencial.getRoles().contains(rolServicio.buscarPorNombre("ADMIN"))){
             session.setAttribute("listaElementos",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
+            //session.setAttribute("foto",usuarioServicio.buscarPorMail(credencial.getMail()).getFoto());
+        }else if(credencial.getRoles().contains(rolServicio.buscarPorNombre("USUARIO"))){
+            session.setAttribute("listaDetalleCompras",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
+            //session.setAttribute("foto",usuarioServicio.buscarPorMail(credencial.getMail()).getFoto());
+        }else if(credencial.getRoles().contains(rolServicio.buscarPorNombre("COMEDOR"))){
+            //session.setAttribute("foto",comedorServicio.buscarPorMail(credencial.getMail()).getFoto());
         }
-
 
         List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 
