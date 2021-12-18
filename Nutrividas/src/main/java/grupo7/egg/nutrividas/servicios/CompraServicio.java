@@ -22,7 +22,8 @@ public class CompraServicio {
     public Compra crearCompra(List<DetalleCompra> detallesCompras, Usuario usuario){
 
         List<DetalleCompra> detallesComprasFinal = detallesCompras.stream().filter(d -> d.getCantidad() > 0).collect(Collectors.toList());
-        detallesComprasFinal.stream().forEach(d -> d.setSubtotal(d.getCanasta().getPrecio() * d.getCantidad()));
+        detallesComprasFinal.stream().forEach(d ->{ d.setSubtotal(d.getCanasta().getPrecio() * d.getCantidad());
+        d.setUsuario(usuario);});
 
         Compra compra = new Compra();
         compra.setDetalleCompras(detallesComprasFinal);

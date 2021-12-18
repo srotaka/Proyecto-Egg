@@ -56,7 +56,7 @@ public class CanastaControlador {
 
     @GetMapping
     public ModelAndView canastasComedor(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("carrito2");
+        ModelAndView mav = new ModelAndView("carrito");
 
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
