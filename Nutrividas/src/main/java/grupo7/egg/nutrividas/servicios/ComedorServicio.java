@@ -34,6 +34,9 @@ public class ComedorServicio {
     private DireccionSevicio direccionSevicio;
 
     @Autowired
+    private NutricionistaServicio nutricionistaSevicio;
+
+    @Autowired
     private RolServicio rolServicio;
 
     @Autowired
@@ -167,16 +170,20 @@ public class ComedorServicio {
     }
 
     @Transactional(readOnly = true)
-    public List<Comedor> listarComedoresSinNutricionista(){
-        return comedorRepository.findByNutricionistaIsNull();
-    }
-
-
-    @Transactional(readOnly = true)
     public Paged<Comedor> listarPaginaComedores(int page, int size, Sort order){
         Pageable request = PageRequest.of(page - 1, size, order);
         Page<Comedor> comedorPage = comedorRepository.findAll(request);
         return new Paged(comedorPage, Paging.of(comedorPage.getTotalPages(), page, size));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Comedor> listarComedoresPorNutricionista(Long idNutricionista){
+        return comedorRepository.buscarComedoresPorNutricionista(idNutricionista);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Comedor> listarComedoresSinNutricionista(){
+        return comedorRepository.findByNutricionistaIsNull();
     }
 
     @Transactional
@@ -202,5 +209,19 @@ public class ComedorServicio {
         }else{
             return null;
         }
+    }
+
+    @Transactional
+    public void asignarNutricionistaAComedor(Long idComedor, Long idNutricionista){
+        Comedor comedor = comedorRepository.findById(idComedor).get();
+        comedor.setNutricionista(nutricionistaSevicio.buscarPorId(idNutricionista));
+        comedorRepository.save(comedor);
+    }
+
+    @Transactional
+    public void desasignarNutricionistaAComedor(Long id){
+        Comedor comedor = comedorRepository.findById(id).get();
+        comedor.setNutricionista(null);
+        comedorRepository.save(comedor);
     }
 }

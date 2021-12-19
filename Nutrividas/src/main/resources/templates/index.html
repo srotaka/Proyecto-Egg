@@ -59,6 +59,12 @@
               <li><a href="#faq">Preguntas Frecuentes</a></li>
             </ul>
           </li>
+          <li class="drop-down"><a href="#">Nutricionistas</a>
+            <ul>
+              <li><a th:href="@{/nutricionista/comedores/__${session.usernameSession}__}">Comedores a cargo</a></li>
+              <li><a th:href="@{/nutricionista/asignarComedor/__${session.usernameSession}__}">Postularse a Comedor</a></li>
+            </ul>
+          </li>
           <li class="drop-down"><a href="#">Mostrar</a>
             <ul>
               <li><a th:href="@{/comedor}">Comedores Registrados</a>
