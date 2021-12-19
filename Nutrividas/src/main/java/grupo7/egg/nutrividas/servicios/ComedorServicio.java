@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -33,10 +34,16 @@ public class ComedorServicio {
     private DireccionSevicio direccionSevicio;
 
     @Autowired
+    private NutricionistaServicio nutricionistaSevicio;
+
+    @Autowired
     private RolServicio rolServicio;
 
     @Autowired
     private CredencialServicio credencialServicio;
+
+    @Autowired
+    private FotoServicio fotoServicio;
 
     private final String ROL = "COMEDOR";
 
@@ -48,7 +55,8 @@ public class ComedorServicio {
             throw new FieldAlreadyExistException("La dirección '"+calle+" "+numero+","+localidad+" ya se encuentra registrada");
         }
 
-        String detalleBiografia = "";
+        Foto foto = new Foto();
+        String detalleBiografia = " ";
         validarDatosDeComedor(nombre, cantidadDePersonas,telefono);
         Direccion direccion = direccionSevicio.createDireccion(calle,numero,codigoPostal,localidad,provincia);
         Biografia biografia = biografiaServicio.crearBiografia(detalleBiografia);
@@ -59,7 +67,13 @@ public class ComedorServicio {
         comedor.setTelefono(telefono);
         comedor.setBiografia(biografia);
         comedor.setAlta(true);
-
+        foto.setAlta(true);
+        foto.setCreacion(LocalDateTime.now());
+        foto.setMime("image/jpeg");
+        foto.setNombre("imagen");
+        foto.setModificacion(LocalDateTime.now());
+        foto.setRuta("/img/children01.jpg");
+        comedor.setFoto(fotoServicio.crearFto(foto));
         List<Rol> roles = new ArrayList<>();
         roles.add(rolServicio.buscarPorNombre(ROL));
         Credencial credencial = credencialServicio.crear(username,mail,password,roles);
@@ -67,7 +81,7 @@ public class ComedorServicio {
         return comedorRepository.save(comedor);
     }
 
-    @Transactional
+    /*@Transactional
     public Comedor modificarComedor(Long id,String nombre, String calle, Integer numero, Integer codigoPostal, String localidad,String provincia,
                                     Integer cantidadDePersonas, Long telefono, String detalleBiografia,
                                     String username, String mail, String password){
@@ -87,6 +101,28 @@ public class ComedorServicio {
         roles.add(rolServicio.buscarPorNombre(ROL));
         Credencial credencial = credencialServicio.crear(username,mail,password,roles);
         comedor.setCredencial(credencial);
+        return comedorRepository.save(comedor);
+    }*/
+
+    @Transactional
+    public Comedor modificarComedor(Long id,String nombre, String calle, Integer numero, Integer codigoPostal, String localidad,String provincia,
+                                    Integer cantidadDePersonas, Long telefono, String detalleBiografia){
+
+        Comedor comedor = comedorRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("El comedor que desa modificar no existe"));
+
+        //validarDatosDeComedor(nombre,cantidadDePersonas, telefono); checkear esta validacion que no permite modificar.
+        Direccion direccion = direccionSevicio.updateDireccion(comedor.getDireccion().getId(),calle,numero,codigoPostal,localidad,provincia);
+        Biografia biografia = biografiaServicio.editarBiografia(comedor.getBiografia().getId(),detalleBiografia);
+        comedor.setNombre(nombre);
+        comedor.setDireccion(direccion);
+        comedor.setCantidadDePersonas(cantidadDePersonas);
+        comedor.setTelefono(telefono);
+        comedor.setAlta(true);
+        //List<Rol> roles = new ArrayList<>();
+        //roles.add(rolServicio.buscarPorNombre(ROL));
+        //Credencial credencial = credencialServicio.crear(username,mail,password,roles);
+        //comedor.setCredencial(credencial);
         return comedorRepository.save(comedor);
     }
 
@@ -127,16 +163,27 @@ public class ComedorServicio {
     }
 
     @Transactional(readOnly = true)
-    public List<Comedor> listarComedoresSinNutricionista(){
-        return comedorRepository.findByNutricionistaIsNull();
+    public Comedor buscarPorMail(String mail){
+        return comedorRepository.findByCredencial_mail(mail).orElseThrow(
+                ()-> new NoSuchElementException("No existe un comedor asociado al mail '"+mail+"' ")
+        );
     }
-
 
     @Transactional(readOnly = true)
     public Paged<Comedor> listarPaginaComedores(int page, int size, Sort order){
         Pageable request = PageRequest.of(page - 1, size, order);
         Page<Comedor> comedorPage = comedorRepository.findAll(request);
         return new Paged(comedorPage, Paging.of(comedorPage.getTotalPages(), page, size));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Comedor> listarComedoresPorNutricionista(Long idNutricionista){
+        return comedorRepository.buscarComedoresPorNutricionista(idNutricionista);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Comedor> listarComedoresSinNutricionista(){
+        return comedorRepository.findByNutricionistaIsNull();
     }
 
     @Transactional
@@ -153,5 +200,28 @@ public class ComedorServicio {
                 ()->new NoSuchElementException("No se halló un comedor con el id '"+id+"'"));
 
         comedorRepository.actualizarFoto(foto,id);
+    }
+
+    @Transactional
+    public Comedor buscarComedorPorCredencial(Long id){
+        if(comedorRepository.buscarComedorPorCredencial(id) != null){
+            return comedorRepository.buscarComedorPorCredencial(id);
+        }else{
+            return null;
+        }
+    }
+
+    @Transactional
+    public void asignarNutricionistaAComedor(Long idComedor, Long idNutricionista){
+        Comedor comedor = comedorRepository.findById(idComedor).get();
+        comedor.setNutricionista(nutricionistaSevicio.buscarPorId(idNutricionista));
+        comedorRepository.save(comedor);
+    }
+
+    @Transactional
+    public void desasignarNutricionistaAComedor(Long id){
+        Comedor comedor = comedorRepository.findById(id).get();
+        comedor.setNutricionista(null);
+        comedorRepository.save(comedor);
     }
 }

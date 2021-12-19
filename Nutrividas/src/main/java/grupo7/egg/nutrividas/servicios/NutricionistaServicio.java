@@ -1,9 +1,6 @@
 package grupo7.egg.nutrividas.servicios;
 
-import grupo7.egg.nutrividas.entidades.Credencial;
-import grupo7.egg.nutrividas.entidades.Foto;
-import grupo7.egg.nutrividas.entidades.Nutricionista;
-import grupo7.egg.nutrividas.entidades.Rol;
+import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.NutricionistaRepository;
@@ -62,20 +59,20 @@ public class NutricionistaServicio {
     }
 
     @Transactional
-    public Nutricionista modificarNutricionista(Nutricionista dto){
-        Nutricionista nutricionista = nutricionistaRepository.findById(dto.getId()).orElseThrow(()->
+    public Nutricionista modificarNutricionista(Long id, String nombre, String apellido, Long documento, Long matricula, LocalDate fechaNacimiento, Long telefono){
+
+        Nutricionista nutricionista = nutricionistaRepository.findById(id).orElseThrow(()->
                 new NoSuchElementException("El nutricionista que desea editar no existe"));
 
-        if(!(nutricionistaRepository.findByMatricula(dto.getMatricula()).isEmpty()) ||
-                !(nutricionistaRepository.findByDocumento(dto.getDocumento()).isEmpty())){
-            throw new FieldAlreadyExistException("Ya existe un nutricionista registrado con la misma matrícula o documento");
-        }
-
-        Validations.validDateBirth(dto.getFechaNacimiento());
-        dto.setNombre(Validations.formatNames(dto.getNombre()));
-        dto.setApellido(Validations.formatNames(dto.getApellido()));
-        dto.setAlta(true);
-        return nutricionistaRepository.save(dto);
+        Validations.validDateBirth(fechaNacimiento);
+        nutricionista.setNombre(Validations.formatNames(nombre));
+        nutricionista.setApellido(Validations.formatNames(apellido));
+        nutricionista.setDocumento(documento);
+        nutricionista.setMatricula(matricula);
+        nutricionista.setFechaNacimiento(fechaNacimiento);
+        nutricionista.setTelefono(telefono);
+        nutricionista.setAlta(true);
+        return nutricionistaRepository.save(nutricionista);
     }
 
     @Transactional
@@ -127,6 +124,15 @@ public class NutricionistaServicio {
     public Nutricionista buscarPorId(Long id){
         return nutricionistaRepository.findById(id).orElseThrow(
                 ()->new NoSuchElementException("No se halló ningún nutricionista con el id '"+id+"'"));
+    }
+
+    @Transactional
+    public Nutricionista buscarNutricionistaPorCredencial(Long id){
+        if(nutricionistaRepository.buscarNutricionistaPorCredencial(id) != null){
+            return nutricionistaRepository.buscarNutricionistaPorCredencial(id);
+        }else{
+            return null;
+        }
     }
 
 }

@@ -30,9 +30,6 @@ public class ElementoServicio {
     @Transactional
     public Elemento crearElemento(Long idProducto, Usuario usuario){
 
-        /*if(elementoRepository.existsByProducto_IdAndCanasta_Id(idProducto,idCanasta)){
-            throw new FieldAlreadyExistException("Ya existe el elemento en esta canasta");
-        }*/
         if(idProducto == null){
             throw new FieldInvalidException("El producto es obligatorio");
         }
@@ -54,11 +51,6 @@ public class ElementoServicio {
         Elemento elemento = elementoRepository.findById(idElemento).orElseThrow(
                 () -> new NoSuchElementException("No existe un elemento con en id '"+idElemento+"'")
         );
-        //Opción 2 validación: Buscar Canasta e iterar lista de elementos
-        /*if(elementoRepository.existsByProducto_IdAndCanasta_Id(idProducto,idCanasta)&&
-        elementoRepository.findByProducto_IdAndCanasta_id(idProducto,idCanasta).get().getId() != idElemento){
-            throw new FieldAlreadyExistException("Ya existe el elemento en esta canasta");
-        }*/
 
         if(cantidadNecesaria == null || cantidadNecesaria <= 0){
             throw new FieldInvalidException("Error en cantidad Necesaria");

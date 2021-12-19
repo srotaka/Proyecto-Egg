@@ -1,5 +1,6 @@
 package grupo7.egg.nutrividas.repositorios;
 
+import grupo7.egg.nutrividas.entidades.Comedor;
 import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Nutricionista;
 import org.springframework.data.domain.Page;
@@ -39,5 +40,8 @@ public interface NutricionistaRepository extends JpaRepository<Nutricionista,Lon
     @Modifying
     @Query("UPDATE Nutricionista n SET n.foto = :foto WHERE n.id = :id")
     void actualizarFoto(@Param("foto") Foto foto,@Param("id")Long id);
+
+    @Query("SELECT n FROM Nutricionista n WHERE n.credencial.id = :id")
+    Nutricionista buscarNutricionistaPorCredencial(@Param("id") Long id);
 
 }

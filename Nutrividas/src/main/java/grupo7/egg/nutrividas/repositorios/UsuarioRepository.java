@@ -1,5 +1,6 @@
 package grupo7.egg.nutrividas.repositorios;
 
+import grupo7.egg.nutrividas.entidades.Comedor;
 import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,5 +29,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
     @Modifying
     @Query("UPDATE Usuario u SET u.foto = :foto WHERE u.id = :id")
     void actualizarFoto(Foto foto, Long id);
+
+    @Query("SELECT u FROM Usuario u WHERE u.credencial.id = :id")
+    Usuario buscarUsuarioPorCredencial(@Param("id") Long id);
 
 }

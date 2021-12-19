@@ -1,16 +1,16 @@
 package grupo7.egg.nutrividas.controlador;
 
-import grupo7.egg.nutrividas.entidades.Comedor;
-import grupo7.egg.nutrividas.entidades.Foto;
-import grupo7.egg.nutrividas.entidades.Provincia;
+import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.enums.Sexo;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.servicios.ComedorServicio;
+import grupo7.egg.nutrividas.servicios.DireccionSevicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.ProvinciaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,7 +19,10 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +39,8 @@ public class ComedorControlador {
 
     @Autowired
     private FotoServicio fotoServicio;
+
+    private DireccionSevicio direccionSevicio;
 
     @GetMapping(value ="/{id}")
     public ModelAndView mostrarComedor(@PathVariable("id") Long id,
@@ -71,42 +76,78 @@ public class ComedorControlador {
         return mav;
     }
 
-    @GetMapping("/crear")
-    public ModelAndView crearComedor(HttpServletRequest request) {
-
+    @GetMapping(value = "/signup")
+    public ModelAndView signupComedor(HttpServletRequest request, Principal principal){
         ModelAndView mav = new ModelAndView("signupComedor");
-        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        mav.addObject("provincias", provinciaServicio.obtenerProvincias());
+
+        if (principal != null) {
+            mav.setViewName("redirect:/ ");
+        }
 
         if (flashMap != null) {
             mav.addObject("error", flashMap.get("error"));
             mav.addObject("comedor", flashMap.get("comedor"));
         } else {
-            mav.addObject("provincias", provinciaServicio.obtenerProvincias());
+
             mav.addObject("comedor", new Comedor());
         }
-        mav.addObject("title", "Ingresar Comedor");
-        mav.addObject("action", "guardar");
+
         return mav;
     }
 
-    @PostMapping("/guardar")
-    public RedirectView guardarComedor(@RequestParam String nombre, @RequestParam String apellido, @RequestParam Long documento, @RequestParam LocalDate fechaNacimiento,
-                                       @RequestParam Double altura, @RequestParam Double peso,
-                                       @RequestParam Boolean aptoCeliacos, @RequestParam Boolean aptoHipertensos,
-                                       @RequestParam Boolean aptoDiabeticos, @RequestParam Boolean aptoIntoleranteLactosa,
-                                       @RequestParam Sexo sexo, @RequestParam Long idComedor, RedirectAttributes attributes){
-        RedirectView redirectView = new RedirectView("/comedor");
+    @PostMapping(value = "/registro")
+    public ModelAndView saveComedor(@Valid @ModelAttribute Comedor comedor, BindingResult result, HttpServletRequest request, RedirectAttributes attributes){
 
-        //modificar parametros
-        try {
-            //comedorServicio.crearComedor(nombre, apellido, documento, fechaNacimiento, peso, altura, aptoIntoleranteLactosa, aptoCeliacos, aptoHipertensos, aptoDiabeticos, sexo, idComedor);
-            attributes.addFlashAttribute("exito", "La creación ha sido realizada satisfactoriamente");
-        } catch (Exception e) {
-            attributes.addFlashAttribute("error", e.getMessage());
-            redirectView.setUrl("/comedor/crear");
+        ModelAndView mav = new ModelAndView("signupComedor");
+        if (result.hasErrors()) {
+            mav.addObject("comedor", comedor);
+            mav.setViewName("signupComedor");
+            return mav;
         }
 
-        return redirectView;
+        try {
+            Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
+
+            request.login(comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
+            mav.setViewName("redirect:/");
+        } catch (ServletException e) {
+            attributes.addFlashAttribute("error", "Error al realizar auto-login");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("comedor", comedor);
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/signup/comedor");
+        }
+
+
+        return mav;
+    }
+
+    @PostMapping("/modificar")
+    public ModelAndView modificar(@Valid @ModelAttribute Comedor comedor, BindingResult result, RedirectAttributes attributes) {
+
+        ModelAndView mav = new ModelAndView();
+        if(result.hasErrors()){
+            mav.addObject("comedor",comedorServicio.buscarPorId(comedor.getId()));
+            mav.addObject("titulo", "Editar Comedor");
+            mav.addObject("accion", "guardar");
+            mav.setViewName("editarComedores");
+        }
+        try {
+            comedorServicio.modificarComedor(comedor.getId(),comedor.getNombre(),comedor.getDireccion().getCalle(),
+                    comedor.getDireccion().getNumero(),comedor.getDireccion().getCodigoPostal(),comedor.getDireccion().getLocalidad(),
+                    comedor.getDireccion().getProvincia(),comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getBiografia().getDescripcion());
+            attributes.addFlashAttribute("exito", "La edicion ha sido realizada satisfactoriamente");
+            mav.setViewName("redirect:/comedor");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("provincias", provinciaServicio.obtenerProvincias());
+            attributes.addFlashAttribute("comedor", comedor);
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/modificar/{" + comedor.getCredencial().getUsername()+"}");
+        }
+
+        return mav;
     }
 
     public Sort getSort(String order){

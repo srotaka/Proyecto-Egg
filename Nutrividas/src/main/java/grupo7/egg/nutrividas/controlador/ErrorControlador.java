@@ -19,6 +19,7 @@ public class ErrorControlador implements ErrorController{
         
         switch(codigo){
             case 403:
+            case 401:
                 mensaje = "No tiene permiso para acceder a este servidor";
                 break;
             case 404:

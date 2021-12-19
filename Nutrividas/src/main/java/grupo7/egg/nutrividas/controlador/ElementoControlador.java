@@ -72,4 +72,9 @@ public class ElementoControlador {
         return new RedirectView("/canasta/crear");
     }
 
+    public void  actualizarContadorCanasta(HttpSession session){
+        session.setAttribute("listaElementos", elementoServicio.obtenerElemntosSesion(session.getAttribute("usernameSession").toString()));
+
+    }
+
 }
