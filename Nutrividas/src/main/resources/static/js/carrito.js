@@ -107,7 +107,7 @@ function updateQuantity(quantityInput) {
 
 function updateSumItems() {
   var sumItems = 0;
-  $('.quantity input').each(function() {
+  $('.quantity-field').each(function() {
     sumItems += parseInt($(this).val());
   });
   $('.total-items').text(sumItems);

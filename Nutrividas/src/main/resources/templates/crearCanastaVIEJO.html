@@ -68,9 +68,8 @@
           </li>
           <li class="drop-down"><a href="#">Registrar</a>
             <ul>
-              <li><a th:href="@{/comedor/crear}">Nuevo Comedor</a>
+              <li><a th:href="@{/signup/comedor}">Nuevo Comedor</a>
               <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
-              <li><a th:href="@{/canasta/crear}">Nueva Canasta</a>
             </ul>
           </li>&nbsp;&nbsp;&nbsp;
 
@@ -83,25 +82,28 @@
             <ul>
               <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
               <li class="dropdown-divider"></li>
-
-              <li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar perfil</a>
-              </li>
+              <li><a class="dropdown-item" th:href="@{/modificar/${session.usernameSession}}">Editar perfil</a></li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
             </ul>
           </li>
           <!-- Fin Botón Usuario si está loggeado -->
+
+          <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+          <li>
+            <button th:onclick="location.href='/login'" id="boton-guardar" sec:authorize="isAnonymous()"> Iniciar Sesión
+              </a></button>
+          </li>
+          <!-- Fin botón para iniciar sesión -->
         </ul>
       </nav><!-- .nav-menu -->
-      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
-      <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a>
-      <!-- End Botón Inicio Sesión -->
+
     </div>
   </header><!-- End Header -->
 
   <!-- ======= TÍTULO ======= -->
   <section class="titulo" id="titulo">
     <div class="texto-productos">
-      <p> Productos que alimentan</p>
+      <p> Canastas que alimentan</p>
       <p>
         <span class="word color">sonrisas</span>
       </p>
@@ -157,97 +159,144 @@
               </div>
             </div>
 
-            <!--<div th:each="elemento : ${canasta.elementos}" class="form-check">
-                <input th:id="${elemento.id}" th:name="${elemento.id}" th:field="${elementos}" th:field="*{elementos}"
-                       class="form-check-input" type="checkbox"  id="flexCheckDefault">
-                <label th:for="${elemento}"  th:text="${elemento}" class="form-check-label" for="flexCheckDefault">
-                </label>
-              </div>
-    
-              <tr th:each="elemento,status : ${canasta.elementos}">
-                <td><input type="checkbox" th:checked="${elemento}" th:value="*{elementos[__${status.index}__]}" th:field="*{elementos[__${status.index}__]}"/></td>
-              </tr>-->
             <div class="row">
               <div class="col-md-6">
                 <button type="submit" class="btn btn-primary text-uppercase shadow-sm mb-2 mt-4" id="boton-guardar"
                   th:text="${action == 'guardar'} ? 'Crear canasta' : 'Guardar cambios'"></button>
               </div>
               <div class="col-md-6">
-                <button th:onclick="location.href='/productos'" id="boton-guardar" style="margin-top: 22px;;"> VER
+                <button th:onclick="location.href='/producto'" id="boton-guardar" style="margin-top: 22px;;"> VER
                   PRODUCTOS
                   </a></button>
               </div>
             </div>
           </form>
+        </div>
+      </div>
+      <!-- TARJETA -->
+      <!-- <div class="card mb-3 ml-3" th:unless="${canasta.elementos == null}" th:each="elemento : ${canasta.elementos}">
 
-          <!-- TARJETA -->
-          <div class="card mb-3 ml-3" th:unless="${canasta.elementos == null}"
-            th:each="elemento : ${canasta.elementos}">
-
-            <div class="row">
-              <div class="col-md-4" th:if="${elemento.producto.foto == null}" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
-                  background-position: center;background-size: 40%;'"></div>
-              <div class="col-md-4" th:unless="${elemento.producto.foto == null}" th:style="'background-image:url(http://localhost:8080/fotos/'+${elemento.producto.foto.id}+') !important;background-repeat: no-repeat;
-                    background-position: center; background-size: 40%;'"></div>
-              <div class="col-md-6">
-                <div class="card-body">
-                  <h5 th:text="${elemento.producto.nombre}" class="card-title"></h5>
-                  <p th:text="| $ ${elemento.producto.precio}|" class="card-text"></p></br>
-                  <label for="cantidad">Cantidad:</label>
-                  <input type="number" th:id="cantidad+${elemento.producto.id}"
-                    th:name="cantidad+${elemento.producto.id}" th:value="${elemento.cantidadNecesaria}" disabled>
-                  <button th:id="editarCantidad+${elemento.producto.id}"
-                    th:onclick="'javascript:editarCantidad(' + ${elemento.producto.id} + ')'" class=" habilitado p-0">
-                    <box-icon name='pencil' type='solid' animation='tada-hover' color='#1bac91'
-                      th:id="editarIcono+${elemento.producto.id}"></box-icon>
-                  </button>
-                  <button th:id="confirmarCantidad+${elemento.producto.id}" disabled
-                    th:onclick="'javascript:confirmarCantidad(' + ${elemento.producto.id} + ')'"
-                    class=" deshabilitado p-0">
-                    <box-icon name='check-circle' th:id="confirmarIcono+${elemento.producto.id}"></box-icon>
-                  </button>
-                </div>
-              </div>
-              <div class="col-md-2 align-self-center">
-                <form method="POST" th:action="@{/elemento/eliminar/__${elemento.id}__}">
-                  <button type="submit">
-                    <box-icon name='trash-alt' type='solid' animation='tada-hover'></box-icon>
-                  </button>
-                </form>
-              </div>
+        <div class="row">
+          <div class="col-md-4" th:if="${elemento.producto.foto == null}" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
+           background-position: center;background-size: 40%;'"></div>
+          <div class="col-md-4" th:unless="${elemento.producto.foto == null}" th:style="'background-image:url(http://localhost:8080/fotos/'+${elemento.producto.foto.id}+') !important;background-repeat: no-repeat;
+             background-position: center; background-size: 40%;'"></div>
+          <div class="col-md-6">
+            <div class="card-body">
+              <h5 th:text="${elemento.producto.nombre}" class="card-title"></h5>
+              <p th:text="| $ ${elemento.producto.precio}|" class="card-text"></p></br>
+              <label for="cantidad">Cantidad:</label>
+              <input type="number" th:id="cantidad+${elemento.producto.id}" th:name="cantidad+${elemento.producto.id}"
+                th:value="${elemento.cantidadNecesaria}" disabled>
+              <button th:id="editarCantidad+${elemento.producto.id}"
+                th:onclick="'javascript:editarCantidad(' + ${elemento.producto.id} + ')'" class=" habilitado p-0">
+                <box-icon name='pencil' type='solid' animation='tada-hover' color='#1bac91'
+                  th:id="editarIcono+${elemento.producto.id}"></box-icon>
+              </button>
+              <button th:id="confirmarCantidad+${elemento.producto.id}" disabled
+                th:onclick="'javascript:confirmarCantidad(' + ${elemento.producto.id} + ')'" class=" deshabilitado p-0">
+                <box-icon name='check-circle' th:id="confirmarIcono+${elemento.producto.id}"></box-icon>
+              </button>
             </div>
           </div>
+          <div class="col-md-2 align-self-center">
+            <form method="POST" th:action="@{/elemento/eliminar/__${elemento.id}__}">
+              <button type="submit">
+                <box-icon name='trash-alt' type='solid' animation='tada-hover'></box-icon>
+              </button>
+            </form>
+          </div>
         </div>
-        <!-- SUBTOTAL -->
-        <div class="col col-md-5 mb-5 ml-5" style="background-color: #F8F9FA; height: fit-content; padding-bottom: 2%;">
-          <aside>
-            <div class="summary mt-4 text-center">
-              <div class="summary-subtotal">
-                <label for="cantidad">Subtotal:</label>
-                <div class="subtotal-value final-value" id="basket-subtotal">0</div>
-              </div>
-              <div class="summary-delivery">
-                <label for="cantidad">Productos Seleccionados:</label>
-                <span class="total-items"></span>
-              </div>
-            </div>
-            <div class="summary-total">
-              <div class="total-title">Total</div>
-              <div class="total-value final-value" id="basket-total">0</div>
-            </div>
-            <div class="summary-checkout">
-              <button th:onclick="location.href='/pago'" id="boton-guardar"> FINALIZAR COMPRA
-                </a></button>
-            </div>
-        </div>
-        </aside>
       </div>
-      <!-- FIN SUBTOTAL -->
     </div>
-    </div>
-  </section>
+  </section> -->
 
   <!-- ======= END TABLA PRODUCTOS ======= -->
+
+  <!-- SIGNUP SECTION -->
+  <section class="signup-section">
+    <div class="container-fluid">
+      <div class="row no-gutter">
+
+        <!-- Mensaje éxito y error -->
+        <div th:if="${error != null} OR ${success != null}"
+          th:classappend="${error != null} ? 'alert-danger' : 'alert-success'"
+          class="alert alert-warning alert-dismissible fade show" role="alert">
+          <i th:classappend="${error != null} ? 'fa-times-circle' : 'fa-check-circle'" class="fas "></i>
+          [[${error != null} ? ${error} : ${success}]]
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <!-- *************** -->
+        <div class="col-md-6 d-none d-md-flex bg-image"></div>
+        <!-- The content half -->
+        <div class="col-md-6 bg-light">
+          <div class="login d-flex align-items-center py-5">
+
+            <!-- Demo content-->
+            <div class="row">
+              <div class="col col-md-6 mb-5" style="background-color: #F8F9FA;">
+                <h1 th:text="${titulo}" class="mt-5 text-center"></h1>
+                <form class="m-5" th:action="@{/canasta/__${accion}__}" th:object="${canasta}" method="POST">
+      
+                  <input th:if="${canasta.id} != null" th:field="*{id}" type="hidden"
+                    class="form-control border-0 shadow-sm px-4">
+      
+                  <div class="form-group mt-5 mb-3">
+                    <label for="nombre">Nombre de la Canasta</label>
+                    <input th:field="*{descripcion}" type="text" placeholder="Descripción" required="" autofocus=""
+                      class="form-control border-0 shadow-sm px-4" style="padding-top: 2%;">
+                  </div>
+                  <div class="error text-start" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+      
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label for="nombre">Seleccione un Comedor</label>
+                      <select th:with="comedor=*{comedor}" name="comedor" id="comedor"
+                        class="form-control border-0 shadow-sm px-4 mb-3" style="width: auto;padding-top: 4%;">
+                        <option th:each="comedor : ${comedores}" th:value="${comedor.id}" th:text="${comedor.nombre}"
+                          th:selected="${canasta.comedor != null} ? ${comedor.nombre} == *{comedor.nombre} : false">
+                        </option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group mb-4">
+                        <label for="nombre">Cantidad de personas</label>
+                        <input th:field="*{cantidadDePersonas}" type="number" placeholder="..." required="" autofocus=""
+                          class="form-control border-0 shadow-sm px-4" style="padding-top: 4%;">
+                      </div>
+                      <div class="error text-start" th:if="${#fields.hasErrors('cantidadDePersonas')}"
+                        th:errors="*{cantidadDePersonas}"></div>
+                    </div>
+                  </div>
+      
+                  <div class="row">
+                    <div class="col-md-6">
+                      <button type="submit" class="btn btn-primary text-uppercase shadow-sm mb-2 mt-4" id="boton-guardar"
+                        th:text="${action == 'guardar'} ? 'Crear canasta' : 'Guardar cambios'"></button>
+                    </div>
+                    <div class="col-md-6">
+                      <button th:onclick="location.href='/producto'" id="boton-guardar" style="margin-top: 22px;;"> VER
+                        PRODUCTOS
+                        </a></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div><!-- End -->
+
+          </div>
+        </div><!-- End -->
+
+        <!-- The image half -->
+        <div class="col-md-6 d-none d-md-flex bg-image"></div>
+      </div>
+    </div>
+  </section>
+  <!-- END SIGN UP SECTION -->
+
+
+
+
 
   <!-- ======= Footer ======= -->
   <footer id="footer2">
