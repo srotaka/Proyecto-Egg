@@ -48,63 +48,6 @@ public class NutricionistaControlador {
     @Autowired
     private MailService mailService;
 
-    @GetMapping(value = "/signup")
-    public ModelAndView signupNutricionista(HttpServletRequest request, Principal principal){
-        ModelAndView mav = new ModelAndView("signupNutricionista");
-        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
-
-        if (principal != null) {
-            mav.setViewName("redirect:/ ");
-        }
-
-        if (flashMap != null) {
-            mav.addObject("error", flashMap.get("error"));
-            mav.addObject("nutricionista", flashMap.get("nutricionista"));
-        } else {
-            mav.addObject("nutricionista", new Nutricionista());
-        }
-
-        return mav;
-    }
-
-    @PostMapping(value = "/registro")
-    public ModelAndView saveNutricionista(@Valid @ModelAttribute Nutricionista nutricionista, BindingResult result, HttpServletRequest request, RedirectAttributes attributes){
-
-        ModelAndView mav = new ModelAndView();
-
-        if (result.hasErrors()) {
-            mav.addObject("nutricionista", nutricionista);
-            mav.setViewName("signupNutricionista");
-            return mav;
-        }
-
-        try {
-
-            Nutricionista nutricionistaCreado =nutricionistaServicio.crearNutricionista(nutricionista.getDocumento(), nutricionista.getNombre(),
-                    nutricionista.getApellido(), nutricionista.getMatricula(), nutricionista.getFechaNacimiento(),
-                    nutricionista.getTelefono(), nutricionista.getCredencial().getMail(),
-                    nutricionista.getCredencial().getUsername(),nutricionista.getCredencial().getPassword());
-
-            /*Foto foto;
-            if(usuario.getFoto() == null){
-                foto = fotoServicio.crearFoto(USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),usuario.getFoto());
-            }else{
-                foto = fotoServicio.actualizarFoto(usuarioCreado.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
-            }
-            usuarioServicio.crearFoto(foto,usuario.getId());*/
-            mailService.sendWelcomeMail("Bienvenida",nutricionistaCreado.getCredencial().getMail(),nutricionista.getCredencial().getUsername(),nutricionista.getCredencial().getId(),"NUTRICIONISTA");
-            //request.login(nutricionista.getCredencial().getMail(), nutricionista.getCredencial().getPassword());
-            mav.setViewName("redirect:/");
-
-        } catch (Exception e) {
-            attributes.addFlashAttribute("nutricionista", nutricionista);
-            attributes.addFlashAttribute("error", e.getMessage());
-            mav.setViewName("redirect:/signup/nutricionista");
-        }
-
-        return mav;
-    }
-
     @PostMapping("/modificar")
     public ModelAndView modificar(@Valid @ModelAttribute Nutricionista nutricionista, BindingResult result, RedirectAttributes attributes) {
 

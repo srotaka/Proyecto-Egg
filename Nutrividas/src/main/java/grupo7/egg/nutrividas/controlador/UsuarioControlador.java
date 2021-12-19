@@ -43,50 +43,6 @@ public class UsuarioControlador {
     @Autowired
     private MailService mailService;
 
-    @GetMapping(value = "/signup")
-    public ModelAndView signup(HttpServletRequest request, Principal principal){
-        ModelAndView mav = new ModelAndView("signup");
-        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
-
-        if (principal != null) {
-            mav.setViewName("redirect:/ ");
-        }
-
-        if (flashMap != null) {
-            mav.addObject("error", flashMap.get("error"));
-            mav.addObject("usuario", flashMap.get("usuario"));
-        } else {
-            mav.addObject("usuario", new Usuario());
-        }
-
-        return mav;
-    }
-
-    @PostMapping(value = "/registro")
-    public ModelAndView saveCustomer(@Valid @ModelAttribute Usuario usuario, BindingResult result, HttpServletRequest request, RedirectAttributes attributes){
-
-        ModelAndView mav = new ModelAndView();
-
-        if (result.hasErrors()) {
-            mav.addObject("usuario", usuario);
-            mav.setViewName("signup");
-            return mav;
-        }
-
-        try {
-            Usuario usuarioCreado =usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
-            mailService.sendWelcomeMail("Bienvenida",usuario.getCredencial().getMail(),usuario.getCredencial().getUsername(),usuarioCreado.getCredencial().getId(),"USUARIO");
-            //request.login(usuario.getCredencial().getMail(), usuario.getCredencial().getPassword());
-            mav.setViewName("redirect:/");
-        } catch (Exception e) {
-            attributes.addFlashAttribute("usuario", usuario);
-            attributes.addFlashAttribute("error", e.getMessage());
-            mav.setViewName("redirect:/signup/usuario");
-        }
-
-        return mav;
-    }
-
 
     @PostMapping("/modificar")
     public RedirectView modificarUsuario(@RequestParam Long id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Long dni, @RequestParam Long telefono, RedirectAttributes redirect, RedirectAttributes attributes){
@@ -104,23 +60,6 @@ public class UsuarioControlador {
         return redirectView;
     }
 
-     @PostMapping("/guardar")
-    public RedirectView guardar(@ModelAttribute Usuario usuario, RedirectAttributes attributes){
-        RedirectView redirectView = new RedirectView("/usuario");
-        
-        try{
-            usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
-            attributes.addFlashAttribute("exito", "La creacion se realizo con exito");
-        }catch(Exception e){
-            attributes.addFlashAttribute("usuario", usuario);
-            attributes.addFlashAttribute("error", e.getMessage());
-            redirectView.setUrl("/usuario/crear/");
-        }
-        
-        return redirectView;
-    }
-    
-    
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable Long id, RedirectAttributes attributes){
         try {

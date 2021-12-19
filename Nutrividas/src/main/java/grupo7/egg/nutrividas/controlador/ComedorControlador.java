@@ -77,59 +77,6 @@ public class ComedorControlador {
         return mav;
     }
 
-
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    @GetMapping(value = "/signup")
-    public ModelAndView signupComedor(HttpServletRequest request, Principal principal){
-
-        ModelAndView mav = new ModelAndView("signupComedor");
-        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
-        mav.addObject("provincias", provinciaServicio.obtenerProvincias());
-
-        if (principal != null) {
-            mav.setViewName("redirect:/ ");
-        }
-
-        if (flashMap != null) {
-            mav.addObject("error", flashMap.get("error"));
-            mav.addObject("comedor", flashMap.get("comedor"));
-        } else {
-
-            mav.addObject("comedor", new Comedor());
-        }
-
-        return mav;
-    }
-
-    @PostMapping(value = "/registro")
-    public ModelAndView saveComedor(@Valid @ModelAttribute Comedor comedor, BindingResult result, HttpServletRequest request, RedirectAttributes attributes){
-
-        ModelAndView mav = new ModelAndView("signupComedor");
-        if (result.hasErrors()) {
-            mav.addObject("comedor", comedor);
-            mav.setViewName("signupComedor");
-            return mav;
-        }
-
-
-        try {
-            Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
-
-            request.login(comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
-            mav.setViewName("redirect:/");
-        } catch (ServletException e) {
-            attributes.addFlashAttribute("error", "Error al realizar auto-login");
-        } catch (Exception e) {
-            attributes.addFlashAttribute("comedor", comedor);
-            attributes.addFlashAttribute("error", e.getMessage());
-            mav.setViewName("redirect:/signup/comedor");
-        }
-
-
-        return mav;
-    }
-
-
     @PreAuthorize("hasAnyRole('ADMIN','COMEDOR')")
     @PostMapping("/modificar")
     public ModelAndView modificar(@Valid @ModelAttribute Comedor comedor, BindingResult result, RedirectAttributes attributes) {
