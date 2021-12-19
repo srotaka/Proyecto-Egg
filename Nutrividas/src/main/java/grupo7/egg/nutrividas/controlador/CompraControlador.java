@@ -3,6 +3,7 @@ package grupo7.egg.nutrividas.controlador;
 import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.servicios.*;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -46,7 +47,7 @@ public class CompraControlador {
         return usuarioServicio.buscarPorMail(mail);
     }
 
-
+    @PreAuthorize("hasAnyRole('USUARIO')")
     @GetMapping("/crear")
     public ModelAndView crear(HttpServletRequest request, HttpSession session){
         ModelAndView mav = new ModelAndView("crearCompra");
@@ -66,6 +67,7 @@ public class CompraControlador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('USUARIO')")
     @PostMapping("/guardar")
     public ModelAndView guardar(@Valid @ModelAttribute Compra compra, BindingResult result, RedirectAttributes attributes, HttpSession session) {
         ModelAndView mav = new ModelAndView();
@@ -91,6 +93,7 @@ public class CompraControlador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('USUARIO')")
     @GetMapping("/pago/{id}")
     public ModelAndView pago(@PathVariable("id")Long id){
         ModelAndView mav = new ModelAndView("pago");
@@ -105,6 +108,7 @@ public class CompraControlador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('USUARIO')")
     @PostMapping("/pagar")
     public ModelAndView pagar(@Valid @ModelAttribute Compra compra, BindingResult result, RedirectAttributes attributes, HttpSession session) {
         ModelAndView mav = new ModelAndView();

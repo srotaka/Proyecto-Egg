@@ -10,6 +10,7 @@ import grupo7.egg.nutrividas.servicios.ProvinciaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -74,6 +75,7 @@ public class ComedorControlador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/crear")
     public ModelAndView crearComedor(HttpServletRequest request) {
 
@@ -95,7 +97,7 @@ public class ComedorControlador {
         return mav;
     }
 
-
+    @PreAuthorize("hasAnyRole('ADMIN','COMEDOR')")
     @GetMapping("/editar/{id}")
     public ModelAndView editarComedor(@PathVariable("id") Long id, HttpServletRequest request){
 
@@ -114,6 +116,7 @@ public class ComedorControlador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','COMEDOR')")
     @PostMapping("/modificar")
     public ModelAndView modificar(@Valid @ModelAttribute Comedor comedor, BindingResult result, RedirectAttributes attributes) {
 
@@ -154,6 +157,7 @@ public class ComedorControlador {
     @Value("${picture.comedores.location}")
     public String COMEDORES_UPLOADED_FOLDER;
 
+    @PreAuthorize("hasAnyRole('ADMIN','COMEDOR')")
     @PostMapping("/imagen/actualizar")
     public void  uploadImage(@RequestParam("id")Long id,@RequestParam("imagen") MultipartFile multipartFile,
                              UriComponentsBuilder componentsBuilder){

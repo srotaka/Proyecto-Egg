@@ -113,7 +113,15 @@
 
 	<!-- ======= TARJETA DE CRÉDITO ======= -->
 	<div class="contenedor">
-
+		<!-- Mensaje éxito y error -->
+		<div th:if="${error != null} OR ${success != null}"
+			 th:classappend="${error != null} ? 'alert-danger' : 'alert-success'"
+			 class="alert alert-warning alert-dismissible fade show" role="alert">
+			<i th:classappend="${error != null} ? 'fa-times-circle' : 'fa-check-circle'" class="fas "></i>
+			[[${error != null} ? ${error} : ${success}]]
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		<!-- *************** -->
 
 		<section class="tarjeta" id="tarjeta">
 			<div class="delantera" id="delantera">
@@ -173,10 +181,14 @@
 			<div class="grupo">
 				<label for="inputNumero">Número Tarjeta</label>
 				<input th:field="*{tarjeta.numeroTarjeta}" type="text" id="inputNumero" maxlength="19" autocomplete="off">
+				<div class="error text-start" th:if="${#fields.hasErrors('tarjeta.numeroTarjeta')}"
+					 th:errors="*{tarjeta.numeroTarjeta}" style="color:red;"></div>
 			</div>
 			<div class="grupo">
 				<label for="inputNombre">Nombre</label>
 				<input th:field="*{tarjeta.nombre}" type="text" id="inputNombre" maxlength="19" autocomplete="off">
+				<div class="error text-start" th:if="${#fields.hasErrors('tarjeta.nombre')}"
+					 th:errors="*{tarjeta.nombre}" style="color:red;"></div>
 			</div>
 			<div class="flexbox">
 				<div class="grupo expira">
@@ -200,6 +212,8 @@
 				<div class="grupo ccv">
 					<label for="inputCCV">CCV</label>
 					<input th:field="*{tarjeta.codigoSeguridad}" type="text" id="inputCCV" maxlength="3">
+					<div class="error text-start" th:if="${#fields.hasErrors('tarjeta.codigoSeguridad')}"
+						 th:errors="*{tarjeta.codigoSeguridad}" style="color:red;"></div>
 				</div>
 			</div>
 			<button type="submit" class="btn-enviar ">Enviar</button>

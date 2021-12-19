@@ -133,6 +133,7 @@ public class CanastaControlador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @GetMapping("/editar/{id}")
     public ModelAndView editar(@PathVariable("id") Long id, HttpServletRequest request,RedirectAttributes attributes){
         ModelAndView mav = new ModelAndView("crearCanastaFlor");
@@ -158,6 +159,7 @@ public class CanastaControlador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @PostMapping("/modificar")
     public ModelAndView modificar(@Valid @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes) {
 
@@ -183,18 +185,21 @@ public class CanastaControlador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable Long id) {
         canastaServicio.habilitarCanasta(id);
         return new RedirectView("/canasta");
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @PostMapping("/eliminar/{id}")
     public RedirectView eliminar(@PathVariable Long id) {
         canastaServicio.deshabilitarCanasta(id);
         return new RedirectView("/canasta");
     }
 
+    @PreAuthorize("hasAnyRole('USUARIO')")
     @GetMapping("/{id}")
     public ModelAndView canastasComedor(@PathVariable("id")Long id,HttpServletRequest request){
         ModelAndView mav = new ModelAndView("carrito");
@@ -227,6 +232,7 @@ public class CanastaControlador {
     @Value("${picture.canastas.location}")
     public String CANASTAS_UPLOADED_FOLDER;
 
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @PostMapping("/imagen/actualizar")
     public void  uploadImage(@RequestParam("id")Long id, @RequestParam("imagen") MultipartFile multipartFile,
                              UriComponentsBuilder componentsBuilder){

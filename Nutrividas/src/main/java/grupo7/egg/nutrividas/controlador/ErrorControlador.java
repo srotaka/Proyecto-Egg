@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/error")
 public class ErrorControlador implements ErrorController{
     
-    @RequestMapping(value = "/error", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView errores(HttpServletResponse response){
         ModelAndView mav = new ModelAndView("error");
         String mensaje = "";

@@ -34,8 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/bootstrap/**","/venobox/**","/isotope-layout/**","/boxicons/**","/icofont/**","/owl.carousel/**","/php-email-form/**","/img/**","/jquery/easing/**","/jquery/**","/js/**","/css/**","/", "/login", "/signup/*", "/error", "/login-error","/registro/usuario").permitAll() // Recursos permitidos
-                .antMatchers("/**").permitAll() // Recursos protegidos
+                .antMatchers("/bootstrap/**","/venobox/**","/isotope-layout/**","/boxicons/**","/icofont/**","/owl.carousel/**","/php-email-form/**","/img/**","/jquery/easing/**","/jquery/**","/js/**","/css/**","/", "/login", "/signup/*", "/error", "/login-error",
+                        "/seleccion","/signup/usuario","/signup/nutricionista","/signup/comedor","/registro/usuario","/registro/nutricionista","/registro/comedor","/comedor","/error").permitAll() // Recursos permitidos
+                .antMatchers("/**").authenticated()// Recursos protegidos
                 .and()
                 .formLogin()
                     .loginPage("/login").permitAll()

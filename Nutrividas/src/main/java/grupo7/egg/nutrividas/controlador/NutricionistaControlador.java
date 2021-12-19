@@ -9,6 +9,7 @@ import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.NutricionistaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("nutricionista")
+@PreAuthorize("hasAnyRole('NUTRICIONISTA','ADMIN')")
 public class NutricionistaControlador {
 
     @Autowired

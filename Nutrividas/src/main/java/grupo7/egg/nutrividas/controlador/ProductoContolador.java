@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -46,6 +47,7 @@ public class ProductoContolador {
     @Autowired
     private ElementoServicio elementoServicio;
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/crear")
     public ModelAndView crearProducto(HttpServletRequest request){
         ModelAndView mav= new ModelAndView("crearProductoFlor");
@@ -63,6 +65,7 @@ public class ProductoContolador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/editar/{id}")
     public ModelAndView editarProducto(@PathVariable("id")Long id,HttpServletRequest request,RedirectAttributes attributes){
         ModelAndView mav= new ModelAndView("crearProductoFlor");
@@ -88,6 +91,7 @@ public class ProductoContolador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/guardar")
     public RedirectView crearProducto(@ModelAttribute @Valid Producto producto,BindingResult result, RedirectAttributes attributes){
 
@@ -111,6 +115,7 @@ public class ProductoContolador {
         return redirectView;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/modificar")
     public RedirectView modificarProducto(@ModelAttribute @Valid Producto producto,BindingResult result, RedirectAttributes attributes){
 
@@ -134,12 +139,14 @@ public class ProductoContolador {
         return redirectView;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable("id") Long id){
         productoServicio.habilitarProducto(id);
         return new RedirectView("/producto");
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/eliminar/{id}")
     public RedirectView deshabilitar(@PathVariable("id") Long id){
         elementoServicio.eliminarElementosProducto(id);
@@ -147,6 +154,7 @@ public class ProductoContolador {
         return new RedirectView("/producto");
     }
 
+    @PreAuthorize("hasAnyRole('NUTRICIONISTA','ADMIN')")
     @GetMapping
     public ModelAndView buscarProductos(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                         @RequestParam(value = "size", required = false, defaultValue = "5") int size,
@@ -165,6 +173,7 @@ public class ProductoContolador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('NUTRICIONISTA','ADMIN')")
     @GetMapping(value = "/filtrar")
     public ModelAndView buscarPorTodosCaompos(@RequestParam(value = "busqueda") String busqueda,
                                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -184,6 +193,8 @@ public class ProductoContolador {
         mav.addObject("rutaActual", obtenerRutaActual(request.getRequestURL()+"?busqueda="+busqueda));
         return mav;
     }
+
+    @PreAuthorize("hasAnyRole('NUTRICIONISTA','ADMIN')")
     @GetMapping(value = "/apto")
     public ModelAndView buscarAptoPatologías(@RequestParam(value = "apto") String apto,
                                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -204,6 +215,7 @@ public class ProductoContolador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('NUTRICIONISTA','ADMIN')")
     @GetMapping(value = "/cat")
     public ModelAndView buscarCategoria(@RequestParam(value = "categoria") String categoria,
                                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -230,6 +242,7 @@ public class ProductoContolador {
     @Value("${picture.products.location}")
     public String PRODUCTOS_UPLOADED_FOLDER;
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/imagen/actualizar")
     public void  uploadImage(@RequestParam("id")Long id,@RequestParam("imagen") MultipartFile multipartFile,
                              UriComponentsBuilder componentsBuilder){
@@ -267,7 +280,7 @@ public class ProductoContolador {
     public static String obtenerRutaActual(String ruta) {
 
         String uri = "";
-        System.out.println("ruta: "+ruta);
+
         if(ruta.length() > 29){
             uri = ruta.substring(30);
         }

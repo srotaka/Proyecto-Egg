@@ -232,7 +232,7 @@ public class PrincipalControlador {
                 foto = fotoServicio.actualizarFoto(usuarioCreado.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
             }
             usuarioServicio.crearFoto(foto,usuario.getId());*/
-            mailService.sendWelcomeMail("Bienvenida",nutricionistaCreado.getCredencial().getMail(),nutricionista.getCredencial().getUsername(),nutricionista.getCredencial().getId(),"NUTRICIONISTA");
+            mailService.sendWelcomeMail("Bienvenida",nutricionistaCreado.getCredencial().getMail(),nutricionistaCreado.getCredencial().getUsername(),nutricionistaCreado.getCredencial().getId(),"NUTRICIONISTA");
             //request.login(nutricionista.getCredencial().getMail(), nutricionista.getCredencial().getPassword());
             mav.setViewName("redirect:/");
 
@@ -279,7 +279,7 @@ public class PrincipalControlador {
 
         try {
             Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
-
+            mailService.sendWelcomeMail("Bienvenida",comedorCreado.getCredencial().getMail(),comedorCreado.getCredencial().getUsername(),comedorCreado.getCredencial().getId(),"COMEDOR");
             request.login(comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
             mav.setViewName("redirect:/");
         } catch (ServletException e) {
@@ -289,7 +289,6 @@ public class PrincipalControlador {
             attributes.addFlashAttribute("error", e.getMessage());
             mav.setViewName("redirect:/signup/comedor");
         }
-
 
         return mav;
     }

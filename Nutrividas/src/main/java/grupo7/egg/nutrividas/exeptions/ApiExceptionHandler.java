@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.file.AccessDeniedException;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
@@ -53,7 +54,7 @@ public class ApiExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler({UnauthorizedException.class})
+    @ExceptionHandler({UnauthorizedException.class, AccessDeniedException.class})
     public void unauthorized(){ }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
