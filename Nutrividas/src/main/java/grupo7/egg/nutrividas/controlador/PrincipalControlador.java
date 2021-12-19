@@ -176,7 +176,6 @@ public class PrincipalControlador {
 
             Usuario usuarioCreado =usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
             mailService.sendWelcomeMail("Bienvenida",usuario.getCredencial().getMail(),usuario.getCredencial().getUsername(),usuarioCreado.getCredencial().getId(),"USUARIO");
-            //request.login(usuario.getCredencial().getMail(), usuario.getCredencial().getPassword());
             mav.setViewName("redirect:/");
         } catch (Exception e) {
             attributes.addFlashAttribute("usuario", usuario);
@@ -226,15 +225,7 @@ public class PrincipalControlador {
                     nutricionista.getTelefono(), nutricionista.getCredencial().getMail(),
                     nutricionista.getCredencial().getUsername(),nutricionista.getCredencial().getPassword());
 
-            /*Foto foto;
-            if(usuario.getFoto() == null){
-                foto = fotoServicio.crearFoto(USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),usuario.getFoto());
-            }else{
-                foto = fotoServicio.actualizarFoto(usuarioCreado.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
-            }
-            usuarioServicio.crearFoto(foto,usuario.getId());*/
             mailService.sendWelcomeMail("Bienvenida",nutricionistaCreado.getCredencial().getMail(),nutricionistaCreado.getCredencial().getUsername(),nutricionistaCreado.getCredencial().getId(),"NUTRICIONISTA");
-            //request.login(nutricionista.getCredencial().getMail(), nutricionista.getCredencial().getPassword());
             mav.setViewName("redirect:/");
 
         } catch (Exception e) {
@@ -281,10 +272,7 @@ public class PrincipalControlador {
         try {
             Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
             mailService.sendWelcomeMail("Bienvenida",comedorCreado.getCredencial().getMail(),comedorCreado.getCredencial().getUsername(),comedorCreado.getCredencial().getId(),"COMEDOR");
-            request.login(comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
             mav.setViewName("redirect:/");
-        } catch (ServletException e) {
-            attributes.addFlashAttribute("error", "Error al realizar auto-login");
         } catch (Exception e) {
             attributes.addFlashAttribute("comedor", comedor);
             attributes.addFlashAttribute("error", e.getMessage());
