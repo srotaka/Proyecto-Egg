@@ -65,6 +65,7 @@
 						<ul>
 							<li><a th:href="@{/comedor}">Comedores Registrados</a>
 							<li><a th:href="@{/producto}">Lista de Productos</a>
+							<li><a th:href="@{/canasta}">Lista de Canastas</a>
 
 						</ul>
 					</li>
@@ -85,18 +86,15 @@
 						<ul>
 							<a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
 							<li class="dropdown-divider"></li>
-
-							<li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar perfil</a>
-							</li>
+							<li><a class="dropdown-item" th:href="@{/modificar/${session.usernameSession}}">Editar
+									perfil</a></li>
 							<li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
 						</ul>
 					</li>
 					<!-- Fin Botón Usuario si está loggeado -->
 				</ul>
 			</nav><!-- .nav-menu -->
-			<!-- Botón Inicio Sesión si Usuario no está loggeado -->
-			<a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a>
-			<!-- End Botón Inicio Sesión -->
+
 		</div>
 	</header><!-- End Header -->
 
@@ -104,7 +102,7 @@
 
 	<section class="titulo" id="titulo">
 		<div class="texto-comedores">
-			<p> Comedores que alimentan</p>
+			<p> Registrar tarjeta para alimentar</p>
 			<p>
 				<span class="word color">sonrisas</span>
 			</p>
@@ -128,7 +126,7 @@
 				<div class="logo-marca" id="logo-marca">
 					<!-- <img src="../static/img/visa.png" alt=""> -->
 				</div>
-				<img  th:src="@{/img/chip-tarjeta.png}" class="chip" alt="" id="chip">
+				<img th:src="@{/img/chip-tarjeta.png}" class="chip" alt="" id="chip">
 				<div class="datos">
 					<div class="grupo" id="numero">
 						<p class="label">Número Tarjeta</p> <br>
@@ -144,6 +142,10 @@
 							<p class="label">Fecha Exp.</p> <br>
 							<p class="expiracion"><span class="mes">MM</span> / <span class="year">AA</span></p>
 						</div>
+						<div class="grupo" id="ccv">
+							<p class="label">CCV</p> <br>
+								<p class="ccv"><span class="ccv"></span></p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -153,16 +155,15 @@
 				<div class="datos">
 					<div class="grupo" id="firma">
 						<p class="label">Firma</p>
-						<div class="firma">
-							<p></p>
-						</div>
+						<div class="firma"><p></p></div>
 					</div>
 					<div class="grupo" id="ccv">
 						<p class="label">CCV</p>
 						<p class="ccv"></p>
 					</div>
 				</div>
-				<p class="leyenda">En caso de robo o pérdida, se agradecerá devolverla a Prisma Medios de Pago S.A., Lavardén 247, BS. AS.</p>
+				<p class="leyenda">En caso de robo o pérdida, se agradecerá devolverla a Prisma Medios de Pago S.A.,
+					Lavardén 247, BS. AS.</p>
 				<a href="#" class="link-banco">www.tubanco.com</a>
 			</div>
 		</section>
@@ -229,15 +230,15 @@
 	</footer><!-- End Footer -->
 
 	<!-- Vendor JS Files -->
-    <script th:src="@{/jquery/jquery.min.js}"></script>
-    <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <script th:src="@{/jquery.easing/jquery.easing.min.js}"></script>
-    <script th:src="@{/php-email-form/validate.js}"></script>
-    <script th:src="@{/owl.carousel/owl.carousel.min.js}"></script>
-    <script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
-    <script th:src="@{/venobox/venobox.min.js}"></script>
-    <script th:src="@{https://unpkg.com/boxicons@2.1.1/dist/boxicons.js}"></script>
-    <script th:src="@{/aos/aos.js}"></script>
+	<script th:src="@{/jquery/jquery.min.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/jquery.easing/jquery.easing.min.js}"></script>
+	<script th:src="@{/php-email-form/validate.js}"></script>
+	<script th:src="@{/owl.carousel/owl.carousel.min.js}"></script>
+	<script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
+	<script th:src="@{/venobox/venobox.min.js}"></script>
+	<script th:src="@{https://unpkg.com/boxicons@2.1.1/dist/boxicons.js}"></script>
+	<script th:src="@{/aos/aos.js}"></script>
 
 
 	<!-- Template Main JS File -->

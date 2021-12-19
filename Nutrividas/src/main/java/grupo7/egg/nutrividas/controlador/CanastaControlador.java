@@ -74,7 +74,7 @@ public class CanastaControlador {
     @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @GetMapping("/crear")
     public ModelAndView crear(HttpServletRequest request, HttpSession session){
-        ModelAndView mav = new ModelAndView("crearCanasta2");
+        ModelAndView mav = new ModelAndView("crearCanasta");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -112,7 +112,7 @@ public class CanastaControlador {
             mav.addObject("canasta", canasta);
             mav.addObject("titulo", "Crear Canasta");
             mav.addObject("accion", "guardar");
-            mav.setViewName("crearCanasta2");
+            mav.setViewName("crearCanasta");
             return mav;
         }
 

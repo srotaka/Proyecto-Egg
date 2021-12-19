@@ -138,6 +138,25 @@ public class PrincipalControlador {
         return modelAndView;
     }
 
+    @GetMapping(value = "/signup/usuario")
+    public ModelAndView signup(HttpServletRequest request, Principal principal){
+        ModelAndView mav = new ModelAndView("signup");
+        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (principal != null) {
+            mav.setViewName("redirect:/ ");
+        }
+
+        if (flashMap != null) {
+            mav.addObject("error", flashMap.get("error"));
+            mav.addObject("usuario", flashMap.get("usuario"));
+        } else {
+            mav.addObject("usuario", new Usuario());
+        }
+
+        return mav;
+    }
+
     @Value("${picture.users.location}")
     public String USUARIOS_UPLOADED_FOLDER;
 
@@ -272,78 +291,6 @@ public class PrincipalControlador {
             mav.setViewName("redirect:/signup/comedor");
         }
 
-        return mav;
-    }
-
-
-    @GetMapping(value = "/modificar/{username}")
-    public ModelAndView editarPerfil(@PathVariable String username, HttpServletRequest request, RedirectAttributes attributes){
-
-        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
-        ModelAndView mav;
-        Credencial credencial = credencialServicio.buscarCredencialPorUsername(username);
-        Long id = credencial.getId();
-
-        if(usuarioServicio.buscarUsuarioPorCredencial(id) != null){
-            mav = new ModelAndView("editarUsuario");
-            mav.addObject("usuario", usuarioServicio.buscarUsuarioPorCredencial(id));
-            return modificarUsuario(id, mav, flashMap, attributes);
-
-            }else if(comedorServicio.buscarComedorPorCredencial(id) != null){
-                mav = new ModelAndView("editarComedores");
-                mav.addObject("comedor", comedorServicio.buscarComedorPorCredencial(id));
-                mav.addObject("provincias", provinciaServicio.obtenerProvincias());
-                return modificarComedor(id, mav, flashMap, attributes);
-                }else{
-                    mav = new ModelAndView("editarNutricionista");
-                    mav.addObject("usuario", nutricionistaServicio.buscarNutricionistaPorCredencial(id));
-                    return modificarNutricionista(id, mav, flashMap, attributes);
-                }
-
-    }
-
-    public ModelAndView modificarUsuario(Long id, ModelAndView mav, Map<String, ?> flashMap, RedirectAttributes attributes){
-        try {
-            if(flashMap != null){
-                mav.addObject("error", flashMap.get("error"));
-            }else {
-                mav.addObject("usuario", usuarioServicio.buscarUsuarioPorCredencial(id));
-            }
-            mav.addObject("title", "Editar Usuario");
-        }catch (Exception e) {
-            attributes.addFlashAttribute("error", e.getMessage());
-            mav.setViewName("redirect:/");
-        }
-        return mav;
-    }
-
-    public ModelAndView modificarComedor(Long id, ModelAndView mav, Map<String, ?> flashMap, RedirectAttributes attributes){
-        try {
-            if(flashMap != null){
-                mav.addObject("error", flashMap.get("error"));
-            }else {
-                mav.addObject("comedor", comedorServicio.buscarComedorPorCredencial(id));
-            }
-            mav.addObject("title", "Editar Comedor");
-        }catch (Exception e) {
-            attributes.addFlashAttribute("error", e.getMessage());
-            mav.setViewName("redirect:/");
-        }
-        return mav;
-    }
-
-    public ModelAndView modificarNutricionista(Long id, ModelAndView mav, Map<String, ?> flashMap, RedirectAttributes attributes){
-        try {
-            if(flashMap != null){
-                mav.addObject("error", flashMap.get("error"));
-            }else {
-                mav.addObject("nutricionista", nutricionistaServicio.buscarNutricionistaPorCredencial(id));
-            }
-            mav.addObject("title", "Editar Nutricionista");
-        }catch (Exception e) {
-            attributes.addFlashAttribute("error", e.getMessage());
-            mav.setViewName("redirect:/");
-        }
         return mav;
     }
 

@@ -68,7 +68,7 @@
           </li>
           <li class="drop-down"><a href="#">Registrar</a>
             <ul>
-              <li><a th:href="@{/comedor/crear}">Nuevo Comedor</a>
+              <li><a th:href="@{/signup/comedor}">Nuevo Comedor</a>
               <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
               <li><a th:href="@{/canasta/crear}">Nueva Canasta</a>
             </ul>
@@ -83,18 +83,21 @@
             <ul>
               <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
               <li class="dropdown-divider"></li>
-
-              <li><a class="dropdown-item" th:href="@{/modificar/__${session.id}__}">Editar perfil</a>
-              </li>
+              <li><a class="dropdown-item" th:href="@{/modificar/${session.usernameSession}}">Editar perfil</a></li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
             </ul>
           </li>-->
           <!-- Fin Botón Usuario si está loggeado -->
+
+           <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+           <li>
+            <button th:onclick="location.href='/login'" id="boton-guardar" sec:authorize="isAnonymous()" > Iniciar Sesión
+            </a></button>
+          </li>
+          <!-- Fin botón para iniciar sesión -->
         </ul>
       </nav><!-- .nav-menu -->
-      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
-      <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a>
-      <!-- End Botón Inicio Sesión -->
+     
     </div>
   </header><!-- End Header -->
 
@@ -110,99 +113,101 @@
 
   <!-- ======= CANASTAS ======= -->
   <main>
-
-    <div class="basket-labels">
-      <ul>
-        <li class="item item-heading">Canasta</li>
-        <li class="price">Precio</li>
-        <li class="quantity">Cantidad</li>
-        <li class="subtotal">Subtotal</li>
-      </ul>
-    </div>
-
-    <form method="POST" action="/compra/guardar" th:object="${compra}">
     <div class="basket">
+      <div class="basket-labels">
+        <ul>
+          <li class="item item-heading">Canasta</li>
+          <li class="price">Precio</li>
+          <li class="quantity">Cantidad</li>
+          <li class="subtotal">Subtotal</li>
+        </ul>
+      </div>
+
+      <form method="POST" action="/compra/guardar" th:object="${compra}">
+        <!-- <div class="basket"> -->
 
 
-      <!-- PRODUCTO 4 -->
-      <div class="basket-product" th:each="detalleCompra, rowStat : ${compra.detalleCompras}">
-        <div class="item">
-          <div class="product-image">
-            <img th:src="@{/img/food-basket04.jpg}" alt="Canasta" class="product-frame">
-          </div>
-          <div class="product-details">
-            <h1><span th:text="${detalleCompra.canasta.descripcion}"></span></h1>
-            <h1><span  class="item-quantity"></span></h1>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal"
-              th:attr="data-target='#customerModel'+${detalleCompra.canasta.id}"
-              th:onclick="'javascript:verModal(' + ${detalleCompra.canasta.id} + ')'">
-              Detalle de productos
-            </button>
-            <!-- Modal -->
-            <div class="modal fade" th:id="${detalleCompra.canasta.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
-              aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="modal-productos">Productos</h5>
-                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <!-- Tabla de productos -->
-                    <div class="container mt-3">
-                      <p>Detalle de productos de la canasta</p>
-                      <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th></th>
-                            <th>Cantidad</th>
-                            <th>Nombre</th>
-                            <th>Marca</th>
-                            <th>Precio</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr th:each="elemento, step : ${detalleCompra.canasta.elementos}">
-                            <th th:if="${elemento.producto.foto == null}" width="30px" heigth="25px" class="text-center"
-                              th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
+        <!-- PRODUCTO 4 -->
+        <div class="basket-product" th:each="detalleCompra, rowStat : ${compra.detalleCompras}">
+          <div class="item">
+            <div class="product-image">
+              <img th:src="@{/img/food-basket04.jpg}" alt="Canasta" class="product-frame">
+            </div>
+            <div class="product-details">
+              <h1><span th:text="${detalleCompra.canasta.descripcion}"></span></h1>
+              <h1><span class="item-quantity"></span></h1>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-modal-trigger" data-bs-toggle="modal"
+                th:attr="data-target='#customerModel'+${detalleCompra.canasta.id}"
+                th:onclick="'javascript:verModal(' + ${detalleCompra.canasta.id} + ')'">
+                Detalle de productos
+              </button>
+              <!-- Modal -->
+              <div class="modal fade" th:id="${detalleCompra.canasta.id}" tabindex="-1"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modal-productos">Productos</h5>
+                      <button type="button" class="btn-close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <!-- Tabla de productos -->
+                      <div class="container mt-3">
+                        <p>Detalle de productos de la canasta</p>
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>Cantidad</th>
+                              <th>Nombre</th>
+                              <th>Marca</th>
+                              <th>Precio</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr th:each="elemento, step : ${detalleCompra.canasta.elementos}">
+                              <th th:if="${elemento.producto.foto == null}" width="30px" heigth="25px"
+                                class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
                                 background-position: center;background-size: cover;'">
-                            </th>
-                            <th th:unless="${elemento.producto.foto == null}" width="40px" heigth="25px"
-                              class="text-center" th:style="'z-index: 100
+                              </th>
+                              <th th:unless="${elemento.producto.foto == null}" width="40px" heigth="25px"
+                                class="text-center" th:style="'z-index: 100
                                 ;background-image:url(http://localhost:8080/fotos/'+${elemento.producto.foto.id}+') !important;background-repeat: no-repeat;
                                  background-position: center;background-size: cover;'">
-                            <td th:text="${elemento.cantidadNecesaria}"></td>
-                            <td th:text="${elemento.producto.nombre}"></td>
-                            <td th:text="${elemento.producto.marca.nombre}"></td>
-                            <td th:text="${elemento.producto.precio}" id="precio-modal"></td>
-                          </tr>
-                        </tbody>
-                      </table>
+                              <td th:text="${elemento.cantidadNecesaria}"></td>
+                              <td th:text="${elemento.producto.nombre}"></td>
+                              <td th:text="${elemento.producto.marca.nombre}"></td>
+                              <td th:text="${#numbers.formatDecimal(elemento.producto.precio,0,2)}" id="precio-modal">
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- Fin Tabla de productos -->
                     </div>
-                    <!-- Fin Tabla de productos -->
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-modal-trigger" data-bs-dismiss="modal">Cerrar</button>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-modal-trigger" data-bs-dismiss="modal">Cerrar</button>
 
+                    </div>
                   </div>
                 </div>
               </div>
+              <!-- Fin modal detalles productos -->
             </div>
-            <!-- Fin modal detalles productos -->
           </div>
-        </div>
-        <div th:text="${detalleCompra.canasta.precio}" class="price"></div>
-        <div class="quantity">
-          <input type="hidden"  th:field="*{detalleCompras[__${rowStat.index}__].canasta}">
-          <input type="number" th:field="*{detalleCompras[__${rowStat.index}__].cantidad}"  value="${detalleCompras.cantidad}" min="0" class="quantity-field">
-        </div>
-        <div class="subtotal">0</div>
+          <div th:text="${#numbers.formatDecimal(detalleCompra.canasta.precio,0,2)}" class="price"></div>
+          <div class="quantity">
+            <input type="hidden" th:field="*{detalleCompras[__${rowStat.index}__].canasta}">
+            <input type="number" th:field="*{detalleCompras[__${rowStat.index}__].cantidad}"
+              value="${detalleCompras.cantidad}" min="0" class="quantity-field">
+          </div>
+          <div class="subtotal">0</div>
 
-        <!-- <div class="remove">
+          <!-- <div class="remove">
           <button>Eliminar</button>
         </div> -->
-      </div>
+        </div>
     </div>
     </div>
 
@@ -216,20 +221,20 @@
           <div class="subtotal-value final-value" id="basket-subtotal">0</div>
         </div>
         <div class="summary-delivery">
-          <div class="summary-total-items"> Canastas Seleccionados: <span class="total-items"></span></div>
+          <div class="summary-total-items"> Canastas Seleccionadas: <span class="total-items"></span></div>
         </div>
         <div class="summary-total">
           <div class="total-title">Total</div>
           <div class="total-value final-value" id="basket-total">0</div>
         </div>
         <div class="summary-checkout">
+
           <button type="submit" id="finalizarCompra" class="boton-guardar"> FINALIZAR COMPRA
             </a></button>
-          
         </div>
       </div>
     </aside>
-   </form>
+    </form>
   </main>
   <!-- End RESUMEN COMPRA --> <br><br>
 

@@ -129,7 +129,7 @@
   
   .card__heading {
     color: var(--text-lighter);
-    font-size: 30px;
+    font-size: 18px;
     text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
     line-height: 1.2;
     text-align: center !important;
@@ -150,13 +150,13 @@
   /* Por debajo de 700px */
   @media screen and (max-width: 700px){
     .card__heading, .card__heading2{
-    font-size:20px;
+    font-size:10px;
     }
   }
     /* Por debajo de 400px */
     @media screen and (max-width: 400px){
     .card__heading, .card__heading2{
-    font-size:20px;
+    font-size:10px;
     } 
     }
   
