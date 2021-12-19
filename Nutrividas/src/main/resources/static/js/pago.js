@@ -18,11 +18,11 @@ const mostrarFrente = () => {
 }
 
 // * Rotacion de la tarjeta
-tarjeta.addEventListener('click', () => {
-	tarjeta.classList.toggle('active');
-    let chip = document.getElementById("chip");
-    chip.setAttribute("style", "display: none;")
-});
+//tarjeta.addEventListener('click', () => {
+//	tarjeta.classList.toggle('active');
+  //  let chip = document.getElementById("chip");
+    //chip.setAttribute("style", "display: none;")
+//});
 
 // * Boton de abrir formulario
 btnAbrirFormulario.addEventListener('click', () => {
@@ -125,7 +125,7 @@ formulario.selectYear.addEventListener('change', (e) => {
 // * CCV
 formulario.inputCCV.addEventListener('keyup', () => {
 	if(!tarjeta.classList.contains('active')){
-		tarjeta.classList.toggle('active');
+		//tarjeta.classList.toggle('active');
 	}
 
 	formulario.inputCCV.value = formulario.inputCCV.value
