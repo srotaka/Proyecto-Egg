@@ -77,9 +77,6 @@ public class ComedorControlador {
         return mav;
     }
 
-<<<<<<< HEAD
-=======
-   
     @GetMapping(value = "/signup")
     public ModelAndView signupComedor(HttpServletRequest request, Principal principal){
 
@@ -131,7 +128,6 @@ public class ComedorControlador {
     }
 
 
->>>>>>> silvia
     @PreAuthorize("hasAnyRole('ADMIN','COMEDOR')")
     @PostMapping("/modificar")
     public ModelAndView modificar(@Valid @ModelAttribute Comedor comedor, BindingResult result, RedirectAttributes attributes) {

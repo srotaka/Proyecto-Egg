@@ -352,7 +352,6 @@ h1, h2, h3, h4, h5, h6 {
 .mobile-nav-active .mobile-nav-toggle i {
   color: #fff;
 }
-
 /*--------------------------------------------------------------
 # Hero Section
 --------------------------------------------------------------*/
@@ -432,6 +431,177 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 36px;
   }
   #hero h2 {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 30px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Hero2 Section
+--------------------------------------------------------------*/
+#hero2 {
+  width: 100%;
+  height: calc(100vh - 72px);
+  background: url("../img/children25.jpg");
+  background-size: cover;
+  position: relative;
+  padding:0;
+  margin-top: 30px;
+}
+
+#hero2:before {
+  content: "";
+  background: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#hero2 .container {
+  z-index: 2;
+}
+
+#hero2 h1 {
+  margin: 0 0 10px 0;
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 56px;
+  color: #fff;
+}
+
+#hero2 h2 {
+  color: #eaeeed;
+  margin-bottom: 35px;
+  font-size: 35px;
+  font-family: "Pacifico", cursive;
+}
+
+#hero2 .btn-get-started {
+  font-family: "Newsreader", serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 8px 28px;
+  border-radius: 4px;
+  transition: 0.5s;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+#hero2 .btn-get-started:hover {
+  border-color: #1bac91;
+  background: #1bac91;
+}
+
+@media (min-width: 1024px) {
+  #hero2 {
+    background-attachment: fixed;
+  }
+}
+
+@media (max-width: 992px) {
+  #hero2 {
+    margin-top: 60px;
+    height: calc(100vh - 60px);
+  }
+}
+
+@media (max-width: 768px) {
+  #hero2 h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  #hero2 h2 {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 30px;
+  }
+}
+
+
+/*--------------------------------------------------------------
+# Hero3 Section
+--------------------------------------------------------------*/
+#hero3 {
+  width: 100%;
+  height: calc(100vh - 72px);
+  background: url("../img/children26.jpg");
+  background-size: cover;
+  position: relative;
+  padding:0;
+  margin-top: 30px;
+}
+
+#hero3:before {
+  content: "";
+  background: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#hero3 .container {
+  z-index: 2;
+}
+
+#hero3 h1 {
+  margin: 0 0 10px 0;
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 56px;
+  color: #fff;
+}
+
+#hero3 h2 {
+  color: #eaeeed;
+  margin-bottom: 35px;
+  font-size: 35px;
+  font-family: "Pacifico", cursive;
+}
+
+#hero3 .btn-get-started {
+  font-family: "Newsreader", serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 8px 28px;
+  border-radius: 4px;
+  transition: 0.5s;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+#hero3 .btn-get-started:hover {
+  border-color: #1bac91;
+  background: #1bac91;
+}
+
+@media (min-width: 1024px) {
+  #hero3 {
+    background-attachment: fixed;
+  }
+}
+
+@media (max-width: 992px) {
+  #hero3 {
+    margin-top: 60px;
+    height: calc(100vh - 60px);
+  }
+}
+
+@media (max-width: 768px) {
+  #hero3 h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  #hero3 h2 {
     font-size: 18px;
     line-height: 24px;
     margin-bottom: 30px;
@@ -1155,3 +1325,22 @@ width: fit-content; height: fit-content;}
 #link-guardar:hover {
   text-decoration: underline;
 } 
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+
+#footer2 .copyright2 {
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  position: fixed;
+  height: 50px;
+  background-color: #1d1d1d;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+  padding-top: 15px;
+  
+}

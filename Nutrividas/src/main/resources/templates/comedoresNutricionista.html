@@ -60,9 +60,15 @@
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
                     <li><a th:href="@{/}">Inicio</a></li>
+                    <li class="drop-down"><a href="#">Nutricionistas</a>
+                        <ul>
+                          <li><a th:href="@{/nutricionista/asignarComedor/__${session.usernameSession}__}">Postularse a Comedor</a></li>
+                        </ul>
+                      </li>
 
                     <li class="drop-down"><a href="#">Mostrar</a>
                         <ul>
+                            <li><a th:href="@{/comedor}">Lista de Comedores</a>
                             <li><a th:href="@{/producto}">Lista de Productos</a>
                             <li><a th:href="@{/canasta}">Lista de Canastas</a>
                         </ul>
@@ -118,23 +124,20 @@
         <div th:if="${comedores.isEmpty()}">
             <h5>Todavía no tiene Comedores a cargo</h5>
         </div>
-
-        <div class="container" id="tabla-comedores">
+           <div class="container" id="tabla-comedores">
             <div class="col col-12">
-
-
                 <table th:unless="${comedores.isEmpty()}"
                     class="table table-responsive table-bordered table-striped">
-                    <thead class="table-secondary text-center">
+                    <thead class="table-secondary text-center" style="background-color: white;">
                         <tr>
                             <th scope="row">ID</th>
                             <th scope="row">Nombre</th>
-                            <th scope="row">Telefono</th>
+                            <th scope="row">Teléfono</th>
                             <th scope="row">Calle</th>
-                            <th scope="row">Numero</th>
+                            <th scope="row">Número</th>
                             <th scope="row">Localidad</th>
                             <th scope="row">Provincia</th>
-                            <th scope="row">Cantidad de Personas</th>
+                            <th scope="row">Cantidad Personas</th>
                             <th scope="row">Baja</th>
                             <th scope="row">Canastas</th>
                         </tr>
@@ -166,6 +169,7 @@
                     </tbody>
                 </table>
             </div>
+        </div>
     </section> <!-- End Comedores Cards -->
 
 
