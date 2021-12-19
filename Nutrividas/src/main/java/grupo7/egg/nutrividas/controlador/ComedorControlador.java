@@ -77,8 +77,7 @@ public class ComedorControlador {
         return mav;
     }
 
-
-    @PreAuthorize("hasAnyRole('ADMIN')")
+   
     @GetMapping(value = "/signup")
     public ModelAndView signupComedor(HttpServletRequest request, Principal principal){
 

@@ -28,7 +28,7 @@
 
     <!-- Template Main CSS File -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
-    <link th:href="@{/css/comedoresNutricionistas.css}" rel="stylesheet">
+    <link th:href="@{/css/comedores.css}" rel="stylesheet">
 
 
 </head>
@@ -69,7 +69,7 @@
                     </li>
                     <li class="drop-down"><a href="#">Registrar</a>
                         <ul>
-                            <li><a th:href="@{/signup/comedor}">Nuevo Comedor</a>
+                            <li><a th:href="@{/comedor/crear}">Nuevo Comedor</a>
                             <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
                             <li><a th:href="@{/canasta/crear}">Nueva Canasta</a>
                         </ul>
@@ -92,11 +92,15 @@
                         </ul>
                     </li>
                     <!-- Fin Botón Usuario si está loggeado -->
+                    <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+                    <li>
+                        <button th:onclick="location.href='/login'" id="boton-guardar" sec:authorize="isAnonymous()">
+                            Iniciar Sesión
+                            </a></button>
+                    </li>
+                    <!-- Fin botón para iniciar sesión -->
                 </ul>
             </nav><!-- .nav-menu -->
-            <!-- Botón Inicio Sesión si Usuario no está loggeado -->
-            <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a>
-            <!-- End Botón Inicio Sesión -->
         </div>
     </header><!-- End Header -->
 
@@ -112,62 +116,56 @@
     </section><!-- End TÍTULO -->
 
     <!-- ======= COMEDORES TABLE ======= -->
-    <section>
-
+    <section class="hero-section">
 
         <div th:if="${comedores.isEmpty()}">
             <h5>Todavía no tiene Comedores a cargo</h5>
         </div>
+        <div class="table-responsive" th:unless="${comedores.isEmpty()}">
 
-        <div class="container" id="tabla-comedores">
-            <div class="col col-12">
+            <thead>
+                <tr>
+                    <th class="col-md-2 px-md-2" scope="col">ID</th>
+                    <th class="col-md-3 px-md-2" scope="col">Nombre</th>
+                    <th class="col-md-3 px-md-2" scope="col">Telefono</th>
+                    <th class="col-md-3 px-md-2" scope="col">Calle</th>
+                    <th class="col-md-3 px-md-2" scope="col">Numero</th>
+                    <th class="col-md-3 px-md-2" scope="col">Localidad</th>
+                    <th class="col-md-3 px-md-2" scope="col">Provincia</th>
+                    <th class="col-md-3 px-md-2" scope="col">Cantidad de Personas</th>
+                    <th class="col-md-3 px-md-2" scope="col">Baja</th>
+                    <th class="col-md-3 px-md-2" scope="col">Canastas</th>
+                </tr>
+            </thead>
 
+            <tbody id="myTable" th:each="comedor : ${comedores.page}">
+               <tr th:each="comedor : ${comedores}">
+                <td class="col-md-2 px-md-1" th:text="${comedor.id}"></td>
+                <td class="col-md-3 px-md-2" th:text="${comedor.nombre}"></td>
+                <td class="col-md-3 px-md-2" th:text="${comedor.telefono}"></td>
+                <td class="col-md-2 px-md-2" th:text="${comedor.direccion.calle}"></td>
+                <td class="col-md-3 px-md-2" th:text="${comedor.direccion.numero}"></td>
+                <td class="col-md-3 px-md-2" th:text="${comedor.direccion.localidad}"></td>
+                <td class="col-md-2 px-md-2" th:text="${comedor.direccion.provincia}"></td>
+                <td class="col-md-3 px-md-2" th:text="${comedor.cantidadDePersonas}"></td>
+                <td class="col-md-3 px-md-2">
+                    <form method="post" th:action="@{/nutricionista/desasignar/__${comedor.id}__}">
+                        <button class="btn btn-danger btn-sm" type="submit">Desasignar</button>
+                    </form>
+                </td>
+                <td class="text-center">
+                    <a th:href="@{/canasta/__${comedor.id}__}">
+                        <box-icon name='basket' type='solid' animation='tada-hover'
+                                  color='#1bac91'>
+                        </box-icon>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-                <table th:unless="${comedores.isEmpty()}"
-                    class="table table-responsive table-bordered table-striped">
-                    <thead class="table-secondary text-center">
-                        <tr>
-                            <th scope="row">ID</th>
-                            <th scope="row">Nombre</th>
-                            <th scope="row">Telefono</th>
-                            <th scope="row">Calle</th>
-                            <th scope="row">Numero</th>
-                            <th scope="row">Localidad</th>
-                            <th scope="row">Provincia</th>
-                            <th scope="row">Cantidad de Personas</th>
-                            <th scope="row">Baja</th>
-                            <th scope="row">Canastas</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="myTable" th:each="comedor : ${comedores}">
-                        <tr>
-                            <td class="col-md-2 px-md-1" th:text="${comedor.id}"></td>
-                            <td class="col-md-3 px-md-2" th:text="${comedor.nombre}"></td>
-                            <td class="col-md-3 px-md-2" th:text="${comedor.telefono}"></td>
-                            <td class="col-md-2 px-md-2" th:text="${comedor.direccion.calle}"></td>
-                            <td class="col-md-3 px-md-2" th:text="${comedor.direccion.numero}"></td>
-                            <td class="col-md-3 px-md-2" th:text="${comedor.direccion.localidad}"></td>
-                            <td class="col-md-2 px-md-2" th:text="${comedor.direccion.provincia}"></td>
-                            <td class="col-md-3 px-md-2" th:text="${comedor.cantidadDePersonas}"></td>
-                            <td class="col-md-3 px-md-2">
-                                <form method="post" th:action="@{/nutricionista/desasignar/__${comedor.id}__}">
-                                    <button class="btn btn-danger btn-sm" type="submit">Desasignar</button>
-                                </form>
-                            </td>
-                            <td class="text-center">
-                                <a th:href="@{/canasta/__${comedor.id}__}">
-                                    <box-icon name='basket' type='solid' animation='tada-hover'
-                                              color='#1bac91'>
-                                    </box-icon>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
     </section> <!-- End Comedores Cards -->
-
+   
 
     <!-- ======= Footer ======= -->
     <footer id="footer2">
@@ -176,6 +174,8 @@
             reservados
         </div>
     </footer><!-- End Footer -->
+
+
 
     <!-- ======= BACK TO TOP ======= -->
     <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
@@ -197,7 +197,7 @@
 
     <!-- JS PARA TITULO -->
     <script th:src="@{/js/titulo.js}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js}"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 
