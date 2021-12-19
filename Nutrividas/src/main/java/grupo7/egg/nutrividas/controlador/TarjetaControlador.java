@@ -65,7 +65,7 @@ public class TarjetaControlador {
         }catch(Exception e){
             attributes.addFlashAttribute("tarjeta", tarjeta);
             attributes.addFlashAttribute("error", e.getMessage());
-            redirectview.setUrl("/tarjeta/editar/" + tarjeta.getId()); //CONFIRMAR URL            
+            redirectview.setUrl("/tarjeta/editar/" + tarjeta.getId());           
         }
         
         return redirectview;
