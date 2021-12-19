@@ -2,15 +2,14 @@ package grupo7.egg.nutrividas.exeptions;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
-import java.nio.file.AccessDeniedException;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
@@ -55,7 +54,9 @@ public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler({UnauthorizedException.class, AccessDeniedException.class})
-    public void unauthorized(){ }
+    public ErrorMessage unauthorized(HttpServletRequest request,Exception exception){
+        return new ErrorMessage(exception,request.getRequestURI());
+    }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({Exception.class})
