@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TarjetaRepository extends JpaRepository<Tarjeta,Long> {
@@ -34,4 +35,7 @@ public interface TarjetaRepository extends JpaRepository<Tarjeta,Long> {
     @Modifying
     @Query("UPDATE Tarjeta t SET t.alta = false WHERE t.id = :id")
     Tarjeta deshabilitarTarjeta(@Param("id") Long id);
+
+    boolean existsByNumeroTarjetaAndUsuario(Long numeroTarjeta, Usuario usuario);
+    Optional<Tarjeta> findByNumeroTarjetaAndUsuario(Long numeroTarjeta, Usuario usuario);
 }

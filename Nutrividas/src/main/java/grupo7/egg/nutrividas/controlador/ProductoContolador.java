@@ -5,12 +5,15 @@ import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.exeptions.InvalidDataException;
+import grupo7.egg.nutrividas.servicios.ElementoServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.MarcaServicio;
 import grupo7.egg.nutrividas.servicios.ProductoServicio;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -40,9 +44,13 @@ public class ProductoContolador {
     @Autowired
     private MarcaServicio marcaServicio;
 
+    @Autowired
+    private ElementoServicio elementoServicio;
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/crear")
     public ModelAndView crearProducto(HttpServletRequest request){
-        ModelAndView mav= new ModelAndView("crearProductoFlor");
+        ModelAndView mav= new ModelAndView("crearProducto");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -57,9 +65,10 @@ public class ProductoContolador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/editar/{id}")
     public ModelAndView editarProducto(@PathVariable("id")Long id,HttpServletRequest request,RedirectAttributes attributes){
-        ModelAndView mav= new ModelAndView("crearProductoFlor");
+        ModelAndView mav= new ModelAndView("crearProducto");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         try{
@@ -82,6 +91,7 @@ public class ProductoContolador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/guardar")
     public RedirectView crearProducto(@ModelAttribute @Valid Producto producto,BindingResult result, RedirectAttributes attributes){
 
@@ -105,6 +115,7 @@ public class ProductoContolador {
         return redirectView;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/modificar")
     public RedirectView modificarProducto(@ModelAttribute @Valid Producto producto,BindingResult result, RedirectAttributes attributes){
 
@@ -128,25 +139,29 @@ public class ProductoContolador {
         return redirectView;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable("id") Long id){
         productoServicio.habilitarProducto(id);
-        return new RedirectView("/productosSil");
+        return new RedirectView("/producto");
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/eliminar/{id}")
     public RedirectView deshabilitar(@PathVariable("id") Long id){
+        elementoServicio.eliminarElementosProducto(id);
         productoServicio.deshabilitarProducto(id);
-        return new RedirectView("/productosSil");
+        return new RedirectView("/producto");
     }
 
+    @PreAuthorize("hasAnyRole('NUTRICIONISTA','ADMIN')")
     @GetMapping
     public ModelAndView buscarProductos(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                         @RequestParam(value = "size", required = false, defaultValue = "5") int size,
                                         @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                                     HttpServletRequest request) {
 
-        ModelAndView mav = new ModelAndView("productosSil");
+        ModelAndView mav = new ModelAndView("productos");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -158,6 +173,7 @@ public class ProductoContolador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('NUTRICIONISTA','ADMIN')")
     @GetMapping(value = "/filtrar")
     public ModelAndView buscarPorTodosCaompos(@RequestParam(value = "busqueda") String busqueda,
                                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -165,7 +181,7 @@ public class ProductoContolador {
                                            @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                               HttpServletRequest request){
 
-        ModelAndView mav = new ModelAndView("productosSil");
+        ModelAndView mav = new ModelAndView("productos");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -177,6 +193,8 @@ public class ProductoContolador {
         mav.addObject("rutaActual", obtenerRutaActual(request.getRequestURL()+"?busqueda="+busqueda));
         return mav;
     }
+
+    @PreAuthorize("hasAnyRole('NUTRICIONISTA','ADMIN')")
     @GetMapping(value = "/apto")
     public ModelAndView buscarAptoPatologías(@RequestParam(value = "apto") String apto,
                                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -184,7 +202,7 @@ public class ProductoContolador {
                                               @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                               HttpServletRequest request){
 
-        ModelAndView mav = new ModelAndView("productosFlor");
+        ModelAndView mav = new ModelAndView("productos");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -197,6 +215,7 @@ public class ProductoContolador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('NUTRICIONISTA','ADMIN')")
     @GetMapping(value = "/cat")
     public ModelAndView buscarCategoria(@RequestParam(value = "categoria") String categoria,
                                            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -204,7 +223,7 @@ public class ProductoContolador {
                                             @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                             HttpServletRequest request){
 
-        ModelAndView mav = new ModelAndView("productosSil");
+        ModelAndView mav = new ModelAndView("productos");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -223,6 +242,7 @@ public class ProductoContolador {
     @Value("${picture.products.location}")
     public String PRODUCTOS_UPLOADED_FOLDER;
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/imagen/actualizar")
     public void  uploadImage(@RequestParam("id")Long id,@RequestParam("imagen") MultipartFile multipartFile,
                              UriComponentsBuilder componentsBuilder){
@@ -260,7 +280,7 @@ public class ProductoContolador {
     public static String obtenerRutaActual(String ruta) {
 
         String uri = "";
-        System.out.println("ruta: "+ruta);
+
         if(ruta.length() > 29){
             uri = ruta.substring(30);
         }
@@ -277,21 +297,4 @@ public class ProductoContolador {
 
     }
 
-
-
-    /*
-    @PostMapping("/guardarRest")
-    public Producto crearProducto(@RequestBody @Valid Producto producto,BindingResult result){
-
-        String errorMsg = result.getFieldErrors().stream().map(FieldError::getDefaultMessage)
-                .collect(Collectors.joining(","));
-        if (result.hasErrors()){
-            throw new InvalidDataException(errorMsg,result);
-        }
-
-       return productoServicio.crearProducto(producto.getNombre(),producto.getMarca().getId(),producto.getPrecio(),producto.getCategoria(),
-                producto.getAptoIntoleranteLactosa(),producto.getAptoCeliacos(),producto.getAptoHipertensos(),
-                producto.getAptoDiabeticos());
-
-    }*/
 }

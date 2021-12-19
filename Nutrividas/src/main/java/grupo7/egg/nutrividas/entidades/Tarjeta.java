@@ -10,6 +10,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -32,12 +33,12 @@ public class Tarjeta {
     @NotBlank(message = "El campo nombre es obligatorio")
     @Pattern(regexp = "^[\\p{L} .'-]+$",message="solo se permiten letras" )
     private String nombre;
-    @NotBlank(message = "El campo 'apellido' es obligatorio")
+    /*@NotBlank(message = "El campo 'apellido' es obligatorio")
     @Pattern(regexp = "^[\\p{L} .'-]+$",message="solo se permiten letras" )
-    private String apellido;
+    private String apellido;*/
     @NotNull(message = "El campo 'número' es obligatorio")
-    @Min(value = 100000000000L,message = "El campo 'número' debe contener 12 caracteres")
-    @Max(value = 999999999999L,message = "El campo 'número' debe contener 12 caracteres")
+    @Min(value = 1000000000000000L,message = "El campo 'número' debe contener 16 caracteres")
+    @Max(value = 9999999999999999L,message = "El campo 'número' debe contener 16 caracteres")
     private Long numeroTarjeta;
     @NotNull(message = "El campo 'código de seguridad' es obligatorio")
     @Min(value = 100,message = "El campo 'código de seguridad' debe contener 3 dígitos")
@@ -45,6 +46,7 @@ public class Tarjeta {
     private Integer codigoSeguridad;
     private TipoTarjeta tipoTarjeta;
     private MarcaTarjeta marcaTarjeta;
+    @DateTimeFormat(pattern="yyyy-MM")
     private LocalDate fechaVencimiento;
     @ManyToOne
     private Usuario usuario;

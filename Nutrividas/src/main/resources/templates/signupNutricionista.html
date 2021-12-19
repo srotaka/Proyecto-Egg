@@ -129,14 +129,14 @@
 
                                         </div>
                                         <div class="col">
-                                            <label for="credencial">Credencial</label>
+                                            <label for="matricula">Matricula</label>
                                             <div class="form-group mb-3">
-                                                <input th:field="*{credencial}" type="text"
+                                                <input th:field="*{matricula}" type="text"
                                                        placeholder="" required="" autofocus=""
                                                        class="form-control border-0 shadow-sm px-4">
                                             </div>
-                                            <div class="error text-start" th:if="${#fields.hasErrors('credencial')}"
-                                                 th:errors="*{credencial}" style="color:red;"></div>
+                                            <div class="error text-start" th:if="${#fields.hasErrors('matricula')}"
+                                                 th:errors="*{matricula}" style="color:red;"></div>
                                         </div>
                                     </div>
 
@@ -212,7 +212,7 @@
                                     </div>
 
                                     <button type="submit" class="btn btn-secondary mb-2"
-                                            id="boton-SignIn">INGRESAR</button>
+                                            id="boton-SignIn">REGISTRAR</button>
                                     <p class="text-muted mb-4">¿Ya está registrado? <a th:href="@{/login}"
                                                                                        id="link-SignUp">Inicia sesión</a></p>
                                 </form>

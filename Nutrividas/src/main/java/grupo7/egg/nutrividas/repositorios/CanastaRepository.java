@@ -21,7 +21,7 @@ public interface CanastaRepository extends JpaRepository<Canasta,Long> {
     boolean existsByDescripcionAndComedor(String descripcion, Comedor comedor);
     Canasta findByDescripcionAndComedor(String descripcion, Comedor comedor);
 
-    List<Canasta> findByComedor(Comedor comedor);
+    List<Canasta> findByComedor_Id(Long id);
 
     @Modifying
     @Query("UPDATE Canasta c SET c.foto = :foto WHERE c.id = :id")

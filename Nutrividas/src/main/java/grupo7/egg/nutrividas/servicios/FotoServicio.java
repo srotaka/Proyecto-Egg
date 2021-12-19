@@ -132,4 +132,11 @@ public class FotoServicio {
             throw new ConflictException("Error al mostrar imagen");
         }
     }
+
+    @Transactional
+    public Foto crearFto(Foto foto){
+
+
+        return  fotoRepositorio.save(foto);
+    }
 }

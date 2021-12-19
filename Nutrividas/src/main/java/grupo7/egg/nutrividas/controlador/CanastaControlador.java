@@ -1,12 +1,10 @@
 package grupo7.egg.nutrividas.controlador;
 
-import grupo7.egg.nutrividas.entidades.Canasta;
-import grupo7.egg.nutrividas.entidades.Elemento;
-import grupo7.egg.nutrividas.entidades.Foto;
-import grupo7.egg.nutrividas.entidades.Producto;
+import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +14,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,11 +41,40 @@ public class CanastaControlador {
     @Autowired
     private ProductoServicio productoServicio;
 
+    @PreAuthorize("hasAnyRole('USUARIO')")
+    @GetMapping
+    public ModelAndView canastasComedor(HttpServletRequest request){
+        ModelAndView mav = new ModelAndView("carrito");
 
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
+        if (flashMap != null) {
+            mav.addObject("success", flashMap.get("success-name"));
+        }
+
+        Compra compra = new Compra();
+        compra.setDetalleCompras(obtenerDetalleCompras());
+        mav.addObject("compra", compra);
+        return mav;
+    }
+
+    public List<DetalleCompra> obtenerDetalleCompras(){
+        List<Canasta> canastas = canastaServicio.listarCanastas();
+
+        List<DetalleCompra> detallesCompras = new ArrayList<>();
+        for (Canasta c : canastas){
+            DetalleCompra detalleCompra = new DetalleCompra();
+            detalleCompra.setCanasta(c);
+            detalleCompra.setCantidad(0);
+            detallesCompras.add(detalleCompra);
+        }
+        return detallesCompras;
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @GetMapping("/crear")
     public ModelAndView crear(HttpServletRequest request, HttpSession session){
-        ModelAndView mav = new ModelAndView("crearCanasta2");
+        ModelAndView mav = new ModelAndView("crearCanasta");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -73,8 +100,9 @@ public class CanastaControlador {
         return productosElementos;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @PostMapping("/guardar")
-    public ModelAndView guardar( @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes, HttpSession session) {
+    public ModelAndView guardar( @Valid @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes, HttpSession session) {
         ModelAndView mav = new ModelAndView();
 
         if (result.hasErrors()) {
@@ -84,7 +112,7 @@ public class CanastaControlador {
             mav.addObject("canasta", canasta);
             mav.addObject("titulo", "Crear Canasta");
             mav.addObject("accion", "guardar");
-            mav.setViewName("crearCanasta2");
+            mav.setViewName("crearCanasta");
             return mav;
         }
 
@@ -104,37 +132,8 @@ public class CanastaControlador {
 
         return mav;
     }
-/*
-    @PostMapping("/guardar/2")
-    public ModelAndView guarda2(@RequestParam RedirectAttributes attributes) {
-       RedirectView redirectView = new RedirectView("/canasta");
 
-        try{
-
-
-            customerService.update(id,document,name,lastName,mail,telephone);
-            userService.update(username,mail,password,rolesVO);
-
-            //customerService.create(document,name,lastName,mail,telephone,userService.create(username,mail,password, Collections.emptyList()));
-            redirectAttributes.addFlashAttribute("success","Los cambios se han efectuado correctamente");
-
-        }catch (FieldAlreadyExistException | FieldInvalidException e){
-            redirectAttributes.addFlashAttribute("error",e.getMessage());
-            redirectAttributes.addFlashAttribute("id", id);
-            redirectAttributes.addFlashAttribute("name", name);
-            redirectAttributes.addFlashAttribute("lastName", lastName);
-            redirectAttributes.addFlashAttribute("document", document);
-            redirectAttributes.addFlashAttribute("mail", mail);
-            redirectAttributes.addFlashAttribute("telephone", telephone);
-            redirectAttributes.addFlashAttribute("username", username);
-            redirectAttributes.addFlashAttribute("password", password);
-
-            redirectView.setUrl("/customers/update/"+id);
-        }
-
-        return redirectView;
-    }*/
-
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @GetMapping("/editar/{id}")
     public ModelAndView editar(@PathVariable("id") Long id, HttpServletRequest request,RedirectAttributes attributes){
         ModelAndView mav = new ModelAndView("crearCanastaFlor");
@@ -160,6 +159,7 @@ public class CanastaControlador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @PostMapping("/modificar")
     public ModelAndView modificar(@Valid @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes) {
 
@@ -185,21 +185,54 @@ public class CanastaControlador {
         return mav;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable Long id) {
         canastaServicio.habilitarCanasta(id);
         return new RedirectView("/canasta");
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @PostMapping("/eliminar/{id}")
     public RedirectView eliminar(@PathVariable Long id) {
         canastaServicio.deshabilitarCanasta(id);
         return new RedirectView("/canasta");
     }
 
+    @PreAuthorize("hasAnyRole('USUARIO')")
+    @GetMapping("/{id}")
+    public ModelAndView canastasComedor(@PathVariable("id")Long id,HttpServletRequest request){
+        ModelAndView mav = new ModelAndView("carrito");
+
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("success", flashMap.get("success-name"));
+        }
+
+        Compra compra = new Compra();
+        compra.setDetalleCompras(obtenerDetalleCompras(id));
+        mav.addObject("compra", compra);
+        return mav;
+    }
+
+    public List<DetalleCompra> obtenerDetalleCompras(Long id){
+        List<Canasta> canastas = canastaServicio.buscarCanastasPorComedor(id);
+
+        List<DetalleCompra> detallesCompras = new ArrayList<>();
+        for (Canasta c : canastas){
+            DetalleCompra detalleCompra = new DetalleCompra();
+            detalleCompra.setCanasta(c);
+            detalleCompra.setCantidad(0);
+            detallesCompras.add(detalleCompra);
+        }
+        return detallesCompras;
+    }
+
     @Value("${picture.canastas.location}")
     public String CANASTAS_UPLOADED_FOLDER;
 
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @PostMapping("/imagen/actualizar")
     public void  uploadImage(@RequestParam("id")Long id, @RequestParam("imagen") MultipartFile multipartFile,
                              UriComponentsBuilder componentsBuilder){

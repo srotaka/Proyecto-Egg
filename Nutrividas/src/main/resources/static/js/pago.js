@@ -18,11 +18,11 @@ const mostrarFrente = () => {
 }
 
 // * Rotacion de la tarjeta
-tarjeta.addEventListener('click', () => {
-	tarjeta.classList.toggle('active');
-    let chip = document.getElementById("chip");
-    chip.setAttribute("style", "display: none;")
-});
+//tarjeta.addEventListener('click', () => {
+//	tarjeta.classList.toggle('active');
+  //  let chip = document.getElementById("chip");
+    //chip.setAttribute("style", "display: none;")
+//});
 
 // * Boton de abrir formulario
 btnAbrirFormulario.addEventListener('click', () => {
@@ -76,14 +76,14 @@ formulario.inputNumero.addEventListener('keyup', (e) => {
 		logoMarca.innerHTML = '';
         logoMarca2.innerHTML = '';
 		const imagen = document.createElement('img');
-		imagen.src = "../static/img/visa.png";
+		imagen.src = "/img/visa.png";
 		logoMarca.appendChild(imagen);
         
         delantera.setAttribute("style", " background-color: #0093E9; background-image: linear-gradient(160deg, #0093E9 0%, #06192f 100%);")
 	} else if(valorInput[0] == 5){
 		logoMarca.innerHTML = '';
 		const imagen = document.createElement('img');
-		imagen.src = "../static/img/mastercard.png";
+		imagen.src = "/img/mastercard.png";
 		logoMarca.appendChild(imagen);
        
         delantera.setAttribute("style", "background-color: #000000; background-image: linear-gradient(315deg, #000000 0%, #839e9e 100%);")
@@ -125,7 +125,7 @@ formulario.selectYear.addEventListener('change', (e) => {
 // * CCV
 formulario.inputCCV.addEventListener('keyup', () => {
 	if(!tarjeta.classList.contains('active')){
-		tarjeta.classList.toggle('active');
+		//tarjeta.classList.toggle('active');
 	}
 
 	formulario.inputCCV.value = formulario.inputCCV.value

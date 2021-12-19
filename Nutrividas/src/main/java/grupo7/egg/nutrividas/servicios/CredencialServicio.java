@@ -3,7 +3,9 @@ package grupo7.egg.nutrividas.servicios;
 import grupo7.egg.nutrividas.entidades.Credencial;
 import grupo7.egg.nutrividas.entidades.Rol;
 import grupo7.egg.nutrividas.entidades.Usuario;
+import grupo7.egg.nutrividas.exeptions.BadCredentialsException;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
+import grupo7.egg.nutrividas.exeptions.InvalidDataException;
 import grupo7.egg.nutrividas.exeptions.NotFoundException;
 import grupo7.egg.nutrividas.repositorios.CredencialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,12 @@ public class CredencialServicio implements UserDetailsService {
 
     @Autowired
     private ElementoServicio elementoServicio;
+
+    //@Autowired
+    //private UsuarioServicio usuarioServicio;
+
+    //@Autowired
+    //private ComedorServicio comedorServicio;
 
 
     @Transactional
@@ -122,6 +130,7 @@ public class CredencialServicio implements UserDetailsService {
         credencial.setPassword(encoder.encode(password));
         credencial.setRoles(roles);
         credencial.setAlta(DISCHARGE);
+        credencial.setHabilitado(false);
     }
 
     private final String MESSAGE = "El nombre de usuario no existe %s";
@@ -131,10 +140,6 @@ public class CredencialServicio implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         Credencial credencial = credencialRepository.findByMailOrUsername(username,username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(MESSAGE, username)));
-        /*
-        if(Credencial.getDischarged() == null || Credencial.getDischarged() == false){
-            throw new credencialnameNotFoundException(String.format("The account is disabled", credencialname));
-        }*/
 
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
@@ -144,8 +149,13 @@ public class CredencialServicio implements UserDetailsService {
 
         if(credencial.getRoles().contains(rolServicio.buscarPorNombre("ADMIN"))){
             session.setAttribute("listaElementos",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
+            //session.setAttribute("foto",usuarioServicio.buscarPorMail(credencial.getMail()).getFoto());
+        }else if(credencial.getRoles().contains(rolServicio.buscarPorNombre("USUARIO"))){
+            session.setAttribute("listaDetalleCompras",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
+            //session.setAttribute("foto",usuarioServicio.buscarPorMail(credencial.getMail()).getFoto());
+        }else if(credencial.getRoles().contains(rolServicio.buscarPorNombre("COMEDOR"))){
+            //session.setAttribute("foto",comedorServicio.buscarPorMail(credencial.getMail()).getFoto());
         }
-
 
         List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 
@@ -181,5 +191,18 @@ public class CredencialServicio implements UserDetailsService {
             throw new NotFoundException("No existe un usuario asociado al id '"+id+"' ");
         }
         credencialRepository.habilitar(id);
+    }
+
+    @Transactional
+    public void habilitarCuenta(Long id){
+        if(!credencialRepository.findById(id).isPresent()){
+            throw new NotFoundException("No existe un usuario asociado al id '"+id+"' ");
+        }
+        credencialRepository.habilitarCuenta(id);
+    }
+
+    @Transactional
+    public Credencial buscarCredencialPorUsername(String username){
+        return credencialRepository.buscarCredencialPorUsername(username);
     }
 }

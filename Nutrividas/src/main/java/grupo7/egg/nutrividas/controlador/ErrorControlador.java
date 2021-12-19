@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/error")
 public class ErrorControlador implements ErrorController{
     
-    @RequestMapping(value = "/error", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView errores(HttpServletResponse response){
         ModelAndView mav = new ModelAndView("error");
         String mensaje = "";
@@ -19,6 +20,9 @@ public class ErrorControlador implements ErrorController{
         
         switch(codigo){
             case 403:
+                mensaje = "No tiene permiso para acceder a este servidor";
+                break;
+            case 401:
                 mensaje = "No tiene permiso para acceder a este servidor";
                 break;
             case 404:

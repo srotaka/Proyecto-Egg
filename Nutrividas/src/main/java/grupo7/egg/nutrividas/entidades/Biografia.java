@@ -19,7 +19,7 @@ public class Biografia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "La descripción es obligatoria")
+
     private String descripcion;
 
     @OneToOne

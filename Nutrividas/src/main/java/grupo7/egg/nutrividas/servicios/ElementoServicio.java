@@ -10,6 +10,7 @@ import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.CanastaRepository;
 import grupo7.egg.nutrividas.repositorios.ElementoRepository;
 import grupo7.egg.nutrividas.repositorios.ProductoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,20 +20,16 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ElementoServicio {
 
-    @Autowired
     private ElementoRepository elementoRepository;
 
-    @Autowired
     private ProductoServicio productoServicio;
 
     @Transactional
     public Elemento crearElemento(Long idProducto, Usuario usuario){
 
-        /*if(elementoRepository.existsByProducto_IdAndCanasta_Id(idProducto,idCanasta)){
-            throw new FieldAlreadyExistException("Ya existe el elemento en esta canasta");
-        }*/
         if(idProducto == null){
             throw new FieldInvalidException("El producto es obligatorio");
         }
@@ -54,11 +51,6 @@ public class ElementoServicio {
         Elemento elemento = elementoRepository.findById(idElemento).orElseThrow(
                 () -> new NoSuchElementException("No existe un elemento con en id '"+idElemento+"'")
         );
-        //Opción 2 validación: Buscar Canasta e iterar lista de elementos
-        /*if(elementoRepository.existsByProducto_IdAndCanasta_Id(idProducto,idCanasta)&&
-        elementoRepository.findByProducto_IdAndCanasta_id(idProducto,idCanasta).get().getId() != idElemento){
-            throw new FieldAlreadyExistException("Ya existe el elemento en esta canasta");
-        }*/
 
         if(cantidadNecesaria == null || cantidadNecesaria <= 0){
             throw new FieldInvalidException("Error en cantidad Necesaria");
@@ -76,10 +68,21 @@ public class ElementoServicio {
         elementoRepository.deleteById(elemento.getId());
     }
 
+    @Transactional
+    public void eliminarElementosProducto(Long idProducto){
+        List<Elemento> elementos = elementoRepository.findByProducto_Id(idProducto);
+        elementos.forEach(e -> elementoRepository.deleteById(e.getId()));
+    }
+
     @Transactional(readOnly = true)
     public Optional<Elemento> existeElementoSesion(Long idProducto, Usuario usuario){
         Producto producto = productoServicio.obtenerProductoPorId(idProducto);
         return elementoRepository.existeElementoSesion(producto,usuario);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Elemento> buscarPorProducto(Long idProducto){
+        return elementoRepository.findByProducto_Id(idProducto);
     }
 
     @Transactional(readOnly = true)

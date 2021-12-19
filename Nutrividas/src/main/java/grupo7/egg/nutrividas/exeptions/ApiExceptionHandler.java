@@ -2,11 +2,11 @@ package grupo7.egg.nutrividas.exeptions;
 
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,16 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({NotFoundException.class})
-   // @ResponseBody
-    public ModelAndView notFoundRequest(HttpServletRequest request, NoHandlerFoundException exception){
-        ModelAndView model = new ModelAndView("error");
-        model.addObject("codeError","404");
-        model.addObject("textError","Not found");
-        model.addObject("description",""+exception.getMessage());
-
-        return model;
-        //return new ErrorMessage(exception,request.getRequestURI());
+    @ExceptionHandler({NotFoundException.class, NoSuchElementException.class})
+    @ResponseBody
+    public ErrorMessage notFoundRequest(HttpServletRequest request, NoHandlerFoundException exception){
+        return new ErrorMessage(exception,request.getRequestURI());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -59,8 +53,10 @@ public class ApiExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler({UnauthorizedException.class})
-    public void unauthorized(){ }
+    @ExceptionHandler({UnauthorizedException.class, AccessDeniedException.class})
+    public ErrorMessage unauthorized(HttpServletRequest request,Exception exception){
+        return new ErrorMessage(exception,request.getRequestURI());
+    }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({Exception.class})

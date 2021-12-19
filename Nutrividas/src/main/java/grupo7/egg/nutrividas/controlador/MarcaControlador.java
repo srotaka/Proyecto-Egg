@@ -4,6 +4,7 @@ import grupo7.egg.nutrividas.entidades.Marca;
 import grupo7.egg.nutrividas.servicios.MarcaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +18,14 @@ public class MarcaControlador {
     @Autowired
     private MarcaServicio marcaServicio;
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/crear")
     @ResponseStatus(HttpStatus.CREATED)
     public Marca crearMarca(@RequestBody @Valid Marca marca){
         return marcaServicio.crearMarca(marca);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/editar/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void editarMarca(@PathVariable Long id, @RequestBody @Valid Marca marca){

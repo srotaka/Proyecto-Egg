@@ -31,7 +31,7 @@
     <link th:href="@{/aos/aos.css}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link rel="stylesheet" th:href="@{/css/signup.css}">
+    <link th:href="@{/css/signup.css}" rel="stylesheet">
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
 </head>
@@ -57,7 +57,7 @@
                     <li class="drop-down"><a href="#">Mostrar</a>
                         <ul>
                             <li><a th:href="@{/comedor}">Comedores Registrados</a>
-                            <li><a th:href="@{/producto}">Lista de Productos</a>                
+                            <li><a th:href="@{/producto}">Lista de Productos</a>
                         </ul>
                     </li>
 
@@ -67,6 +67,8 @@
         </div>
     </header><!-- End Header -->
 
+
+    <!-- SIGNUP SECTION -->
     <section class="signup-section">
         <div class="container-fluid">
             <div class="row no-gutter">
@@ -120,8 +122,8 @@
                                             <div class="col">
                                                 <label for="dni">DNI</label>
                                                 <div class="form-group mb-3">
-                                                    <input th:field="*{dni}" id="inputDni" type="number"
-                                                        placeholder="" required="" autofocus=""
+                                                    <input th:field="*{dni}" id="inputDni" type="number" placeholder=""
+                                                        required="" autofocus=""
                                                         class="form-control border-0 shadow-sm px-4">
                                                 </div>
                                                 <div class="error text-start" th:if="${#fields.hasErrors('dni')}"
@@ -169,8 +171,8 @@
                                                 <label for="password">Contraseña</label>
                                                 <div class="form-group mb-3">
                                                     <input th:field="*{credencial.password}" id="inputPassword"
-                                                        type="password" placeholder="" required=""
-                                                        autofocus="" class="form-control border-0 shadow-sm px-4">
+                                                        type="password" placeholder="" required="" autofocus=""
+                                                        class="form-control border-0 shadow-sm px-4">
                                                 </div>
                                                 <div class="error text-start"
                                                     th:if="${#fields.hasErrors('credencial.password')}"
@@ -180,9 +182,9 @@
                                                 <label for="password">Repetir Contraseña</label>
                                                 <div class="form-group mb-3">
                                                     <input id="inputEmail" type="password" placeholder="" required=""
-                                                    autofocus="" class="form-control border-0 shadow-sm px-4">
+                                                        autofocus="" class="form-control border-0 shadow-sm px-4">
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
 
@@ -203,6 +205,9 @@
             </div>
         </div>
     </section>
+    <!-- END SIGN UP SECTION -->
+
+
     <!-- ======= Footer ======= -->
     <footer id="footer2">
         <div class="copyright2">

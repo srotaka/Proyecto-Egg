@@ -27,6 +27,53 @@
     padding-top: 6rem;
     height: 100%;
   }
+  .signup-section {
+    padding-left: 12%;
+    padding-right: 12%;
+    padding-top: 6.5%;
+    margin-bottom: 3%;
+    
+  }
+
+  .bg-image {
+    background-image: url("../img/children08.jpg");
+    background-size: cover;
+    background-position: center center;
+    border-radius: 20px;
+  }
+
+  
+#boton-SignIn {
+  color: white !important;
+  background-color: #1bac91 !important;
+  border: 1px solid #1fc5a7;
+  margin-top: 1px;
+  border-radius: 6px  !important;
+  padding: 6px 15px 4px 15px !important;
+  max-height: 40px !important;
+  text-align: center !important;
+  vertical-align: center !important;
+}
+
+#boton-SignIn:hover {
+  background-color:  #1a8673 !important;
+  border-radius: 6px !important;
+  border: 1px solid #1fc5a7;
+  transition: 1s;
+}
+
+#boton-SignIn:not(:hover) {   
+    transition: 1.6s;
+}
+
+#link-SignUp:hover {
+  text-decoration: underline;
+} 
+
+/* check (Recordar Email) */
+#customCheck1 {
+  background-color: #1bac91 !important;
+}
   .comedores-registrados{
       color: #444444;
       text-align: center;
@@ -313,3 +360,6 @@
   #link-guardar:hover {
     text-decoration: underline;
   } 
+#tarjetas-productos{
+  background-color: #F8F9FA;
+}

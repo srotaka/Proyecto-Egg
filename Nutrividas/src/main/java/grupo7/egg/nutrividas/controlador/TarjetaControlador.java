@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @RequestMapping("/tarjeta")
+@PreAuthorize("hasAnyRole('USUARIO','ADMIN')")
 public class TarjetaControlador {
     
     @Autowired
@@ -54,12 +56,12 @@ public class TarjetaControlador {
     }
     
     
-    @PostMapping("/modificar")
+   /* @PostMapping("/modificar")
     public RedirectView modificar(@ModelAttribute Tarjeta tarjeta, RedirectAttributes attributes){
         RedirectView redirectview = new RedirectView("/tarjeta");
         
         try{
-            tarjetaServicio.modificarTarjeta(tarjeta.getId(), tarjeta.getNombre(), tarjeta.getApellido(), tarjeta.getId(), tarjeta.getCodigoSeguridad(),
+            tarjetaServicio.modificarTarjeta(tarjeta.getId(), tarjeta.getNombre(),  tarjeta.getId(), tarjeta.getCodigoSeguridad(),
                     tarjeta.getTipoTarjeta(), tarjeta.getMarcaTarjeta(), tarjeta.getFechaVencimiento(), tarjeta.getNumeroTarjeta());
                     attributes.addFlashAttribute("exito", "La actualizacion se realizo con exito");
         }catch(Exception e){
@@ -69,10 +71,10 @@ public class TarjetaControlador {
         }
         
         return redirectview;
-    }
+    }*/
     
     
-    @PostMapping("/guardar")
+   /* @PostMapping("/guardar")
     public RedirectView guardar(@ModelAttribute Tarjeta tarjeta, RedirectAttributes attributes){
         RedirectView redirectView = new RedirectView("/tarjeta");
         
@@ -87,7 +89,7 @@ public class TarjetaControlador {
         }
         
         return redirectView;
-    }
+    }*/
     
     
     @PostMapping("/habilitar/{id}")

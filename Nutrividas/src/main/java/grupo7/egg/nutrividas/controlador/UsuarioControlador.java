@@ -5,8 +5,11 @@ import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.entidades.Tarjeta;
 import grupo7.egg.nutrividas.entidades.Usuario;
+import grupo7.egg.nutrividas.mail.MailService;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.UsuarioServicio;
+
+import java.security.Principal;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +18,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +30,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping("usuario")
+@PreAuthorize("hasAnyRole('USUARIO','ADMIN')")
+@RequestMapping("/usuario")
 public class UsuarioControlador {
     
     @Autowired
@@ -33,79 +39,27 @@ public class UsuarioControlador {
 
     @Autowired
     private FotoServicio fotoServicio;
-    
-    @GetMapping("/crear")
-    public ModelAndView crear(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("usuario-formulario");
-        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
-        
-        if(flashMap != null){
-            mav.addObject("error", flashMap.get("error"));
-            mav.addObject("usuario", flashMap.get("usuario"));
-        }else{
-            mav.addObject("usuario", new Usuario());
-        }    
-        mav.addObject("title", "crear usuario");
-        mav.addObject("action", "guardar");
-        
-        return mav;
-    }
-    
-    
-    @GetMapping("/editar/{id}")
-    public ModelAndView editar(@PathVariable("id")Long id, HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("usuario-formulario");
-        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
-        
-        if(flashMap != null){
-            mav.addObject("error", flashMap.get("error"));
-            mav.addObject("usuario", flashMap.get("usuario"));
-        }else{
-            mav.addObject("usuario", new Usuario());
-        }    
-        mav.addObject("title", "editar usuario");
-        mav.addObject("action", "guardar");
-        
-        return mav;
-    }
-    
-    
+
+    @Autowired
+    private MailService mailService;
+
+
     @PostMapping("/modificar")
-    public RedirectView modificar(@Valid @ModelAttribute Usuario usuario, RedirectAttributes attributes){
-        RedirectView redirectview = new RedirectView("/usuario");
-        
+    public RedirectView modificarUsuario(@RequestParam Long id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Long dni, @RequestParam Long telefono, RedirectAttributes redirect, RedirectAttributes attributes){
+        RedirectView redirectView = new RedirectView("/");
+        Usuario usuario = usuarioServicio.buscarPorId(id);
+
         try{
-            usuarioServicio.modificarUsuario(usuario.getId(), usuario.getDni(), usuario.getNombre(),
-                    usuario.getApellido(), usuario.getTelefono(),usuario.getCredencial().getMail(),
-                    usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
-            attributes.addFlashAttribute("exito", "La actualizacion se realizo con exito");
+            usuarioServicio.modificarUsuario(id, dni, nombre, apellido, telefono);
+
         }catch(Exception e){
-            attributes.addFlashAttribute("usuario", usuario);
-            attributes.addFlashAttribute("error", e.getMessage());
-            redirectview.setUrl("/usuario/editar/" + usuario.getId());        
+            redirect.addFlashAttribute("error", e.getMessage());
+            redirectView.setUrl("/modificar/{" + usuario.getCredencial().getUsername()+"}");
+            return redirectView;
         }
-        
-        return redirectview;
-    }
-    
-    
-     @PostMapping("/guardar")
-    public RedirectView guardar(@ModelAttribute Usuario usuario, RedirectAttributes attributes){
-        RedirectView redirectView = new RedirectView("/usuario");
-        
-        try{
-            usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
-            attributes.addFlashAttribute("exito", "La creacion se realizo con exito");
-        }catch(Exception e){
-            attributes.addFlashAttribute("usuario", usuario);
-            attributes.addFlashAttribute("error", e.getMessage());
-            redirectView.setUrl("/usuario/crear/");
-        }
-        
         return redirectView;
     }
-    
-    
+
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable Long id, RedirectAttributes attributes){
         try {
