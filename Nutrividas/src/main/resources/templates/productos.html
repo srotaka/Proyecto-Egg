@@ -126,10 +126,17 @@
 
     <div class="container" id="tabla-productos">
 
+      <div class="alert alert-success" id="success-alert">
+        <button type="button" class="close" data-dismiss="alert"> x</button>
+        <strong>Operación realizada con éxito!</strong>
+        Se ha añadido el producto a la canasta.
+      </div>
+
       <div class="row">
+
         <div class="col-md-2 offset-md-10">
 
-          <a th:href="@{/producto/crear}">
+          <a sec:authorize="hasRole('ADMIN')" th:href="@{/producto/crear}">
             <box-icon name='plus-circle' size="lg" type='solid' animation='burst-hover' color='#1bac91'></box-icon>
           </a>
         </div>
@@ -158,8 +165,8 @@
                 <th class="text-center">Diabético</th>
                 <th class="text-center">Hipertenso</th>
                 <th class="text-center">Intolerante Lactosa</th>
-                <th class="text-center">Editar</th>
-                <th class="text-center">Elimnar</th>
+                <th sec:authorize="hasRole('ADMIN')" class="text-center">Editar</th>
+                <th sec:authorize="hasRole('ADMIN')" class="text-center">Elimnar</th>
               </tr>
             </thead>
             <tbody id="myTable" th:each="producto : ${productos.page}">
@@ -194,12 +201,12 @@
                   <box-icon th:name="${producto.aptoIntoleranteLactosa == true} ? 'check' : 'x'" color='#444444'>
                   </box-icon>
                 </th>
-                <td class="text-center">
+                <td sec:authorize="hasRole('ADMIN')" class="text-center">
                   <a th:href="@{/producto/editar/__${producto.id}__}">
                     <box-icon name='pencil' type='solid' animation='tada-hover' color='#1bac91'></box-icon>
                   </a>
                 </td>
-                <td class="text-center">
+                <td sec:authorize="hasRole('ADMIN')" class="text-center">
                   <form method="POST"
                     th:action="${producto.alta} == true ? @{/producto/eliminar/__${producto.id}__} : @{/producto/habilitar/__${producto.id}__}">
                     <button type="submit">
@@ -254,7 +261,7 @@
             </div>
           </form>
 
-          <form class="m-3" method="GET" action="/producto/cat?categoria=Harinas;&order=&amp;">
+          <form class="m-3" method="GET" action="/producto">
             <div class="input-group">
               <select name="order" id="order" class="form-control" style="width: auto;">
                 <option value="OrderByNombreASC">Ordenar por nombre asc.</option>
@@ -264,7 +271,7 @@
                 <option value="OrderByMarcaASC">Ordenar por marca asc.</option>
                 <option value="OrderByMarcaDESC">Ordenar por marca desc</option>
               </select>
-              <button class="btn btn-outline-secondary pb-0" type="submit">
+              <button class="btn btn-outline-secondary pb-0" type="submit" >
                 <box-icon name='search' size="xs" animation='flashing'></box-icon>
                 </box-icon>
               </button>
@@ -340,13 +347,20 @@
   <script th:src="@{/js/titulo.js}"></script>
 
   <script>
+
+    $("#success-alert").hide();
+
     function addBasket(id) {
       var element = document.getElementById('element' + id);
       $.ajax({
         type: 'GET',
         url: '/elemento/agregar/' + id
       });
+       $("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
+          $("#success-alert").slideUp(500);
+        });
     }
+
   </script>
 
 </body>

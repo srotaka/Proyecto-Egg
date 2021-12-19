@@ -129,7 +129,7 @@
         <ul>
           <li class="item item-heading">Canasta</li>
           <li class="price">Precio</li>
-          <li class="quantity">Cantidad</li>
+          <li sec:authorize="hasRole('USUARIO')" class="quantity">Cantidad</li>
           <li class="subtotal">Subtotal</li>
         </ul>
       </div>
@@ -208,7 +208,7 @@
             </div>
           </div>
           <div th:text="${#numbers.formatDecimal(detalleCompra.canasta.precio,0,2)}" class="price"></div>
-          <div class="quantity">
+          <div sec:authorize="hasRole('USUARIO')" class="quantity">
             <input type="hidden" th:field="*{detalleCompras[__${rowStat.index}__].canasta}">
             <input type="number" th:field="*{detalleCompras[__${rowStat.index}__].cantidad}"
               value="${detalleCompras.cantidad}" min="0" class="quantity-field">
@@ -224,7 +224,7 @@
 
 
     <!-- RESUMEN COMPRA  -->
-    <aside>
+    <aside sec:authorize="hasRole('USUARIO')">
       <div class="summary mt-4">
 
         <div class="summary-subtotal">

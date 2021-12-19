@@ -164,7 +164,7 @@
                                                     <th scope="row">Localidad</th>
                                                     <th scope="row">Provincia</th>
                                                     <th scope="row">Cantidad de Personas</th>
-                                                    <th scope="row">Editar</th>
+                                                    <th sec:authorize="hasRole('ADMIN')" scope="row">Editar</th>
                                                     <th scope="row">Canastas</th>
                                                 </tr>
                                             </thead>
@@ -177,13 +177,13 @@
                                                     <td th:text="${comedor.direccion.localidad}"></td>
                                                     <td th:text="${comedor.direccion.provincia}"></td>
                                                     <td th:text="${comedor.cantidadDePersonas}"></td>
-                                                    <td class="text-center">
+                                                    <td sec:authorize="hasRole('ADMIN')" class="text-center">
                                                         <a th:href="@{/comedor/editar/__${comedor.id}__}">
                                                             <box-icon name='pencil' type='solid' animation='tada-hover'
                                                                 color='#1bac91'></box-icon>
                                                         </a>
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td  class="text-center">
                                                         <a th:href="@{/canasta/__${comedor.id}__}">
                                                             <box-icon name='basket' type='solid' animation='tada-hover'
                                                                 color='#1bac91'>
