@@ -4718,7 +4718,7 @@
     border-bottom-right-radius: 0.25rem;
   }
   .page-item.active .page-link {
-    z-index: 3;
+    /* z-index: 3; */
     color: #fff;
     background-color: #1bac91;
     border-color: #1fc5a7;
