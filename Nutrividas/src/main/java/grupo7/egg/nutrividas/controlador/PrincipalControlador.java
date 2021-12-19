@@ -138,27 +138,9 @@ public class PrincipalControlador {
         return modelAndView;
     }
 
-    @GetMapping(value = "/signup/usuario")
-    public ModelAndView signup(HttpServletRequest request,Principal principal){
-        ModelAndView mav = new ModelAndView("signup");
-        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
-
-        if (principal != null) {
-            mav.setViewName("redirect:/ ");
-        }
-
-        if (flashMap != null) {
-            mav.addObject("error", flashMap.get("error"));
-            mav.addObject("usuario", flashMap.get("usuario"));
-        } else {
-            mav.addObject("usuario", new Usuario());
-        }
-
-        return mav;
-    }
-
     @Value("${picture.users.location}")
     public String USUARIOS_UPLOADED_FOLDER;
+
 
     @PostMapping(value = "/registro/usuario")
     public ModelAndView saveCustomer(@Valid @ModelAttribute Usuario usuario, BindingResult result, HttpServletRequest request, RedirectAttributes attributes){
@@ -292,6 +274,7 @@ public class PrincipalControlador {
 
         return mav;
     }
+
 
     @GetMapping(value = "/modificar/{username}")
     public ModelAndView editarPerfil(@PathVariable String username, HttpServletRequest request, RedirectAttributes attributes){

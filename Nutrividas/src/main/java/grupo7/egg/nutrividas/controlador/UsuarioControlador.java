@@ -5,8 +5,11 @@ import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.entidades.Tarjeta;
 import grupo7.egg.nutrividas.entidades.Usuario;
+import grupo7.egg.nutrividas.mail.MailService;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.UsuarioServicio;
+
+import java.security.Principal;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,8 +30,8 @@ import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
-@RequestMapping("usuario")
 @PreAuthorize("hasAnyRole('USUARIO','ADMIN')")
+@RequestMapping("/usuario")
 public class UsuarioControlador {
     
     @Autowired
@@ -35,21 +39,51 @@ public class UsuarioControlador {
 
     @Autowired
     private FotoServicio fotoServicio;
-    
-    @GetMapping("/crear")
-    public ModelAndView crear(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("usuario-formulario");
+
+    @Autowired
+    private MailService mailService;
+
+    @GetMapping(value = "/signup")
+    public ModelAndView signup(HttpServletRequest request, Principal principal){
+        ModelAndView mav = new ModelAndView("signup");
         Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
-        
-        if(flashMap != null){
+
+        if (principal != null) {
+            mav.setViewName("redirect:/ ");
+        }
+
+        if (flashMap != null) {
             mav.addObject("error", flashMap.get("error"));
             mav.addObject("usuario", flashMap.get("usuario"));
-        }else{
+        } else {
             mav.addObject("usuario", new Usuario());
-        }    
-        mav.addObject("title", "crear usuario");
-        mav.addObject("action", "guardar");
-        
+        }
+
+        return mav;
+    }
+
+    @PostMapping(value = "/registro")
+    public ModelAndView saveCustomer(@Valid @ModelAttribute Usuario usuario, BindingResult result, HttpServletRequest request, RedirectAttributes attributes){
+
+        ModelAndView mav = new ModelAndView();
+
+        if (result.hasErrors()) {
+            mav.addObject("usuario", usuario);
+            mav.setViewName("signup");
+            return mav;
+        }
+
+        try {
+            Usuario usuarioCreado =usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
+            mailService.sendWelcomeMail("Bienvenida",usuario.getCredencial().getMail(),usuario.getCredencial().getUsername(),usuarioCreado.getCredencial().getId(),"USUARIO");
+            //request.login(usuario.getCredencial().getMail(), usuario.getCredencial().getPassword());
+            mav.setViewName("redirect:/");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("usuario", usuario);
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/signup/usuario");
+        }
+
         return mav;
     }
 

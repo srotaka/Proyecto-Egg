@@ -20,8 +20,10 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -75,46 +77,58 @@ public class ComedorControlador {
         return mav;
     }
 
+
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @GetMapping("/crear")
-    public ModelAndView crearComedor(HttpServletRequest request) {
+    @GetMapping(value = "/signup")
+    public ModelAndView signupComedor(HttpServletRequest request, Principal principal){
 
         ModelAndView mav = new ModelAndView("signupComedor");
-        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        mav.addObject("provincias", provinciaServicio.obtenerProvincias());
+
+        if (principal != null) {
+            mav.setViewName("redirect:/ ");
+        }
 
         if (flashMap != null) {
             mav.addObject("error", flashMap.get("error"));
             mav.addObject("comedor", flashMap.get("comedor"));
         } else {
-            mav.addObject("provincias", provinciaServicio.obtenerProvincias());
+
             mav.addObject("comedor", new Comedor());
         }
 
-        mav.addObject("provincias",direccionSevicio.listarProvincias());
-
-        mav.addObject("title", "Ingresar Comedor");
-        mav.addObject("action", "guardar");
         return mav;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','COMEDOR')")
-    @GetMapping("/editar/{id}")
-    public ModelAndView editarComedor(@PathVariable("id") Long id, HttpServletRequest request){
+    @PostMapping(value = "/registro")
+    public ModelAndView saveComedor(@Valid @ModelAttribute Comedor comedor, BindingResult result, HttpServletRequest request, RedirectAttributes attributes){
 
-        ModelAndView mav = new ModelAndView("editarComedores");
-        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
-
-        if (flashMap != null) {
-            mav.addObject("error", flashMap.get("error"));
-            mav.addObject("comedor", flashMap.get("comedor"));
-        } else {
-            mav.addObject("provincias", provinciaServicio.obtenerProvincias());
-            mav.addObject("comedor", comedorServicio.buscarPorId(id));
+        ModelAndView mav = new ModelAndView("signupComedor");
+        if (result.hasErrors()) {
+            mav.addObject("comedor", comedor);
+            mav.setViewName("signupComedor");
+            return mav;
         }
-        mav.addObject("title", "Editar Comedor");
-        mav.addObject("action", "modificar");
+
+
+        try {
+            Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
+
+            request.login(comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
+            mav.setViewName("redirect:/");
+        } catch (ServletException e) {
+            attributes.addFlashAttribute("error", "Error al realizar auto-login");
+        } catch (Exception e) {
+            attributes.addFlashAttribute("comedor", comedor);
+            attributes.addFlashAttribute("error", e.getMessage());
+            mav.setViewName("redirect:/signup/comedor");
+        }
+
+
         return mav;
     }
+
 
     @PreAuthorize("hasAnyRole('ADMIN','COMEDOR')")
     @PostMapping("/modificar")
