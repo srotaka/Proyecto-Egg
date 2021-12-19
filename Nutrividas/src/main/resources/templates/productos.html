@@ -67,7 +67,7 @@
           </li>
           <li class="drop-down"><a href="#">Registrar</a>
             <ul>
-              <li><a th:href="@{/comedor/crear}">Nuevo Comedor</a>
+              <li><a th:href="@{/signup/comedor}">Nuevo Comedor</a>
               <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
               <li><a th:href="@{/canasta/crear}">Nueva Canasta</a>
             </ul>
@@ -87,11 +87,15 @@
             </ul>
           </li>
           <!-- Fin Botón Usuario si está loggeado -->
+           <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+           <li>
+            <button th:onclick="location.href='/login'" id="boton-guardar" sec:authorize="isAnonymous()" > Iniciar Sesión
+            </a></button>
+          </li>
+          <!-- Fin botón para iniciar sesión -->
         </ul>
       </nav><!-- .nav-menu -->
-      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
-      <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a>
-      <!-- End Botón Inicio Sesión -->
+     
     </div>
   </header><!-- End Header -->
 
@@ -108,7 +112,6 @@
   <!-- ======= TABLA PRODUCTOS ======= -->
   <section>
 
-      <p>[[${#lists.size(session.listaElementos)}]]</p>
 
     <div class="container" id="tabla-productos">
 

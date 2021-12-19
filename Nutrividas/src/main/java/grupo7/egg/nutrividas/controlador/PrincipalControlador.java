@@ -87,11 +87,7 @@ public class PrincipalControlador {
     }
     
     @GetMapping("/pago")
-<<<<<<< HEAD
-    public ModelAndView pago() {
-=======
     public ModelAndView pago(){
->>>>>>> develop
         return new ModelAndView("pago");
     }
 

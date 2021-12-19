@@ -68,7 +68,7 @@
           </li>
           <li class="drop-down"><a href="#">Registrar</a>
             <ul>
-              <li><a th:href="@{/comedor/crear}">Nuevo Comedor</a>
+              <li><a th:href="@{/signup/comedor}">Nuevo Comedor</a>
               <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
               <li><a th:href="@{/canasta/crear}">Nueva Canasta</a>
             </ul>
@@ -87,15 +87,22 @@
 
               <li><a class="dropdown-item" th:href="@{/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
-            </ul>
+            </ul>            
           </li>
           <!-- Fin Botón Usuario si está loggeado -->
+          
+         <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+          <li>
+            <button th:onclick="location.href='/login'"  sec:authorize="isAnonymous()" id="boton-guardar"> Iniciar Sesión
+            </a></button>
+          </li>
+          <!-- Fin botón para iniciar sesión -->
         </ul>
 
       </nav><!-- .nav-menu -->
 
       <!-- Botón Inicio Sesión si Usuario no está loggeado -->
-      <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a>
+      <!-- <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a> -->
       <!-- End Botón Inicio Sesión -->
     </div>
   </header><!-- End Header -->
@@ -240,7 +247,7 @@
           </p>
           <img th:src="@{/img/testimonial01.png}" class="testimonial-img" alt="">
           <h3>Gabriel Pereyra</h3>
-          <h4>Comedor Nuestros Pekes</h4>
+          <h4>Comedor Chariquitos de Colores</h4>
         </div>
 
         <div class="testimonial-item">
@@ -607,7 +614,7 @@
                         <div class="form-group">
                           <label class="label" for="#">Mensaje</label>
                           <textarea name="message" class="form-control" id="message" cols="30" rows="4"
-                            placeholder="Escriba su mensaje aquí..."></textarea>
+                            placeholder="Sobre el comedor..."></textarea>
                         </div>
                       </div>
 
@@ -642,7 +649,7 @@
                 Monteagudo 275 <br>
                 C1437 CABA<br><br>
                 Teléfono: +54 11 5272 5500<br>
-                Email: info@nutrividas.com<br>
+                Email: nutrividas.info@gmail.com<br>
               </p>
               <div class="social-links mt-3">
                 <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -665,7 +672,7 @@
               </li>
               <li><i class="bx bx-chevron-right"></i> <a th:href="@{/politica}" target="_blank">Política de
                   Privacidad</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a th:href="@{/pago}" target="_blank">Pago con Tarjeta</a></li>
+
             </ul>
           </div>
 
