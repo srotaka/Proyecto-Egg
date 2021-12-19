@@ -54,12 +54,12 @@ public class TarjetaControlador {
     }
     
     
-    @PostMapping("/modificar")
+   /* @PostMapping("/modificar")
     public RedirectView modificar(@ModelAttribute Tarjeta tarjeta, RedirectAttributes attributes){
         RedirectView redirectview = new RedirectView("/tarjeta");
         
         try{
-            tarjetaServicio.modificarTarjeta(tarjeta.getId(), tarjeta.getNombre(), tarjeta.getApellido(), tarjeta.getId(), tarjeta.getCodigoSeguridad(),
+            tarjetaServicio.modificarTarjeta(tarjeta.getId(), tarjeta.getNombre(),  tarjeta.getId(), tarjeta.getCodigoSeguridad(),
                     tarjeta.getTipoTarjeta(), tarjeta.getMarcaTarjeta(), tarjeta.getFechaVencimiento(), tarjeta.getNumeroTarjeta());
                     attributes.addFlashAttribute("exito", "La actualizacion se realizo con exito");
         }catch(Exception e){
@@ -69,10 +69,10 @@ public class TarjetaControlador {
         }
         
         return redirectview;
-    }
+    }*/
     
     
-    @PostMapping("/guardar")
+   /* @PostMapping("/guardar")
     public RedirectView guardar(@ModelAttribute Tarjeta tarjeta, RedirectAttributes attributes){
         RedirectView redirectView = new RedirectView("/tarjeta");
         
@@ -87,7 +87,7 @@ public class TarjetaControlador {
         }
         
         return redirectView;
-    }
+    }*/
     
     
     @PostMapping("/habilitar/{id}")

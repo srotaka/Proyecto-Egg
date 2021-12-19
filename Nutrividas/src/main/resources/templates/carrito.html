@@ -223,10 +223,8 @@
           <div class="total-value final-value" id="basket-total">0</div>
         </div>
         <div class="summary-checkout">
-          <button  th:onclick="location.href='/pago'" id="boton-guardar"> FINALIZAR COMPRA
-          </a></button>
-          <!--<button type="submit" id="boton-guardar"> FINALIZAR COMPRA
-            </a></button>-->
+          <button type="submit" id="finalizarCompra" class="boton-guardar"> FINALIZAR COMPRA
+            </a></button>
           
         </div>
       </div>
@@ -272,7 +270,6 @@
     function verModal(id) {
       $('#' + id).modal('show');
     }
-
 
   </script>
 

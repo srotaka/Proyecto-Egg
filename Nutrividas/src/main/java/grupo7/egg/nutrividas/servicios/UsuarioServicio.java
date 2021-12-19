@@ -86,7 +86,7 @@ public class UsuarioServicio {
                                        LocalDate fechaVencimiento) throws Exception{
         Usuario usuario = usuarioRepository.findById(idUsuario).get();
         List<Tarjeta> tarjetas = tarjetaRepository.obtenerTarjetasDeUsuario(usuario);
-        Tarjeta tarjeta = tarjetaServicio.crearTarjeta(nombre, apellido, numeroTarjeta, codigoSeguridad, tipoTarjeta, fechaVencimiento, idUsuario);
+        Tarjeta tarjeta = tarjetaServicio.crearTarjeta(nombre, numeroTarjeta, codigoSeguridad, fechaVencimiento, usuario);
 
         tarjetas.add(tarjeta); //agrego la tarjeta creada a la lista de tarjetas
         usuario.setTarjetas(tarjetas); //seteo las tarjetas al usuario

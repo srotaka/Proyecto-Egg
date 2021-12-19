@@ -4,6 +4,7 @@ import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.servicios.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -40,20 +41,7 @@ public class CanastaControlador {
     @Autowired
     private ProductoServicio productoServicio;
 
-    /*@GetMapping
-    public ModelAndView canastasComedor(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("carrito");
-
-        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
-
-        if (flashMap != null) {
-            mav.addObject("success", flashMap.get("success-name"));
-        }
-
-        mav.addObject("canastas",  canastaServicio.listarCanastas());
-        return mav;
-    }*/
-
+    @PreAuthorize("hasAnyRole('USUARIO')")
     @GetMapping
     public ModelAndView canastasComedor(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("carrito");
@@ -67,7 +55,6 @@ public class CanastaControlador {
         Compra compra = new Compra();
         compra.setDetalleCompras(obtenerDetalleCompras());
         mav.addObject("compra", compra);
-        //mav.addObject("detallesCompra",detallesCompras);
         return mav;
     }
 
@@ -84,27 +71,7 @@ public class CanastaControlador {
         return detallesCompras;
     }
 
-   /*@GetMapping
-   public ModelAndView canastasComedor(HttpServletRequest request){
-       ModelAndView mav = new ModelAndView("carrito2");
-
-       Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
-
-       if (flashMap != null) {
-           mav.addObject("success", flashMap.get("success-name"));
-       }
-
-       Map<Canasta,Integer> canastasDetalle = new HashMap<>();
-       List<Canasta> canastas = canastaServicio.listarCanastas();
-       for (Canasta c : canastas){
-           canastasDetalle.put(c,0);
-       }
-
-       mav.addObject("detallesCompra",canastasDetalle);
-       return mav;
-   }*/
-
-
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @GetMapping("/crear")
     public ModelAndView crear(HttpServletRequest request, HttpSession session){
         ModelAndView mav = new ModelAndView("crearCanasta2");
@@ -133,6 +100,7 @@ public class CanastaControlador {
         return productosElementos;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRICIONISTA')")
     @PostMapping("/guardar")
     public ModelAndView guardar( @Valid @ModelAttribute Canasta canasta, BindingResult result, RedirectAttributes attributes, HttpSession session) {
         ModelAndView mav = new ModelAndView();
@@ -236,10 +204,24 @@ public class CanastaControlador {
         if (flashMap != null) {
             mav.addObject("success", flashMap.get("success-name"));
         }
-        Comedor comedor = comedorServicio.buscarPorId(id);
 
-            mav.addObject("canastas",  canastaServicio.buscarCanastasPorComedor(comedor));
+        Compra compra = new Compra();
+        compra.setDetalleCompras(obtenerDetalleCompras(id));
+        mav.addObject("compra", compra);
         return mav;
+    }
+
+    public List<DetalleCompra> obtenerDetalleCompras(Long id){
+        List<Canasta> canastas = canastaServicio.buscarCanastasPorComedor(id);
+
+        List<DetalleCompra> detallesCompras = new ArrayList<>();
+        for (Canasta c : canastas){
+            DetalleCompra detalleCompra = new DetalleCompra();
+            detalleCompra.setCanasta(c);
+            detalleCompra.setCantidad(0);
+            detallesCompras.add(detalleCompra);
+        }
+        return detallesCompras;
     }
 
     @Value("${picture.canastas.location}")

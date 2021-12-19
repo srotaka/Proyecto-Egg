@@ -1,7 +1,10 @@
 package grupo7.egg.nutrividas.servicios;
 
+import grupo7.egg.nutrividas.entidades.Usuario;
 import grupo7.egg.nutrividas.enums.MarcaTarjeta;
 import grupo7.egg.nutrividas.enums.TipoTarjeta;
+import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
+import grupo7.egg.nutrividas.exeptions.InvalidDataException;
 import grupo7.egg.nutrividas.repositorios.TarjetaRepository;
 import grupo7.egg.nutrividas.repositorios.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import grupo7.egg.nutrividas.entidades.Tarjeta;
 
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,35 +27,39 @@ public class TarjetaServicio {
     private UsuarioRepository usuarioRepository;
 
     @Transactional
-    public Tarjeta crearTarjeta(String nombre, String apellido, Long numeroTarjeta,
-                                Integer codigoSeguridad, TipoTarjeta tipoTarjeta, LocalDate fechaVencimiento,
-                                Long idUsuario) throws Exception {
+    public Tarjeta crearTarjeta(String nombre, Long numeroTarjeta,
+                                Integer codigoSeguridad, LocalDate fechaVencimiento,
+                                Usuario usuario) {
+
+        if(tarjetaRepository.existsByNumeroTarjetaAndUsuario(numeroTarjeta,usuario)){
+            return tarjetaRepository.findByNumeroTarjetaAndUsuario(numeroTarjeta,usuario).get();
+        }
+
         Tarjeta tarjeta = new Tarjeta();
         MarcaTarjeta marca = obtenerMarcaDeTarjeta(numeroTarjeta);
-        validarDatosDeTarjeta(nombre, apellido, numeroTarjeta, codigoSeguridad, tipoTarjeta, fechaVencimiento, marca);
+        TipoTarjeta tipoTarjeta = obtenerTipoDeTarjeta(numeroTarjeta);
 
         tarjeta.setNombre(nombre);
-        tarjeta.setApellido(apellido);
         tarjeta.setNumeroTarjeta(numeroTarjeta);
         tarjeta.setCodigoSeguridad(codigoSeguridad);
         tarjeta.setTipoTarjeta(tipoTarjeta);
         tarjeta.setMarcaTarjeta(marca);
         tarjeta.setFechaVencimiento(fechaVencimiento);
-        tarjeta.setUsuario(usuarioRepository.findById(idUsuario).get());
+        //tarjeta.setUsuario(usuarioRepository.findById(idUsuario).get());
+        tarjeta.setUsuario(usuario);
         tarjeta.setAlta(true);
         return tarjetaRepository.save(tarjeta);
     }
 
-    @Transactional
-    public Tarjeta modificarTarjeta(Long idTarjeta, String nombre, String apellido, Long numeroTarjeta,
-                                    Integer codigoSeguridad, TipoTarjeta tipoTarjeta, MarcaTarjeta marca,
+    /*@Transactional
+    public Tarjeta modificarTarjeta(Long idTarjeta, String nombre,Long numeroTarjeta,
+                                    Integer codigoSeguridad, MarcaTarjeta marca,
                                     LocalDate fechaVencimiento, Long idUsuario) throws Exception {
 
         Tarjeta tarjeta = tarjetaRepository.findById(idTarjeta).get();
+        TipoTarjeta tipoTarjeta = obtenerTipoDeTarjeta(numeroTarjeta);
 
-        validarDatosDeTarjeta(nombre, apellido, numeroTarjeta, codigoSeguridad, tipoTarjeta, fechaVencimiento, marca);
         tarjeta.setNombre(nombre);
-        tarjeta.setApellido(apellido);
         tarjeta.setNumeroTarjeta(numeroTarjeta);
         tarjeta.setCodigoSeguridad(codigoSeguridad);
         tarjeta.setTipoTarjeta(tipoTarjeta);
@@ -72,13 +80,13 @@ public class TarjetaServicio {
             throw new Exception("El apellido en la tarjeta debe ser obligatorio");
         }
 
-        Integer largoDeNumero = obtenerLargoDeNumero(numeroTarjeta);
+        Integer largoDeNumero = Long.toString(numeroTarjeta).length();
 
-        if (largoDeNumero != 12 || numeroTarjeta == null) {
+        if (largoDeNumero != 16 || numeroTarjeta == null) {
             throw new Exception("El numero de la tarjeta es invalido");
         }
 
-        Integer largoDeCodigo = obtenerLargoDeNumero(codigoSeguridad.longValue());
+        Integer largoDeCodigo = Integer.toString(codigoSeguridad).length();
 
         if (largoDeCodigo != 3 || codigoSeguridad == null) {
             throw new Exception("El codigo de seguridad es invalido");
@@ -101,36 +109,28 @@ public class TarjetaServicio {
             throw new Exception("La marca de la tarjeta no coincide con el numero de tarjeta");
         }
 
-    }
+    }*/
 
-    public MarcaTarjeta obtenerMarcaDeTarjeta(Long numeroTarjeta) throws Exception {
-        Integer primerNumero = obtenerPrimerNumero(numeroTarjeta);
+    public MarcaTarjeta obtenerMarcaDeTarjeta(Long numeroTarjeta) {
 
-        if (primerNumero == 4) {
+        String primerNumero = Long.toString(numeroTarjeta).substring(0,1);
+
+        if (primerNumero.equals("4")) {
             return MarcaTarjeta.VISA;
-        } else if (primerNumero == 5) {
+        } else if (primerNumero.equals("5")) {
             return MarcaTarjeta.MASTERCARD;
         } else {
-            throw new Exception("El numero de la tarjeta es invalido");
+            throw new FieldInvalidException("El numero de la tarjeta es invalido");
         }
     }
 
-    public Integer obtenerPrimerNumero(Long numeroTarjeta) {
-        Integer vuelta = 1;
-        while (vuelta < 11) {
-            numeroTarjeta = numeroTarjeta / 10;
-            vuelta++;
-        }
-        return numeroTarjeta.intValue();
-    }
+    public TipoTarjeta obtenerTipoDeTarjeta(Long numeroTarjeta){
+        String segundoNumero = Long.toString(numeroTarjeta).substring(1,2);
 
-    public Integer obtenerLargoDeNumero(Long numeroTarjeta) {
-        Integer digitos = 0;
-        while (numeroTarjeta != 0) {
-            numeroTarjeta = numeroTarjeta / 10;
-            digitos++;
+        if(segundoNumero.equals("5")){
+            return TipoTarjeta.DEBITO;
         }
-        return digitos;
+        return TipoTarjeta.CREDITO;
     }
 
     @Transactional

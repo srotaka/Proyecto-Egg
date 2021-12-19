@@ -75,8 +75,8 @@ public class CanastaServicio {
     }
 
     @Transactional(readOnly = true)
-    public List<Canasta> buscarCanastasPorComedor(Comedor comedor){
-        return canastaRepository.findByComedor(comedor);
+    public List<Canasta> buscarCanastasPorComedor(Long comedor){
+        return canastaRepository.findByComedor_Id(comedor);
     }
 
 

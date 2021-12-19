@@ -40,6 +40,16 @@ public class CompraServicio {
         return compraRepository.save(compra);
     }
 
+    @Transactional
+    public Compra pagarCompra(Long idCompra, Tarjeta tarjeta){
+        Compra compra = compraRepository.findById(idCompra).orElseThrow(
+                () -> new NoSuchElementException("No se encontró una compra vinculada al id "+idCompra)
+        );
+        compra.setTarjeta(tarjeta);
+        compra.setAsignada(true);
+        return compraRepository.save(compra);
+    }
+
 
     @Transactional(readOnly = true)
     public List<Compra> listarcomprasUsuario(Long idUsaurio){

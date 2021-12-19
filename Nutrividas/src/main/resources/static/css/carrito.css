@@ -500,7 +500,7 @@ p {
 # BOTÓN GURDAR
 --------------------------------------------------------------*/
 
-#boton-guardar {
+.boton-guardar {
   color: white !important;
   background-color: #1bac91 !important;
   border: 1px solid #1fc5a7;
@@ -512,14 +512,14 @@ p {
   vertical-align: center !important;
 }
 
-#boton-guardar:hover {
+.boton-guardar:hover {
   background-color:  #1a8673 !important;
   border-radius: 6px !important;
   border: 1px solid #1fc5a7;
   transition: 1s;
 }
 
-#boton-guardar:not(:hover) {   
+.boton-guardar:not(:hover) {
     transition: 1.6s;
 }
 

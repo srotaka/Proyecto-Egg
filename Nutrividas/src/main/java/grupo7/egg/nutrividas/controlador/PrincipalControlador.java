@@ -85,11 +85,7 @@ public class PrincipalControlador {
     public ModelAndView confirmado(){
         return new ModelAndView("confirmacion-mail");
     }
-    
-    @GetMapping("/pago")
-    public ModelAndView pago(){
-        return new ModelAndView("pago");
-    }
+
 
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false) String error, @RequestParam(required = false)String logout, Principal principal, HttpServletRequest request){

@@ -49,6 +49,8 @@ public class MailService {
                 return template.getTemplateConfirmMail(name,id);
             case "NUTRICIONISTA":
                 return template.getTemplateConfirmMailNutri(name,id);
+            case "COMEDOR":
+                return template.getTemplateConfirmComedor(name,id);
             default:
                 return null;
         }

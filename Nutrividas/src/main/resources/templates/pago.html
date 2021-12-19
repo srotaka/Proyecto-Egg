@@ -167,14 +167,16 @@
 		</div>
 
 		<!-- Formulario -->
-		<form action="" id="formulario-tarjeta" class="formulario-tarjeta">
+		<form method="POST" action="/compra/pagar" id="formulario-tarjeta" class="formulario-tarjeta" th:object="${compra}">
+			<input th:field="*{id}" type="hidden">
+			<input th:field="*{usuario}" type="hidden">
 			<div class="grupo">
 				<label for="inputNumero">Número Tarjeta</label>
-				<input type="text" id="inputNumero" maxlength="19" autocomplete="off">
+				<input th:field="*{tarjeta.numeroTarjeta}" type="text" id="inputNumero" maxlength="19" autocomplete="off">
 			</div>
 			<div class="grupo">
 				<label for="inputNombre">Nombre</label>
-				<input type="text" id="inputNombre" maxlength="19" autocomplete="off">
+				<input th:field="*{tarjeta.nombre}" type="text" id="inputNombre" maxlength="19" autocomplete="off">
 			</div>
 			<div class="flexbox">
 				<div class="grupo expira">
@@ -182,7 +184,7 @@
 					<div class="flexbox">
 						<div class="grupo-select">
 							<select name="mes" id="selectMes">
-								<option disabled selected>Mes</option>
+								<option  disabled selected>Mes</option>
 							</select>
 							<i class="fas fa-angle-down"></i>
 						</div>
@@ -197,7 +199,7 @@
 
 				<div class="grupo ccv">
 					<label for="inputCCV">CCV</label>
-					<input type="text" id="inputCCV" maxlength="3">
+					<input th:field="*{tarjeta.codigoSeguridad}" type="text" id="inputCCV" maxlength="3">
 				</div>
 			</div>
 			<button type="submit" class="btn-enviar ">Enviar</button>

@@ -15,16 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ApiExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({NotFoundException.class})
-   // @ResponseBody
-    public ModelAndView notFoundRequest(HttpServletRequest request, NoHandlerFoundException exception){
-        ModelAndView model = new ModelAndView("error");
-        model.addObject("codeError","404");
-        model.addObject("textError","Not found");
-        model.addObject("description",""+exception.getMessage());
-
-        return model;
-        //return new ErrorMessage(exception,request.getRequestURI());
+    @ExceptionHandler({NotFoundException.class, NoSuchElementException.class})
+    @ResponseBody
+    public ErrorMessage notFoundRequest(HttpServletRequest request, NoHandlerFoundException exception){
+        return new ErrorMessage(exception,request.getRequestURI());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
