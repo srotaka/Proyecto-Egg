@@ -85,7 +85,7 @@
           <li class="drop-down" sec:authorize="isAuthenticated()">
             <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
               style="margin-top: -13px;" role="button float-right">
-              <img  class="rounded-circle" th:src="@{/img/user-nopic.png}" width="50">
+              <img  class="rounded-circle" th:src="@{__${session.foto}__}" width="50">
               <!--<img th:uless="${session.foto} == null" class="rounded-circle" th:src="@{__${foto.ruta}__}" width="50">-->
             </a>
             <ul>

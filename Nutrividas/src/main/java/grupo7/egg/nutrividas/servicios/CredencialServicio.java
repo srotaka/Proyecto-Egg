@@ -149,14 +149,20 @@ public class CredencialServicio implements UserDetailsService {
 
         if(credencial.getRoles().contains(rolServicio.buscarPorNombre("ADMIN"))){
             session.setAttribute("listaElementos",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
+            session.setAttribute("foto", "/img/user-nopic.png");
             //session.setAttribute("foto",usuarioServicio.buscarPorMail(credencial.getMail()).getFoto());
         }else if(credencial.getRoles().contains(rolServicio.buscarPorNombre("USUARIO"))){
             session.setAttribute("listaDetalleCompras",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
+            session.setAttribute("foto", "/img/user-nopic.png");
             //session.setAttribute("foto",usuarioServicio.buscarPorMail(credencial.getMail()).getFoto());
         }else if(credencial.getRoles().contains(rolServicio.buscarPorNombre("COMEDOR"))){
             //session.setAttribute("foto",comedorServicio.buscarPorMail(credencial.getMail()).getFoto());
+            session.setAttribute("foto", "/img/user-comedor.png");
+        }else if(credencial.getRoles().contains(rolServicio.buscarPorNombre("NUTRICIONISTA"))){
+            session.setAttribute("listaElementos",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
+            session.setAttribute("foto", "/img/user-nutricionista.png");
+            //session.setAttribute("foto",usuarioServicio.buscarPorMail(credencial.getMail()).getFoto());
         }
-
         List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 
         for(Rol rol: credencial.getRoles()){

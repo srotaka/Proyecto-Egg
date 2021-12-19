@@ -126,7 +126,25 @@ public class ComedorControlador {
 
         return mav;
     }
+    
+    
+    @GetMapping("/editar/{id}")
+    public ModelAndView editarComedor(@PathVariable("id") Long id, HttpServletRequest request){
 
+        ModelAndView mav = new ModelAndView("editarComedores");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("error", flashMap.get("error"));
+            mav.addObject("comedor", flashMap.get("comedor"));
+        } else {
+            mav.addObject("provincias", provinciaServicio.obtenerProvincias());
+            mav.addObject("comedor", comedorServicio.buscarPorId(id));
+        }
+        mav.addObject("title", "Editar Comedor");
+        mav.addObject("action", "modificar");
+        return mav;
+    }
 
     @PreAuthorize("hasAnyRole('ADMIN','COMEDOR')")
     @PostMapping("/modificar")
