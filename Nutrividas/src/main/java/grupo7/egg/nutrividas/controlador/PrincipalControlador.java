@@ -75,6 +75,11 @@ public class PrincipalControlador {
         return new ModelAndView("contacto");
     }
     
+     @GetMapping("/biografia")
+    public ModelAndView biagrafia(){
+        return new ModelAndView("biografia");
+    }
+    
     @PostMapping("/confirmar")
     public RedirectView confirmacion(@RequestParam("tokenMail")Long tokenMail){
         credencialServicio.habilitarCuenta(tokenMail);
@@ -85,7 +90,11 @@ public class PrincipalControlador {
     public ModelAndView confirmado(){
         return new ModelAndView("confirmacion-mail");
     }
-
+    
+      @GetMapping("/confirmacion-compra")
+    public ModelAndView confirmacionCompra(){
+        return new ModelAndView("confirmacion-compra");
+    }
 
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false) String error, @RequestParam(required = false)String logout, Principal principal, HttpServletRequest request){

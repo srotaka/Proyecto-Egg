@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+  <meta content="Nutrividas" name="Grupo7" />
+  <title>Inicio - Nutrividas</title>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
+  <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
+  <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin>
+  <link
+    th:href="@{https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap}"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/icofont/icofont.min.css}" rel="stylesheet">
+  <link th:href="@{/boxicons/css/boxicons.min.css}" rel="stylesheet">
+  <link th:href="@{/owl.carousel/assets/owl.carousel.min.css}" rel="stylesheet">
+  <link th:href="@{/venobox/venobox.css}" rel="stylesheet">
+  <link th:href="@{/aos/aos.css}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+ <!-- ======= Header ======= -->
+ <header id="header" class="fixed-top">
+
+  <div class="container d-flex">
+
+    <div class="logo">
+      <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
+    </div>
+
+    <div class="logo mr-auto">
+      <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
+    </div>
+
+    <nav class="nav-menu d-none d-lg-block">
+      <ul>
+        <li class="active"><a href="#hero">Inicio</a></li>
+        <li class="drop-down"><a href="#">Sobre Nutrividas</a>
+          <ul>
+            <li><a href="#about">¿Qué hacemos?</a></li>
+            <li><a href="#testimonials">Testimonios</a></li>
+            <li><a href="#team">Nuestro Equipo</a></li>
+            <li><a href="#faq">Preguntas Frecuentes</a></li>
+          </ul>
+        </li>
+        <li class="drop-down"><a href="#">Nutricionistas</a>
+          <ul>
+            <li><a th:href="@{/nutricionista/comedores/__${session.usernameSession}__}">Comedores a cargo</a></li>
+            <li><a th:href="@{/nutricionista/asignarComedor/__${session.usernameSession}__}">Postularse a Comedor</a></li>
+          </ul>
+        </li>
+        <li class="drop-down"><a href="#">Mostrar</a>
+          <ul>
+            <li><a th:href="@{/comedor}">Comedores Registrados</a>
+            <li><a th:href="@{/producto}">Lista de Productos</a>
+            <li><a th:href="@{/canasta}">Lista de Canastas</a>
+          </ul>
+        </li>
+        <li class="drop-down"><a href="#">Registrar</a>
+          <ul>
+            <li><a th:href="@{/signup/comedor}">Nuevo Comedor</a>
+            <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
+            <li><a th:href="@{/canasta/crear}">Nueva Canasta</a>
+          </ul>
+        </li>
+        <!-- <li><a href="#contact">Contáctanos</a></li> -->
+        &nbsp;&nbsp;&nbsp;
+        <!-- Botón Usuario si está loggeado -->
+        <li class="drop-down" sec:authorize="isAuthenticated()">
+          <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
+            style="margin-top: -13px;" role="button float-right">
+            <img  class="rounded-circle" th:src="@{__${session.foto}__}" width="50">
+            <!--<img th:uless="${session.foto} == null" class="rounded-circle" th:src="@{__${foto.ruta}__}" width="50">-->
+          </a>
+          <ul>
+            <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
+            <li class="dropdown-divider"></li>
+
+            <li><a class="dropdown-item" th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
+            <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+          </ul>            
+        </li>
+        <!-- Fin Botón Usuario si está loggeado -->
+        
+       <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+        <li>
+          <button th:onclick="location.href='/login'"  sec:authorize="isAnonymous()" id="boton-guardar"> Iniciar Sesión
+          </a></button>
+        </li>
+        <!-- Fin botón para iniciar sesión -->
+      </ul>
+
+    </nav><!-- .nav-menu -->
+
+    <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+    <!-- <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a> -->
+    <!-- End Botón Inicio Sesión -->
+  </div>
+</header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero2" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container text-center text-md-left" data-aos="fade-up">
+      <h1>¡Muchas gracias por su colaboración!</h1>
+      <h2>... y por alimentar sonrisas</h2>
+      <a th:href="@{/}" class="btn-get-started scrollto">INICIO</a>
+    </div>
+  </section>
+  <!-- ======= End Hero Section ======= -->
+   <!-- ======= Footer ======= -->
+   <footer id="footer2">
+    <div class="copyright2">
+        Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
+        reservados
+    </div>
+</footer><!-- End Footer -->
+
+
+  <div class="loader-center" id="onload">
+    <div class="loader">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  <!-- Vendor JS Files -->
+  <script th:src="@{/jquery/jquery.min.js}"></script>
+  <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/jquery.easing/jquery.easing.min.js}"></script>
+  <script th:src="@{/php-email-form/validate.js}"></script>
+  <script th:src="@{/owl.carousel/owl.carousel.min.js}"></script>
+  <script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
+  <script th:src="@{/venobox/venobox.min.js}"></script>
+  <script th:src="@{/aos/aos.js}"></script>
+  <script th:src="@{/js/loader.js}"> </script>
+
+  <!-- Template Main JS File -->
+  <script th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>
