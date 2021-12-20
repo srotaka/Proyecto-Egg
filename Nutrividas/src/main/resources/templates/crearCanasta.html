@@ -36,53 +36,60 @@
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
 
-    <!-- PRELOADER -->
-    <div class="loader-center" id="onload">
-      <div class="loader">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-    </div>
-    <!-- END PRELOADER -->
-
     <div class="container d-flex">
+
       <div class="logo">
         <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
       </div>
+
       <div class="logo mr-auto">
         <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
       </div>
+
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li><a th:href="@{/}">Inicio</a></li>
-          <li><a th:href="@{/#contact}">Contáctanos</a></li>
-          <li class="drop-down"><a href="#">Mostrar</a>
+          <li class="active"><a href="#hero">Inicio</a></li>
+          <li class="drop-down"><a href="#">Sobre Nutrividas</a>
             <ul>
-              <li><a th:href="@{/comedor}">Lista de Comedores</a>
-              <li><a th:href="@{/producto}">Lista de Productos</a>
+              <li><a href="#about">¿Qué hacemos?</a></li>
+              <li><a href="#testimonials">Testimonios</a></li>
+              <li><a href="#team">Nuestro Equipo</a></li>
+              <li><a href="#faq">Preguntas Frecuentes</a></li>
+            </ul>
+          </li>
+          <li sec:authorize="hasRole('NUTRICIONISTA')" class="drop-down"><a href="#">Nutricionistas</a>
+            <ul>
+              <li><a th:href="@{/nutricionista/comedores/__${session.usernameSession}__}">Comedores a cargo</a></li>
+              <li><a th:href="@{/nutricionista/asignarComedor/__${session.usernameSession}__}">Postularse a Comedor</a></li>
+            </ul>
+          </li>
+          <li sec:authorize="isAuthenticated()" class="drop-down"><a href="#">Mostrar</a>
+            <ul>
+              <li><a th:href="@{/comedor}">Comedores Registrados</a>
+              <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/producto}">Lista de Productos</a>
               <li><a th:href="@{/canasta}">Lista de Canastas</a>
             </ul>
           </li>
-          <li class="drop-down"><a href="#">Registrar</a>
+          <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')" class="drop-down"><a href="#">Registrar</a>
             <ul>
-              <li><a th:href="@{/signup/comedor}">Nuevo Comedor</a>
-              <li><a th:href="@{/producto/crear}">Nuevo Producto</a>
+              <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/signup/comedor}">Nuevo Comedor</a>
+              <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/producto/crear}">Nuevo Producto</a>
+              <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/canasta/crear}">Nueva Canasta</a>
             </ul>
-          </li>&nbsp;&nbsp;&nbsp;
-
+          </li>
+          <li><a sec:authorize="isAnonymous()" href="#contact">Contáctanos</a></li>
+          &nbsp;&nbsp;&nbsp;
           <!-- Botón Usuario si está loggeado -->
           <li class="drop-down" sec:authorize="isAuthenticated()">
             <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
-              style="margin-top: -13px;" role="button float-right">
-              <img class="rounded-circle" th:src="@{/img/user-nopic.png}" width="50">
+               style="margin-top: -13px;" role="button float-right">
+              <img  class="rounded-circle" th:src="@{__${session.foto}__}" width="50">
             </a>
             <ul>
               <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
               <li class="dropdown-divider"></li>
-              <li><a class="dropdown-item" th:href="@{/modificar/${session.usernameSession}}">Editar perfil</a></li>
+
+              <li><a class="dropdown-item" th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
             </ul>
           </li>
@@ -90,13 +97,17 @@
 
           <!-- Botón Inicio Sesión si Usuario no está loggeado -->
           <li>
-            <button th:onclick="location.href='/login'" id="boton-guardar" sec:authorize="isAnonymous()"> Iniciar Sesión
+            <button th:onclick="location.href='/login'"  sec:authorize="isAnonymous()" id="boton-guardar"> Iniciar Sesión
               </a></button>
           </li>
           <!-- Fin botón para iniciar sesión -->
         </ul>
+
       </nav><!-- .nav-menu -->
 
+      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+      <!-- <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a> -->
+      <!-- End Botón Inicio Sesión -->
     </div>
   </header><!-- End Header -->
 
@@ -200,12 +211,12 @@
               th:value="${elemento.cantidadNecesaria}" disabled>
             <button th:id="editarCantidad+${elemento.producto.id}"
               th:onclick="'javascript:editarCantidad(' + ${elemento.producto.id} + ')'" class=" habilitado p-0">
-              <box-icon name='pencil' type='solid' animation='tada-hover' color='#1bac91'
-                th:id="editarIcono+${elemento.producto.id}"></box-icon>
+              <i class='bx bxs-pencil bx-xs'  style="color=#1bac91;"
+                th:id="editarIcono+${elemento.producto.id}"></i>
             </button>
             <button th:id="confirmarCantidad+${elemento.producto.id}" disabled
               th:onclick="'javascript:confirmarCantidad(' + ${elemento.producto.id} + ')'" class=" deshabilitado p-0">
-              <box-icon name='check-circle' th:id="confirmarIcono+${elemento.producto.id}"></box-icon>
+              <i class='bx bxs-check-circle bx-xs' style="color=#9D9D9D" th:id="confirmarIcono+${elemento.producto.id}"></i>
             </button>
 
           </div>
@@ -262,11 +273,15 @@
       var inputCantidad = document.getElementById('cantidad' + id);
       var botonEditar = document.getElementById('editarCantidad' + id);
       var botonConfirmar = document.getElementById('confirmarCantidad' + id);
+      var iconoEditar = document.getElementById('editarIcono' + id);
+      var iconoConfirmar = document.getElementById('confirmarIcono' + id);
 
       console.log(id);
       inputCantidad.disabled = false;
       botonConfirmar.disabled = false;
       botonEditar.disabled = true;
+      iconoEditar.style.color = '#9D9D9D';
+      iconoConfirmar.style.color='#1bac91';
     }
 
     function confirmarCantidad(id) {
@@ -274,11 +289,14 @@
       var inputCantidad = document.getElementById('cantidad' + id);
       var botonEditar = document.getElementById('editarCantidad' + id);
       var botonConfirmar = document.getElementById('confirmarCantidad' + id);
+      var iconoEditar = document.getElementById('editarIcono' + id);
+      var iconoConfirmar = document.getElementById('confirmarIcono' + id);
 
       inputCantidad.disabled = true;
       botonConfirmar.disabled = true;
       botonEditar.disabled = false;
-
+      iconoEditar.style.color ='#1bac91';
+      iconoConfirmar.style.color= '#9D9D9D';
 
       var cantidad = inputCantidad.value
       $.ajax({

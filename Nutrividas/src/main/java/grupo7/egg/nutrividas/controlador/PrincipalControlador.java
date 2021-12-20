@@ -25,6 +25,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Map;
@@ -73,8 +74,8 @@ public class PrincipalControlador {
     @GetMapping("/contacto")
     public ModelAndView contacto(){
         return new ModelAndView("contacto");
-    }
-    
+    }   
+     
     @PostMapping("/confirmar")
     public RedirectView confirmacion(@RequestParam("tokenMail")Long tokenMail){
         credencialServicio.habilitarCuenta(tokenMail);
@@ -84,8 +85,13 @@ public class PrincipalControlador {
     @GetMapping("/confirmado")
     public ModelAndView confirmado(){
         return new ModelAndView("confirmacion-mail");
-    }  
 
+    }  
+    
+    @GetMapping("/confirmacion-compra")
+    public ModelAndView confirmacionCompra(){
+        return new ModelAndView("confirmacion-compra");
+    }
 
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false) String error, @RequestParam(required = false)String logout, Principal principal, HttpServletRequest request){
@@ -93,6 +99,7 @@ public class PrincipalControlador {
         ModelAndView modelAndView = new ModelAndView("login");
 
         Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
         if (error != null) {
             modelAndView.addObject("error", "Usuario o contraseña incorrectos");
         }
@@ -101,18 +108,9 @@ public class PrincipalControlador {
             modelAndView.addObject("logout", "Ha salido correctamente de la plataforma");
              modelAndView.setViewName("redirect:/");
         }
-        if(flashMap != null){
-            modelAndView.addObject("success", flashMap.get("success"));
-        }
 
         if (principal != null) {
             modelAndView.setViewName("redirect:/ ");
-        }
-
-
-        if(principal!= null && credencialServicio.findByMail(principal.getName()).getHabilitado() == false ){
-            System.out.println("Mail: "+principal.getName());
-            throw new BadCredentialsException("La cuenta se encuentra inhabilitada");
         }
 
         return modelAndView;
@@ -124,7 +122,7 @@ public class PrincipalControlador {
 
         Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
         if (error != null) {
-            modelAndView.addObject("error", "Usuario o contraseña incorrectos");
+            modelAndView.addObject("error","Usuario o contraseña incorrectos" );
         }
 
         if(flashMap != null){
@@ -176,7 +174,6 @@ public class PrincipalControlador {
 
             Usuario usuarioCreado =usuarioServicio.crearUsuario(usuario.getDni(), usuario.getNombre(), usuario.getApellido(), usuario.getCredencial().getMail(), usuario.getTelefono(),usuario.getCredencial().getUsername(),usuario.getCredencial().getPassword());
             mailService.sendWelcomeMail("Bienvenida",usuario.getCredencial().getMail(),usuario.getCredencial().getUsername(),usuarioCreado.getCredencial().getId(),"USUARIO");
-            //request.login(usuario.getCredencial().getMail(), usuario.getCredencial().getPassword());
             mav.setViewName("redirect:/");
         } catch (Exception e) {
             attributes.addFlashAttribute("usuario", usuario);
@@ -226,15 +223,7 @@ public class PrincipalControlador {
                     nutricionista.getTelefono(), nutricionista.getCredencial().getMail(),
                     nutricionista.getCredencial().getUsername(),nutricionista.getCredencial().getPassword());
 
-            /*Foto foto;
-            if(usuario.getFoto() == null){
-                foto = fotoServicio.crearFoto(USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),usuario.getFoto());
-            }else{
-                foto = fotoServicio.actualizarFoto(usuarioCreado.getFoto(),USUARIOS_UPLOADED_FOLDER,String.valueOf(usuarioCreado.getId()),usuario.getNombre()+"-"+usuario.getApellido(),multipartFile);
-            }
-            usuarioServicio.crearFoto(foto,usuario.getId());*/
             mailService.sendWelcomeMail("Bienvenida",nutricionistaCreado.getCredencial().getMail(),nutricionistaCreado.getCredencial().getUsername(),nutricionistaCreado.getCredencial().getId(),"NUTRICIONISTA");
-            //request.login(nutricionista.getCredencial().getMail(), nutricionista.getCredencial().getPassword());
             mav.setViewName("redirect:/");
 
         } catch (Exception e) {
@@ -281,10 +270,7 @@ public class PrincipalControlador {
         try {
             Comedor comedorCreado = comedorServicio.crearComedor(comedor.getNombre(), comedor.getDireccion().getCalle(), comedor.getDireccion().getNumero(), comedor.getDireccion().getCodigoPostal(), comedor.getDireccion().getLocalidad(), comedor.getDireccion().getProvincia(), comedor.getCantidadDePersonas(), comedor.getTelefono(), comedor.getCredencial().getUsername(), comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
             mailService.sendWelcomeMail("Bienvenida",comedorCreado.getCredencial().getMail(),comedorCreado.getCredencial().getUsername(),comedorCreado.getCredencial().getId(),"COMEDOR");
-            request.login(comedor.getCredencial().getMail(), comedor.getCredencial().getPassword());
             mav.setViewName("redirect:/");
-        } catch (ServletException e) {
-            attributes.addFlashAttribute("error", "Error al realizar auto-login");
         } catch (Exception e) {
             attributes.addFlashAttribute("comedor", comedor);
             attributes.addFlashAttribute("error", e.getMessage());
@@ -293,7 +279,6 @@ public class PrincipalControlador {
 
         return mav;
     }
-
 
 }
 

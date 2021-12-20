@@ -40,33 +40,81 @@
 
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top">
+
     <div class="container d-flex">
 
-        <div class="logo">
-            <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
-        </div>
+      <div class="logo">
+        <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
+      </div>
 
-        <div class="logo mr-auto">
-            <h2 class="text-light mt-0" style="color: #1bac91 !important;">&nbsp;Nutrividas</h2>
-        </div>
+      <div class="logo mr-auto">
+        <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
+      </div>
 
         <nav class="nav-menu d-none d-lg-block">
             <ul>
-                <li><a th:href="@{/}">Inicio</a></li>
-                <li><a th:href="@{/#contact}">Contáctanos</a></li>
-                <li class="drop-down"><a href="#">Mostrar</a>
+                <li class="active"><a href="#hero">Inicio</a></li>
+                <li class="drop-down"><a href="#">Sobre Nutrividas</a>
                     <ul>
-                        <li><a th:href="@{/comedor}">Comedores Registrados</a>
-                        <li><a th:href="@{/producto}">Lista de Productos</a>
+                        <li><a href="#about">¿Qué hacemos?</a></li>
+                        <li><a href="#testimonials">Testimonios</a></li>
+                        <li><a href="#team">Nuestro Equipo</a></li>
+                        <li><a href="#faq">Preguntas Frecuentes</a></li>
                     </ul>
                 </li>
+                <li sec:authorize="hasRole('NUTRICIONISTA')" class="drop-down"><a href="#">Nutricionistas</a>
+                    <ul>
+                        <li><a th:href="@{/nutricionista/comedores/__${session.usernameSession}__}">Comedores a cargo</a></li>
+                        <li><a th:href="@{/nutricionista/asignarComedor/__${session.usernameSession}__}">Postularse a Comedor</a></li>
+                    </ul>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="drop-down"><a href="#">Mostrar</a>
+                    <ul>
+                        <li><a th:href="@{/comedor}">Comedores Registrados</a>
+                        <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/producto}">Lista de Productos</a>
+                        <li><a th:href="@{/canasta}">Lista de Canastas</a>
+                    </ul>
+                </li>
+                <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')" class="drop-down"><a href="#">Registrar</a>
+                    <ul>
+                        <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/signup/comedor}">Nuevo Comedor</a>
+                        <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/producto/crear}">Nuevo Producto</a>
+                        <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/canasta/crear}">Nueva Canasta</a>
+                    </ul>
+                </li>
+                <li><a sec:authorize="isAnonymous()" href="#contact">Contáctanos</a></li>
+                &nbsp;&nbsp;&nbsp;
+                <!-- Botón Usuario si está loggeado -->
+                <li class="drop-down" sec:authorize="isAuthenticated()">
+                    <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
+                       style="margin-top: -13px;" role="button float-right">
+                        <img  class="rounded-circle" th:src="@{__${session.foto}__}" width="50">
+                    </a>
+                    <ul>
+                        <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
+                        <li class="dropdown-divider"></li>
 
+                        <li><a class="dropdown-item" th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                    </ul>
+                </li>
+                <!-- Fin Botón Usuario si está loggeado -->
+
+                <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+                <li>
+                    <button th:onclick="location.href='/login'"  sec:authorize="isAnonymous()" id="boton-guardar"> Iniciar Sesión
+                        </a></button>
+                </li>
+                <!-- Fin botón para iniciar sesión -->
             </ul>
+
         </nav><!-- .nav-menu -->
 
+      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+      <!-- <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a> -->
+      <!-- End Botón Inicio Sesión -->
     </div>
-</header><!-- End Header -->
-
+  </header><!-- End Header -->
 <section class="signup-section">
     <div class="container-fluid">
         <div class="row no-gutter">

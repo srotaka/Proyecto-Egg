@@ -21,9 +21,6 @@ public interface PersonaRepository extends JpaRepository<Persona,Long> {
     @Query("UPDATE Persona p SET p.alta = 1 WHERE p.id = :id")
     void habilitarPersona(@Param("id") Long id);
 
-    @Modifying
-    @Query("UPDATE Persona p SET p.foto = :foto WHERE p.id = :id")
-    void actualizarFoto(@Param("foto")Foto foto,@Param("id") Long id);
 
     boolean existsByDocumento(Long documento);
     Optional<Persona> findByDocumento(Long documento);

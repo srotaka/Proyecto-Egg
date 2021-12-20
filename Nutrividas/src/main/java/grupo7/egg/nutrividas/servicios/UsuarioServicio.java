@@ -165,6 +165,12 @@ public class UsuarioServicio {
     }
 
     @Transactional
+    public Usuario buscarPorUsername(String username){
+        return usuarioRepository.findByCredencial_username(username).orElseThrow(
+                ()->new NoSuchElementException("No se halló un usuario con el username '"+username+"'"));
+    }
+
+    @Transactional
     public Usuario buscarUsuarioPorCredencial(Long id){
         if(usuarioRepository.buscarUsuarioPorCredencial(id) != null){
             return usuarioRepository.buscarUsuarioPorCredencial(id);

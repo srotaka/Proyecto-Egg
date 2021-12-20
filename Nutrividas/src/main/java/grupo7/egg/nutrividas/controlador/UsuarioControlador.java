@@ -2,20 +2,15 @@
 package grupo7.egg.nutrividas.controlador;
 
 import grupo7.egg.nutrividas.entidades.Foto;
-import grupo7.egg.nutrividas.entidades.Producto;
-import grupo7.egg.nutrividas.entidades.Tarjeta;
 import grupo7.egg.nutrividas.entidades.Usuario;
 import grupo7.egg.nutrividas.mail.MailService;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.UsuarioServicio;
-
 import java.security.Principal;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -97,6 +92,25 @@ public class UsuarioControlador {
         }
 
         usuarioServicio.crearFoto(foto,id);
+    }
+
+    @GetMapping(value = "/compras/{username}")
+    public ModelAndView signup(@PathVariable("username")String username, HttpServletRequest request, HttpSession session){
+        ModelAndView mav = new ModelAndView("historialCompras");
+        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (!session.getAttribute("usernameSession").toString().equals(username)) {
+            mav.setViewName("redirect:/ ");
+        }
+
+        if (flashMap != null) {
+            mav.addObject("error", flashMap.get("error"));
+            mav.addObject("usuario", flashMap.get("usuario"));
+        } else {
+            mav.addObject("usuario", usuarioServicio.buscarPorUsername(username));
+        }
+
+        return mav;
     }
     
 }

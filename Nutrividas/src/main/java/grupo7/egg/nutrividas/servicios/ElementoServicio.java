@@ -1,10 +1,7 @@
 package grupo7.egg.nutrividas.servicios;
 
 
-import grupo7.egg.nutrividas.entidades.Canasta;
-import grupo7.egg.nutrividas.entidades.Elemento;
-import grupo7.egg.nutrividas.entidades.Producto;
-import grupo7.egg.nutrividas.entidades.Usuario;
+import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.repositorios.CanastaRepository;
@@ -27,8 +24,9 @@ public class ElementoServicio {
 
     private ProductoServicio productoServicio;
 
+
     @Transactional
-    public Elemento crearElemento(Long idProducto, Usuario usuario){
+    public Elemento crearElemento(Long idProducto, Credencial credencial){
 
         if(idProducto == null){
             throw new FieldInvalidException("El producto es obligatorio");
@@ -40,7 +38,7 @@ public class ElementoServicio {
         elemento.setCantidadNecesaria(1);
         elemento.setCantidadComprada(0);
         elemento.setFueComprado(false);
-        elemento.setUsuario(usuario);
+        elemento.setCredencial(credencial);
         elemento.setAsignado(false);
         return elementoRepository.save(elemento);
     }
@@ -75,9 +73,9 @@ public class ElementoServicio {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Elemento> existeElementoSesion(Long idProducto, Usuario usuario){
+    public Optional<Elemento> existeElementoSesion(Long idProducto, String mail){
         Producto producto = productoServicio.obtenerProductoPorId(idProducto);
-        return elementoRepository.existeElementoSesion(producto,usuario);
+        return elementoRepository.existeElementoSesion(producto,mail);
     }
 
     @Transactional(readOnly = true)

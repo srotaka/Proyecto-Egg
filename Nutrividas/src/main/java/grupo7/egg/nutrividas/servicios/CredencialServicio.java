@@ -42,12 +42,6 @@ public class CredencialServicio implements UserDetailsService {
     @Autowired
     private ElementoServicio elementoServicio;
 
-    //@Autowired
-    //private UsuarioServicio usuarioServicio;
-
-    //@Autowired
-    //private ComedorServicio comedorServicio;
-
 
     @Transactional
     public Credencial crear(String usename, String mail, String password, List<Rol> roles){
@@ -134,13 +128,16 @@ public class CredencialServicio implements UserDetailsService {
     }
 
     private final String MESSAGE = "El nombre de usuario no existe %s";
-    private final String MESSAGEDISHARGE = "La cuenta se encuentra deshabilitada %s";
+    private final String MESSAGEDISHARGE = "La cuenta se encuentra deshabilitada";
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, BadCredentialsException{
         Credencial credencial = credencialRepository.findByMailOrUsername(username,username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(MESSAGE, username)));
 
+        if(!credencial.getHabilitado()){
+            throw new BadCredentialsException(MESSAGEDISHARGE);
+        }
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attributes.getRequest().getSession(true);
@@ -149,14 +146,17 @@ public class CredencialServicio implements UserDetailsService {
 
         if(credencial.getRoles().contains(rolServicio.buscarPorNombre("ADMIN"))){
             session.setAttribute("listaElementos",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
-            //session.setAttribute("foto",usuarioServicio.buscarPorMail(credencial.getMail()).getFoto());
+            session.setAttribute("foto", "/img/user-nopic.png");
         }else if(credencial.getRoles().contains(rolServicio.buscarPorNombre("USUARIO"))){
             session.setAttribute("listaDetalleCompras",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
-            //session.setAttribute("foto",usuarioServicio.buscarPorMail(credencial.getMail()).getFoto());
+            session.setAttribute("foto", "/img/user-nopic.png");
         }else if(credencial.getRoles().contains(rolServicio.buscarPorNombre("COMEDOR"))){
             //session.setAttribute("foto",comedorServicio.buscarPorMail(credencial.getMail()).getFoto());
+            session.setAttribute("foto", "/img/user-comedor.png");
+        }else if(credencial.getRoles().contains(rolServicio.buscarPorNombre("NUTRICIONISTA"))){
+            session.setAttribute("listaElementos",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
+            session.setAttribute("foto", "/img/user-nutricionista.png");
         }
-
         List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 
         for(Rol rol: credencial.getRoles()){

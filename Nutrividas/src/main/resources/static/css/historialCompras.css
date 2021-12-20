@@ -1,0 +1,236 @@
+* {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+}
+
+body {
+  padding-top: 6rem;
+  height: 100%;
+}
+
+a {
+  border: 0 none;
+  outline: 0;
+  text-decoration: none;
+}
+
+strong {
+  font-weight: bold;
+}
+
+p {
+  margin: 0.75rem 0 0;
+}
+
+h1 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+
+h5 {
+  font-size: 14px;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+
+input, {
+  border: 0 none;
+  outline: 0 none;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.3125rem;
+}
+
+.hidden{
+    display: none;
+}
+
+
+@media screen and (max-width: 640px) {
+  aside,
+  .basket,
+  .summary,
+  .item,
+  .remove {
+    width: 100%;
+  }
+
+  .basket-labels {
+    display: none;
+  }
+
+  .basket-module {
+    margin-bottom: 1rem;
+  }
+
+  .item {
+    margin-bottom: 1rem;
+  }
+
+  .product-image {
+    width: 40%;
+  }
+
+  .product-details {
+    width: 60%;
+  }
+
+  .price,
+  .subtotal {
+    width: 33%;
+  }
+
+  .quantity {
+    text-align: center;
+    width: 34%;
+  }
+
+  .quantity-field {
+    float: none;
+  }
+
+  .remove {
+    bottom: 0;
+    text-align: left;
+    margin-top: 0.75rem;
+    position: relative;
+  }
+
+
+  .
+
+  .summary {
+    margin-top: 1.25rem;
+    position: relative;
+  }
+}
+
+.card-footer{
+    background-color: white;
+}
+.total{
+    color: #1bac91;
+}
+
+@media screen and (min-width: 641px) and (max-width: 960px) {
+  aside {
+    padding: 0 1rem 0 0;
+  }
+  .summary {
+    width: 28%;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  main {
+    width: 100%;
+  }
+  .product-details {
+    padding: 0 1rem;
+  }
+}
+
+
+/*--------------------------------------------------------------
+# MODAL
+--------------------------------------------------------------*/
+
+#modal-productos{
+  font-size: 24px;
+  text-align: center !important;
+}
+
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+
+#footer2 .copyright2 {
+  color: #fff;
+  font-size: 14px;
+  text-align: center;
+  position: fixed;
+  height: 50px;
+  background-color: #1d1d1d;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
+  padding-top: 15px;
+
+}
+
+
+
+/*--------------------------------------------------------------
+# TÍTULO
+--------------------------------------------------------------*/
+
+#titulo{
+  text-align: center !important;
+
+  color: #444444;
+  font: normal 40px/50px "Montserrat", sans-serif;
+  background: url("../img/cover01.jpg") center center;
+  background-size: cover;
+  padding-bottom: 2rem;
+}
+
+.texto-comedores {
+
+  top: 50%;
+  margin-top: -20px;
+  font-family: 'Monserrat', serif;
+  font-size: 50px;
+}
+
+p {
+  display: inline-block;
+  vertical-align: top;
+ align-items: center;
+}
+
+.word {
+  position: auto;
+  width: 250px;
+  opacity: 0;
+}
+
+.letter {
+  display: inline-block;
+  position: relative;
+  float: left;
+  transform: translateZ(25px);
+  transform-origin: 50% 50% 25px;
+}
+
+.letter.out {
+  transform: rotateX(90deg);
+  transition: transform 0.32s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+
+.letter.behind {
+  transform: rotateX(-90deg);
+}
+
+.letter.in {
+  transform: rotateX(0deg);
+  transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.color {
+  color: #1bac91;
+}
