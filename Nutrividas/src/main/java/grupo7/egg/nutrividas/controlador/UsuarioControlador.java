@@ -9,6 +9,7 @@ import grupo7.egg.nutrividas.servicios.UsuarioServicio;
 import java.security.Principal;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,25 +37,6 @@ public class UsuarioControlador {
 
     @Autowired
     private MailService mailService;
-
-    @GetMapping(value = "/compras/{id}")
-    public ModelAndView signup(@PathVariable("id")Long id,HttpServletRequest request, Principal principal){
-        ModelAndView mav = new ModelAndView("historialCompras");
-        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
-
-        /*if (principal != null) {
-            mav.setViewName("redirect:/ ");
-        }*/
-
-        if (flashMap != null) {
-            mav.addObject("error", flashMap.get("error"));
-            mav.addObject("usuario", flashMap.get("usuario"));
-        } else {
-            mav.addObject("usuario", usuarioServicio.buscarPorId(id));
-        }
-
-        return mav;
-    }
 
 
     @PostMapping("/modificar")
@@ -110,6 +92,25 @@ public class UsuarioControlador {
         }
 
         usuarioServicio.crearFoto(foto,id);
+    }
+
+    @GetMapping(value = "/compras/{username}")
+    public ModelAndView signup(@PathVariable("username")String username, HttpServletRequest request, HttpSession session){
+        ModelAndView mav = new ModelAndView("historialCompras");
+        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (!session.getAttribute("usernameSession").toString().equals(username)) {
+            mav.setViewName("redirect:/ ");
+        }
+
+        if (flashMap != null) {
+            mav.addObject("error", flashMap.get("error"));
+            mav.addObject("usuario", flashMap.get("usuario"));
+        } else {
+            mav.addObject("usuario", usuarioServicio.buscarPorUsername(username));
+        }
+
+        return mav;
     }
     
 }

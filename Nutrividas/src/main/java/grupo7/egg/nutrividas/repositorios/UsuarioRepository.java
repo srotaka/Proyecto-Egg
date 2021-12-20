@@ -22,6 +22,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 
     Optional<Usuario> findByCredencial_mail(String mail);
 
+    Optional<Usuario> findByCredencial_username(String username);
+
     @Modifying
     @Query("UPDATE Usuario u SET u.alta = true")
     void habilitarUsuario(@Param("id") Long id);

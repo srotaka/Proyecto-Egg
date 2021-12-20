@@ -44,22 +44,9 @@ h5 {
   padding: 0;
 }
 
-input,
-button {
+input, {
   border: 0 none;
   outline: 0 none;
-}
-
-button {
-  background-color: #1bac91;
-  color: #fff;
-  font-size: 12px;
-  border-radius: 5px;
-}
-
-button:hover,
-button:focus {
-  background-color: #2f8f80;
 }
 
 label {
@@ -123,14 +110,19 @@ label {
   }
 
 
-  .remove button {
-    padding: 0;
-  }
+  .
 
   .summary {
     margin-top: 1.25rem;
     position: relative;
   }
+}
+
+.card-footer{
+    background-color: white;
+}
+.total{
+    color: #1bac91;
 }
 
 @media screen and (min-width: 641px) and (max-width: 960px) {
@@ -155,19 +147,6 @@ label {
 /*--------------------------------------------------------------
 # MODAL
 --------------------------------------------------------------*/
-.btn-modal-trigger{
-  background-color: #1bac91;
-  color: white;
-  margin-top: 18px;
-  border-radius: 5px;
-}
-
-.btn-modal-trigger:hover{
-  border-color: #2f8f80;
-  background: #3e9e8d;
-  color: white;
-
-}
 
 #modal-productos{
   font-size: 24px;

@@ -90,6 +90,7 @@
             <li class="dropdown-divider"></li>
 
             <li><a class="dropdown-item" th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
+            <li><a class="dropdown-item" th:href="@{/usuario/compras/__${session.usernameSession}__}">Historial compras</a></li>
             <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
           </ul>
         </li>
@@ -122,41 +123,107 @@
 </section><!-- End TÍTULO -->
 
 <!-- ======= CANASTAS ======= -->
-<main>
+<main class="mt-4">
+
+  <div class="m-5">
+      <img th:if="${usuario.foto == null}" class="rounded-circle" th:src="@{__${session.foto}__}" width="50">
+      <img th:unless="${usuario.foto == null}" class="rounded-circle" th:src="@{__${usuario.foto.ruta}__}" width="50">
+      <h2 class="ml-3" style="display:inline-block">  Mis compras</h2>
+  </div>
+
     <!-- ===== CARDS ========= -->
-  <div class="row row-cols-md-3 m-2">
-    <div class="col mr-5 mb-2" th:each="compra : ${usuario.compras}">
+  <div class="row row-cols-2 m-2 justify-content-center">
+    <div class="col col-4 mr-2  mb-2" th:each="compra : ${usuario.compras}">
         <div class="card" style="width: 30rem;">
 
-          <div class="card-image-container">
+          <div class="card-header pl-3">
             <h5 id="numberOrder" class="card-title">Orden n° [[${compra.id}]]</h5>
-            <h5 id="card" th:if="${compra.tarjeta != null}">Tarjeta [[${compra.tarjeta.numeroTarjeta}]]</h5>
-            <h5 th:unless="${compra.tarjeta != null}">Sin pagar</h5>
-            <a href="#" class="button" th:onclick="'javascript:seeHidden(' + ${compra.id} + ')'">Ver detalle  <i class='bx bxs-chevron-down bx-xs' th:id="__${compra.id}__iconShow"></i> </a>
+          </div>
+          <div class="card-body">
+            <h5 id="card" th:if="${compra.tarjeta != null}" style="display:inline-block;" class="justify-content-start">Tarjeta [[${compra.tarjeta.numeroTarjeta}]] </h5>
+            <h5 th:unless="${compra.tarjeta != null}" style="display:inline-block;" class="justify-content-end">Sin pagar</h5>
+            <a href="#" class="button" th:onclick="'javascript:seeHidden(' + ${compra.id} + ')'" style="display:inline-block;">   | Ver detalle  <i class='bx bxs-chevron-down bx-xs' th:id="__${compra.id}__iconShow"></i> </a>
+
           </div>
 
             <div class="card-body hidden"  th:id="${compra.id}">
-              <table class="table table-borderless text-center">
-                <thead>
-                  <tr>
-                    <th style="width: 10rem;" scope="col">Canasta</th>
-                    <th style="width: 2rem;" scope="col">Cantidad</th>
-                    <th style="width: 10rem;" scope="col">Precio</th>
-                  </tr>
-                </thead>
-              </table>
-
               <ul class="list-group list-group-flush">
+                <li class="list-group-item text-center">
+                  <p  style="display:inline-block;width: 8rem;font-weight: bolder;">Canasta</p>
+                  <p  style="display:inline-block;width: 4rem;font-weight: bolder;">Cantidad</p>
+                  <p  style="display:inline-block;width: 10rem;font-weight: bolder;">Precio</p>
+                  <p  style="display:inline-block;width: 2rem;"></p>
+                </li>
                 <li class="list-group-item text-center" th:each="detalleCompra : ${compra.detalleCompras}">
-                  <p th:text="${detalleCompra.canasta.descripcion}" style="display:inline-block;width: 10rem;"></p>
-                  <p th:text="${detalleCompra.cantidad}" style="display:inline-block;width: 2rem;"></p>
+                  <p th:text="${detalleCompra.canasta.descripcion}" style="display:inline-block;width: 8rem;"></p>
+                  <p th:text="${detalleCompra.cantidad}" style="display:inline-block;width: 4rem;"></p>
                   <p  style="display:inline-block;width: 10rem;">$ [[${#numbers.formatDecimal(detalleCompra.subtotal,0,2)}]]</p>
+                  <button type="button"  data-bs-toggle="modal"
+                          th:attr="data-target='#customerModel'+${detalleCompra.canasta.id}"
+                          th:onclick="'javascript:verModal(' + ${detalleCompra.canasta.id} + ')'"
+                          style="display:inline-block;width: 2rem;">
+                    <box-icon name='lemon' color='#1bac91' ></box-icon>
+                    <!--<i class='bx bxs-lemon bx-sm' style="color:#1bac91;"></i>--></button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" th:id="${detalleCompra.canasta.id}" tabindex="-1"
+                       aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="modal-productos">Productos</h5>
+                          <button type="button" class="btn-close-modal" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <!-- Tabla de productos -->
+                          <div class="container mt-3">
+                            <p>Detalle de productos de la canasta</p>
+                            <table class="table table-striped">
+                              <thead>
+                              <tr>
+                                <th></th>
+                                <th>Cantidad</th>
+                                <th>Nombre</th>
+                                <th>Marca</th>
+                                <th>Precio</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              <tr th:each="elemento, step : ${detalleCompra.canasta.elementos}">
+                                <th th:if="${elemento.producto.foto == null}" width="30px" heigth="25px"
+                                    class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
+                                  background-position: center;background-size: cover;'">
+                                </th>
+                                <th th:unless="${elemento.producto.foto == null}" width="40px" heigth="25px"
+                                    class="text-center" th:style="'z-index: 100
+                                  ;background-image:url(http://localhost:8080/fotos/'+${elemento.producto.foto.id}+') !important;background-repeat: no-repeat;
+                                   background-position: center;background-size: cover;'">
+                                <td th:text="${elemento.cantidadNecesaria}"></td>
+                                <td th:text="${elemento.producto.nombre}"></td>
+                                <td th:text="${elemento.producto.marca.nombre}"></td>
+                                <td th:text="${#numbers.formatDecimal(elemento.producto.precio,0,2)}" id="precio-modal">
+                                </td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <!-- Fin Tabla de productos -->
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-modal-trigger" data-bs-dismiss="modal">Cerrar</button>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Fin modal detalles productos -->
+
                 </li>
               </ul>
             </div>
 
-          <div class="card-body">
-            <h5>Total $[[${#numbers.formatDecimal(compra.precioFinal,0,2)}]]</h5>
+          <div class="card-footer">
+            <h5 class="total">Total $[[${#numbers.formatDecimal(compra.precioFinal,0,2)}]]</h5>
           </div>
         </div>
     </div>
@@ -216,6 +283,10 @@
           x.style.display = "none";
           icon.className = "bx bxs-chevron-down bx-xs";
         }
+    }
+
+    function verModal(id) {
+      $('#' + id).modal('show');
     }
 
   </script>

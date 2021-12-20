@@ -204,11 +204,9 @@ public class ComedorControlador {
     }
 
     @GetMapping(value ="/biografia/{id}")
-    public ModelAndView mostrarBiografiaComedor(@PathVariable("id") Long id,
-                                       HttpServletRequest request) {
+    public ModelAndView mostrarBiografiaComedor(@PathVariable("id") Long id, HttpServletRequest request) {
 
-        ModelAndView mav = new ModelAndView("comedores");
-
+        ModelAndView mav = new ModelAndView("biografia");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
@@ -216,6 +214,7 @@ public class ComedorControlador {
             mav.addObject("error", flashMap.get("error"));
         }
 
+        mav.addObject("comedor", comedorServicio.buscarPorId(id));
         mav.addObject("biografia", comedorServicio.buscarPorId(id).getBiografia());
         return mav;
     }
