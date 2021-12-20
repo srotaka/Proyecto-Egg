@@ -41,7 +41,7 @@ public class CanastaControlador {
     @Autowired
     private ProductoServicio productoServicio;
 
-    @PreAuthorize("hasAnyRole('USUARIO')")
+
     @GetMapping
     public ModelAndView canastasComedor(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("carrito");
@@ -199,7 +199,6 @@ public class CanastaControlador {
         return new RedirectView("/canasta");
     }
 
-    @PreAuthorize("hasAnyRole('USUARIO')")
     @GetMapping("/{id}")
     public ModelAndView canastasComedor(@PathVariable("id")Long id,HttpServletRequest request){
         ModelAndView mav = new ModelAndView("carrito");

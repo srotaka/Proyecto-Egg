@@ -147,12 +147,16 @@ public class ProductoServicio {
         switch (patologia){
             case "celiacos":
                 productPage = productoRepository.findByAptoCeliacos(apto,request);
+                break;
             case  "diabeticos":
                 productPage = productoRepository.findByAptoDiabeticos(apto,request);
+                break;
             case "hipertensos":
                 productPage = productoRepository.findByAptoHipertensos(apto,request);
+                break;
             case "intolerantesLactosa":
                 productPage = productoRepository.findByAptoIntoleranteLactosa(apto,request);
+                break;
         }
         return new Paged(productPage, Paging.of(productPage.getTotalPages(), page, size));
     }

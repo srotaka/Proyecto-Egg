@@ -37,8 +37,8 @@ public class Elemento {
     private Boolean fueComprado;
     @ManyToOne
     private Canasta canasta;
-    @OneToOne
-    private Usuario usuario;
+    @ManyToOne
+    private Credencial credencial;
 
     private Boolean asignado;
 

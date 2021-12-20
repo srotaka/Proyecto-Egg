@@ -125,7 +125,7 @@ public class CompraControlador {
 
             compraServicio.pagarCompra(compra.getId(),tarjeta);
             attributes.addFlashAttribute("exito", "El pago ha sido realizado con éxito");
-            mav.setViewName("redirect:/");
+            mav.setViewName("redirect:/confirmacion-compra");
         } catch (Exception e) {
             attributes.addFlashAttribute("compra", compra);
             attributes.addFlashAttribute("error", e.getMessage());
