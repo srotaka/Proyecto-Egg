@@ -1,10 +1,7 @@
 package grupo7.egg.nutrividas.repositorios;
 
 
-import grupo7.egg.nutrividas.entidades.Canasta;
-import grupo7.egg.nutrividas.entidades.Elemento;
-import grupo7.egg.nutrividas.entidades.Producto;
-import grupo7.egg.nutrividas.entidades.Usuario;
+import grupo7.egg.nutrividas.entidades.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -40,8 +37,8 @@ public interface ElementoRepository extends JpaRepository<Elemento,Long> {
     Optional<Elemento> findByProducto_IdAndCanasta_id(Long prductoId, Long canastaId);
     List<Elemento> findByProducto_Id(Long prductoId);
 
-    @Query("SELECT e FROM Elemento e WHERE e.usuario.credencial.mail = :usuarioMail AND e.asignado=false")
-    List<Elemento> obtenerElementosSesion(@Param("usuarioMail") String mail);
-    @Query("SELECT e FROM Elemento e WHERE e.producto= :producto AND e.usuario = :usuario AND e.asignado=false")
-    Optional<Elemento> existeElementoSesion(@Param("producto") Producto producto,@Param("usuario") Usuario usuario);
+    @Query("SELECT e FROM Elemento e WHERE e.credencial.mail = :mail AND e.asignado=false")
+    List<Elemento> obtenerElementosSesion(@Param("mail") String mail);
+    @Query("SELECT e FROM Elemento e WHERE e.producto= :producto AND e.credencial.mail = :credencial AND e.asignado=false")
+    Optional<Elemento> existeElementoSesion(@Param("producto") Producto producto,@Param("credencial") String mail);
 }
