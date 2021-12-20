@@ -400,6 +400,7 @@ aside {
   color: white;
   margin-top: 18px;
   border-radius: 5px;
+  padding-top: 7px;
 }
 
 .btn-modal-trigger:hover{
