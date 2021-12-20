@@ -105,11 +105,6 @@
                 <!-- Fin botón para iniciar sesión -->
             </ul>
 
-        </nav><!-- .nav-menu -->
-
-      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
-      <!-- <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a> -->
-      <!-- End Botón Inicio Sesión -->
     </div>
   </header><!-- End Header -->
 
@@ -148,7 +143,7 @@
                         <th scope="row">Acción</th>
                     </tr>
                 </thead>
-                <tbody id="myTable" th:each="comedor : ${comedores}">
+                <tbody id="myTable" style="text-align: center;" th:each="comedor : ${comedores}">
                     <tr>
                         <td class="col-md-2 px-md-1" th:text="${comedor.id}"></td>
                         <td class="col-md-3 px-md-2" th:text="${comedor.nombre}"></td>

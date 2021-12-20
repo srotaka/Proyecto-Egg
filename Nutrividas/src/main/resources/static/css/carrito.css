@@ -56,7 +56,7 @@ button:focus {
   background-color: #2f8f80;
 }
 
-img,
+.product-frame,
 .basket-module,
 .basket-labels,
 .basket-product {
@@ -400,6 +400,7 @@ aside {
   color: white;
   margin-top: 18px;
   border-radius: 5px;
+  padding-top: 7px;
 }
 
 .btn-modal-trigger:hover{

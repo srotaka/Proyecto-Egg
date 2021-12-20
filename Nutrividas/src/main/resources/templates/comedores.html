@@ -127,16 +127,14 @@
 
     <!-- ======= COMEDORES CARDS ======= -->
     <section class="hero-section">
-
         <div class="card-grid" th:unless="${comedores.page.isEmpty()}">
             <a class="card" th:each="comedor : ${comedores.page}">
-                <div class="card__background" th:style="'background-image:url(' + ${comedor.foto.ruta}+ ')'"> </div>
+                <div class="card__background" th:style="'background-image:url(' + ${comedor.foto.ruta}+ ')'"></div>
                 <div class="card__content" style="text-align: center;">
                     <p class="card__heading" th:text="${comedor.nombre}"></p>
 
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-modal-trigger btn-primary" data-bs-toggle="modal"
-
                         th:attr="data-target='#customerModel'+${comedor.id}"
                         th:onclick="'javascript:verModal(' + ${comedor.id} + ')'">Más Info..</button>
                     <!-- Modal -->
@@ -162,9 +160,15 @@
                                                     <th scope="row">Número</th>
                                                     <th scope="row">Localidad</th>
                                                     <th scope="row">Provincia</th>
+<<<<<<< HEAD
                                                     <th scope="row">Cantidad de Personas</th>
                                                     <th sec:authorize="hasRole('ADMIN')" scope="row">Editar</th>
+=======
+                                                    <th scope="row">Cantidad Personas</th>
+                                                    <th scope="row">Editar</th>
+>>>>>>> silvia
                                                     <th scope="row">Canastas</th>
+                                                    <th scope="row">Biografía</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -178,7 +182,7 @@
                                                     <td th:text="${comedor.cantidadDePersonas}"></td>
                                                     <td sec:authorize="hasRole('ADMIN')" class="text-center">
                                                         <a th:href="@{/comedor/editar/__${comedor.id}__}">
-                                                            <box-icon name='pencil' type='solid' animation='tada-hover'
+                                                            <box-icon name='edit' type='solid' animation='tada-hover'
                                                                 color='#1bac91'></box-icon>
                                                         </a>
                                                     </td>
@@ -187,6 +191,12 @@
                                                             <box-icon name='basket' type='solid' animation='tada-hover'
                                                                 color='#1bac91'>
                                                             </box-icon>
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a th:href="@{/comedor/biografia/__${comedor.id}__}">
+                                                            <box-icon name='book-heart' animation='tada-hover'
+                                                                color='#1bac91'></box-icon>
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -201,12 +211,9 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <!-- Fin modal detalles comedores -->
-
                 </div>
-
             </a>
         </div>
     </section> <!-- End Comedores Cards -->
@@ -264,6 +271,7 @@
 
     <!-- JS PARA TITULO -->
     <script th:src="@{/js/titulo.js}"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>

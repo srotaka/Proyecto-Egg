@@ -271,15 +271,10 @@
 
                                         <div class="row">
                                             <div class="col">
-                                                <label for="inputbiografia">Biografia</label>
+                                                <label for="inputbiografia">Biografía</label>
                                                 <textarea name="message" class="form-control"
                                                     th:field="*{biografia.descripcion}" id="inputbiografia" cols="30"
                                                     rows="4" placeholder="Escriba su mensaje aquí..."></textarea>
-                                                <!-- <div class="form-group mb-10">
-                                                    <input th:field="*{biografia.descripcion}" id="inputbiografia"
-                                                        type="text" required="" autofocus=""
-                                                        class="form-control border-0 shadow-sm px-10"> -->
-
                                             </div>
                                             <div class="error text-start"
                                                 th:if="${#fields.hasErrors('biografia.descripcion')}"
