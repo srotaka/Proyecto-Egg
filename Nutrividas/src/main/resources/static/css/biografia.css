@@ -239,7 +239,7 @@ body {
   --------------------------------------------------------------*/
   #hero {
     background: url("../img/children29.jpg") repeat scroll center center/cover;
-    height: 100vh;
+    height: 100%;
     width: 100%;
   }
   
