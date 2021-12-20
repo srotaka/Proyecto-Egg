@@ -117,12 +117,11 @@
 
     <section class="login-section">
         <!-- Mensaje éxito y error-->
-        <div th:if="${error != null} OR ${logout != null}"
+        <div id="alert" th:if="${error != null} OR ${logout != null}"
             th:classappend="${error != null} ? 'alert-danger' : 'alert-warning'"
             class="alert alert-warning alert-dismissible fade show" role="alert">
             <i th:classappend="${error != null} ? 'fa-times-circle' : 'fa-check-circle'" class="fas "></i>
             [[${error != null} ? ${error} : ${logout}]]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
         <div th:if="${success != null}" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -206,6 +205,12 @@
 
     <!-- Template Main JS File -->
     <script th:src="@{/js/main.js}"></script>
+
+   <script>
+        $("#alert").fadeTo(2000, 500).slideUp(500, function(){
+            $("#alert").slideUp(500);
+        });
+</script>
 
 </body>
 

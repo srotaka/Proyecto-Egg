@@ -128,13 +128,16 @@ public class CredencialServicio implements UserDetailsService {
     }
 
     private final String MESSAGE = "El nombre de usuario no existe %s";
-    private final String MESSAGEDISHARGE = "La cuenta se encuentra deshabilitada %s";
+    private final String MESSAGEDISHARGE = "La cuenta se encuentra deshabilitada";
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, BadCredentialsException{
         Credencial credencial = credencialRepository.findByMailOrUsername(username,username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(MESSAGE, username)));
 
+        if(!credencial.getHabilitado()){
+            throw new BadCredentialsException(MESSAGEDISHARGE);
+        }
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attributes.getRequest().getSession(true);

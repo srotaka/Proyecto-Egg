@@ -3,6 +3,8 @@ package grupo7.egg.nutrividas.entidades;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -50,6 +52,10 @@ public class Usuario {
     private Foto foto;
     @OneToOne
     private Credencial credencial;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "usuario")
+    private List<Compra> compras;
 
     @CreatedDate
     @Column( updatable = false)

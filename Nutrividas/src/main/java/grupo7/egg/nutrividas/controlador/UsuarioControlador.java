@@ -37,6 +37,25 @@ public class UsuarioControlador {
     @Autowired
     private MailService mailService;
 
+    @GetMapping(value = "/compras/{id}")
+    public ModelAndView signup(@PathVariable("id")Long id,HttpServletRequest request, Principal principal){
+        ModelAndView mav = new ModelAndView("historialCompras");
+        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        /*if (principal != null) {
+            mav.setViewName("redirect:/ ");
+        }*/
+
+        if (flashMap != null) {
+            mav.addObject("error", flashMap.get("error"));
+            mav.addObject("usuario", flashMap.get("usuario"));
+        } else {
+            mav.addObject("usuario", usuarioServicio.buscarPorId(id));
+        }
+
+        return mav;
+    }
+
 
     @PostMapping("/modificar")
     public RedirectView modificarUsuario(@RequestParam Long id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam Long dni, @RequestParam Long telefono, RedirectAttributes redirect, RedirectAttributes attributes){

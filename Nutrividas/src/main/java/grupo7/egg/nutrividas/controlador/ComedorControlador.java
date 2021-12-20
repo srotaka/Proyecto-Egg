@@ -203,4 +203,20 @@ public class ComedorControlador {
         comedorServicio.guardarFoto(foto,comedor.getId());
     }
 
+    @GetMapping(value ="/biografia/{id}")
+    public ModelAndView mostrarBiografiaComedor(@PathVariable("id") Long id,
+                                       HttpServletRequest request) {
+
+        ModelAndView mav = new ModelAndView("comedores");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+        }
+
+        mav.addObject("biografia", comedorServicio.buscarPorId(id).getBiografia());
+        return mav;
+    }
+
 }

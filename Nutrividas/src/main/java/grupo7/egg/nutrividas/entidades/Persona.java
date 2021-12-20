@@ -42,15 +42,12 @@ public class Persona {
     private Double altura;
     @Positive(message = "La altura debe ser mayor a 0")
     private Double peso;
-    private Boolean aptoCeliacos;
-    private Boolean aptoHipertensos;
-    private Boolean aptoDiabeticos;
-    private Boolean aptoIntoleranteLactosa;
+    private Boolean celiaco;
+    private Boolean hipertenso;
+    private Boolean diabetico;
+    private Boolean intoleranteLactosa;
     private Double IMC;
     private Sexo sexo;
-
-    @OneToOne
-    private Foto foto;
 
     @ManyToOne
     private Comedor comedor;

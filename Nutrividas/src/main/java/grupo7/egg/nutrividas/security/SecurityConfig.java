@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/bootstrap/**","/venobox/**","/isotope-layout/**","/boxicons/**","/icofont/**","/owl.carousel/**","/php-email-form/**","/img/**","/jquery/easing/**","/jquery/**","/js/**","/css/**","/", "/login", "/signup/*", "/error", "/login-error",
                         "/seleccion","/signup/usuario","/signup/nutricionista","/signup/comedor","/registro/usuario","/registro/nutricionista","/registro/comedor",
                         "/comedor","/error","/confirmar","/confirmado","/politica","condiciones","/contacto").permitAll() // Recursos permitidos
-                .antMatchers("/**").permitAll()// Recursos protegidos
+                .antMatchers("/**").authenticated()// Recursos protegidos
                 .and()
                 .formLogin()
                     .loginPage("/login").permitAll()

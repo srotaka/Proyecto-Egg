@@ -211,12 +211,12 @@
               th:value="${elemento.cantidadNecesaria}" disabled>
             <button th:id="editarCantidad+${elemento.producto.id}"
               th:onclick="'javascript:editarCantidad(' + ${elemento.producto.id} + ')'" class=" habilitado p-0">
-              <box-icon name='pencil' type='solid' animation='tada-hover' color='#1bac91'
-                th:id="editarIcono+${elemento.producto.id}"></box-icon>
+              <i class='bx bxs-pencil bx-xs'  style="color=#1bac91;"
+                th:id="editarIcono+${elemento.producto.id}"></i>
             </button>
             <button th:id="confirmarCantidad+${elemento.producto.id}" disabled
               th:onclick="'javascript:confirmarCantidad(' + ${elemento.producto.id} + ')'" class=" deshabilitado p-0">
-              <box-icon name='check-circle' th:id="confirmarIcono+${elemento.producto.id}"></box-icon>
+              <i class='bx bxs-check-circle bx-xs' style="color=#9D9D9D" th:id="confirmarIcono+${elemento.producto.id}"></i>
             </button>
 
           </div>
@@ -273,11 +273,15 @@
       var inputCantidad = document.getElementById('cantidad' + id);
       var botonEditar = document.getElementById('editarCantidad' + id);
       var botonConfirmar = document.getElementById('confirmarCantidad' + id);
+      var iconoEditar = document.getElementById('editarIcono' + id);
+      var iconoConfirmar = document.getElementById('confirmarIcono' + id);
 
       console.log(id);
       inputCantidad.disabled = false;
       botonConfirmar.disabled = false;
       botonEditar.disabled = true;
+      iconoEditar.style.color = '#9D9D9D';
+      iconoConfirmar.style.color='#1bac91';
     }
 
     function confirmarCantidad(id) {
@@ -285,11 +289,14 @@
       var inputCantidad = document.getElementById('cantidad' + id);
       var botonEditar = document.getElementById('editarCantidad' + id);
       var botonConfirmar = document.getElementById('confirmarCantidad' + id);
+      var iconoEditar = document.getElementById('editarIcono' + id);
+      var iconoConfirmar = document.getElementById('confirmarIcono' + id);
 
       inputCantidad.disabled = true;
       botonConfirmar.disabled = true;
       botonEditar.disabled = false;
-
+      iconoEditar.style.color ='#1bac91';
+      iconoConfirmar.style.color= '#9D9D9D';
 
       var cantidad = inputCantidad.value
       $.ajax({

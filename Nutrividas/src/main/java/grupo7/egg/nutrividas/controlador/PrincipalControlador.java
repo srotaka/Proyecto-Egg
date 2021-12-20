@@ -25,6 +25,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Map;
@@ -91,7 +92,7 @@ public class PrincipalControlador {
         return new ModelAndView("confirmacion-mail");
     }
     
-      @GetMapping("/confirmacion-compra")
+    @GetMapping("/confirmacion-compra")
     public ModelAndView confirmacionCompra(){
         return new ModelAndView("confirmacion-compra");
     }
@@ -102,6 +103,7 @@ public class PrincipalControlador {
         ModelAndView modelAndView = new ModelAndView("login");
 
         Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
         if (error != null) {
             modelAndView.addObject("error", "Usuario o contraseña incorrectos");
         }
@@ -110,18 +112,9 @@ public class PrincipalControlador {
             modelAndView.addObject("logout", "Ha salido correctamente de la plataforma");
              modelAndView.setViewName("redirect:/");
         }
-        if(flashMap != null){
-            modelAndView.addObject("success", flashMap.get("success"));
-        }
 
         if (principal != null) {
             modelAndView.setViewName("redirect:/ ");
-        }
-
-
-        if(principal!= null && credencialServicio.findByMail(principal.getName()).getHabilitado() == false ){
-            System.out.println("Mail: "+principal.getName());
-            throw new BadCredentialsException("La cuenta se encuentra inhabilitada");
         }
 
         return modelAndView;
@@ -133,7 +126,7 @@ public class PrincipalControlador {
 
         Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
         if (error != null) {
-            modelAndView.addObject("error", "Usuario o contraseña incorrectos");
+            modelAndView.addObject("error","Usuario o contraseña incorrectos" );
         }
 
         if(flashMap != null){

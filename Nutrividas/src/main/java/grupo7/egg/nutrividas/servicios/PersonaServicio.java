@@ -51,10 +51,10 @@ public class PersonaServicio {
         persona.setFechaNacimiento(fechaNacimiento);
         persona.setPeso(peso);
         persona.setAltura(altura);
-        persona.setAptoIntoleranteLactosa(aptoIntoleranteLactosa);
-        persona.setAptoHipertensos(aptoHipertenso);
-        persona.setAptoDiabeticos(aptoDiabeticos);
-        persona.setAptoCeliacos(aptoCeliaco);
+        persona.setIntoleranteLactosa(aptoIntoleranteLactosa);
+        persona.setHipertenso(aptoHipertenso);
+        persona.setDiabetico(aptoDiabeticos);
+        persona.setCeliaco(aptoCeliaco);
         persona.setEdad(calcularEdad(fechaNacimiento));
         persona.setIMC(calcularIMC(peso,altura));
         persona.setSexo(sexo);
@@ -83,10 +83,10 @@ public class PersonaServicio {
         persona.setFechaNacimiento(fechaNacimiento);
         persona.setPeso(peso);
         persona.setAltura(altura);
-        persona.setAptoIntoleranteLactosa(aptoIntoleranteLactosa);
-        persona.setAptoHipertensos(aptoHipertenso);
-        persona.setAptoDiabeticos(aptoDiabeticos);
-        persona.setAptoCeliacos(aptoCeliaco);
+        persona.setIntoleranteLactosa(aptoIntoleranteLactosa);
+        persona.setHipertenso(aptoHipertenso);
+        persona.setDiabetico(aptoDiabeticos);
+        persona.setCeliaco(aptoCeliaco);
         persona.setEdad(calcularEdad(fechaNacimiento));
         persona.setIMC(calcularIMC(peso,altura));
         persona.setSexo(sexo);
@@ -147,16 +147,6 @@ public class PersonaServicio {
         personaRepository.deleteById(id);
     }
 
-    @Transactional
-    public void modificarFoto(Long id, Foto foto) throws Exception{
-        if(foto == null){
-            throw new FieldInvalidException("La imagen no puede ser nula");
-        }
-        personaRepository.findById(id).orElseThrow(
-                ()->new NoSuchElementException("No se halló una persona con el id '"+id+"'"));
-
-        personaRepository.actualizarFoto(foto,id);
-    }
 
     @Transactional(readOnly = true)
     public Paged<Persona> listarPersonas(int page, int size, Sort order){
