@@ -146,7 +146,7 @@ public class CredencialServicio implements UserDetailsService {
 
         if(credencial.getRoles().contains(rolServicio.buscarPorNombre("ADMIN"))){
             session.setAttribute("listaElementos",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
-            session.setAttribute("foto", "/img/user-nopic.png");
+            session.setAttribute("foto", "/img/user-admin.png");
         }else if(credencial.getRoles().contains(rolServicio.buscarPorNombre("USUARIO"))){
             session.setAttribute("listaDetalleCompras",elementoServicio.obtenerElemntosSesion(credencial.getMail()));
             session.setAttribute("foto", "/img/user-nopic.png");
