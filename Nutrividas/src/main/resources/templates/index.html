@@ -79,12 +79,12 @@
               <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/canasta/crear}">Nueva Canasta</a>
             </ul>
           </li>
-<<<<<<< HEAD
-<!--          <li><a href="#contact">Contáctanos</a></li>&nbsp;&nbsp;&nbsp;-->
-=======
+
           <li><a sec:authorize="isAnonymous()" href="#contact">Contáctanos</a></li>
           &nbsp;&nbsp;&nbsp;
->>>>>>> 862d4a4d93892358807a95d4bc4cdad4b82c6051
+
+          <li><a sec:authorize="isAnonymous()" href="#contact">Contáctanos</a></li>
+
           <!-- Botón Usuario si está loggeado -->
           <li class="drop-down" sec:authorize="isAuthenticated()">
             <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
