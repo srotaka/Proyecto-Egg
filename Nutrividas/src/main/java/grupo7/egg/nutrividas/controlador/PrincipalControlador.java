@@ -74,13 +74,8 @@ public class PrincipalControlador {
     @GetMapping("/contacto")
     public ModelAndView contacto(){
         return new ModelAndView("contacto");
-    }
-    
-     @GetMapping("/biografia")
-    public ModelAndView biagrafia(){
-        return new ModelAndView("biografia");
-    }
-    
+    }   
+     
     @PostMapping("/confirmar")
     public RedirectView confirmacion(@RequestParam("tokenMail")Long tokenMail){
         credencialServicio.habilitarCuenta(tokenMail);

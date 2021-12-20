@@ -208,6 +208,7 @@ public class ComedorControlador {
                                        HttpServletRequest request) {
 
         ModelAndView mav = new ModelAndView("comedores");
+
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if (flashMap != null) {
