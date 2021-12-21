@@ -89,6 +89,8 @@
                         <li class="dropdown-divider"></li>
 
                         <li><a class="dropdown-item" th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
+                        <li><a class="dropdown-item" th:href="@{/usuario/compras/__${session.usernameSession}__}" sec:authorize="hasRole('USUARIO')">Mis compras</a></li>
+                        <li><a class="dropdown-item" th:href="@{/usuario/tarjetas/__${session.usernameSession}__}" sec:authorize="hasRole('USUARIO')">Mis Tarjetas</a></li>
                         <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
                     </ul>
                 </li>
