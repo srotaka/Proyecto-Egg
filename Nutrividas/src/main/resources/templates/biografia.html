@@ -126,10 +126,10 @@
       <div class="container">
         <div class="row justify-content-between">
 
-          <div class="col-lg-4 ">
+      <div class="col-lg-4 ">
             <div class="div-img-bg">
               <div class="about-img">
-                <img th:src="@{/img/children30.jpg}" class="img-responsive" alt="me">
+                <img th:object="${comedor}" th:src="${comedor.foto.ruta}" class="img-responsive" alt="me">
               </div>
             </div>
           </div>

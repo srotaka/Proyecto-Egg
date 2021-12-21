@@ -28,12 +28,13 @@
   <link th:href="@{/aos/aos.css}" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link th:href="@{/css/preloader.css}" rel="stylesheet">
   <link th:href="@{/css/style.css}" rel="stylesheet">
+  <link th:href="@{/css/preloader.css}" rel="stylesheet">
 
 </head>
 
-<body>
+<body class="hidden">
+
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
@@ -50,7 +51,7 @@
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="active"><a href="/">Inicio</a></li>
+          <li class="active"><a th:href="@{/}">Inicio</a></li>
           <li class="drop-down"><a href="#">Sobre Nutrividas</a>
             <ul>
               <li><a href="#about">¿Qué hacemos?</a></li>
@@ -62,7 +63,8 @@
           <li sec:authorize="hasRole('NUTRICIONISTA')" class="drop-down"><a href="#">Nutricionistas</a>
             <ul>
               <li><a th:href="@{/nutricionista/comedores/__${session.usernameSession}__}">Comedores a cargo</a></li>
-              <li><a th:href="@{/nutricionista/asignarComedor/__${session.usernameSession}__}">Postularse a Comedor</a></li>
+              <li><a th:href="@{/nutricionista/asignarComedor/__${session.usernameSession}__}">Postularse a Comedor</a>
+              </li>
             </ul>
           </li>
           <li sec:authorize="isAuthenticated()" class="drop-down"><a href="#">Mostrar</a>
@@ -85,24 +87,23 @@
           <li class="drop-down" sec:authorize="isAuthenticated()">
             <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
               style="margin-top: -13px;" role="button float-right">
-              <img  class="rounded-circle" th:src="@{__${session.foto}__}" width="50">
+              <img class="rounded-circle" th:src="@{__${session.foto}__}" width="50">
             </a>
             <ul>
               <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
               <li class="dropdown-divider"></li>
-
               <li><a class="dropdown-item" th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
               <li><a class="dropdown-item" th:href="@{/usuario/compras/__${session.usernameSession}__}" sec:authorize="hasRole('USUARIO')">Mis compras</a></li>
               <li><a class="dropdown-item" th:href="@{/usuario/tarjetas/__${session.usernameSession}__}" sec:authorize="hasRole('USUARIO')">Mis Tarjetas</a></li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
-            </ul>            
+            </ul>
           </li>
           <!-- Fin Botón Usuario si está loggeado -->
-          
-         <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+
+          <!-- Botón Inicio Sesión si Usuario no está loggeado -->
           <li>
-            <button th:onclick="location.href='/login'"  sec:authorize="isAnonymous()" id="boton-guardar"> Iniciar Sesión
-            </a></button>
+            <button th:onclick="location.href='/login'" sec:authorize="isAnonymous()" id="boton-guardar"> Iniciar Sesión
+              </a></button>
           </li>
           <!-- Fin botón para iniciar sesión -->
         </ul>
@@ -113,6 +114,7 @@
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
+
   <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
     <div class="container text-center text-md-left" data-aos="fade-up">
       <h1>Bienvenidos a Nutrividas</h1>
@@ -120,9 +122,11 @@
       <a th:href="@{/login}" class="btn-get-started scrollto">¡COMENCEMOS!</a>
     </div>
   </section>
+
   <!-- ======= End Hero Section ======= -->
 
   <!-- ======= About Section ======= -->
+
   <section id="about" class="about">
     <div class="container">
 
@@ -322,7 +326,7 @@
           orgullosos. </p>
       </div>
       <div class="row">
-        
+
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
           <div class="member">
             <img th:src="@{/img/team-flor.png}" alt="">
@@ -339,123 +343,123 @@
           </div>
         </div>
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
-            <div class="member">
-              <img th:src="@{/img/team-franco.jpeg}" alt="">
-              <h4>Franco Scolari</h4>
-              <span>Developer</span>
-              <p>
-                “Amante de las juntadas entre amigos y fan de Marvel.”
-              </p>
-              <div class="social">
-                <a href="mailto:franco.scolari@hotmail.com"><i class="icofont-email"></i></a>
-                <a th:href="@{https://www.linkedin.com/in/franco-scolari-b11bb5162/}" target="_blank"><i
-                    class="icofont-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
-            <div class="member">
-              <img th:src="@{/img/team-jorge.jpeg}" alt="">
-              <h4>Jorge Nogueira</h4>
-              <span>Developer</span>
-              <p>
-                "Me encanta la vida al aire libre y pasar tiempo con mis perros."
-              </p>
-              <div class="social">
-                <a href="mailto:nogueira.jorgea@gmail.com"><i class="icofont-email"></i></a>
-                <a th:href="@{https://www.linkedin.com/in/jorge-alberto-nogueira/}" target="_blank"><i
-                    class="icofont-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
-            <div class="member">
-              <img th:src="@{/img/team-juan.jpeg}" alt="">
-              <h4>Juan Telis</h4>
-              <span>Developer</span>
-              <p>
-               "Amante de la buena música y del buen comer."
-              </p>
-              <div class="social">
-                <a href="mailto:juantelisg@hotmail.com"><i class="icofont-email"></i></a>
-                <a th:href="@{https://www.linkedin.com/in/juan-telis-6535a11a3/}" target="_blank"><i
-                    class="icofont-linkedin"></i></a>
-              </div>
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
+          <div class="member">
+            <img th:src="@{/img/team-franco.jpeg}" alt="">
+            <h4>Franco Scolari</h4>
+            <span>Developer</span>
+            <p>
+              “Amante de las juntadas entre amigos y fan de Marvel.”
+            </p>
+            <div class="social">
+              <a href="mailto:franco.scolari@hotmail.com"><i class="icofont-email"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/franco-scolari-b11bb5162/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
         </div>
-        <div class="row">
 
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
-            <div class="member">
-              <img th:src="@{/img/team-lucas.jpeg}" alt="">
-              <h4>Lucas Moyano</h4>
-              <span>Developer</span>
-              <p>
-                "Papá apasionado de los viajes<br>y el aprendizaje."
-              </p>
-              <div class="social">
-                <a href="mailto:lmoyano.tec@gmail.com"><i class="icofont-email"></i></a>
-                <a th:href="@{https://www.linkedin.com/in/lucas-moyano-b9713b190/}" target="_blank"><i
-                    class="icofont-linkedin"></i></a>
-              </div>
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
+          <div class="member">
+            <img th:src="@{/img/team-jorge.jpeg}" alt="">
+            <h4>Jorge Nogueira</h4>
+            <span>Developer</span>
+            <p>
+              "Me encanta la vida al aire libre y pasar tiempo con mis perros."
+            </p>
+            <div class="social">
+              <a href="mailto:nogueira.jorgea@gmail.com"><i class="icofont-email"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/jorge-alberto-nogueira/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
-            <div class="member">
-              <img th:src="@{/img/team-juana.png}" alt="">
-              <h4>Juana Morinigo</h4>
-              <span>Developer</span>
-              <p>
-                Alguna breve descripción o comentario personal
-              </p>
-              <div class="social">
-                <a href="mailto:lissetmorinigo24@gmail.com"><i class="icofont-email"></i></a>
-                <a th:href="@{https://www.linkedin.com/in/juana-lisset-morinigo-molinas/}" target="_blank"><i
-                    class="icofont-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
-            <div class="member">
-              <img th:src="@{/img/team-eva.png}" alt="">
-              <h4>Eva Sarapura</h4>
-              <span>Developer</span>
-              <p>
-                Alguna breve descripción o comentario personal
-              </p>
-              <div class="social">
-                <a href="mailto:evyy.sarapura@gmail.com"><i class="icofont-email"></i></a>
-                <a th:href="@{https://www.linkedin.com/in/eva-s-74335b1b2/}" target="_blank"><i
-                    class="icofont-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
+        </div>
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
-            <div class="member">
-              <img th:src="@{/img/team-silvia.png}" alt="">
-              <h4>Silvia Otaka</h4>
-              <span>Developer</span>
-              <p>
-                "Mamá 24/7 y fan de Harry Potter."
-              </p>
-              <div class="social">
-                <a href="mailto:srotaka@gmail.com"><i class="icofont-email"></i></a>
-                <a th:href="@{http://www.linkedin.com/in/silvia-raquel-otaka}" target="_blank"><i
-                    class="icofont-linkedin"></i></a>
-              </div>
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
+          <div class="member">
+            <img th:src="@{/img/team-juan.jpeg}" alt="">
+            <h4>Juan Telis</h4>
+            <span>Developer</span>
+            <p>
+              "Amante de la buena música y del buen comer."
+            </p>
+            <div class="social">
+              <a href="mailto:juantelisg@hotmail.com"><i class="icofont-email"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/juan-telis-6535a11a3/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="row">
 
+
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
+          <div class="member">
+            <img th:src="@{/img/team-lucas.jpeg}" alt="">
+            <h4>Lucas Moyano</h4>
+            <span>Developer</span>
+            <p>
+              "Papá apasionado de los viajes<br>y el aprendizaje."
+            </p>
+            <div class="social">
+              <a href="mailto:lmoyano.tec@gmail.com"><i class="icofont-email"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/lucas-moyano-b9713b190/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
+          <div class="member">
+            <img th:src="@{/img/team-juana.png}" alt="">
+            <h4>Juana Morinigo</h4>
+            <span>Developer</span>
+            <p>
+              Alguna breve descripción o comentario personal
+            </p>
+            <div class="social">
+              <a href="mailto:lissetmorinigo24@gmail.com"><i class="icofont-email"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/juana-lisset-morinigo-molinas/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
+          <div class="member">
+            <img th:src="@{/img/team-eva.png}" alt="">
+            <h4>Eva Sarapura</h4>
+            <span>Developer</span>
+            <p>
+              Alguna breve descripción o comentario personal
+            </p>
+            <div class="social">
+              <a href="mailto:evyy.sarapura@gmail.com"><i class="icofont-email"></i></a>
+              <a th:href="@{https://www.linkedin.com/in/eva-s-74335b1b2/}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in">
+          <div class="member">
+            <img th:src="@{/img/team-silvia.png}" alt="">
+            <h4>Silvia Otaka</h4>
+            <span>Developer</span>
+            <p>
+              "Mamá 24/7 y fan de Harry Potter."
+            </p>
+            <div class="social">
+              <a href="mailto:srotaka@gmail.com"><i class="icofont-email"></i></a>
+              <a th:href="@{http://www.linkedin.com/in/silvia-raquel-otaka}" target="_blank"><i
+                  class="icofont-linkedin"></i></a>
+            </div>
+          </div>
         </div>
 
       </div>
+
+    </div>
   </section><!-- End Team Section -->
 
   <!-- ======= F.A.Q Section ======= -->
@@ -669,7 +673,7 @@
           <div class="col-lg-4 col-md-6 footer-links">
             <h4>Enlaces Útiles</h4>
             <ul>
-              <li><i class="bx bx-chevron-right" ></i> <a href="#" class="smoothScroll">Inicio</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#" class="smoothScroll">Inicio</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">¿Qué hacemos?</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Nuestro Equipo</a></li>
               <li><i class="bx bx-chevron-right"></i> <a th:href="@{/condiciones}" target="_blank">Términos y
@@ -681,10 +685,11 @@
             </ul>
           </div>
 
+
           <div class="col-lg-4 col-md-6 footer-newsletter">
             <h4>Boletín de Novedades</h4>
             <p>Si quieres recibir nuestras últimas novedades, suscríbete.</p>
-            <form action="" method="post">
+            <form action="../static/php-email-form/notify.php" method="post" role="form" class="php-email-form">
               <input type="email" name="email"><input type="submit" value="Suscribirse">
             </form>
           </div>
@@ -697,11 +702,7 @@
     </div>
   </footer><!-- End Footer -->
 
-
-
-  <!-- ======= BACK TO TOP ======= -->
-  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-  <!-- ======= BACK TO TOP ======= -->
+  <!-- PRELOADER -->
   <div class="loader-center" id="onload">
     <div class="loader">
       <div class="dot"></div>
@@ -711,6 +712,11 @@
       <div class="dot"></div>
     </div>
   </div>
+  <!-- END PRELOADER -->
+  <!-- ======= BACK TO TOP ======= -->
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+  <!-- ======= BACK TO TOP ======= -->
+
   <!-- Vendor JS Files -->
   <script th:src="@{/jquery/jquery.min.js}"></script>
   <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
@@ -720,7 +726,7 @@
   <script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
   <script th:src="@{/venobox/venobox.min.js}"></script>
   <script th:src="@{/aos/aos.js}"></script>
-  <script th:src="@{/js/loader.js}"> </script>
+  <script th:src="@{/js/loader.js}"></script>
 
   <!-- Template Main JS File -->
   <script th:src="@{/js/main.js}"></script>

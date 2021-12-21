@@ -30,7 +30,12 @@ html {
     background-position: center center;
     border-radius: 20px;
   }
-  
+  .bg-image2 {
+    background-image: url("../img/nutricionistaCard.jpg");
+    background-size: cover;
+    background-position: center center;
+    border-radius: 20px;
+  }
   body {
       color: #444444 !important;
       font-family: 'Newsreader', serif !important;
@@ -100,10 +105,15 @@ html {
   
   #mensaje-Secundario-SignUp {
       font-size: 1.5rem;
-      text-align: center;
+      text-align: center !important;
   }
   
   
+  #mensaje-nutricionista {
+    font-size: 1.5rem;
+    text-align: center !important;
+    
+}
   /*--------------------------------------------------------------
   # Footer
   --------------------------------------------------------------*/
@@ -151,6 +161,7 @@ p {
   display: inline-block;
   vertical-align: top;
  align-items: center;
+ padding-top: 16px;
 }
 
 .word {
