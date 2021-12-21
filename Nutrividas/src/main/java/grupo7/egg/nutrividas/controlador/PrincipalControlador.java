@@ -241,9 +241,6 @@ public class PrincipalControlador {
         Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
         mav.addObject("provincias", provinciaServicio.obtenerProvincias());
 
-        if (principal != null) {
-            mav.setViewName("redirect:/ ");
-        }
 
         if (flashMap != null) {
             mav.addObject("error", flashMap.get("error"));
