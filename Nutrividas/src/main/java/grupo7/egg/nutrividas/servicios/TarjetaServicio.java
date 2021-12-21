@@ -151,7 +151,7 @@ public class TarjetaServicio {
     public void eliminarTarjeta(Long idTarjeta) throws Exception {
         tarjetaRepository.findById(idTarjeta).orElseThrow(
                 () -> new Exception("No se halló una tarjeta con el id " + idTarjeta));
-        tarjetaRepository.deleteById(idTarjeta);
+        tarjetaRepository.eliminarTarjeta(idTarjeta);
     }
 
     @Transactional

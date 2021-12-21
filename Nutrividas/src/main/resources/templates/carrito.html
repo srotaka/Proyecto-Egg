@@ -48,15 +48,7 @@
 
       <nav class="nav-menu d-none d-lg-block">
         <ul>
-          <li class="active"><a href="#hero">Inicio</a></li>
-          <li class="drop-down"><a href="#">Sobre Nutrividas</a>
-            <ul>
-              <li><a href="#about">¿Qué hacemos?</a></li>
-              <li><a href="#testimonials">Testimonios</a></li>
-              <li><a href="#team">Nuestro Equipo</a></li>
-              <li><a href="#faq">Preguntas Frecuentes</a></li>
-            </ul>
-          </li>
+          <li class="active"><a href="/">Inicio</a></li>
           <li sec:authorize="hasRole('NUTRICIONISTA')" class="drop-down"><a href="#">Nutricionistas</a>
             <ul>
               <li><a th:href="@{/nutricionista/comedores/__${session.usernameSession}__}">Comedores a cargo</a></li>
@@ -90,6 +82,7 @@
               <li class="dropdown-divider"></li>
 
               <li><a class="dropdown-item" th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
+              <li><a class="dropdown-item" th:href="@{/usuario/tarjetas/__${session.usernameSession}__}">Mis Tarjetas</a></li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
             </ul>
           </li>
