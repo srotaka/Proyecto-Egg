@@ -471,13 +471,13 @@ aside {
 --------------------------------------------------------------*/
 
 #titulo{
-  text-align: center !important;
-  
+  text-align: center !important;  
   color: #444444;
   font: normal 40px/50px "Montserrat", sans-serif;
   background: url("../img/cover01.jpg") center center;
   background-size: cover;
-  padding-bottom: 2rem;
+  padding-bottom: 40px;
+  padding-top: 40px;
 }
 
 .texto-comedores {
