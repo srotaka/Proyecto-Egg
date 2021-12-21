@@ -128,6 +128,14 @@ public class UsuarioServicio {
     }
 
     @Transactional
+    public List<Tarjeta> buscarTarjetasDeUsuario(String username){
+        Credencial credencial = credencialServicio.buscarCredencialPorUsername(username);
+        Usuario usuario = usuarioRepository.buscarUsuarioPorCredencial(credencial.getId());
+
+        return tarjetaServicio.obtenerTarjetasDeUsuario(usuario.getId());
+    }
+
+    @Transactional
     public void deshabilitarUsuario(Long idUsuario){
         Usuario usuario =usuarioRepository.findById(idUsuario).orElseThrow(
                 () -> new NoSuchElementException("No se halló un usuario con el id " + idUsuario));
