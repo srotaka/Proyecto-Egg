@@ -31,7 +31,7 @@ public class DetalleCompra {
 
     private Double subtotal;
 
-    @OneToOne
+    @ManyToOne
     private Compra compra;
 
     private Boolean asignado;
