@@ -14,13 +14,13 @@
 
     <!-- BOOTSTRAP 5.1.3-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap"
-          rel="stylesheet">
+        rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
@@ -38,180 +38,196 @@
 
 <body>
 
-<!-- ======= Header ======= -->
-<header id="header" class="fixed-top">
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top">
 
-    <div class="container d-flex">
+        <div class="container d-flex">
 
-      <div class="logo">
-        <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
-      </div>
-
-      <div class="logo mr-auto">
-        <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
-      </div>
-
-        <nav class="nav-menu d-none d-lg-block">
-            <ul>
-                <li class="active"><a href="/">Inicio</a></li>
-                <li sec:authorize="hasRole('NUTRICIONISTA')" class="drop-down"><a href="#">Nutricionistas</a>
-                    <ul>
-                        <li><a th:href="@{/nutricionista/comedores/__${session.usernameSession}__}">Comedores a cargo</a></li>
-                        <li><a th:href="@{/nutricionista/asignarComedor/__${session.usernameSession}__}">Postularse a Comedor</a></li>
-                    </ul>
-                </li>
-                <li sec:authorize="isAuthenticated()" class="drop-down"><a href="#">Mostrar</a>
-                    <ul>
-                        <li><a th:href="@{/comedor}">Comedores Registrados</a>
-                        <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/producto}">Lista de Productos</a>
-                        <li><a th:href="@{/canasta}">Lista de Canastas</a>
-                    </ul>
-                </li>
-                <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')" class="drop-down"><a href="#">Registrar</a>
-                    <ul>
-                        <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/signup/comedor}">Nuevo Comedor</a>
-                        <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/producto/crear}">Nuevo Producto</a>
-                        <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/canasta/crear}">Nueva Canasta</a>
-                    </ul>
-                </li>
-                <li><a sec:authorize="isAnonymous()" href="#contact">Contáctanos</a></li>
-                &nbsp;&nbsp;&nbsp;
-                <!-- Botón Usuario si está loggeado -->
-                <li class="drop-down" sec:authorize="isAuthenticated()">
-                    <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
-                       style="margin-top: -13px;" role="button float-right">
-                        <img  class="rounded-circle" th:src="@{__${session.foto}__}" width="50">
-                    </a>
-                    <ul>
-                        <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
-                        <li class="dropdown-divider"></li>
-
-                        <li><a class="dropdown-item" th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
-                        <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
-                    </ul>
-                </li>
-                <!-- Fin Botón Usuario si está loggeado -->
-
-                <!-- Botón Inicio Sesión si Usuario no está loggeado -->
-                <li>
-                    <button th:onclick="location.href='/login'"  sec:authorize="isAnonymous()" id="boton-guardar"> Iniciar Sesión
-                        </a></button>
-                </li>
-                <!-- Fin botón para iniciar sesión -->
-            </ul>
-
-        </nav><!-- .nav-menu -->
-
-      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
-      <!-- <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a> -->
-      <!-- End Botón Inicio Sesión -->
-    </div>
-  </header><!-- End Header -->
-<section class="signup-section">
-    <div class="container-fluid">
-        <div class="row no-gutter">
-
-            <!-- Mensaje éxito y error -->
-            <div th:if="${error != null} OR ${success != null}"
-                 th:classappend="${error != null} ? 'alert-danger' : 'alert-success'"
-                 class="alert alert-warning alert-dismissible fade show" role="alert">
-                <i th:classappend="${error != null} ? 'fa-times-circle' : 'fa-check-circle'" class="fas "></i>
-                [[${error != null} ? ${error} : ${success}]]
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <div class="logo">
+                <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
             </div>
-            <!-- *************** -->
 
-            <!-- The content half -->
-            <div class="col-md-6 bg-light">
-                <div class="login d-flex align-items-center py-5">
+            <div class="logo mr-auto">
+                <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
+            </div>
 
-                    <!-- Demo content-->
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-10 mx-auto">
-                                <h3 class="display-4" id="mensaje-Bienvenida-SignUp">¡Edite su usuario!</h3>
-                                <form th:action="@{/usuario/modificar}" th:object="${usuario}" method="POST">
-                                    <input th:field="*{id}" type="hidden"/>
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="nombre">Nombre</label>
-                                            <div class="form-group mb-3">
-                                                <input th:field="*{nombre}" id="inputNombre" type="text"
-                                                       placeholder="" required="" autofocus=""
-                                                       class="form-control border-0 shadow-sm px-4">
-                                            </div>
-                                            <div class="error text-start" th:if="${#fields.hasErrors('nombre')}"
-                                                 th:errors="*{nombre}" style="color:red;"></div>
-                                        </div>
-                                        <div class="col">
-                                            <label for="apellido">Apellido</label>
-                                            <div class="form-group mb-3">
-                                                <input th:field="*{apellido}" id="inputApellido" type="text"
-                                                       placeholder="" required=""
-                                                       class="form-control border-0 shadow-sm px-4 text">
-                                            </div>
-                                            <div class="error text-start" th:if="${#fields.hasErrors('apellido')}"
-                                                 th:errors="*{apellido}" style="color:red;"></div>
-                                        </div>
-                                    </div>
+            <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li class="active"><a href="/">Inicio</a></li>
+                    <li sec:authorize="hasRole('NUTRICIONISTA')" class="drop-down"><a href="#">Nutricionistas</a>
+                        <ul>
+                            <li><a th:href="@{/nutricionista/comedores/__${session.usernameSession}__}">Comedores a
+                                    cargo</a></li>
+                            <li><a th:href="@{/nutricionista/asignarComedor/__${session.usernameSession}__}">Postularse
+                                    a Comedor</a></li>
+                        </ul>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" class="drop-down"><a href="#">Mostrar</a>
+                        <ul>
+                            <li><a th:href="@{/comedor}">Comedores Registrados</a>
+                            <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/producto}">Lista de
+                                    Productos</a>
+                            <li><a th:href="@{/canasta}">Lista de Canastas</a>
+                        </ul>
+                    </li>
+                    <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')" class="drop-down"><a href="#">Registrar</a>
+                        <ul>
+                            <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/signup/comedor}">Nuevo Comedor</a>
+                            <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/producto/crear}">Nuevo Producto</a>
+                            <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/canasta/crear}">Nueva
+                                    Canasta</a>
+                        </ul>
+                    </li>
+                    <li><a sec:authorize="isAnonymous()" href="#contact">Contáctanos</a></li>
+                    &nbsp;&nbsp;&nbsp;
+                    <!-- Botón Usuario si está loggeado -->
+                    <li class="drop-down" sec:authorize="isAuthenticated()">
+                        <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#"
+                            id="dropdown-avatar" style="margin-top: -13px;" role="button float-right">
+                            <img class="rounded-circle" th:src="@{__${session.foto}__}" width="50">
+                        </a>
+                        <ul>
+                            <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
+                            <li class="dropdown-divider"></li>
 
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="dni">DNI</label>
-                                            <div class="form-group mb-3">
-                                                <input th:field="*{dni}" id="inputDni" type="number" placeholder=""
-                                                       required="" autofocus=""
-                                                       class="form-control border-0 shadow-sm px-4">
-                                            </div>
-                                            <div class="error text-start" th:if="${#fields.hasErrors('dni')}"
-                                                 th:errors="*{dni}" style="color:red;"></div>
-                                        </div>
-                                        <div class="col">
-                                            <label for="telefono">Teléfono</label>
-                                            <div class="form-group mb-3">
-                                                <input th:field="*{telefono}" id="inputTelefono" type="number"
-                                                       placeholder="" required="" autofocus=""
-                                                       class="form-control border-0 shadow-sm px-4">
-                                            </div>
-                                            <div class="error text-start" th:if="${#fields.hasErrors('telefono')}"
-                                                 th:errors="*{telefono}" style="color:red;"></div>
-                                        </div>
-                                    </div>
+                            <li><a class="dropdown-item"
+                                    th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                    <!-- Fin Botón Usuario si está loggeado -->
 
-                                    <button type="submit" class="btn btn-secondary mb-2">MODIFICAR</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div><!-- End -->
+                    <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+                    <li>
+                        <button th:onclick="location.href='/login'" sec:authorize="isAnonymous()" id="boton-guardar">
+                            Iniciar Sesión
+                            </a></button>
+                    </li>
+                    <!-- Fin botón para iniciar sesión -->
+                </ul>
 
-                </div>
-            </div><!-- End -->
-
-            <!-- The image half -->
-            <div class="col-md-6 d-none d-md-flex bg-image"></div>
+            </nav><!-- .nav-menu -->
         </div>
-    </div>
-</section>
-<!-- ======= Footer ======= -->
-<footer id="footer2">
-    <div class="copyright2">
-        Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
-        reservados
-    </div>
-</footer><!-- End Footer -->
+    </header><!-- End Header -->
 
-<!-- Vendor JS Files -->
-<script th:src="@{/jquery/jquery.min.js}"></script>
-<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<script th:src="@{/jquery.easing/jquery.easing.min.js}"></script>
-<script th:src="@{/php-email-form/validate.js}"></script>
-<script th:src="@{/owl.carousel/owl.carousel.min.js}"></script>
-<script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
-<script th:src="@{/venobox/venobox.min.js}"></script>
-<script th:src="@{/aos/aos.js}"></script>
+    <!-- ======= TÍTULO ======= -->
+    <section class="titulo" id="titulo">
+        <div class="texto-productos">
+            <p> Usuarios que alimentan</p>
+            <p>
+                <span class="word color">sonrisas</span>
+            </p>
+        </div>
+    </section><!-- End TÍTULO -->
 
-<!-- Template Main JS File -->
-<script th:src="@{/js/main.js}"></script>
+
+    <section class="signup-section">
+        <div class="container-fluid">
+            <div class="row no-gutter">
+
+                <!-- Mensaje éxito y error -->
+                <div th:if="${error != null} OR ${success != null}"
+                    th:classappend="${error != null} ? 'alert-danger' : 'alert-success'"
+                    class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <i th:classappend="${error != null} ? 'fa-times-circle' : 'fa-check-circle'" class="fas "></i>
+                    [[${error != null} ? ${error} : ${success}]]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <!-- *************** -->
+
+                <!-- The content half -->
+                <div class="col-md-6 bg-light">
+                    <div class="login d-flex align-items-center py-5">
+
+                        <!-- Demo content-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-10 mx-auto">
+                                    <h3 class="display-4" id="mensaje-Bienvenida-SignUp">¡Edite su usuario!</h3>
+                                    <form th:action="@{/usuario/modificar}" th:object="${usuario}" method="POST">
+                                        <input th:field="*{id}" type="hidden" />
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="nombre">Nombre</label>
+                                                <div class="form-group mb-3">
+                                                    <input th:field="*{nombre}" id="inputNombre" type="text"
+                                                        placeholder="" required="" autofocus=""
+                                                        class="form-control border-0 shadow-sm px-4">
+                                                </div>
+                                                <div class="error text-start" th:if="${#fields.hasErrors('nombre')}"
+                                                    th:errors="*{nombre}" style="color:red;"></div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="apellido">Apellido</label>
+                                                <div class="form-group mb-3">
+                                                    <input th:field="*{apellido}" id="inputApellido" type="text"
+                                                        placeholder="" required=""
+                                                        class="form-control border-0 shadow-sm px-4 text">
+                                                </div>
+                                                <div class="error text-start" th:if="${#fields.hasErrors('apellido')}"
+                                                    th:errors="*{apellido}" style="color:red;"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="dni">DNI</label>
+                                                <div class="form-group mb-3">
+                                                    <input th:field="*{dni}" id="inputDni" type="number" placeholder=""
+                                                        required="" autofocus=""
+                                                        class="form-control border-0 shadow-sm px-4">
+                                                </div>
+                                                <div class="error text-start" th:if="${#fields.hasErrors('dni')}"
+                                                    th:errors="*{dni}" style="color:red;"></div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="telefono">Teléfono</label>
+                                                <div class="form-group mb-3">
+                                                    <input th:field="*{telefono}" id="inputTelefono" type="number"
+                                                        placeholder="" required="" autofocus=""
+                                                        class="form-control border-0 shadow-sm px-4">
+                                                </div>
+                                                <div class="error text-start" th:if="${#fields.hasErrors('telefono')}"
+                                                    th:errors="*{telefono}" style="color:red;"></div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-secondary mb-2">MODIFICAR</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div><!-- End -->
+
+                    </div>
+                </div><!-- End -->
+
+                <!-- The image half -->
+                <div class="col-md-6 d-none d-md-flex bg-image"></div>
+            </div>
+        </div>
+    </section>
+    <!-- ======= Footer ======= -->
+    <footer id="footer2">
+        <div class="copyright2">
+            Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
+            reservados
+        </div>
+    </footer><!-- End Footer -->
+
+    <!-- Vendor JS Files -->
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/jquery.easing/jquery.easing.min.js}"></script>
+    <script th:src="@{/php-email-form/validate.js}"></script>
+    <script th:src="@{/owl.carousel/owl.carousel.min.js}"></script>
+    <script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
+    <script th:src="@{/venobox/venobox.min.js}"></script>
+    <script th:src="@{/aos/aos.js}"></script>
+
+    <!-- JS PARA TITULO -->
+    <script th:src="@{/js/titulo.js}"></script>
+    <!-- Template Main JS File -->
+    <script th:src="@{/js/main.js}"></script>
 
 </body>
 

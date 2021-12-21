@@ -97,9 +97,7 @@
 
       </nav><!-- .nav-menu -->
 
-      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
-      <!-- <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a> -->
-      <!-- End Botón Inicio Sesión -->
+
     </div>
   </header><!-- End Header -->
 
@@ -169,9 +167,7 @@
               </div>
               <div class="col-md-6">
                 <button th:onclick="location.href='/producto'" id="boton-guardar" style="margin-top: 22px;;"> AÑADIR MÁS
-                  PRODUCTOS
-                  </a></button>
-
+                  PRODUCTOS</button>
               </div>
               <br><br>
 
@@ -203,12 +199,12 @@
               th:value="${elemento.cantidadNecesaria}" disabled>
             <button th:id="editarCantidad+${elemento.producto.id}"
               th:onclick="'javascript:editarCantidad(' + ${elemento.producto.id} + ')'" class=" habilitado p-0">
-              <i class='bx bxs-pencil bx-xs'  style="color=#1bac91;"
+              <i class='bx bxs-pencil bx-xs'  style="color:#1bac91;"
                 th:id="editarIcono+${elemento.producto.id}"></i>
             </button>
             <button th:id="confirmarCantidad+${elemento.producto.id}" disabled
               th:onclick="'javascript:confirmarCantidad(' + ${elemento.producto.id} + ')'" class=" deshabilitado p-0">
-              <i class='bx bxs-check-circle bx-xs' style="color=#9D9D9D" th:id="confirmarIcono+${elemento.producto.id}"></i>
+              <i class='bx bxs-check-circle bx-xs' style="color:#9D9D9D" th:id="confirmarIcono+${elemento.producto.id}"></i>
             </button>
 
           </div>

@@ -97,9 +97,6 @@
 
       </nav><!-- .nav-menu -->
 
-      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
-      <!-- <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a> -->
-      <!-- End Botón Inicio Sesión -->
     </div>
   </header><!-- End Header -->
   <!-- ======= TÍTULO ======= -->
@@ -117,12 +114,7 @@
 
     <div class="container" id="tabla-productos">
 
-      <div class="alert alert-success" id="success-alert">
-        <button type="button" class="close" data-dismiss="alert"> x</button>
-        <strong>Operación realizada con éxito!</strong>
-        Se ha añadido el producto a la canasta.
-      </div>
-
+     
       <div class="row">
 
         <div class="col-md-2 offset-md-10">
@@ -299,7 +291,11 @@
         </ul>
       </nav>
       <!-- ******************** -->
-
+      <div class="alert alert-success" id="success-alert">
+        <button type="button" class="close" data-dismiss="alert"> x</button>
+        <strong>Operación realizada con éxito!</strong>
+        Se ha añadido el producto a la canasta.
+      </div>
     </div>
 
   </section>

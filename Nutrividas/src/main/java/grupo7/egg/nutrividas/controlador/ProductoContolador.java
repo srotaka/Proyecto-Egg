@@ -55,7 +55,7 @@ public class ProductoContolador {
 
         if (flashMap != null) {
             mav.addObject("error", flashMap.get("error"));
-            mav.addObject("producto", flashMap.get("producto"));
+            mav.addObject("producto", flashMap.get("productos"));
         } else {
             mav.addObject("producto", new Producto());
         }
