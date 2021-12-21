@@ -38,4 +38,8 @@ public interface TarjetaRepository extends JpaRepository<Tarjeta,Long> {
 
     boolean existsByNumeroTarjetaAndUsuario(Long numeroTarjeta, Usuario usuario);
     Optional<Tarjeta> findByNumeroTarjetaAndUsuario(Long numeroTarjeta, Usuario usuario);
+
+    @Modifying
+    @Query("DELETE FROM Tarjeta t where t.id = :id")
+    void eliminarTarjeta(@Param("id") Long id);
 }

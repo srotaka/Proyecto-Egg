@@ -112,5 +112,23 @@ public class UsuarioControlador {
 
         return mav;
     }
+
+    @GetMapping("/tarjetas/{username}")
+    public ModelAndView mostrarTarjetas(@PathVariable("username")String username, HttpServletRequest request, HttpSession session){
+        ModelAndView mav = new ModelAndView("tarjetasUsuario");
+        Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (!session.getAttribute("usernameSession").toString().equals(username)) {
+            mav.setViewName("redirect:/ ");
+        }
+
+        if (flashMap != null) {
+            mav.addObject("error", flashMap.get("error"));
+        } else {
+            mav.addObject("tarjetas", usuarioServicio.buscarTarjetasDeUsuario(username));
+        }
+
+        return mav;
+    }
     
 }

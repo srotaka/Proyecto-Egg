@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -100,6 +101,16 @@ public class TarjetaControlador {
             attributes.addFlashAttribute("error", e.getMessage());
         }
         return new RedirectView("/tarjeta");
+    }
+
+    @PostMapping("/eliminar/{id}")
+    public RedirectView eliminarTarjeta(@PathVariable Long id, RedirectAttributes attributes){
+        try{
+            tarjetaServicio.eliminarTarjeta(id);
+        } catch(Exception e){
+            attributes.addFlashAttribute("error", e.getMessage());
+        }
+        return new RedirectView("/");
     }
     
     @PostMapping("/deshabilitar/{id}")
