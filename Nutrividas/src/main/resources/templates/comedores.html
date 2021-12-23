@@ -101,9 +101,6 @@
 
         </nav><!-- .nav-menu -->
 
-      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
-      <!-- <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a> -->
-      <!-- End Botón Inicio Sesión -->
     </div>
   </header><!-- End Header -->
 
@@ -123,7 +120,8 @@
     <section class="hero-section">
         <div class="card-grid" th:unless="${comedores.page.isEmpty()}">
             <a class="card" th:each="comedor : ${comedores.page}">
-                <div class="card__background" th:style="'background-image:url(' + ${comedor.foto.ruta}+ ')'"></div>
+                <div class="card__background" 
+                th:style="'background-image:url(' + ${comedor.foto.ruta}+ ')'"></div>
                 <div class="card__content" style="text-align: center;">
                     <p class="card__heading" th:text="${comedor.nombre}"></p>
 

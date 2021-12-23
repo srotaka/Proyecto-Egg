@@ -114,11 +114,20 @@
 
         </nav><!-- .nav-menu -->
 
-      <!-- Botón Inicio Sesión si Usuario no está loggeado -->
-      <!-- <a th:href="@{/login}" sec:authorize="isAnonymous()" class="botonform scrollto">Inicia Sesión</a> -->
-      <!-- End Botón Inicio Sesión -->
     </div>
   </header><!-- End Header -->
+
+    <!-- ======= TÍTULO ======= -->
+
+    <section class="titulo" id="titulo">
+      <div class="texto-comedores">
+          <p id="comedores-que-alimentan"> Nutricionistas que ayudan a alimentar</p>
+          <p id="comedores-que-alimentan">
+              <span class="word color">sonrisas</span>
+          </p>
+      </div>
+
+  </section><!-- End TÍTULO -->
 
   <!-- EDITAR NUTRICIONISTA -->
   <section class="signup-section">
@@ -179,7 +188,7 @@
 
                       </div>
                       <div class="col">
-                        <label for="matricula">Matricula</label>
+                        <label for="matricula">Matrícula</label>
                         <div class="form-group mb-3">
                           <input th:field="*{matricula}" type="text" placeholder="" required="" autofocus=""
                             class="form-control border-0 shadow-sm px-4">
@@ -242,8 +251,11 @@
   <script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
   <script th:src="@{/venobox/venobox.min.js}"></script>
   <script th:src="@{/aos/aos.js}"></script>
+ 
+    <!-- JS PARA TITULO -->
+    <script th:src="@{/js/titulo.js}"></script>
 
-  <!-- Template Main JS File -->
+    <!-- Template Main JS File -->
   <script th:src="@{/js/main.js}"></script>
 
 </body>

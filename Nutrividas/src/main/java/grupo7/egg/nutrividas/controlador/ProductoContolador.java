@@ -95,7 +95,7 @@ public class ProductoContolador {
     @PostMapping("/guardar")
     public RedirectView crearProducto(@ModelAttribute @Valid Producto producto,BindingResult result, RedirectAttributes attributes){
 
-        RedirectView redirectView = new RedirectView("/productos");
+        RedirectView redirectView = new RedirectView("/producto");
         try{
             String errorMsg = result.getFieldErrors().stream().map(FieldError::getDefaultMessage)
                     .collect(Collectors.joining(","));
