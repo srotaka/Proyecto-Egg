@@ -1,5 +1,6 @@
 package grupo7.egg.nutrividas.entidades;
 
+import grupo7.egg.nutrividas.enums.CategoriaIMC;
 import grupo7.egg.nutrividas.enums.Sexo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,6 +49,7 @@ public class Persona {
     private Boolean intoleranteLactosa;
     private Double IMC;
     private Sexo sexo;
+    private CategoriaIMC categoriaIMC;
 
     @ManyToOne
     private Comedor comedor;

@@ -1,14 +1,24 @@
 package grupo7.egg.nutrividas.controlador;
 
+import com.lowagie.text.DocumentException;
+import grupo7.egg.nutrividas.entidades.Menu;
 import grupo7.egg.nutrividas.entidades.Persona;
+import grupo7.egg.nutrividas.enums.CategoriaIMC;
 import grupo7.egg.nutrividas.enums.Sexo;
+import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
+import grupo7.egg.nutrividas.exeptions.InvalidDataException;
 import grupo7.egg.nutrividas.repositorios.PersonaRepository;
 import grupo7.egg.nutrividas.servicios.ComedorServicio;
 import grupo7.egg.nutrividas.servicios.PersonaServicio;
+import grupo7.egg.nutrividas.util.MenuPDFExporter;
+import grupo7.egg.nutrividas.util.Validations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,12 +26,22 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.awt.*;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/persona")
-@PreAuthorize("hasAnyRole('COMEDOR','ADMIN')")
+//@PreAuthorize("hasAnyRole('NUTRICIONISTA','ADMIN')")
 public class PersonaControlador {
 
     @Autowired
@@ -33,11 +53,12 @@ public class PersonaControlador {
     @Autowired
     private ComedorServicio comedorServicio;
 
-    @GetMapping
-    public ModelAndView mostrarPersonas(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+    @GetMapping("/comedor/{id}")
+    public ModelAndView mostrarPersonasPorComedor(@PathVariable("id")Long idComedor,@RequestParam(value = "page", required = false, defaultValue = "1") int page,
                                         @RequestParam(value = "size", required = false, defaultValue = "5") int size,
-                                        @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") Sort order,
+                                        @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
                                         HttpServletRequest request) {
+
         ModelAndView mav = new ModelAndView("personas");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
@@ -46,7 +67,83 @@ public class PersonaControlador {
             mav.addObject("error", flashMap.get("error"));
         }
 
-        mav.addObject("personas", personaServicio.listarPersonas(page, size, order));
+        mav.addObject("personas", personaServicio.listarPersonasPorComedor(idComedor,page, size,getSort(order)));
+        mav.addObject("porcentajes",obtenerPorcentajesIMC(idComedor));
+        mav.addObject("idComedor",idComedor);
+        mav.addObject("rutaActual",obtenerRutaActual(""));
+        mav.addObject("menu",new Menu());
+        return mav;
+    }
+
+    @GetMapping(value = "/comedor/{id}",params = {"imc"})
+    public ModelAndView mostrarPersonasPorIMC(@PathVariable("id")Long idComedor,
+                                              @RequestParam(value = "imc")String imc,@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                                  @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                                                  @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
+                                                  HttpServletRequest request) {
+
+        ModelAndView mav = new ModelAndView("personas");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+        }
+
+        mav.addObject("personas", personaServicio.listarPersonasPorIMC(Validations.getCategoriaIMC(imc),idComedor,page, size,getSort(order)));
+        mav.addObject("porcentajes",obtenerPorcentajesIMC(idComedor));
+        mav.addObject("menu",new Menu());
+        mav.addObject("idComedor",idComedor);
+        mav.addObject("rutaActual","?imc="+imc+"&");
+
+        return mav;
+    }
+
+    @GetMapping(value = "/comedor/{id}",params = {"patologia"})
+    public ModelAndView mostrarPersonasPorPatologia(@PathVariable("id")Long idComedor,
+                                              @RequestParam(value = "patologia")String patologia,@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                              @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                                              @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
+                                              HttpServletRequest request) {
+
+        ModelAndView mav = new ModelAndView("personas");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+        }
+
+        mav.addObject("personas", personaServicio.listarPersonasPorPatologia(patologia,true,idComedor,page, size,getSort(order)));
+        mav.addObject("porcentajes",obtenerPorcentajesIMC(idComedor));
+        mav.addObject("menu",new Menu());
+        mav.addObject("idComedor",idComedor);
+        mav.addObject("rutaActual","?patologia="+patologia+"&");
+
+        return mav;
+    }
+
+    @GetMapping(value = "/comedor/{id}",params = {"busqueda"})
+    public ModelAndView mostrarPersonasPorTodoLosCampos(@PathVariable("id")Long idComedor,
+                                                    @RequestParam(value = "busqueda")String busqueda,@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                                    @RequestParam(value = "size", required = false, defaultValue = "5") int size,
+                                                    @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
+                                                    HttpServletRequest request) {
+
+        ModelAndView mav = new ModelAndView("personas");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+        }
+
+        mav.addObject("personas", personaServicio.listarPorTodosLosCampos(busqueda,idComedor,page, size,getSort(order)));
+        mav.addObject("porcentajes",obtenerPorcentajesIMC(idComedor));
+        mav.addObject("menu",new Menu());
+        mav.addObject("idComedor",idComedor);
+        mav.addObject("rutaActual","?busqueda="+busqueda+"&");
+
         return mav;
     }
 
@@ -146,5 +243,104 @@ public class PersonaControlador {
     public RedirectView deshabilitarPersona(@PathVariable Long id){
         personaServicio.deshabilitarPersona(id);
         return new RedirectView("/persona");
+    }
+
+    @GetMapping("/export/pdf")
+    public RedirectView exportToPDF(@ModelAttribute @Valid Menu menu2, BindingResult result, HttpServletResponse response) throws DocumentException, IOException {
+
+        RedirectView redirectView = new RedirectView("/persona/comedor/9");
+
+        String errorMsg = result.getFieldErrors().stream().map(FieldError::getDefaultMessage)
+                .collect(Collectors.joining(","));
+        if (result.hasErrors()){
+            throw new InvalidDataException(errorMsg,result);
+        }
+
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=users_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        Menu menu = new Menu();
+        menu.setTitulo("Menu para integrantes celíacos");
+        String[][] menuSemanal = new String[5][3];
+        menuSemanal[0][0] = "Milanesas de pollo con puré A";
+        menuSemanal[0][1] = "Milanesas de pollo con puré M";
+        menuSemanal[0][2] = "Milanesas de pollo con puré C";
+
+        menuSemanal[1][0] = "Bife con ensalada A";
+        menuSemanal[1][1] = "Bife con ensalada M";
+        menuSemanal[1][2] = "Bife con ensalada C";
+
+        menuSemanal[2][0] = "Tarta de zaqpallitos A";
+        menuSemanal[2][1] = "Tarta de zaqpallitos M";
+        menuSemanal[2][2] = "Tarta de zaqpallitos C";
+
+        menuSemanal[3][0] = "Guiso de lentejas A";
+        menuSemanal[3][1] = "Guiso de lentejas M";
+        menuSemanal[3][2] = "Guiso de lentejas C";
+
+        menuSemanal[4][0] = "Carne al horno con verduras A";
+        menuSemanal[4][1] = "Carne al horno con verduras M";
+        menuSemanal[4][2] = "Carne al horno con verduras C";
+
+        menu.setMenuSemanal(menuSemanal);
+
+        MenuPDFExporter exporter = new MenuPDFExporter(menu2);
+        exporter.export(response);
+
+        return redirectView;
+    }
+
+    public String obtenerRutaActual(String ruta) {
+
+        String uri = "";
+
+        if(ruta.length() > 29){
+            uri = ruta.substring(30);
+        }
+        String removeParameterPage = "";
+        if(!uri.equals("")){
+            removeParameterPage = uri.replaceAll("/[&?]page=\\d+/","");
+        }
+
+        if(removeParameterPage.contains("?")){
+            return removeParameterPage.concat("&");
+        }else{
+            return removeParameterPage.concat("?");
+        }
+
+    }
+
+    public List<Double> obtenerPorcentajesIMC(Long idComedor){
+        List<Double> porcentajesIMC = new ArrayList();
+
+        for(CategoriaIMC c : CategoriaIMC.values()){
+            porcentajesIMC.add(personaServicio.obtenerPorcentajeIMC(c,idComedor));
+        }
+
+        return porcentajesIMC;
+    }
+
+    public Sort getSort(String order){
+        switch (order){
+            case "OrderByNombreASC":
+                return Sort.by(Sort.Direction.ASC,"nombre");
+            case "OrderByNombreDESC":
+                return Sort.by(Sort.Direction.DESC,"nombre");
+            case "OrderByApellidooASC":
+                return Sort.by(Sort.Direction.ASC,"apellido");
+            case "OrderByApellidoDESC":
+                return Sort.by(Sort.Direction.DESC,"apellido");
+            case "OrderByPesoASC":
+                return Sort.by(Sort.Direction.ASC,"peso");
+            case "OrderByPesoDESC":
+                return Sort.by(Sort.Direction.DESC,"peso");
+            default:
+                throw new FieldInvalidException("El parámetro de orden ingresado es inválido");
+        }
     }
 }

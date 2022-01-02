@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+  <meta content="Nutrividas" name="Grupo7" />
+  <title>Nutrividas - Productos</title>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
+  <link th:href="@{/img/favicon.ico}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader&family=Pacifico&family=Style+Script&display=swap"
+        rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/icofont/icofont.min.css}" rel="stylesheet">
+  <link th:href="@{/boxicons/css/boxicons.min.css}" rel="stylesheet">
+  <link th:href="@{/owl.carousel/assets/owl.carousel.min.css}" rel="stylesheet">
+  <link th:href="@{/venobox/venobox.css}" rel="stylesheet">
+  <link th:href="@{/aos/aos.css}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+  <link th:href="@{/css/personas.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+
+  <div class="container d-flex">
+
+    <div class="logo">
+      <a th:href="@{/}"><img th:src="@{/img/logo.png}" alt="" class="img-fluid"></a>
+    </div>
+
+    <div class="logo mr-auto">
+      <h2 class="text-light mt-0" style="color: #1bac91 !important;" th:href="@{/}">&nbsp;Nutrividas</h2>
+    </div>
+
+    <nav class="nav-menu d-none d-lg-block">
+      <ul>
+        <li class="active"><a href="/">Inicio</a></li>
+        <li sec:authorize="hasRole('NUTRICIONISTA')" class="drop-down"><a href="#">Nutricionistas</a>
+          <ul>
+            <li><a th:href="@{/nutricionista/comedores/__${session.usernameSession}__}">Comedores a cargo</a></li>
+            <li><a th:href="@{/nutricionista/asignarComedor/__${session.usernameSession}__}">Postularse a Comedor</a></li>
+          </ul>
+        </li>
+        <li sec:authorize="isAuthenticated()" class="drop-down"><a href="#">Mostrar</a>
+          <ul>
+            <li><a th:href="@{/comedor}">Comedores Registrados</a>
+            <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/producto}">Lista de Productos</a>
+            <li><a th:href="@{/canasta}">Lista de Canastas</a>
+          </ul>
+        </li>
+        <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')" class="drop-down"><a href="#">Registrar</a>
+          <ul>
+            <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/signup/comedor}">Nuevo Comedor</a>
+            <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/producto/crear}">Nuevo Producto</a>
+            <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/canasta/crear}">Nueva Canasta</a>
+          </ul>
+        </li>
+        <li><a sec:authorize="isAnonymous()" href="#contact">Contáctanos</a></li>
+        &nbsp;&nbsp;&nbsp;
+        <!-- Botón Usuario si está loggeado -->
+        <li class="drop-down" sec:authorize="isAuthenticated()">
+          <a aria-expanded="false" class="dropdown-click" data-bs-toggle="dropdown" href="#" id="dropdown-avatar"
+             style="margin-top: -13px;" role="button float-right">
+            <img  class="rounded-circle" th:src="@{__${session.foto}__}" width="50">
+          </a>
+          <ul>
+            <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
+            <li class="dropdown-divider"></li>
+
+            <li><a class="dropdown-item" th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
+            <li><a class="dropdown-item" th:href="@{/usuario/compras/__${session.usernameSession}__}" sec:authorize="hasRole('USUARIO')">Mis compras</a></li>
+            <li><a class="dropdown-item" th:href="@{/usuario/tarjetas/__${session.usernameSession}__}" sec:authorize="hasRole('USUARIO')">Mis Tarjetas</a></li>
+            <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
+          </ul>
+        </li>
+        <!-- Fin Botón Usuario si está loggeado -->
+
+        <!-- Botón Inicio Sesión si Usuario no está loggeado -->
+        <li>
+          <button th:onclick="location.href='/login'"  sec:authorize="isAnonymous()" id="boton-guardar"> Iniciar Sesión
+            </a></button>
+        </li>
+        <!-- Fin botón para iniciar sesión -->
+      </ul>
+
+    </nav><!-- .nav-menu -->
+
+  </div>
+</header><!-- End Header -->
+<!-- ======= TÍTULO ======= -->
+<section class="titulo" id="titulo">
+  <div class="texto-productos">
+    <p> Productos que alimentan</p>
+    <p>
+      <span class="word color">sonrisas</span>
+    </p>
+  </div>
+</section><!-- End TÍTULO -->
+
+<!-- =======  ======= -->
+<section >
+  <div class="container">
+    <div class="row">
+      <div class="col col-md-5 col-sm-12 mt-2">
+
+        <div id="chart" class="mb-4 justify-content-center" style="width: 60%;">
+          <canvas id="imcChart" class=""></canvas>
+        </div>
+        <div class="row mb-5">
+          <div class="col col-md-6 col-sm-12">
+              <form method="GET" th:action="@{/persona/comedor/__${idComedor}__}">
+                <div class="input-group">
+                  <select name="patologia" id="patologia" class="form-control" style="width: auto;">
+                    <option value="celiacos">Celíacos</option>
+                    <option value="diabeticos">Diabéticos</option>
+                    <option value="hipertensos">Hipertensos</option>
+                    <option value="intolerantesLactosa">Intolerantes a la lactosa</option>
+                  </select>
+                  <button class="btn btn-outline-secondary pb-0" type="submit">
+                    <box-icon name='search' size="xs" animation='flashing'></box-icon>
+                    </box-icon>
+                  </button>
+                </div>
+              </form>
+          </div>
+          <div class="col col-md-6 col-sm-12">
+            <form method="get" th:action="@{/persona/comedor/__${idComedor}__}">
+            <div class="input-group">
+                <input name="busqueda" class="form-control"  type="text" placeholder="Buscar...">
+                <button class="btn btn-outline-secondary pb-0" type="submit">
+                  <box-icon name='search' size="xs" animation='flashing'></box-icon>
+                  </box-icon>
+                </button>
+            </div>
+            </form>
+          </div>
+        </div>
+        <table class="mb-2">
+          <thead>
+          <tr class="text-center">
+            <th style="width: 10rem;">Nombre</th>
+            <th style="width: 5rem;">Edad</th>
+            <th style="width: 6rem;">Altura(cm)</th>
+            <th style="width: 6rem;">Peso(kg)</th>
+            <th style="width: 5rem;">IMC</th>
+          </tr>
+          </thead>
+        </table>
+
+        <div th:each="persona : ${personas.page}" class="card cardChildrens mb-2">
+          <div class="card-body">
+            <table>
+              <tr class="text-center">
+                <td th:text="|${persona.nombre}, ${persona.apellido}|" style="width: 10rem;"></td>
+                <td th:text="|${persona.edad}|" style="width: 5rem;"></td>
+                <td th:text="|${persona.altura}|" style="width: 6rem;"></td>
+                <td th:text="${#numbers.formatDecimal(persona.peso, 0, 'COMMA', 1, 'POINT')}" style="width: 6rem;"></td>
+                <th th:text="|${persona.IMC}|" th:style="'width: 5rem; color: '+${persona.categoriaIMC.color}+';'"></th>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Paginacion -->
+        <nav aria-label="Page navigation" class="paging">
+          <ul class="pagination" th:if="${personas.page.totalPages > 1}">
+            <li class="page-item" th:classappend="${!personas.paging.isPrevEnabled()? 'disabled' : ''}">
+              <a class="page-link" th:href="@{'/persona/comedor/'+${idComedor}+''+${rutaActual}+'page=' + ${personas.paging.pageNumber - 1}}"
+                 tabindex="-1">Anterior</a>
+            </li>
+            <th:block th:each="item : ${personas.paging.getItems()}">
+              <li class="page-item" th:classappend="${item.index == personas.paging.pageNumber? 'active' : ''}"
+                  th:if="${item.pageItemType.name() == 'PAGE'}">
+                <a class="page-link" th:href="@{'/persona/comedor/'+${idComedor}+''+${rutaActual}+'page=' + ${item.index}}"
+                   th:text="${item.index}"></a>
+              </li>
+              <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+                <a class="page-link" href="#">...</a>
+              </li>
+            </th:block>
+            <li class="page-item" th:classappend="${!personas.paging.isNextEnabled()? 'disabled' : ''}">
+              <a class="page-link"
+                 th:href="@{'/persona/comedor/'+${idComedor}+''+${rutaActual}+'page=' + ${personas.paging.pageNumber + 1}}">Siguiente</a>
+            </li>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+          </ul>
+        </nav>
+        <!-- ******************** -->
+
+      </div>
+
+      <div class="col col-md-6 col-sm-12 ml-2 mt-5 mb-5 rounded" id="menu">
+
+        <form class="row m-3 table-responsive" th:action="@{/persona/export/pdf}" th:object="${menu}">
+          <h2 id="menuTitle" class="menu"><strong>Menu</strong></h2>
+          <div class="col-12">
+            <label for="inputAddress" class="form-label">Título</label>
+            <input type="text" class="form-control" id="inputTitulo" th:field="*{titulo}" placeholder="Menú apto celíacos">
+          </div>
+
+          <table class="table" style="border: white;">
+            <thead>
+            <tr>
+              <td></td>
+              <td class=" menu menuDia">Almuerzo</td>
+              <td class=" menu menuDia">Merienda</td>
+              <td class=" menu menuDia">Cena</td>
+            </tr>
+            </thead>
+            <tbody class="mt-2" style="border-top:none;">
+            <tr class="p-2">
+              <td class="mr-4">Lunes</td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[0][0]}" type="text" class="form-control" id="inputAlmuerzoLunes">
+              </td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[0][1]}" type="text" class="form-control" id="inputMeriendaLunes">
+              </td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[0][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="Ensalada....">
+              </td>
+            </tr>
+            <tr class="p-2">
+              <td class="mr-4">Martes</td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[1][0]}" type="text" class="form-control" id="inputAlmuerzoLunes">
+              </td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[1][1]}" type="text" class="form-control" id="inputMeriendaLunes">
+              </td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[1][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="Ensalada....">
+              </td>
+            </tr>
+            <tr class="p-2">
+              <td class="mr-4">Miercoles</td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[2][0]}" type="text" class="form-control" id="inputAlmuerzoLunes">
+              </td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[2][1]}" type="text" class="form-control" id="inputMeriendaLunes">
+              </td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[2][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="Ensalada....">
+              </td>
+            </tr>
+            <tr class="p-2">
+              <td class="mr-4">Jueves</td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[3][0]}" type="text" class="form-control" id="inputAlmuerzoLunes">
+              </td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[3][1]}" type="text" class="form-control" id="inputMeriendaLunes">
+              </td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[3][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="Ensalada....">
+              </td>
+            </tr>
+            <tr class="p-2">
+              <td class="mr-4">Viernes</td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[4][0]}" type="text" class="form-control" id="inputAlmuerzoLunes">
+              </td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[4][1]}" type="text" class="form-control" id="inputMeriendaLunes">
+              </td>
+              <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
+                <input th:field="*{menuSemanal[4][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="Ensalada....">
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+
+          <div class="col-12">
+            <a type="submit" th:href="@{/persona/export/pdf}">Export to PDF</a>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Footer ======= -->
+<footer id="footer2">
+  <div class="copyright2">
+    Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos
+    reservados
+  </div>
+</footer><!-- End Footer -->
+
+<!-- ======= BACK TO TOP ======= -->
+<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+<!-- ======= BACK TO TOP ======= -->
+
+<!-- Vendor JS Files -->
+<script th:src="@{/jquery/jquery.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/jquery.easing/jquery.easing.min.js}"></script>
+<script th:src="@{/php-email-form/validate.js}"></script>
+<script th:src="@{/owl.carousel/owl.carousel.min.js}"></script>
+<script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
+<script th:src="@{/venobox/venobox.min.js}"></script>
+<script th:src="@{/aos/aos.js}"></script>
+<script th:src="@{https://unpkg.com/boxicons@2.1.1/dist/boxicons.js}"></script>
+
+<!-- Template Main JS File -->
+<script th:src="@{/js/main.js}"></script>
+
+<!-- JS BUSCADOR DE PRODUCTOS -->
+<script th:href="@{/js/buscador-productos.js}"></script>
+
+<!-- JS PARA TITULO -->
+<script th:src="@{/js/titulo.js}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:inline="javascript">
+
+        var imcCanvas = document.getElementById("imcChart");
+        var categoriasIMC= [];
+        var colours = [];
+        var coloursTrasnparent= [];
+        var categoriasPercent = /*[[${porcentajes}]]*/;
+        /*<![CDATA[*/
+        /*[# th:each="categoria : ${T(grupo7.egg.nutrividas.enums.CategoriaIMC).values()}"]*/
+            categoriasIMC.push(/*[[${categoria.valor}]]*/);
+            colours.push(/*[[${categoria.color}]]*/);
+            coloursTrasnparent.push(/*[[${categoria.color}]]*/+"59");
+
+        /*[/]*/
+
+        /*]]>*/
+
+        console.log(categoriasIMC)
+        console.log(colours)
+        console.log(coloursTrasnparent)
+        console.log(categoriasPercent)
+
+        var imcData = {
+            labels: categoriasIMC ,
+            datasets: [
+                {
+                    data: categoriasPercent,
+                    backgroundColor: colours,
+                    hoverBorderColor: coloursTrasnparent,
+                    hoverBorderWidth: 6
+                }]
+        };
+
+        var pieChart = new Chart(imcCanvas, {
+        type: 'doughnut',
+        data: imcData,
+            options: {
+                onClick: clickHandler,
+            plugins: {
+                responsive: true,
+                legend: {
+                    display: true,
+                    textAlingn: 'center',
+                    position :'bottom',
+                    usePointStyle: true,
+                    pointStyle:'circle',
+                    labels: {
+                        color: 'rgb(0, 0, 0)'
+                    },
+
+                },
+                 animation: {
+                    animateScale: true,
+                    animateRotate: true
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                callbacks: {
+                   label: function(tooltipItem) {
+                          return tooltipItem.yLabel;
+                   }
+                }
+                }
+
+            }
+        }
+        });
+
+        function clickHandler(evt) {
+            const points = pieChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+
+            if (points.length) {
+                const firstPoint = points[0];
+                var label = pieChart.data.labels[firstPoint.index];
+                var id = /*[[${idComedor}]]*/
+                window.location = "/persona/comedor/"+id+"?imc="+label
+
+            }
+        }
+
+ </script>
+
+</body>
+
+</html>

@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/jquery.easing/**","/jquery/**","/js/**","/css/**","/", "/login", "/signup/*", "/error", "/login-error",
                         "/seleccion","/signup/usuario","/signup/nutricionista","/signup/comedor","/registro/usuario","/registro/nutricionista","/registro/comedor",
                         "/comedor","/error","/confirmar","/confirmado","/politica","/condiciones","/comedor/biografia","/animate/**", "/contacto","/aos/**","/hover/**","/ionicons/**","/jquery-sticky/**", "/typed/**").permitAll() // Recursos permitidos
-                .antMatchers("/**").authenticated()// Recursos protegidos
+                .antMatchers("/**").permitAll()// Recursos protegidos
                 .and()
                 .formLogin()
                     .loginPage("/login").permitAll()

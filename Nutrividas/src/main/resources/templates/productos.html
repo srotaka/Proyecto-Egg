@@ -163,12 +163,12 @@
                   </a>
                 </td>
                 <th th:if="${producto.foto == null}" width="30px" heigth="25px" class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
-              background-position: center;background-size: cover;'">
+                  background-position: center;background-size: cover;'">
                 </th>
 
                 <th th:unless="${producto.foto == null}" width="40px" heigth="25px" class="text-center" th:style="'z-index: 100
-          ;background-image:url(http://localhost:8080/fotos/'+${producto.foto.id}+') !important;background-repeat: no-repeat;
-          background-position: center;background-size: cover;'">
+                  ;background-image:url(http://localhost:8080/fotos/'+${producto.foto.id}+') !important;background-repeat: no-repeat;
+                  background-position: center;background-size: cover;'">
                 <th th:text="|${producto.nombre}|" class="text-center" id="producto-txt"></th>
                 <th th:text="|${producto.marca.nombre}|" class="text-center" id="producto-txt"></th>
                 <!-- <th>Categoría</th> -->

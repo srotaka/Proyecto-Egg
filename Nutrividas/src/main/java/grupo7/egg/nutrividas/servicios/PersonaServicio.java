@@ -3,6 +3,7 @@ package grupo7.egg.nutrividas.servicios;
 import grupo7.egg.nutrividas.entidades.Comedor;
 import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Persona;
+import grupo7.egg.nutrividas.enums.CategoriaIMC;
 import grupo7.egg.nutrividas.enums.Sexo;
 import grupo7.egg.nutrividas.exeptions.FieldAlreadyExistException;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
@@ -149,20 +150,63 @@ public class PersonaServicio {
 
 
     @Transactional(readOnly = true)
-    public Paged<Persona> listarPersonas(int page, int size, Sort order){
+    public Paged<Persona> listarPersonasPorComedor(Long idComedor,int page, int size, Sort order){
         Pageable request = PageRequest.of(page - 1, size, order);
-        Page<Persona> personaPage = personaRepository.findAll(request);
+        Page<Persona> personaPage = personaRepository.findByComedor_id(idComedor,request);
         return new Paged(personaPage, Paging.of(personaPage.getTotalPages(), page, size));
     }
 
-    @Transactional
-    public List<Persona> mostrarTodasLasPersonas(){
-        return personaRepository.buscarTodasLasPersonas();
+    @Transactional(readOnly = true)
+    public Paged<Persona> listarPersonasPorPatologia(String patologia,Boolean apto,Long idComedor,int page, int size, Sort order){
+        Pageable request = PageRequest.of(page - 1, size, order);
+        Page<Persona> personaPage = null;
+
+        switch (patologia){
+            case "celiacos":
+                personaPage = personaRepository.findByCeliacoAndComedor_id(apto,idComedor,request);
+                break;
+            case  "diabeticos":
+                personaPage = personaRepository.findByDiabeticoAndComedor_id(apto,idComedor,request);
+                break;
+            case "hipertensos":
+                personaPage = personaRepository.findByHipertensoAndComedor_id(apto,idComedor,request);
+                break;
+            case "intolerantesLactosa":
+                personaPage = personaRepository.findByIntoleranteLactosaAndComedor_id(apto,idComedor,request);
+                break;
+        }
+        return new Paged(personaPage, Paging.of(personaPage.getTotalPages(), page, size));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
+    public Paged<Persona> listarPersonasPorIMC(CategoriaIMC categoriaIMC,Long comedorId, int page, int size, Sort order){
+        Pageable request = PageRequest.of(page - 1, size, order);
+        Page<Persona> personaPage = personaRepository.findByCategoriaIMCAndComedor_id(categoriaIMC,comedorId,request);
+        return new Paged(personaPage, Paging.of(personaPage.getTotalPages(), page, size));
+    }
+
+    @Transactional(readOnly = true)
+    public Paged<Persona> listarPorTodosLosCampos(String busqueda, Long idComedor,int page, int size, Sort order){
+        Pageable request = PageRequest.of(page - 1, size, order);
+        Page<Persona> personaPage = personaRepository.buscarPorTodosCampos(busqueda,idComedor,request);
+        return new Paged(personaPage, Paging.of(personaPage.getTotalPages(), page, size));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Persona> listarTodo(){
+        return personaRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
     public Persona buscarPorId(Long id){
-        return personaRepository.findById(id).get();
+        return personaRepository.findById(id).orElseThrow(
+                () -> new NoSuchElementException("No se halló una persona asociada con el id "+id)
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public Double obtenerPorcentajeIMC(CategoriaIMC categoriaIMC,Long idComedor){
+        return personaRepository.porcentajePorCategoriaIMC(categoriaIMC,idComedor);
     }
 
 }

@@ -1,6 +1,7 @@
 package grupo7.egg.nutrividas.util;
 
 import grupo7.egg.nutrividas.enums.Categoria;
+import grupo7.egg.nutrividas.enums.CategoriaIMC;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
 import grupo7.egg.nutrividas.exeptions.InvalidDataException;
 
@@ -70,6 +71,13 @@ public final class Validations {
     public static Categoria getCategoria(String categoria){
         return Arrays.stream(Categoria.values())
                 .filter(f -> f.getValor().toLowerCase().equals(categoria.toLowerCase()))
+                .findFirst()
+                .orElseThrow(() -> new FieldInvalidException("La categoría ingresada no existe"));
+    }
+
+    public static CategoriaIMC getCategoriaIMC(String categoriaIMC){
+        return Arrays.stream(CategoriaIMC.values())
+                .filter(f -> f.getValor().toLowerCase().equals(categoriaIMC.toLowerCase()))
                 .findFirst()
                 .orElseThrow(() -> new FieldInvalidException("La categoría ingresada no existe"));
     }
