@@ -5582,6 +5582,7 @@
     outline: 0;
   }
   .modal-backdrop {
+    /* visibility: hidden !important; */
     position: fixed;
     top: 0;
     left: 0;
