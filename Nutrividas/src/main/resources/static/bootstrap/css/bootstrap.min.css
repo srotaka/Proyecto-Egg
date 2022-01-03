@@ -3619,8 +3619,8 @@
   .custom-checkbox
     .custom-control-input:indeterminate
     ~ .custom-control-label::before {
-    border-color: #007bff;
-    background-color: #007bff;
+    border-color: #2ca790;
+    background-color: #1bac91;
   }
   .custom-checkbox
     .custom-control-input:indeterminate

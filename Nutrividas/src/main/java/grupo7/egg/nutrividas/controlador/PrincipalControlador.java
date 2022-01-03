@@ -70,12 +70,12 @@ public class PrincipalControlador {
     public ModelAndView condiciones(){
         return new ModelAndView("terminos-condiciones");
     }
-
+      
     @GetMapping("/contacto")
     public ModelAndView contacto(){
         return new ModelAndView("contacto");
     }   
-     
+    
     @PostMapping("/confirmar")
     public RedirectView confirmacion(@RequestParam("tokenMail")Long tokenMail){
         credencialServicio.habilitarCuenta(tokenMail);

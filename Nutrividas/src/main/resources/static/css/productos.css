@@ -181,3 +181,7 @@ p {
 .color {
   color: #1bac91;
 }
+.form-check-input:checked {
+  background-color: #40a794 !important;
+  border-color: #1bac91 	!important;
+}
