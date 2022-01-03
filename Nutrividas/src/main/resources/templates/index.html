@@ -92,6 +92,7 @@
               <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
               <li class="dropdown-divider"></li>
               <li><a class="dropdown-item" th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
+              <li><a class="dropdown-item" th:href="@{/persona/crear}">Agregar Integrante al Comedor</a></li>
               <li><a class="dropdown-item" th:href="@{/usuario/compras/__${session.usernameSession}__}" sec:authorize="hasRole('USUARIO')">Mis compras</a></li>
               <li><a class="dropdown-item" th:href="@{/usuario/tarjetas/__${session.usernameSession}__}" sec:authorize="hasRole('USUARIO')">Mis Tarjetas</a></li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
@@ -697,7 +698,7 @@
     </div>
 
     <div class="copyright">
-      Copyright&copy; 2010-2021 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos reservados
+      Copyright&copy; 2021-2022 | <strong><span>&nbsp;Nutrividas&nbsp;</span></strong> | Todos los derechos reservados
     </div>
   </footer><!-- End Footer -->
 

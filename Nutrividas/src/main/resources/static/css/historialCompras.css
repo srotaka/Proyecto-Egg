@@ -1,259 +1,536 @@
 * {
-  border: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    height: 100%;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+  }
+  
+  body {
+    padding-top: 6rem;
+    height: 100%;
+  }
+
+/* CSS reset */
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-html {
-  height: 100%;
-  font-family: "Montserrat", sans-serif;
-  font-size: 14px;
-}
+html { font-size: 62.5%; }
 
 body {
-  padding-top: 6rem;
-  height: 100%;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  position: relative;
 }
-/* 
-#mis-compras{
-align-items: center !important;
-padding-top: 5px;
 
-} */
-a {
-  border: 0 none;
-  outline: 0;
+/* Typography =======================*/
+
+/* Headings */
+
+/* Main heading for card's front cover */
+.card-front__heading {
+  font-size: 1.5rem;
+  margin-top: .25rem;
+}
+
+/* Main heading for inside page */
+.inside-page__heading { 
+  padding-bottom: 1rem; 
+  width: 100%;
+}
+
+/* Mixed */
+
+/* For both inside page's main heading and 'view me' text on card front cover */
+.inside-page__heading,
+.card-front__text-view {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-top: .2rem;
+  font-family: 'Montserrat';
+}
+
+.inside-page__heading--city,
+.card-front__text-view--city { color: #ff62b2; }
+
+.inside-page__heading--ski,
+.card-front__text-view--ski { color: #2aaac1; }
+
+.inside-page__heading--beach,
+.card-front__text-view--beach { color: #fa7f67; }
+
+.inside-page__heading--camping,
+.card-front__text-view--camping { color: #00b97c; }
+
+/* Front cover */
+
+.card-front__tp { color: #fafbfa; }
+
+/* For pricing text on card front cover */
+.card-front__text-price {
+  font-size: 1.2rem;
+  margin-top: -.2rem;
+}
+
+/* Back cover */
+
+/* For inside page's body text */
+.inside-page__text {
+  color: #333;
+  margin-bottom: 0px;
+}
+
+/* Icons ===========================================*/
+
+.card-front__icon {
+  fill: #fafbfa;
+  font-size: 3vw;
+  height: 3.25rem;
+  margin-top: -.5rem;
+  width: 3.25rem;
+}
+
+/* Buttons =================================================*/
+
+.inside-page__btn {
+  background-color: transparent;
+  border: 3px solid;
+  border-radius: .5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  overflow: hidden;
+  padding: .7rem .75rem;
+  position: relative;
   text-decoration: none;
+  transition: all .3s ease;
+  width: 90%;
+  z-index: 10;
+  vertical-align: middle;
 }
 
-strong {
-  font-weight: bold;
+.inside-page__btn::before { 
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transform: scaleY(0);
+  transition: all .3s ease;
+  width: 100%;
+  z-index: -1;
 }
 
-p {
-  margin: 0.75rem 0 0;
+.inside-page__btn--city { 
+  border-color: #ff40a1;
+  color: #ff40a1;
 }
 
-h1 {
-  font-size: 16px;
-  font-weight: normal;
-  margin: 0;
-  padding: 0;
+.inside-page__btn--city::before { 
+  background-color: #ff40a1;
 }
 
-h5 {
-  font-size: 14px;
-  font-weight: normal;
-  margin: 0;
-  padding: 0;
+.inside-page__btn--ski { 
+  border-color: #279eb2;
+  color: #279eb2;
 }
 
-input {
-  border: 0 none;
-  outline: 0 none;
+.inside-page__btn--ski::before { 
+  background-color: #279eb2;
 }
 
-label {
-  display: block;
-  margin-bottom: 0.3125rem;
+.inside-page__btn--beach { 
+  border-color: #fa7f67;
+  color: #fa7f67;
 }
 
-.hidden {
-  display: none;
+.inside-page__btn--beach::before { 
+  background-color: #fa7f67;
 }
 
-@media screen and (max-width: 640px) {
-  aside,
-  .basket,
-  .summary,
-  .item,
-  .remove {
-    width: 100%;
-  }
-
-  .basket-labels {
-    display: none;
-  }
-
-  .basket-module {
-    margin-bottom: 1rem;
-  }
-
-  .item {
-    margin-bottom: 1rem;
-  }
-
-  .product-image {
-    width: 40%;
-  }
-
-  .product-details {
-    width: 60%;
-  }
-
-  .price,
-  .subtotal {
-    width: 33%;
-  }
-
-  .quantity {
-    text-align: center;
-    width: 34%;
-  }
-
-  .quantity-field {
-    float: none;
-  }
-
-  .remove {
-    bottom: 0;
-    text-align: left;
-    margin-top: 0.75rem;
-    position: relative;
-  }
-
-  .summary {
-    margin-top: 1.25rem;
-    position: relative;
-  }
-}
-
-.card-footer {
-  background-color: white;
-}
-.total {
+.inside-page__btn--camping { 
+  border-color: #00b97d;
   color: #1bac91;
+  font-family: 'Montserrat';
 }
 
-@media screen and (min-width: 641px) and (max-width: 960px) {
-  aside {
-    padding: 0 1rem 0 0;
-  }
-  .summary {
-    width: 28%;
-  }
+.inside-page__btn--camping::before { 
+  background-color: #1bac91;
 }
 
-@media screen and (max-width: 960px) {
-  main {
-    width: 100%;
-  }
-  .product-details {
-    padding: 0 1rem;
-  }
+.inside-page__btn:hover { 
+  color: #fafbfa;
 }
 
-/*--------------------------------------------------------------
-# MODAL
+.inside-page__btn:hover::before { 
+  transform: scaleY(1);
+}
+
+/* Layout Structure=========================================*/
+
+.main {
+  background: linear-gradient(
+    to bottom right,
+    #eee8dd,
+    #e3d9c6
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Container to hold all cards in one place */
+.card-area {
+  align-items: center;
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100%;
+  justify-content: space-evenly;
+  padding: 1rem;
+}
+
+/* Card ============================================*/
+
+/* Area to hold an individual card */
+.card-section {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+/* A container to hold the flip card and the inside page */
+.card {
+  background-color: rgba(0,0,0, .05);
+  box-shadow: -.1rem 1.7rem 6.6rem -3.2rem rgba(0,0,0,0.5);
+  height: 15rem;
+  position: relative;
+  transition: all 1s ease;
+  width: 15rem;
+}
+
+/* Flip card - covering both the front and inside front page */
+
+/* An outer container to hold the flip card. This excludes the inside page */
+.flip-card {
+  height: 15rem;
+  perspective: 100rem;
+  position: absolute;
+  right: 0;
+  transition: all 1s ease;
+  visibility: hidden;
+  width: 15rem;
+  z-index: 100;
+}
+
+/* The outer container's visibility is set to hidden. This is to make everything within the container NOT set to hidden  */
+/* This is done so content in the inside page can be selected */
+.flip-card > * {
+  visibility: visible;
+}
+
+/* An inner container to hold the flip card. This excludes the inside page */
+.flip-card__container {
+  height: 100%;
+  position: absolute;
+  right: 0;
+  transform-origin: left;
+  transform-style: preserve-3d;
+  transition: all 1s ease;
+  width: 100%;
+}
+
+.card-front,
+.card-back {
+  backface-visibility: hidden;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+/* Styling for the front side of the flip card */
+
+/* container for the front side */
+.card-front {
+  background-color: #fafbfa;
+  height: 15rem;
+  width: 15rem;
+}
+
+/* Front side's top section */
+.card-front__tp {
+  align-items: center;
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 57% 90%, 50% 100%, 43% 90%, 0 90%);
+  display: flex;
+  flex-direction: column;
+  height: 12rem;
+  justify-content: center;
+  padding: .75rem;
+}
+
+.card-front__tp--camping {
+  background: linear-gradient(
+    to bottom,
+    #1bac91,
+    #00b97d
+  );
+}
+
+/* Front card's bottom section */
+.card-front__bt {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+/* Styling for the back side of the flip card */
+
+.card-back {
+  background-color: #fafbfa;
+  transform: rotateY(180deg);
+}
+
+/* Inside page */
+
+.inside-page {
+  background-color: #fafbfa;
+  box-shadow: inset 20rem 0px 5rem -2.5rem rgba(0,0,0,0.25);
+  height: 100%;
+  padding: 1rem;
+  position: absolute;
+  right: 0;
+  transition: all 1s ease;
+  width: 15rem;
+  z-index: 1;
+}
+
+.inside-page__container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-align: center; 
+  width: 100%;
+}
+
+/* Functionality ====================================*/
+
+/* This is to keep the card centered (within its container) when opened */
+.card:hover {
+  box-shadow:
+  -.1rem 1.7rem 6.6rem -3.2rem rgba(0,0,0,0.75);
+  width: 30rem;
+}
+
+/* When the card is hovered, the flip card container will rotate */
+.card:hover .flip-card__container {
+  transform: rotateY(-180deg);
+}
+
+/* When the card is hovered, the shadow on the inside page will shrink to the left */
+.card:hover .inside-page {
+  box-shadow: inset 1rem 0px 5rem -2.5rem rgba(0,0,0,0.1);
+}
+
+/* Footer ====================================*/
+
+.footer {
+  background-color: #333;
+   margin-top: 3rem;
+  padding: 1rem 0;
+  width: 100%;
+}
+
+.footer-text {
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+}/*--------------------------------------------------------------
+# TÍTULO
 --------------------------------------------------------------*/
 
-#modal-productos {
-  font-size: 24px;
-  text-align: center !important;
-}
+#titulo{
+    text-align: center !important;
+    color: #444444;
+    font: normal 40px/50px "Montserrat", sans-serif;
+    background: url("../img/cover01.jpg") center center;
+    background-size: cover;
+    padding-bottom: 2rem;
+  }
+  
+  .texto-comedores {
+    
+    top: 50%;
+    margin-top: -20px;
+    font-family: 'Monserrat', serif;
+    font-size: 50px;
+  }
+  
+  #comedores-que-alimentan, #comedores-que-alimentan{
+    display: inline-block;
+    vertical-align: top;
+   align-items: center;
+  }
+  
+  p {
+   display: inline-block;
+   vertical-align: top;
+   align-items: center;
+  }
+  
+  .word {
+    position: auto;
+    width: 250px;
+    opacity: 0;
+  }
+  
+  .letter {
+    display: inline-block;
+    position: relative;
+    float: left;
+    transform: translateZ(25px);
+    transform-origin: 50% 50% 25px;
+  }
+  
+  .letter.out {
+    transform: rotateX(90deg);
+    transition: transform 0.32s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  
+  .letter.behind {
+    transform: rotateX(-90deg);
+  }
+  
+  .letter.in {
+    transform: rotateX(0deg);
+    transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .color {
+    color: #1bac91;
+  }
+  
+
 
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
 
 #footer2 .copyright2 {
-  color: #fff;
-  font-size: 14px;
-  text-align: center;
-  position: fixed;
-  height: 50px;
-  background-color: #1d1d1d;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  margin-bottom: 0px;
-  padding-top: 15px;
-}
-
-/*--------------------------------------------------------------
-# TÍTULO
---------------------------------------------------------------*/
-
-#titulo {
-  text-align: center !important;
-  color: #444444;
-  font: normal 40px/50px "Montserrat", sans-serif;
-  background: url("../img/cover01.jpg") center center;
-  background-size: cover;
-  padding-bottom: 2rem;
-}
-
-.texto-comedores {
-  top: 50%;
-  margin-top: -20px;
-  font-family: "Monserrat", serif;
-  font-size: 50px;
-}
-
-p {
-  display: inline-block;
-  vertical-align: top;
-  align-items: center;
-}
-
-.word {
-  position: auto;
-  width: 250px;
-  opacity: 0;
-}
-
-.letter {
-  display: inline-block;
-  position: relative;
-  float: left;
-  transform: translateZ(25px);
-  transform-origin: 50% 50% 25px;
-}
-
-.letter.out {
-  transform: rotateX(90deg);
-  transition: transform 0.32s cubic-bezier(0.55, 0.055, 0.675, 0.19);
-}
-
-.letter.behind {
-  transform: rotateX(-90deg);
-}
-
-.letter.in {
-  transform: rotateX(0deg);
-  transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.color {
-  color: #1bac91;
-}
-
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    position: fixed;
+    height: 50px;
+    background-color: #1d1d1d;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+    padding-top: 15px;
+    
+  }
+    
+  
 /*--------------------------------------------------------------
 # MIS COMPRAS
 --------------------------------------------------------------*/
 
 strong {
-  position: relative;
-}
-strong::after {
-  content: "";
-  position: absolute;
-  bottom: -0.125rem;
-  left: -0.5rem;
-  right: -0.5rem;
-  height: 0.75rem;
-  z-index: -1;
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/664131/underline.svg");
-  background-repeat: no-repeat;
-  background-size: cover;
+    position: relative;
+  }
+  strong::after {
+    content: "";
+    position: absolute;
+    bottom: -0.125rem;
+    left: -0.5rem;
+    right: -0.5rem;
+    height: 0.75rem;
+    z-index: -1;
+    background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/664131/underline.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  #mis-compras {
+    font-family: "newsreader";
+    max-width: 800px;
+    margin: 0 5% 1rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    padding-top: 0px;
+  }
+  
+  .product-image {
+    width: 100%;
+    float: center;
+  }
+
+/*--------------------------------------------------------------
+# MODAL
+--------------------------------------------------------------*/
+.btn-modal-trigger{
+  background-color: #1bac91;
+  border-color: #2f8f80;
+  color: white;
+  margin-top: 18px;
+  border-radius: 5px;
+  font-size: 13px;
 }
 
-#mis-compras {
-  font-family: "newsreader";
-  max-width: 800px;
-  margin: 0 5% 1rem;
-  font-size: 2.5rem;
-  font-weight: 600;
-  padding-top: 0px;
+.btn-modal-trigger:hover{
+  border-color: #2f8f80;
+  background: #3e9e8d;
+  color: white;
+
 }
+
+#modal-compra{
+  font-size: 24px;
+  text-align: center !important;
+}
+
+/* Por debajo de 700px */
+@media screen and (max-width: 700px){
+  .btn-modal-trigger{
+  font-size:10px;
+  }
+}
+  /* Por debajo de 400px */
+  @media screen and (max-width: 400px){
+  .btn-modal-trigger{
+  font-size:6px;
+  } 
+  }
+  .modal-backdrop {
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    /* z-index: 1040; */
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+  }
+
+  #lemonModal{
+    padding-top: 600px !important;
+  }
+
+  .modal-dialog{
+    width: 500px !important;
+  }

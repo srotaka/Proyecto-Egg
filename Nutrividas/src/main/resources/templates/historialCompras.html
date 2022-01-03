@@ -6,7 +6,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta content="ie=edge" http-equiv="X-UA-Compatible" />
   <meta content="Nutrividas" name="Grupo7" />
-  <title>Nutrividas - Carrito de Compras</title>
+  <title>Nutrividas - Historial de Compras</title>
 
   <!-- Favicons -->
   <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}" />
@@ -29,6 +29,7 @@
   <!-- Template Main CSS File -->
   <link th:href="@{/css/style.css}" rel="stylesheet">
   <link th:href="@{/css/historialCompras.css}" rel="stylesheet">
+
 </head>
 
 <body>
@@ -117,7 +118,7 @@
     </div>
   </section><!-- End TÍTULO -->
 
-  <!-- ======= CANASTAS ======= -->
+  <!-- ======= USUARIO ======= -->
   <main class="mt-4">
 
     <section id="mis-compras">
@@ -128,182 +129,239 @@
             <img th:unless="${usuario.foto == null}" class="rounded-circle" th:src="@{__${usuario.foto.ruta}__}"
               width="50">
             <!-- <h2 class="ml-3" style="display:inline-block"> Mis compras</h2> -->
-            Mis <strong>compras</strong>
+            Mis <strong>Compras</strong>
           </h1>
         </div>
 
       </div>
     </section>
-    <!-- ===== CARDS ========= -->
-    <!-- <div class="container" style="margin-bottom: 30px;"> -->
-      <div class="row row-cols-2 m-2 justify-content-center">
-        <div class="col col-4 mr-2  mb-4" th:each="compra : ${usuario.compras}">
-          <div class="card" style="width: 30rem;">
+    <!-- ======= COMPRAS CARDS ======= -->
 
-            <div class="card-header pl-3">
-              <h5 id="numberOrder" class="card-title">Orden N° [[${compra.id}]]</h5>
-            </div>
-            <div class="card-body">
-              <h5 id="card" th:if="${compra.tarjeta != null}" style="display:inline-block;"
-                class="justify-content-start">
-                Tarjeta Nº: [[${compra.tarjeta.numeroTarjeta}]] </h5>
-              <h5 th:unless="${compra.tarjeta != null}" style="display:inline-block;" class="justify-content-end">Sin
-                pagar</h5>
-              <a href="#" class="button" th:onclick="'javascript:seeHidden(' + ${compra.id} + ')'"
-                style="display:inline-block;"> | Ver detalle <i class='bx bxs-chevron-down bx-xs'
-                  th:id="__${compra.id}__iconShow"></i> </a>
+    <section class="card-area">
 
-            </div>
+      <!-- Cards -->
+      <section class="card-section">
+        <div class="container mx-auto">
+          <div class="row row-cols-2 justify-content-center mx-auto">
+            <div class="card-grid col col-4 mb-4 mx-auto" th:each="compra : ${usuario.compras}">
+              <div class="card">
+                <div class="flip-card">
+                  <div class="flip-card__container">
+                    <div class="card-front">
+                      <div class="card-front__tp card-front__tp--camping">
+                        <img th:src="@{/img/shopping-cart01.png}" alt="shopping-cart" style="width: 25%;">
+                        <h2 class="card-front__heading">
+                          Orden N° [[${compra.id}]]
+                        </h2>
+                      </div>
 
-            <div class="card-body hidden" th:id="${compra.id}">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item text-center">
-                  <p style="display:inline-block;width: 8rem;font-weight: bolder;">Canasta</p>
-                  <p style="display:inline-block;width: 5rem;font-weight: bolder;">Cantidad</p>
-                  <p style="display:inline-block;width: 10rem;font-weight: bolder;">Precio</p>
-                  <p style="display:inline-block;width: 2rem;"></p>
-                </li>
-                <li class="list-group-item text-center" th:each="detalleCompra : ${compra.detalleCompras}">
-                  <p th:text="${detalleCompra.canasta.descripcion}" style="display:inline-block;width: 8rem;"></p>
-                  <p th:text="${detalleCompra.cantidad}" style="display:inline-block;width: 4rem;"></p>
-                  <p style="display:inline-block;width: 10rem;">$
-                    [[${#numbers.formatDecimal(detalleCompra.subtotal,0,2)}]]</p>
-                  <button type="button" data-bs-toggle="modal"
-                    th:attr="data-target='#customerModel'+${detalleCompra.canasta.id}"
-                    th:onclick="'javascript:verModal(' + ${detalleCompra.canasta.id} + ')'"
-                    style="display:inline-block;width: 2rem;">
-                    <box-icon name='lemon' color='#1bac91'></box-icon>
-                    <!--<i class='bx bxs-lemon bx-sm' style="color:#1bac91;"></i>-->
-                  </button>
+                      <div class="card-front__bt">
+                        <p class="card-front__text-view card-front__text-view--camping">
+                          Ver más
+                        </p>
+                      </div>
+                    </div>
+                    <div class="card-back">
+                      <img th:src="@{/img/food-basket07.jpg}" alt="Canasta" class="product-image">
+                    </div>
+                  </div>
+                </div>
 
-                  <!-- Modal -->
-                  <div class="modal fade" th:id="${detalleCompra.canasta.id}" tabindex="-1"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="modal-productos">Productos</h5>
-                          <button type="button" class="btn-close-modal" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                <div class="inside-page">
+                  <div class="inside-page__container">
+                    <h3 class="inside-page__heading inside-page__heading--camping">
+                      <h5 id="card" th:if="${compra.tarjeta != null}" style="display:inline-block;"
+                        class="justify-content-start">
+                        <b>Tarjeta Nº:</b> [[${compra.tarjeta.numeroTarjeta}]]
+                      </h5>
+                      <h5 th:unless="${compra.tarjeta != null}" style="display:inline-block;"
+                        class="justify-content-end"><b>Sin
+                          pagar</b></h5>
+                      <!-- BUTTON TRIGGER MODAL -->
+                      <button type="button" class="inside-page__btn inside-page__btn--camping" data-bs-toggle="modal"
+                        th:onclick="'javascript:verModal(' + ${compra.id} + ')'">Ver
+                        detalles</button>
+                      <!-- BUTTON TRIGGER MODAL -->
+                  </div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal" th:id="${compra.id}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="modal-compra">Detalle:</h5>
+                        <button type="button" class="btn-close-modal" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <!-- Tabla de detalles Comedores -->
+                        <div class="container">
+                          <!-- <p>Información</p> -->
+                          <table class="table table-striped table-responsive">
+                            <thead>
+                              <tr>
+                                <th scope="row">Canasta</th>
+                                <th scope="row">Cantidad</th>
+                                <th scope="row">Precio</th>
+                                <th scope="row">Ver Items</th>
+                              </tr>
+                            </thead>
+                            <tbody th:each="detalleCompra : ${compra.detalleCompras}">
+                              <tr>
+                                <td class="col-md-4 px-md-1" th:text="${detalleCompra.canasta.descripcion}"></td>
+                                <td class="col-md-4 px-md-1" th:text="${detalleCompra.cantidad}"></td>
+                                <td class="col-md-4 px-md-1">$
+                                  [[${#numbers.formatDecimal(detalleCompra.subtotal,0,2)}]]</td>
+                                  <!-- Trigger Limon -->
+                                  <td class="col-md-4 px-md-1">
+                                  <!-- <button type="button" data-toggle="modal" data-target="#exampleModal">
+                                    <box-icon name='lemon' color='#1bac91'></box-icon>
+                                  </button> -->
+                                  <!-- Lemon Button Trigger  -->
+                                  <button type="button" data-toggle="modal" data-target="#exampleModal"
+                                    th:attr="data-target='#customerModel'+${detalleCompra.canasta.id}"
+                                    th:onclick="'javascript:verModal(' + ${detalleCompra.canasta.id} + ')'">
+                                    <box-icon name='lemon' color='#1bac91'></box-icon>
+                                  </button>
+                                  <!-- End Lemon Button Trigger  -->
+                                  <!-- Modal de prueba para el botón de LIMÓN-->
+                <div class="modal fade" th:id="${detalleCompra.canasta.id}" tabindex="1"
+                aria-labelledby="exampleModalLabel" aria-hidden="true" id="lemonModal"  style="z-index: 100;">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modal-productos">Productos</h5>
+                      <button type="button" class="btn-close-modal" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <!-- Tabla de productos -->
+                      <div class="container mt-3">
+                        <p>Detalle de productos de la canasta</p>
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>Cantidad</th>
+                              <th>Nombre</th>
+                              <th>Marca</th>
+                              <th>Precio</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr th:each="elemento, step : ${detalleCompra.canasta.elementos}">
+                              <th th:if="${elemento.producto.foto == null}" width="30px" heigth="25px"
+                                class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
+                                                background-position: center;background-size: cover;'">
+                              </th>
+                              <th th:unless="${elemento.producto.foto == null}" width="40px" heigth="25px"
+                                class="text-center" th:style="'z-index: 100
+                                                ;background-image:url(http://localhost:8080/fotos/'+${elemento.producto.foto.id}+') !important;background-repeat: no-repeat;
+                                                 background-position: center;background-size: cover;'">
+                              <td th:text="${elemento.cantidadNecesaria}"></td>
+                              <td th:text="${elemento.producto.nombre}"></td>
+                              <td th:text="${elemento.producto.marca.nombre}"></td>
+                              <td th:text="${#numbers.formatDecimal(elemento.producto.precio,0,2)}" id="precio-modal">
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <!-- Fin Tabla de productos -->
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-modal-trigger" data-bs-dismiss="modal">Cerrar</button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+               <!-- FIN Modal de prueba para el botón de LIMÓN-->
+
+                                </td>
+
+                                
+                              </tr>
+                              
+                            </tbody>
+                          </table>
                         </div>
-                        <div class="modal-body">
-                          <!-- Tabla de productos -->
-                          <div class="container mt-3">
-                            <p>Detalle de productos de la canasta</p>
-                            <table class="table table-striped">
-                              <thead>
-                                <tr>
-                                  <th></th>
-                                  <th>Cantidad</th>
-                                  <th>Nombre</th>
-                                  <th>Marca</th>
-                                  <th>Precio</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr th:each="elemento, step : ${detalleCompra.canasta.elementos}">
-                                  <th th:if="${elemento.producto.foto == null}" width="30px" heigth="25px"
-                                    class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
-                                  background-position: center;background-size: cover;'">
-                                  </th>
-                                  <th th:unless="${elemento.producto.foto == null}" width="40px" heigth="25px"
-                                    class="text-center" th:style="'z-index: 100
-                                  ;background-image:url(http://localhost:8080/fotos/'+${elemento.producto.foto.id}+') !important;background-repeat: no-repeat;
-                                   background-position: center;background-size: cover;'">
-                                  <td th:text="${elemento.cantidadNecesaria}"></td>
-                                  <td th:text="${elemento.producto.nombre}"></td>
-                                  <td th:text="${elemento.producto.marca.nombre}"></td>
-                                  <td th:text="${#numbers.formatDecimal(elemento.producto.precio,0,2)}"
-                                    id="precio-modal">
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                          <!-- Fin Tabla de productos -->
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-modal-trigger" data-bs-dismiss="modal">Cerrar</button>
-
-                        </div>
+                        <!-- Fin Tabla detalle Comedores -->
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-modal-trigger" data-bs-dismiss="modal">Cerrar</button>
                       </div>
                     </div>
                   </div>
-                  <!-- Fin modal detalles productos -->
+                </div>
+                <!-- Fin modal detalles comedores -->
 
-                </li>
-              </ul>
-            </div>
-
-            <div class="card-footer">
-              <h5 class="total">Total $[[${#numbers.formatDecimal(compra.precioFinal,0,2)}]]</h5>
+                
+              </div>
             </div>
           </div>
         </div>
+      </section>
+    </section>
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer2" style="z-index: 100 !important;">
+      <div class="copyright2">
+        Copyright&copy; 2021-2022 | <b><span>&nbsp;Nutrividas&nbsp;</span></b> | Todos los derechos
+        reservados
       </div>
-    <!-- </div> -->
-    <!-- ====== FIN CARD ===== -->
-  </main>
-  <!-- End RESUMEN COMPRA --> <br><br>
+    </footer>
+    <!-- End Footer -->
 
+    <!-- JS -->
+    <!-- <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js}"></script>
+    <script th:src="@{/js/carrito.js}"> </script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js}"></script>
+     -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.1/dist/boxicons.js"></script>
+    <!-- Vendor JS Files -->
+    <script th:src="@{/jquery/jquery.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/jquery.easing/jquery.easing.min.js}"></script>
+    <script th:src="@{/php-email-form/validate.js}"></script>
+    <script th:src="@{/owl.carousel/owl.carousel.min.js}"></script>
+    <script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
+    <script th:src="@{/venobox/venobox.min.js}"></script>
+    <script th:src="@{/aos/aos.js}"></script>
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer2">
-    <div class="copyright2">
-      Copyright&copy; 2010-2021 | <b><span>&nbsp;Nutrividas&nbsp;</span></b> | Todos los derechos
-      reservados
-    </div>
-  </footer><!-- End Footer -->
+    <!-- Template Main JS File -->
+    <script th:src="@{/js/main.js}"></script>
 
+    <!-- JS PARA TITULO -->
+    <script th:src="@{/js/titulo.js}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
 
-  <!-- JS -->
-  <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js}"></script>
-  <script th:src="@{/js/carrito.js}"> </script>
-  <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js}"></script>
-  <script src="https://unpkg.com/boxicons@2.1.1/dist/boxicons.js"></script>
+    <script>
 
-  <!-- Vendor JS Files -->
-  <script th:src="@{/jquery/jquery.min.js}"></script>
-  <script th:src="@{/bootstrap/js/bootstrap.bundle.min.js}"></script>
-  <script th:src="@{/jquery.easing/jquery.easing.min.js}"></script>
-  <script th:src="@{/php-email-form/validate.js}"></script>
-  <script th:src="@{/owl.carousel/owl.carousel.min.js}"></script>
-  <script th:src="@{/isotope-layout/isotope.pkgd.min.js}"></script>
-  <script th:src="@{/venobox/venobox.min.js}"></script>
-  <script th:src="@{/aos/aos.js}"></script>
-
-  <!-- Template Main JS File -->
-  <script th:src="@{/js/main.js}"></script>
-
-  <!-- JS PARA TITULO -->
-  <script th:src="@{/js/titulo.js}"></script>
-
-  <script>
-
-    function verModal(id) {
-      $('#' + id).modal('show');
-    }
-
-    function seeHidden(id) {
-      var button = id;
-      var x = document.getElementById("" + button + "");
-      var icon = document.getElementById(id + "iconShow");
-      if (x.style.display === "none") {
-        x.style.display = "table-row";
-        icon.className = "bx bxs-chevron-up bx-xs";
-
-      } else {
-        x.style.display = "none";
-        icon.className = "bx bxs-chevron-down bx-xs";
+      function verModal(id) {
+        $('#' + id).modal('show');
       }
-    }
 
-    function verModal(id) {
-      $('#' + id).modal('show');
-    }
+      function seeHidden(id) {
+        var button = id;
+        var x = document.getElementById("" + button + "");
+        var icon = document.getElementById(id + "iconShow");
+        if (x.style.display === "none") {
+          x.style.display = "table-row";
+          icon.className = "bx bxs-chevron-up bx-xs";
 
-  </script>
+        } else {
+          x.style.display = "none";
+          icon.className = "bx bxs-chevron-down bx-xs";
+        }
+      }
+
+    </script>
 
 
 </body>

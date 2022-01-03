@@ -1,0 +1,205 @@
+
+* {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+  }
+  
+  html {
+	height: 100%;
+	font-family: "Montserrat", sans-serif;
+	font-size: 14px;
+  }
+  .signup-section {
+	  padding-left: 12%;
+	  padding-right: 12%;
+	  padding-top: 3%;
+	  margin-bottom: 3%;
+	  
+	}
+	
+	.login,
+	.image {
+	  min-height: auto;
+	}
+	
+	.bg-image {
+	  background-image: url("../img/children31.jpg");
+	  background-size: cover;
+	  background-position: center center;
+	  /* border-radius: 20px; */
+	  border-top-left-radius: 20px;
+	  border-bottom-left-radius: 20px;
+	}
+
+	.bg-image2 {
+		background-image: url("../img/background01.jpg");
+		background-size: cover;
+		background-position: center center;
+		border-top-right-radius: 20px;
+		border-bottom-right-radius: 20px;
+	  }
+	  
+
+	body {
+		color: #444444 !important;
+		font-family: 'Newsreader', serif !important;
+	
+	}
+	#titulo-form{
+	  font-size: 18px;
+	  text-align: center !important;
+	}
+  
+	#boton-SignIn {
+	  color: white !important;
+	  background-color: #1bac91 !important;
+	  border: 1px solid #1fc5a7;
+	  margin-top: 1px;
+	  border-radius: 6px  !important;
+	  padding: 6px 15px 4px 15px !important;
+	  max-height: 40px !important;
+	  text-align: center !important;
+	  vertical-align: center !important;
+	}
+	
+	#boton-SignIn:hover {
+	  background-color:  #1a8673 !important;
+	  border-radius: 6px !important;
+	  border: 1px solid #1fc5a7;
+	  transition: 1s;
+	}
+	
+	#boton-SignIn:not(:hover) {   
+		transition: 1.6s;
+	}
+	
+	#link-SignUp:hover {
+	  text-decoration: underline;
+	} 
+	
+  
+	
+	/* --------- SACAR LAS FLECHAS PARA INCREMENTAR O DISMINUIR NÚMEROS --------- */
+	/* Chrome */
+	input[type="number"]::-webkit-outer-spin-button,
+	input[type="number"]::-webkit-inner-spin-button {
+	  -webkit-appearance: none;
+	  margin: 0;
+	}
+	/* Firefox */
+	input[type="number"] {
+	  -moz-appearance: textfield;
+	}
+	input[type="number"]:hover,
+	input[type="number"]:focus {
+	  -moz-appearance: number-input;
+	}
+	/* Other */
+	input[type="number"]::-webkit-inner-spin-button,
+	input[type="number"]::-webkit-outer-spin-button {
+	  -webkit-appearance: none;
+	  margin: 0;
+	}
+	
+	
+	#mensaje-Bienvenida-SignUp {
+		font-size: 33px;
+		text-align: center;
+	}
+	
+	#mensaje-Secundario-SignUp {
+		font-size: 1.5rem;
+		text-align: center !important;
+	}
+	
+	
+	#mensaje-nutricionista {
+	  font-size: 1.5rem;
+	  text-align: center !important;
+	  
+  }
+	/*--------------------------------------------------------------
+	# Footer
+	--------------------------------------------------------------*/
+	
+	#footer2 .copyright2 {
+	  color: #fff;
+	  font-size: 14px;
+	  text-align: center;
+	  position: fixed;
+	  height: 50px;
+	  background-color: #1d1d1d;
+	  bottom: 0px;
+	  left: 0px;
+	  right: 0px;
+	  margin-bottom: 0px;
+	  padding-top: 15px;
+	  
+	}	
+  /*--------------------------------------------------------------
+  # TÍTULO
+  --------------------------------------------------------------*/
+  
+  #titulo{
+	text-align: center !important;
+	margin-top: 4rem;
+	color: #444444;
+	font: normal 40px/50px "Montserrat", sans-serif;
+	background: url("../img/cover01.jpg") center center;
+	background-size: cover;
+	padding-bottom: 2rem;
+  }
+  
+  .texto-comedores {
+	
+	top: 50%;
+	margin-top: -20px;
+	font-family: 'Monserrat', serif;
+	font-size: 50px;
+  }
+  
+  p {
+	display: inline-block;
+	vertical-align: top;
+   align-items: center;
+   padding-top: 16px;
+  }
+  
+  .word {
+	position: auto;
+	width: 250px;
+	opacity: 0;
+  }
+  
+  .letter {
+	display: inline-block;
+	position: relative;
+	float: left;
+	transform: translateZ(25px);
+	transform-origin: 50% 50% 25px;
+  }
+  
+  .letter.out {
+	transform: rotateX(90deg);
+	transition: transform 0.32s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  
+  .letter.behind {
+	transform: rotateX(-90deg);
+  }
+  
+  .letter.in {
+	transform: rotateX(0deg);
+	transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .color {
+	color: #1bac91;
+  }
+  
+  .form-check-input:checked {
+    background-color: #40a794 !important;
+    border-color: #1bac91 	!important;
+}
