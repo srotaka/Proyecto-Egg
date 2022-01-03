@@ -1,6 +1,7 @@
 package grupo7.egg.nutrividas.mail;
 
 
+import grupo7.egg.nutrividas.entidades.Menu;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -848,6 +849,239 @@ public class Template {
                 "</table></td>\n" +
                 "</tr>\n" +
                 "</table>\n" +
+                "</div>\n" +
+                "</body>\n" +
+                "</html>";
+    }
+
+    public static String menuTemplate(Menu menu){
+        return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
+                "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" style=\"width:100%;font-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta content=\"width=device-width, initial-scale=1\" name=\"viewport\">\n" +
+                "    <meta name=\"x-apple-disable-message-reformatting\">\n" +
+                "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
+                "    <meta content=\"telephone=no\" name=\"format-detection\">\n" +
+                "    <title>Nuevo mensaje 2</title>\n" +
+                "    <style type=\"text/css\">\n" +
+                "a {text-decoration: none;}\n" +
+                "</style>\n" +
+                "    <style>sup { font-size: 100% !important; }</style>\n" +
+                "\n" +
+                "    <xml>\n" +
+                "        <o:OfficeDocumentSettings>\n" +
+                "            <o:AllowPNG></o:AllowPNG>\n" +
+                "            <o:PixelsPerInch></o:PixelsPerInch>\n" +
+                "        </o:OfficeDocumentSettings>\n" +
+                "    </xml>\n" +
+                "\n" +
+                "    <link href=\"https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i\" rel=\"stylesheet\">\n" +
+                "</head>\n" +
+                "<body style=\"width:100%;font-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0\">\n" +
+                "<div class=\"es-wrapper-color\" style=\"background-color:#F6F6F6\">\n" +
+                "\n" +
+                "    <v:background xmlns:v=\"urn:schemas-microsoft-com:vml\" fill=\"t\">\n" +
+                "        <v:fill type=\"tile\" color=\"#f6f6f6\"></v:fill>\n" +
+                "    </v:background>\n" +
+                "\n" +
+                "    <table class=\"es-wrapper\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top\">\n" +
+                "        <tr style=\"border-collapse:collapse\">\n" +
+                "            <td valign=\"top\" style=\"padding:0;Margin:0\">\n" +
+                "                <table cellpadding=\"0\" cellspacing=\"0\" class=\"es-header\" align=\"center\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top\">\n" +
+                "                    <tr style=\"border-collapse:collapse\">\n" +
+                "                        <td align=\"center\" bgcolor=\"#ffffff\" style=\"padding:0;Margin:0;background-color:#ffffff\">\n" +
+                "                            <table class=\"es-header-body\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#ffffff\" align=\"center\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#ffffff;width:600px\">\n" +
+                "                                <tr style=\"border-collapse:collapse\">\n" +
+                "                                    <td style=\"Margin:0;padding-bottom:10px;padding-top:20px;padding-left:20px;padding-right:20px;background-position:center center\" align=\"left\">\n" +
+                "                                       <table style=\"width:560px\" cellpadding=\"0\" cellspacing=\"0\"><tr><td style=\"width:270px\" valign=\"top\">\n" +
+                "                                        <table class=\"es-left\" cellspacing=\"0\" cellpadding=\"0\" align=\"left\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left\">\n" +
+                "                                            <tr style=\"border-collapse:collapse\">\n" +
+                "                                                <td class=\"es-m-p20b\" align=\"left\" style=\"padding:0;Margin:0;width:270px\">\n" +
+                "                                                    <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:0;Margin:0;padding-bottom:5px;font-size:0px\"><a target=\"_blank\" href=\"https://viewstripo.email/\" style=\"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#659C35;font-size:16px\"><img src=\"https://tpavby.stripocdn.email/content/guids/CABINET_666a544a8b5e42bc37f055b5282b24b8/images/logonutri.png\" alt style=\"display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic\" class=\"adapt-img\" width=\"145\"></a></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                    </table></td>\n" +
+                "                                            </tr>\n" +
+                "                                        </table>\n" +
+                "                                        </td><td style=\"width:20px\"></td><td style=\"width:270px\" valign=\"top\">\n" +
+                "                                        <table class=\"es-right\" cellspacing=\"0\" cellpadding=\"0\" align=\"right\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right\">\n" +
+                "                                            <tr style=\"border-collapse:collapse\">\n" +
+                "                                                <td align=\"left\" style=\"padding:0;Margin:0;width:270px\">\n" +
+                "                                                    <table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:0;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:24px;color:#333333;font-size:16px\"><br></p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                    </table></td>\n" +
+                "                                            </tr>\n" +
+                "                                        </table>\n" +
+                "                                        </td></tr></table></td>\n" +
+                "                                </tr>\n" +
+                "                            </table></td>\n" +
+                "                    </tr>\n" +
+                "                </table>\n" +
+                "                <table cellpadding=\"0\" cellspacing=\"0\" class=\"es-content\" align=\"center\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%\">\n" +
+                "                    <tr style=\"border-collapse:collapse\">\n" +
+                "                        <td align=\"center\" bgcolor=\"#ffffff\" style=\"padding:0;Margin:0;background-color:#ffffff;background-image:url(https://tpavby.stripocdn.email/content/guids/CABINET_666a544a8b5e42bc37f055b5282b24b8/images/backgroundmenu_aa0.png);background-repeat:no-repeat;background-position:center top\" background=\"https://tpavby.stripocdn.email/content/guids/CABINET_666a544a8b5e42bc37f055b5282b24b8/images/backgroundmenu_aa0.png\">\n" +
+                "                            <table class=\"es-content-body\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px\">\n" +
+                "                                <tr style=\"border-collapse:collapse\">\n" +
+                "                                    <td align=\"left\" style=\"padding:20px;Margin:0\">\n" +
+                "                                        <table style=\"width:560px\" cellpadding=\"0\" cellspacing=\"0\"><tr><td style=\"width:100px\" valign=\"top\">\n" +
+                "                                        <table cellpadding=\"0\" cellspacing=\"0\" class=\"es-left\" align=\"left\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left\">\n" +
+                "                                            <tr style=\"border-collapse:collapse\">\n" +
+                "                                                <td class=\"es-m-p20b\" align=\"left\" style=\"padding:0;Margin:0;width:100px\">\n" +
+                "                                                    <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"center\" style=\"padding:0;Margin:0;font-size:0px\"><img class=\"adapt-img\" src=\"https://tpavby.stripocdn.email/content/guids/CABINET_666a544a8b5e42bc37f055b5282b24b8/images/usernutricionista.png\" alt style=\"display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic\" width=\"50\"></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                    </table></td>\n" +
+                "                                            </tr>\n" +
+                "                                        </table>\n" +
+                "                                        </td><td style=\"width:20px\"></td><td style=\"width:440px\" valign=\"top\">\n" +
+                "                                        <table cellpadding=\"0\" cellspacing=\"0\" class=\"es-right\" align=\"right\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right\">\n" +
+                "                                            <tr style=\"border-collapse:collapse\">\n" +
+                "                                                <td align=\"left\" style=\"padding:0;Margin:0;width:440px\">\n" +
+                "                                                    <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:0;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#333333;font-size:12px\"><strong>Nutricionista:</strong> Marta Sosa<br><strong>Matrícula:</strong> 123456789123<br><strong>Mail: </strong>martasosa@gmail.com</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                    </table></td>\n" +
+                "                                            </tr>\n" +
+                "                                        </table>\n" +
+                "                                        </td></tr></table></td>\n" +
+                "                                </tr>\n" +
+                "                                <tr style=\"border-collapse:collapse\">\n" +
+                "                                    <td align=\"left\" style=\"padding:0;Margin:0;padding-top:20px;padding-left:20px;padding-right:20px\">\n" +
+                "                                        <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                            <tr style=\"border-collapse:collapse\">\n" +
+                "                                                <td align=\"center\" valign=\"top\" style=\"padding:0;Margin:0;width:560px\">\n" +
+                "                                                    <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:0;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'comic sans ms', 'marker felt-thin', arial, sans-serif;line-height:33px;color:#daa520;font-size:22px\"><em><strong style='content: \"\";\n'><em> Menú: "+menu.getTitulo()+"</em></p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                    </table></td>\n" +
+                "                                            </tr>\n" +
+                "                                        </table></td>\n" +
+                "                                </tr>\n" +
+                "                                <tr style=\"border-collapse:collapse\">\n" +
+                "                                    <td align=\"left\" style=\"padding:20px;Margin:0;border-radius:10px\">\n" +
+                "                                        <table style=\"width:560px\" cellpadding=\"0\" cellspacing=\"0\"><tr><td style=\"width:145px\" valign=\"top\">\n" +
+                "                                        <table cellpadding=\"0\" cellspacing=\"0\" class=\"es-left\" align=\"left\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left\">\n" +
+                "                                            <tr style=\"border-collapse:collapse\">\n" +
+                "                                                <td class=\"es-m-p0r es-m-p20b\" align=\"center\" style=\"padding:0;Margin:0;width:125px\">\n" +
+                "                                                    <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px\"><br></p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#808080;font-size:14px\"><em><strong>Lunes</strong></em></p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#808080;font-size:14px\"><em><strong>Martes</strong></em></p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#808080;font-size:14px\"><em><strong>Miercoles</strong></em></p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#808080;font-size:14px\"><em><strong>Jueves</strong></em></p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#808080;font-size:14px\"><em><strong>Viernes</strong></em></p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#808080;font-size:14px\"><br><br></p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                    </table></td>\n" +
+                "                                                <td class=\"es-hidden\" style=\"padding:0;Margin:0;width:20px\"></td>\n" +
+                "                                            </tr>\n" +
+                "                                        </table>\n" +
+                "                                        </td><td style=\"width:145px\" valign=\"top\">\n" +
+                "                                        <table cellpadding=\"0\" cellspacing=\"0\" class=\"es-left\" align=\"left\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left\">\n" +
+                "                                            <tr style=\"border-collapse:collapse\">\n" +
+                "                                                <td class=\"es-m-p20b\" align=\"center\" style=\"padding:0;Margin:0;width:125px\">\n" +
+                "                                                    <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'comic sans ms', 'marker felt-thin', arial, sans-serif;line-height:27px;color:#1bac91;font-size:18px\">Almuerzo</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px;background-color: #0cc09f33;\">"+menu.getMenuSemanal()[0][0]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px;background-color: #0cc09f33;\">"+menu.getMenuSemanal()[1][0]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px;background-color: #0cc09f33;\">"+menu.getMenuSemanal()[2][0]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px;background-color: #0cc09f33;\">"+menu.getMenuSemanal()[3][0]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px;background-color: #0cc09f33;\">"+menu.getMenuSemanal()[4][0]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                    </table></td>\n" +
+                "                                                <td class=\"es-hidden\" style=\"padding:0;Margin:0;width:20px\"></td>\n" +
+                "                                            </tr>\n" +
+                "                                        </table>\n" +
+                "                                        </td><td style=\"width:125px\" valign=\"top\">\n" +
+                "                                        <table cellpadding=\"0\" cellspacing=\"0\" class=\"es-left\" align=\"left\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left\">\n" +
+                "                                            <tr style=\"border-collapse:collapse\">\n" +
+                "                                                <td class=\"es-m-p20b\" align=\"center\" style=\"padding:0;Margin:0;width:125px\">\n" +
+                "                                                    <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'comic sans ms', 'marker felt-thin', arial, sans-serif;line-height:27px;color:#1bac91;font-size:18px\">Merienda</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px\">"+menu.getMenuSemanal()[0][1]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px\">"+menu.getMenuSemanal()[1][1]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px\">"+menu.getMenuSemanal()[2][1]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px\">"+menu.getMenuSemanal()[3][1]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px\">"+menu.getMenuSemanal()[4][1]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                    </table></td>\n" +
+                "                                            </tr>\n" +
+                "                                        </table>\n" +
+                "                                        </td><td style=\"width:20px\"></td><td style=\"width:125px\" valign=\"top\">\n" +
+                "                                        <table cellpadding=\"0\" cellspacing=\"0\" class=\"es-right\" align=\"right\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right\">\n" +
+                "                                            <tr style=\"border-collapse:collapse\">\n" +
+                "                                                <td align=\"center\" style=\"padding:0;Margin:0;width:125px\">\n" +
+                "                                                    <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'comic sans ms', 'marker felt-thin', arial, sans-serif;line-height:27px;color:#1bac91;font-size:18px\">Cena</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px\">"+menu.getMenuSemanal()[0][2]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px\">"+menu.getMenuSemanal()[1][2]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px\">"+menu.getMenuSemanal()[2][2]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px\">"+menu.getMenuSemanal()[3][2]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                        <tr style=\"border-collapse:collapse\">\n" +
+                "                                                            <td align=\"left\" style=\"padding:10px;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px\">"+menu.getMenuSemanal()[4][2]+"</p></td>\n" +
+                "                                                        </tr>\n" +
+                "                                                    </table></td>\n" +
+                "                                            </tr>\n" +
+                "                                        </table>\n" +
+                "                                        </td></tr></table></td>\n" +
+                "                                </tr>\n" +
+                "                            </table></td>\n" +
+                "                    </tr>\n" +
+                "                </table></td>\n" +
+                "        </tr>\n" +
+                "    </table>\n" +
                 "</div>\n" +
                 "</body>\n" +
                 "</html>";

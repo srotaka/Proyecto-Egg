@@ -7,15 +7,22 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import grupo7.egg.nutrividas.entidades.Menu;
+import grupo7.egg.nutrividas.mail.Template;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jsoup.Jsoup;
 import org.springframework.stereotype.Component;
+import org.xhtmlrenderer.layout.SharedContext;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Component
 @Data
@@ -85,8 +92,8 @@ public class MenuPDFExporter {
 
         PdfPTable table = new PdfPTable(4);
         Image image = Image.getInstance("C:\\Users\\test\\Documents\\ProyectoFinalEgg2\\Proyecto-Egg\\Nutrividas\\src\\main\\resources\\static\\img\\backgroundMenu.png");
-        image.scaleAbsolute(300, 200);
-        image.setAbsolutePosition(0, 0);
+        //image.scaleAbsolute(300, 200);
+        //image.setAbsolutePosition(0, 0);
         table.setWidthPercentage(100f);
         table.setWidths(new float[] {1.5f, 3.5f, 3.5f, 3.f});
         table.setSpacingBefore(10);
@@ -97,5 +104,30 @@ public class MenuPDFExporter {
         document.add(table);
 
         document.close();
+    }
+
+    public void export2(HttpServletResponse response) throws IOException {
+        //String inputFile = "C:\\Users\\test\\Documents\\ProyectoFinalEgg2\\Proyecto-Egg\\Nutrividas\\src\\main\\resources\\templates\\menuPDF.html";
+
+        //String html = new String(Files.readAllBytes(Paths.get(inputFile)));
+        String html = Template.menuTemplate(menu);
+        org.jsoup.nodes.Document document = Jsoup.parse(html);
+        document.outputSettings().syntax(org.jsoup.nodes.Document.OutputSettings.Syntax.xml);
+
+
+        try (OutputStream outputStream = response.getOutputStream()) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+            ITextRenderer renderer = new ITextRenderer();
+            SharedContext sharedContext = renderer.getSharedContext();
+            sharedContext.setPrint(true);
+            sharedContext.setInteractive(false);
+            renderer.setDocumentFromString(document.html());
+            renderer.layout();
+            renderer.createPDF(outputStream);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

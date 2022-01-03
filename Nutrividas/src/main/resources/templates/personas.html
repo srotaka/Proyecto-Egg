@@ -113,7 +113,7 @@
 
 <!-- =======  ======= -->
 <section >
-  <div class="container">
+  <div class="container-fluid ml-2">
     <div class="row">
       <div class="col col-md-5 col-sm-12 mt-2">
 
@@ -203,16 +203,15 @@
 
       </div>
 
-      <div class="col col-md-6 col-sm-12 ml-2 mt-5 mb-5 rounded" id="menu">
+      <div class="col col-md-6 col-sm-12 ml-5 mt-5 mb-5 p-5 rounded" id="menu">
 
-        <form class="row m-3 table-responsive" th:action="@{/persona/export/pdf}" th:object="${menu}">
+        <form class="row m-3 table-responsive" method="POST" th:action="@{/persona/export/pdf}" th:object="${menu}">
           <h2 id="menuTitle" class="menu"><strong>Menu</strong></h2>
-          <div class="col-12">
-            <label for="inputAddress" class="form-label">Título</label>
-            <input type="text" class="form-control" id="inputTitulo" th:field="*{titulo}" placeholder="Menú apto celíacos">
+          <div class="col-12 mt-4">
+            <input type="text" class="form-control" id="inputTitulo" th:field="*{titulo}" placeholder="Apto celíacos">
           </div>
 
-          <table class="table" style="border: white;">
+          <table class="table" style="border: white !important;">
             <thead>
             <tr>
               <td></td>
@@ -231,7 +230,7 @@
                 <input th:field="*{menuSemanal[0][1]}" type="text" class="form-control" id="inputMeriendaLunes">
               </td>
               <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
-                <input th:field="*{menuSemanal[0][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="Ensalada....">
+                <input th:field="*{menuSemanal[0][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="">
               </td>
             </tr>
             <tr class="p-2">
@@ -243,7 +242,7 @@
                 <input th:field="*{menuSemanal[1][1]}" type="text" class="form-control" id="inputMeriendaLunes">
               </td>
               <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
-                <input th:field="*{menuSemanal[1][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="Ensalada....">
+                <input th:field="*{menuSemanal[1][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="">
               </td>
             </tr>
             <tr class="p-2">
@@ -255,7 +254,7 @@
                 <input th:field="*{menuSemanal[2][1]}" type="text" class="form-control" id="inputMeriendaLunes">
               </td>
               <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
-                <input th:field="*{menuSemanal[2][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="Ensalada....">
+                <input th:field="*{menuSemanal[2][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="">
               </td>
             </tr>
             <tr class="p-2">
@@ -267,7 +266,7 @@
                 <input th:field="*{menuSemanal[3][1]}" type="text" class="form-control" id="inputMeriendaLunes">
               </td>
               <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
-                <input th:field="*{menuSemanal[3][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="Ensalada....">
+                <input th:field="*{menuSemanal[3][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="">
               </td>
             </tr>
             <tr class="p-2">
@@ -279,15 +278,15 @@
                 <input th:field="*{menuSemanal[4][1]}" type="text" class="form-control" id="inputMeriendaLunes">
               </td>
               <td class="menuDiaInput p-3" style="background-color: #0cc09f33;">
-                <input th:field="*{menuSemanal[4][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="Ensalada....">
+                <input th:field="*{menuSemanal[4][2]}" type="text" class="form-control" id="inputCenaLunes" placeholder="">
               </td>
             </tr>
 
             </tbody>
           </table>
 
-          <div class="col-12">
-            <a type="submit" th:href="@{/persona/export/pdf}">Export to PDF</a>
+          <div class="col-12 mt-3">
+            <button type="submit"><box-icon name='file-pdf' type='solid' animation='tada-hover' size="lg" color='#1bac91' ></box-icon></button>
           </div>
         </form>
 

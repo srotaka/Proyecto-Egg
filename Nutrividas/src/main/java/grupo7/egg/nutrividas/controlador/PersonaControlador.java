@@ -12,6 +12,7 @@ import grupo7.egg.nutrividas.servicios.ComedorServicio;
 import grupo7.egg.nutrividas.servicios.PersonaServicio;
 import grupo7.egg.nutrividas.util.MenuPDFExporter;
 import grupo7.egg.nutrividas.util.Validations;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
@@ -24,12 +25,20 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
+import org.xhtmlrenderer.layout.SharedContext;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+import org.xhtmlrenderer.simple.xhtml.XhtmlForm;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.awt.*;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -245,52 +254,31 @@ public class PersonaControlador {
         return new RedirectView("/persona");
     }
 
-    @GetMapping("/export/pdf")
-    public RedirectView exportToPDF(@ModelAttribute @Valid Menu menu2, BindingResult result, HttpServletResponse response) throws DocumentException, IOException {
+    @PostMapping("/export/pdf")
+    public RedirectView exportToPDF(@ModelAttribute Menu menu, HttpServletResponse response) throws DocumentException, IOException {
 
         RedirectView redirectView = new RedirectView("/persona/comedor/9");
 
-        String errorMsg = result.getFieldErrors().stream().map(FieldError::getDefaultMessage)
-                .collect(Collectors.joining(","));
-        if (result.hasErrors()){
-            throw new InvalidDataException(errorMsg,result);
-        }
 
-        response.setContentType("application/pdf");
+        /*response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=users_" + currentDateTime + ".pdf";
+        String headerValue = "attachment; filename="+menu.getTitulo()+"_" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
 
-        Menu menu = new Menu();
-        menu.setTitulo("Menu para integrantes celíacos");
-        String[][] menuSemanal = new String[5][3];
-        menuSemanal[0][0] = "Milanesas de pollo con puré A";
-        menuSemanal[0][1] = "Milanesas de pollo con puré M";
-        menuSemanal[0][2] = "Milanesas de pollo con puré C";
+        MenuPDFExporter exporter = new MenuPDFExporter(menu);
+        //exporter.export(response);*/
 
-        menuSemanal[1][0] = "Bife con ensalada A";
-        menuSemanal[1][1] = "Bife con ensalada M";
-        menuSemanal[1][2] = "Bife con ensalada C";
-
-        menuSemanal[2][0] = "Tarta de zaqpallitos A";
-        menuSemanal[2][1] = "Tarta de zaqpallitos M";
-        menuSemanal[2][2] = "Tarta de zaqpallitos C";
-
-        menuSemanal[3][0] = "Guiso de lentejas A";
-        menuSemanal[3][1] = "Guiso de lentejas M";
-        menuSemanal[3][2] = "Guiso de lentejas C";
-
-        menuSemanal[4][0] = "Carne al horno con verduras A";
-        menuSemanal[4][1] = "Carne al horno con verduras M";
-        menuSemanal[4][2] = "Carne al horno con verduras C";
-
-        menu.setMenuSemanal(menuSemanal);
-
-        MenuPDFExporter exporter = new MenuPDFExporter(menu2);
-        exporter.export(response);
+        response.setContentType("application/pdf");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename="+menu.getTitulo()+"_" + currentDateTime + ".pdf";
+        response.setHeader(headerKey, headerValue);
+        MenuPDFExporter exporter = new MenuPDFExporter(menu);
+        exporter.export2(response);
 
         return redirectView;
     }
