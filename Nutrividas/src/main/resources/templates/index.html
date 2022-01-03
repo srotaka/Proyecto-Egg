@@ -80,7 +80,7 @@
               <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/canasta/crear}">Nueva Canasta</a>
             </ul>
           </li>
-          <li><a sec:authorize="isAnonymous()" href="#contact">Contáctanos</a></li>
+          <li><a href="#contact">Contáctanos</a></li>
           &nbsp;&nbsp;&nbsp;
           <!-- Botón Usuario si está loggeado -->
           <li class="drop-down" sec:authorize="isAuthenticated()">
@@ -92,7 +92,7 @@
               <a href="#"><b>¡Hola [[${session.usernameSession}]]!</b></a>
               <li class="dropdown-divider"></li>
               <li><a class="dropdown-item" th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
-              <li><a class="dropdown-item" th:href="@{/persona/crear}">Agregar Integrante al Comedor</a></li>
+              <li><a class="dropdown-item" th:href="@{/persona/crear}" sec:authorize="hasRole('COMEDOR')">Agregar Integrante al Comedor</a></li>
               <li><a class="dropdown-item" th:href="@{/usuario/compras/__${session.usernameSession}__}" sec:authorize="hasRole('USUARIO')">Mis compras</a></li>
               <li><a class="dropdown-item" th:href="@{/usuario/tarjetas/__${session.usernameSession}__}" sec:authorize="hasRole('USUARIO')">Mis Tarjetas</a></li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
@@ -623,7 +623,7 @@
                         <div class="form-group">
                           <label class="label" for="#">Mensaje</label>
                           <textarea name="message" class="form-control" id="message" cols="30" rows="4"
-                            placeholder="Sobre el comedor..."></textarea>
+                            placeholder="Su consulta, sugerencia o inquietud..."></textarea>
                         </div>
                       </div>
 

@@ -203,3 +203,7 @@
     background-color: #40a794 !important;
     border-color: #1bac91 	!important;
 }
+
+select option:hover{
+	background: rgba(9, 167, 49, 0.3);
+ }
