@@ -1,7 +1,5 @@
 package grupo7.egg.nutrividas.servicios;
 
-import grupo7.egg.nutrividas.entidades.Comedor;
-import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Persona;
 import grupo7.egg.nutrividas.enums.CategoriaIMC;
 import grupo7.egg.nutrividas.enums.Sexo;
@@ -57,7 +55,19 @@ public class PersonaServicio {
         persona.setDiabetico(aptoDiabeticos);
         persona.setCeliaco(aptoCeliaco);
         persona.setEdad(calcularEdad(fechaNacimiento));
-        persona.setIMC(calcularIMC(peso,altura));
+
+        Double imc = calcularIMC(peso,altura);
+        persona.setIMC(imc);
+        if(imc<18.5){
+            persona.setCategoriaIMC(CategoriaIMC.BAJO);
+        }else if(imc<24.9){
+            persona.setCategoriaIMC(CategoriaIMC.NORMAL);
+        }else if(imc<29.9){
+            persona.setCategoriaIMC(CategoriaIMC.SOBREPESO);
+        }else{
+            persona.setCategoriaIMC(CategoriaIMC.OBESIDAD);
+        }
+
         persona.setSexo(sexo);
         persona.setComedor(comedorRepository.findById(idComedor).orElseThrow(
                 () ->new NoSuchElementException("No existe un comedor asociado con el id '"+idComedor+"' ")));
@@ -89,7 +99,17 @@ public class PersonaServicio {
         persona.setDiabetico(aptoDiabeticos);
         persona.setCeliaco(aptoCeliaco);
         persona.setEdad(calcularEdad(fechaNacimiento));
-        persona.setIMC(calcularIMC(peso,altura));
+        Double imc = calcularIMC(peso,altura);
+        persona.setIMC(imc);
+        if(imc<18.5){
+            persona.setCategoriaIMC(CategoriaIMC.BAJO);
+        }else if(imc<24.9){
+            persona.setCategoriaIMC(CategoriaIMC.NORMAL);
+        }else if(imc<29.9){
+            persona.setCategoriaIMC(CategoriaIMC.SOBREPESO);
+        }else{
+            persona.setCategoriaIMC(CategoriaIMC.OBESIDAD);
+        }
         persona.setSexo(sexo);
         persona.setComedor(comedorRepository.findById(idComedor).orElseThrow(
                 () ->new NoSuchElementException("No existe un comedor asociado con el id '"+idComedor+"' ")));
@@ -117,7 +137,7 @@ public class PersonaServicio {
         if(altura<=0){
             throw new FieldInvalidException("La altura ingresada es inválida");
         }
-        if(sexo!=null){
+        if(sexo==null){
             throw new FieldInvalidException("El género no puede ser nulo");
         }
     }

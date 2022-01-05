@@ -126,13 +126,19 @@ public class NutricionistaServicio {
                 ()->new NoSuchElementException("No se halló ningún nutricionista con el id '"+id+"'"));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Nutricionista buscarNutricionistaPorCredencial(Long id){
         if(nutricionistaRepository.buscarNutricionistaPorCredencial(id) != null){
             return nutricionistaRepository.buscarNutricionistaPorCredencial(id);
         }else{
             return null;
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Nutricionista buscarPorMail(String mail){
+        return nutricionistaRepository.findByCredencial_Mail(mail).orElseThrow(
+                ()->new NoSuchElementException("No se halló ningún nutricionista con el mail '"+mail+"'"));
     }
 
 }

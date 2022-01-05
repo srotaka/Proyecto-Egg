@@ -145,36 +145,20 @@
                 </thead>
                 <!-- <tbody id="myTable" style="text-align: center;" th:each="persona : ${personas}"> -->
                 <tbody id="myTable" style="text-align: center;">
-                    <tr>     
-                        <td class="col-md-3 px-md-2" >Juan</td>
-                        <td class="col-md-3 px-md-2" >Pepe</td>
-                        <td class="col-md-2 px-md-2" >33333333</td>
-                        <td class="col-md-3 px-md-2" >01/01/2010</td>
-                        <td class="col-md-3 px-md-2" >12</td>
-                        <td class="col-md-2 px-md-2" >150</td>
-                        <td class="col-md-3 px-md-2" >50</td>
-                        <td class="col-md-3 px-md-2" >10</td>
-                        <td class="col-md-2 px-md-2" >M</td>
-                        <td class="col-md-2 px-md-2">X</td>
-                        <td class="col-md-2 px-md-2">X</td>
-                        <td class="col-md-2 px-md-2">X</td>
-                        <td class="col-md-2 px-md-2">X</td>
-                        
-
-                        <!-- <td class="col-md-3 px-md-2" th:text="${persona.nombre}"></td>
-                        <td class="col-md-3 px-md-2" th:text="${persona.apellido}"></td>
-                        <td class="col-md-2 px-md-2" th:text="${persona.dni}"></td>
-                        <td class="col-md-3 px-md-2" th:text="${persona.fechaNacimiento}"></td>
-                        <td class="col-md-3 px-md-2" th:text="${persona.edad}"></td>
-                        <td class="col-md-2 px-md-2" th:text="${persona.altura}"></td>
-                        <td class="col-md-3 px-md-2" th:text="${persona.peso}"></td>
-                        <td class="col-md-3 px-md-2" th:text="${persona.IMC}"></td>
-                        <td class="col-md-2 px-md-2" th:text="${persona.sexo}"></td>
+                    <tr th:each="persona : ${personas.page}">
+                        <td th:text="${persona.nombre}" class="col-md-3 px-md-2" ></td>
+                        <td th:text="${persona.apellido}" class="col-md-3 px-md-2" ></td>
+                        <td th:text="|${persona.documento}|" class="col-md-2 px-md-2"></td>
+                        <td th:text="${#temporals.format(persona.fechaNacimiento,'dd/MM/yyyy')}"class="col-md-3 px-md-2" ></td>
+                        <td th:text="|${persona.edad}|" class="col-md-3 px-md-2" ></td>
+                        <td th:text="|${persona.altura}|" class="col-md-2 px-md-2" ></td>
+                        <td th:text="${#numbers.formatDecimal(persona.peso, 0, 'COMMA', 1, 'POINT')}" class="col-md-3 px-md-2" ></td>
+                        <td th:text="${#numbers.formatDecimal(persona.IMC,0,2)}" class="col-md-3 px-md-2" ></td>
+                        <td th:text="${persona.sexo == 'FEMENINO'} ? F : M" class="col-md-2 px-md-2" ></td>
                         <td class="col-md-2 px-md-2"><box-icon th:name="${persona.celiaco == true} ? 'check' : 'x'" color='#444444'></box-icon></td>
                         <td class="col-md-2 px-md-2"><box-icon th:name="${persona.diabetico == true} ? 'check' : 'x'" color='#444444'></box-icon></td>
                         <td class="col-md-2 px-md-2"><box-icon th:name="${persona.hipertenso == true} ? 'check' : 'x'" color='#444444'></box-icon></td>
-                        <td class="col-md-2 px-md-2"><box-icon th:name="${persona.intoleranteLactosa == true} ? 'check' : 'x'" color='#444444'></box-icon></td> -->
-                        
+                        <td class="col-md-2 px-md-2"><box-icon th:name="${persona.intoleranteLactosa == true} ? 'check' : 'x'" color='#444444'></box-icon></td>
                     </tr>
                 </tbody>
             </table>

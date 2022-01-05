@@ -2,6 +2,7 @@ package grupo7.egg.nutrividas.mail;
 
 
 import grupo7.egg.nutrividas.entidades.Menu;
+import grupo7.egg.nutrividas.entidades.Nutricionista;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -854,7 +855,7 @@ public class Template {
                 "</html>";
     }
 
-    public static String menuTemplate(Menu menu){
+    public static String menuTemplate(Menu menu, Nutricionista nutricionista){
         return "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n" +
                 "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" style=\"width:100%;font-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0\">\n" +
                 "<head>\n" +
@@ -944,7 +945,7 @@ public class Template {
                 "                                                <td align=\"left\" style=\"padding:0;Margin:0;width:440px\">\n" +
                 "                                                    <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" role=\"presentation\" style=\"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px\">\n" +
                 "                                                        <tr style=\"border-collapse:collapse\">\n" +
-                "                                                            <td align=\"left\" style=\"padding:0;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#333333;font-size:12px\"><strong>Nutricionista:</strong> Marta Sosa<br><strong>Matrícula:</strong> 123456789123<br><strong>Mail: </strong>martasosa@gmail.com</p></td>\n" +
+                "                                                            <td align=\"left\" style=\"padding:0;Margin:0\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;color:#333333;font-size:12px\"><strong>Nutricionista:</strong>"+nutricionista.getNombre()+", "+nutricionista.getApellido()+"<br><strong>Matrícula:</strong> "+nutricionista.getMatricula()+"<br><strong>Mail: </strong>"+nutricionista.getCredencial().getMail()+"</p></td>\n" +
                 "                                                        </tr>\n" +
                 "                                                    </table></td>\n" +
                 "                                            </tr>\n" +

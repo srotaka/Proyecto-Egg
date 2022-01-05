@@ -164,7 +164,7 @@
                                     <h3 class="display-4" id="mensaje-Bienvenida-SignUp">¡Nuevo Integrante!</h3>
                                     <!-- <p class="text-muted mb-4" id="mensaje-nutricionista">¡Forma parte de esta
                                         experiencia!</p> -->
-                                    <form th:action="@{/persona/crear}" th:object="${persona}" method="POST">
+                                    <form th:action="@{/persona/__${accion}__}" th:object="${persona}" method="POST">
                                         <div class="row">
                                             <div class="col">
                                                 <label for="nombre">Nombre</label>
@@ -214,7 +214,7 @@
                                             <div class="col">
                                                 <label for="documento">Peso</label>
                                                 <div class="form-group mb-3">
-                                                    <input th:field="*{peso}" id="inputPeso" type="number"
+                                                    <input th:field="*{peso}" id="inputPeso" type="number" step='0.01'
                                                         placeholder="" required="" autofocus=""
                                                         class="form-control border-0 shadow-sm px-4">
                                                 </div>
@@ -238,7 +238,7 @@
                                             <div class="col">
                                                 <div class="form-check mt-4">
                                                     <!-- <input th:field="*{celiaco}" name="diabetico" -->
-                                                    <input name="celiaco" value="true" class="form-check-input"
+                                                    <input th:field="*{celiaco}" name="celiaco" value="true" class="form-check-input"
                                                         type="checkbox" id="flexCheckDefault">
                                                     <label class="form-check-label" for="flexCheckDefault">
                                                         Celíaco
@@ -248,7 +248,7 @@
                                             <div class="col">
                                                 <div class="form-check mt-4">
                                                     <!-- <input th:field="*{diabetico}" name="diabetico" -->
-                                                    <input name="diabetico" value="true" class="form-check-input"
+                                                    <input th:field="*{diabetico}"  name="diabetico" value="true" class="form-check-input"
                                                         type="checkbox" id="flexCheckChecked">
                                                     <label class="form-check-label" for="flexCheckChecked">
                                                         Diabético
@@ -262,7 +262,7 @@
                                             <div class="col">
                                                 <div class="form-check mt-2">
                                                     <!-- <input th:field="*{hipertenso}" name="hipertenso" -->
-                                                    <input name="hipertenso" value="true" class="form-check-input"
+                                                    <input th:field="*{hipertenso}" name="hipertenso" value="true" class="form-check-input"
                                                         type="checkbox" id="flexCheckChecked">
                                                     <label class="form-check-label" for="flexCheckChecked">
                                                         Hipertenso
@@ -272,7 +272,7 @@
                                             <div class="col">
                                                 <div class="form-check mt-2 mb-4">
                                                     <!-- <input th:field="*{intoleranteLactosa}" value="true" -->
-                                                    <input value="true" class="form-check-input" type="checkbox"
+                                                    <input th:field="*{intoleranteLactosa}" value="true" class="form-check-input" type="checkbox"
                                                         id="flexCheckChecked">
                                                     <label class="form-check-label" for="flexCheckChecked">
                                                         Intoleante Lactosa
@@ -284,18 +284,16 @@
                                             
                                             <div class="col">
                                                 <div class="form-group mb-3">
-                                                    <label for="sexo">Sexo</label>
-                                                    <select aria-label="Sexo" class="form-select" id="inputSexo">
-                                                        <!-- id="inputSexo" th:field="*{sexo}"> -->
-                                                        <option>Femenino</option>
-                                                        <option>Masculino</option>
-                                                        <!-- <option 
-                                                    th:each="sexo : ${T(grupo7.egg.nutrividas.enums.Sexo).values()}"
-                                                    th:value="${sexo}" th:text="${sexo.valor}">
-                                                </option> -->
+                                                    <label for="sexo">Género</label>
+                                                    <select name="sexo"
+                                                            class="form-select" id="inputSexo"
+                                                            th:with="sexo=*{sexo}">
+                                                        <option
+                                                                th:each="sexo : ${T(grupo7.egg.nutrividas.enums.Sexo).values()}"
+                                                                th:value="${sexo}" th:text="${sexo.valor}"
+                                                                th:selected="${persona.sexo != null} ? ${sexo.valor} == *{sexo.valor} : false">
+                                                        </option>
                                                     </select>
-                                                    <!-- <div class="error text-start" th:if="${#fields.hasErrors('sexo')}"
-                                            th:errors="*{sexo}" style="color:red;"></div> -->
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -306,8 +304,8 @@
                                         </div>
 
                                         <button type="submit" class="btn btn-primary" id="boton-SignIn">Guardar</button>
-                                </div>
-                                </form>
+
+                                    </form>
                             </div>
                         </div>
                     </div><!-- End -->

@@ -153,6 +153,7 @@
                                                     <th scope="row">Localidad</th>
                                                     <th scope="row">Provincia</th>
                                                     <th scope="row">Cantidad Personas</th>
+                                                    <th sec:authorize="hasRole('NUTRICIONISTA')" scope="row">Pacientes</th>
                                                     <th sec:authorize="hasRole('ADMIN')" scope="row">Editar</th>                                                   
                                                     <th scope="row">Canastas</th>
                                                     <th scope="row">Biografía</th>
@@ -167,6 +168,12 @@
                                                     <td th:text="${comedor.direccion.localidad}"></td>
                                                     <td th:text="${comedor.direccion.provincia}"></td>
                                                     <td th:text="${comedor.cantidadDePersonas}"></td>
+                                                    <td sec:authorize="hasRole('NUTRICIONISTA')" class="text-center">
+                                                        <a th:href="@{/persona/comedor/__${comedor.id}__}">
+                                                            <box-icon name='face' type='solid' animation='tada-hover'
+                                                                      color='#1bac91'></box-icon>
+                                                        </a>
+                                                    </td>
                                                     <td sec:authorize="hasRole('ADMIN')" class="text-center">
                                                         <a th:href="@{/comedor/editar/__${comedor.id}__}">
                                                             <box-icon name='edit' type='solid' animation='tada-hover'

@@ -7,6 +7,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import grupo7.egg.nutrividas.entidades.Menu;
+import grupo7.egg.nutrividas.entidades.Nutricionista;
 import grupo7.egg.nutrividas.mail.Template;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,11 +19,7 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 @Component
 @Data
@@ -30,12 +27,6 @@ import java.util.Date;
 @AllArgsConstructor
 public class MenuPDFExporter {
 
-
-    private Menu menu;
-
-    public MenuPDFExporter(Menu menu) {
-        this.menu = menu;
-    }
 
     private void writeTableHeader(PdfPTable table) {
         PdfPCell cell = new PdfPCell();
@@ -67,7 +58,7 @@ public class MenuPDFExporter {
         }
     }*/
     private String[] dias = {"Lunes","Martes","Miercoles","Jueves","Viernes"};
-    private void writeTableData(PdfPTable table) {
+    private void writeTableData(PdfPTable table,Menu menu) {
         String[][] menuSemanal = menu.getMenuSemanal();
         for (int i = 0; i < menuSemanal.length; i++) {
             table.addCell(dias[i]);
@@ -77,7 +68,7 @@ public class MenuPDFExporter {
         }
     }
 
-    public void export(HttpServletResponse response) throws DocumentException, IOException {
+    public void export(HttpServletResponse response,Menu menu) throws DocumentException, IOException {
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
 
@@ -99,18 +90,18 @@ public class MenuPDFExporter {
         table.setSpacingBefore(10);
 
         writeTableHeader(table);
-        writeTableData(table);
+        writeTableData(table,menu);
 
         document.add(table);
 
         document.close();
     }
 
-    public void export2(HttpServletResponse response) throws IOException {
+    public void export2(HttpServletResponse response, Menu menu, Nutricionista nutricionista) throws IOException {
         //String inputFile = "C:\\Users\\test\\Documents\\ProyectoFinalEgg2\\Proyecto-Egg\\Nutrividas\\src\\main\\resources\\templates\\menuPDF.html";
 
         //String html = new String(Files.readAllBytes(Paths.get(inputFile)));
-        String html = Template.menuTemplate(menu);
+        String html = Template.menuTemplate(menu,nutricionista);
         org.jsoup.nodes.Document document = Jsoup.parse(html);
         document.outputSettings().syntax(org.jsoup.nodes.Document.OutputSettings.Syntax.xml);
 

@@ -2,43 +2,35 @@ package grupo7.egg.nutrividas.controlador;
 
 import com.lowagie.text.DocumentException;
 import grupo7.egg.nutrividas.entidades.Menu;
+import grupo7.egg.nutrividas.entidades.Nutricionista;
 import grupo7.egg.nutrividas.entidades.Persona;
+import grupo7.egg.nutrividas.entidades.Producto;
 import grupo7.egg.nutrividas.enums.CategoriaIMC;
 import grupo7.egg.nutrividas.enums.Sexo;
 import grupo7.egg.nutrividas.exeptions.FieldInvalidException;
-import grupo7.egg.nutrividas.exeptions.InvalidDataException;
 import grupo7.egg.nutrividas.repositorios.PersonaRepository;
 import grupo7.egg.nutrividas.servicios.ComedorServicio;
+import grupo7.egg.nutrividas.servicios.NutricionistaServicio;
 import grupo7.egg.nutrividas.servicios.PersonaServicio;
 import grupo7.egg.nutrividas.util.MenuPDFExporter;
 import grupo7.egg.nutrividas.util.Validations;
-import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
-import org.xhtmlrenderer.layout.SharedContext;
-import org.xhtmlrenderer.pdf.ITextRenderer;
-import org.xhtmlrenderer.simple.xhtml.XhtmlForm;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.awt.*;
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -46,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
 
 @Controller
 @RequestMapping("/persona")
@@ -61,6 +53,29 @@ public class PersonaControlador {
 
     @Autowired
     private ComedorServicio comedorServicio;
+
+    @Autowired
+    private NutricionistaServicio nutricionistaServicio;
+
+    @GetMapping
+    public ModelAndView mostrarPersonas(@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                                  @RequestParam(value = "size", required = false, defaultValue = "15") int size,
+                                                  @RequestParam(value = "order", required = false, defaultValue = "OrderByNombreASC") String order,
+                                                  HttpServletRequest request, HttpSession session) {
+
+        ModelAndView mav = new ModelAndView("persona-listado");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+        }
+
+        mav.addObject("personas", personaServicio.listarPersonasPorComedor(comedorServicio.buscarPorMail(session.getAttribute("emailSession").toString()).getId(),page, size,getSort(order)));
+        mav.addObject("rutaActual",obtenerRutaActual(""));
+        mav.addObject("menu",new Menu());
+        return mav;
+    }
 
     @GetMapping("/comedor/{id}")
     public ModelAndView mostrarPersonasPorComedor(@PathVariable("id")Long idComedor,@RequestParam(value = "page", required = false, defaultValue = "1") int page,
@@ -168,9 +183,8 @@ public class PersonaControlador {
             mav.addObject("persona", new Persona());
         }
 
-        mav.addObject("comedores", comedorServicio.listarComedores());
         mav.addObject("title", "Ingresar Persona");
-        mav.addObject("action", "guardar");
+        mav.addObject("accion", "guardar");
         return mav;
     }
 
@@ -199,19 +213,15 @@ public class PersonaControlador {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardarPersona(@RequestParam String nombre, @RequestParam String apellido, @RequestParam Long documento, @RequestParam LocalDate fechaNacimiento,
-                                @RequestParam Double altura, @RequestParam Double peso,
-                                @RequestParam Boolean aptoCeliacos, @RequestParam Boolean aptoHipertensos,
-                                @RequestParam Boolean aptoDiabeticos, @RequestParam Boolean aptoIntoleranteLactosa,
-                                @RequestParam Sexo sexo, @RequestParam Long idComedor, RedirectAttributes attributes){
+    public RedirectView guardarPersona(@ModelAttribute @Valid Persona persona, BindingResult result, RedirectAttributes attributes, HttpSession session){
         RedirectView redirectView = new RedirectView("/persona");
 
-
         try {
-            personaServicio.crearPersona(nombre, apellido, documento, fechaNacimiento, peso, altura, aptoIntoleranteLactosa, aptoCeliacos, aptoHipertensos, aptoDiabeticos, sexo, idComedor);
+            Persona persona2 = personaServicio.crearPersona(persona.getNombre(), persona.getApellido(), persona.getDocumento(), persona.getFechaNacimiento(),persona.getPeso(),persona.getAltura(), persona.getIntoleranteLactosa(),persona.getCeliaco(),persona.getHipertenso(),persona.getDiabetico(),persona.getSexo(),comedorServicio.buscarPorMail(session.getAttribute("emailSession").toString()).getId());
             attributes.addFlashAttribute("exito", "La creación ha sido realizada satisfactoriamente");
         } catch (Exception e) {
             attributes.addFlashAttribute("error", e.getMessage());
+            attributes.addFlashAttribute("persona", persona);
             redirectView.setUrl("/persona/crear");
         }
 
@@ -219,21 +229,13 @@ public class PersonaControlador {
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificarPersona(@RequestParam Long id, @RequestParam String nombre, @RequestParam String apellido,
-                                  @RequestParam Long documento, @RequestParam LocalDate fechaNacimiento,
-                                  @RequestParam Double altura, @RequestParam Double peso,
-                                  @RequestParam Boolean aptoCeliacos, @RequestParam Boolean aptoHipertensos,
-                                  @RequestParam Boolean aptoDiabeticos, @RequestParam Boolean aptoIntoleranteLactosa,
-                                  @RequestParam Sexo sexo, @RequestParam Long idComedor, RedirectAttributes attributes) {
+    public RedirectView modificarPersona(@ModelAttribute @Valid Persona persona, BindingResult result, RedirectAttributes attributes) {
         RedirectView redirectView = new RedirectView("/persona");
 
         try {
-            personaServicio.modificarPersona(id, nombre, apellido, documento, fechaNacimiento, peso,
-                    altura, aptoIntoleranteLactosa, aptoCeliacos, aptoHipertensos,
-                    aptoDiabeticos, sexo, idComedor);
+            personaServicio.modificarPersona(persona.getId(),persona.getNombre(), persona.getApellido(), persona.getDocumento(), persona.getFechaNacimiento(),persona.getPeso(),persona.getAltura(), persona.getIntoleranteLactosa(),persona.getCeliaco(),persona.getHipertenso(), persona.getDiabetico(),persona.getSexo(),persona.getComedor().getId());
             attributes.addFlashAttribute("exito", "La actualización ha sido realizada satisfactoriamente");
         } catch (Exception e) {
-            Persona persona = personaRepository.findById(id).get();
             attributes.addFlashAttribute("persona", persona);
             attributes.addFlashAttribute("error", e.getMessage());
             redirectView.setUrl("/persona/editar/" + persona.getId());
@@ -277,8 +279,8 @@ public class PersonaControlador {
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename="+menu.getTitulo()+"_" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
-        MenuPDFExporter exporter = new MenuPDFExporter(menu);
-        exporter.export2(response);
+        MenuPDFExporter exporter = new MenuPDFExporter();
+        exporter.export2(response,menu,getNutricionistLogged());
 
         return redirectView;
     }
@@ -330,5 +332,17 @@ public class PersonaControlador {
             default:
                 throw new FieldInvalidException("El parámetro de orden ingresado es inválido");
         }
+    }
+
+    public Nutricionista getNutricionistLogged(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String mail;
+        if (principal instanceof UserDetails){
+            mail = ((UserDetails) principal).getUsername();
+        }else{
+            mail = principal.toString();
+        }
+
+        return nutricionistaServicio.buscarPorMail(mail);
     }
 }

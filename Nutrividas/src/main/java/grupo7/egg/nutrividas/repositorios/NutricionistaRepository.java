@@ -20,6 +20,7 @@ public interface NutricionistaRepository extends JpaRepository<Nutricionista,Lon
     boolean existsByMatriculaOrDocumento(Long matricula, Long documento);
     Optional<Nutricionista> findByMatriculaOrDocumento(Long matricula, Long documento);
     Optional<Nutricionista> findById(Long id);
+    Optional<Nutricionista> findByCredencial_Mail(String mail);
     @Query(value = "SELECT n FROM nutricionistas n CONCAT_WS(n.nombre,n.apellido, n.matricula,n.documento,n.comedor.nombre) LIKE %:busqueda%",nativeQuery = true)
     Page<Nutricionista> buscarPorTodosCampos(@Param("busqueda") String busqueda, Pageable pageable);
     Page<Nutricionista> findByMatriculaContaining(Long matricula,Pageable pageable);

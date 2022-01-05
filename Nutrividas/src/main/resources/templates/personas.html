@@ -169,7 +169,7 @@
                 <td th:text="|${persona.edad}|" style="width: 5rem;"></td>
                 <td th:text="|${persona.altura}|" style="width: 6rem;"></td>
                 <td th:text="${#numbers.formatDecimal(persona.peso, 0, 'COMMA', 1, 'POINT')}" style="width: 6rem;"></td>
-                <th th:text="|${persona.IMC}|" th:style="'width: 5rem; color: '+${persona.categoriaIMC.color}+';'"></th>
+                <th th:text="${#numbers.formatDecimal(persona.IMC,0,2)}" th:style="'width: 5rem; color: '+${persona.categoriaIMC.color}+';'"></th>
               </tr>
             </table>
           </div>
