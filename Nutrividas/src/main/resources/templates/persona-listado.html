@@ -76,7 +76,8 @@
                         <th scope="row">Celíaco</th>
                         <th scope="row">Diabético</th>
                         <th scope="row">Hipertenso</th>
-                        <th scope="row">Intolerante Lactosa</th>                        
+                        <th scope="row">Intolerante Lactosa</th>
+                        <th scope="row">Acción</th>                          
                     </tr>
                 </thead>
                 <!-- <tbody id="myTable" style="text-align: center;" th:each="persona : ${personas}"> -->
@@ -95,6 +96,11 @@
                         <td class="col-md-2 px-md-2"><box-icon th:name="${persona.diabetico == true} ? 'check' : 'x'" color='#444444'></box-icon></td>
                         <td class="col-md-2 px-md-2"><box-icon th:name="${persona.hipertenso == true} ? 'check' : 'x'" color='#444444'></box-icon></td>
                         <td class="col-md-2 px-md-2"><box-icon th:name="${persona.intoleranteLactosa == true} ? 'check' : 'x'" color='#444444'></box-icon></td>
+                        <td class="col-md-3 px-md-2">
+                            <form method="post">                               
+                                <button class="btn btn-success btn-sm" type="submit" id="boton-guardar">Editar</button>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             </table>

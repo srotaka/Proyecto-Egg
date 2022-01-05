@@ -199,8 +199,8 @@ body {
   height: 100%;
   justify-content: space-evenly;
   padding: 1rem;
+  padding-top: 2rem;
 }
-
 /* Card ============================================*/
 
 /* Area to hold an individual card */
@@ -474,6 +474,9 @@ strong {
     font-size: 2.5rem;
     font-weight: 600;
     padding-top: 0px;
+    padding-bottom: 0rem;
+    padding-left: 11%;
+    padding-top: 2rem;
   }
   
   .product-image {
@@ -534,3 +537,12 @@ strong {
   .modal-dialog{
     width: 500px !important;
   }
+
+  
+/*--------------------------------------------------------------
+# PAGING
+--------------------------------------------------------------*/
+.pagination{
+  padding-left: 22%;
+  padding-bottom: 6.7% !important;
+}

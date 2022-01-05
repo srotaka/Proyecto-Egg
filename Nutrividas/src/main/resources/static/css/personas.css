@@ -112,12 +112,12 @@ strong::after {
 
 #titulo{
   text-align: center !important;
-
   color: #444444;
-  font: normal 40px/50px "Montserrat", sans-serif;
+  font: normal 40px/50px "Montserrat", sans-serif !important;
   background: url("../img/cover01.jpg") center center;
   background-size: cover;
   padding-bottom: 2rem;
+  
 }
 
 .texto-comedores {

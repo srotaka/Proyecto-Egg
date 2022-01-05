@@ -145,8 +145,8 @@
                                 <td class="col-md-4 px-md-1" th:text="${detalleCompra.cantidad}"></td>
                                 <td class="col-md-4 px-md-1">$
                                   [[${#numbers.formatDecimal(detalleCompra.subtotal,0,2)}]]</td>
-                                  <!-- Trigger Limon -->
-                                  <td class="col-md-4 px-md-1">
+                                <!-- Trigger Limon -->
+                                <td class="col-md-4 px-md-1">
                                   <!-- <button type="button" data-toggle="modal" data-target="#exampleModal">
                                     <box-icon name='lemon' color='#1bac91'></box-icon>
                                   </button> -->
@@ -158,64 +158,67 @@
                                   </button>
                                   <!-- End Lemon Button Trigger  -->
                                   <!-- Modal de prueba para el botón de LIMÓN-->
-                <div class="modal fade" th:id="${detalleCompra.canasta.id}" tabindex="1"
-                aria-labelledby="exampleModalLabel" aria-hidden="true" id="lemonModal"  style="z-index: 100;">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="modal-productos">Productos</h5>
-                      <button type="button" class="btn-close-modal" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <!-- Tabla de productos -->
-                      <div class="container mt-3">
-                        <p>Detalle de productos de la canasta</p>
-                        <table class="table table-striped">
-                          <thead>
-                            <tr>
-                              <th></th>
-                              <th>Cantidad</th>
-                              <th>Nombre</th>
-                              <th>Marca</th>
-                              <th>Precio</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr th:each="elemento, step : ${detalleCompra.canasta.elementos}">
-                              <th th:if="${elemento.producto.foto == null}" width="30px" heigth="25px"
-                                class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
+                                  <div class="modal fade" th:id="${detalleCompra.canasta.id}" tabindex="1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true" id="lemonModal"
+                                    style="z-index: 100;">
+                                    <div class="modal-dialog">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="modal-productos">Productos</h5>
+                                          <button type="button" class="btn-close-modal" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <!-- Tabla de productos -->
+                                          <div class="container mt-3">
+                                            <p>Detalle de productos de la canasta</p>
+                                            <table class="table table-striped">
+                                              <thead>
+                                                <tr>
+                                                  <th></th>
+                                                  <th>Cantidad</th>
+                                                  <th>Nombre</th>
+                                                  <th>Marca</th>
+                                                  <th>Precio</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <tr th:each="elemento, step : ${detalleCompra.canasta.elementos}">
+                                                  <th th:if="${elemento.producto.foto == null}" width="30px"
+                                                    heigth="25px" class="text-center" th:style="'z-index: 100; background-image:url( '+@{/img/productos/productosDefault.jpg}+' ) !important;background-repeat: no-repeat;
                                                 background-position: center;background-size: cover;'">
-                              </th>
-                              <th th:unless="${elemento.producto.foto == null}" width="40px" heigth="25px"
-                                class="text-center" th:style="'z-index: 100
+                                                  </th>
+                                                  <th th:unless="${elemento.producto.foto == null}" width="40px"
+                                                    heigth="25px" class="text-center" th:style="'z-index: 100
                                                 ;background-image:url(http://localhost:8080/fotos/'+${elemento.producto.foto.id}+') !important;background-repeat: no-repeat;
                                                  background-position: center;background-size: cover;'">
-                              <td th:text="${elemento.cantidadNecesaria}"></td>
-                              <td th:text="${elemento.producto.nombre}"></td>
-                              <td th:text="${elemento.producto.marca.nombre}"></td>
-                              <td th:text="${#numbers.formatDecimal(elemento.producto.precio,0,2)}" id="precio-modal">
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <!-- Fin Tabla de productos -->
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-modal-trigger" data-bs-dismiss="modal">Cerrar</button>
+                                                  <td th:text="${elemento.cantidadNecesaria}"></td>
+                                                  <td th:text="${elemento.producto.nombre}"></td>
+                                                  <td th:text="${elemento.producto.marca.nombre}"></td>
+                                                  <td th:text="${#numbers.formatDecimal(elemento.producto.precio,0,2)}"
+                                                    id="precio-modal">
+                                                  </td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          </div>
+                                          <!-- Fin Tabla de productos -->
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-modal-trigger"
+                                            data-bs-dismiss="modal">Cerrar</button>
 
-                    </div>
-                  </div>
-                </div>
-              </div>
-               <!-- FIN Modal de prueba para el botón de LIMÓN-->
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!-- FIN Modal de prueba para el botón de LIMÓN-->
 
                                 </td>
 
-                                
+
                               </tr>
-                              
+
                             </tbody>
                           </table>
                         </div>
@@ -229,49 +232,44 @@
                 </div>
                 <!-- Fin modal detalles comedores -->
 
-                
+
               </div>
             </div>
           </div>
         </div>
-
-        <!-- Paginacion -->
-
-          <nav aria-label="Page navigation" class="paging">
-            <ul class="pagination" th:if="${compras.page.totalPages > 1}">
-              <li class="page-item" th:classappend="${!compras.paging.isPrevEnabled()? 'disabled' : ''}">
-                <a class="page-link" th:href="@{'/usuario'+${rutaActual}+'?page=' + ${compras.paging.pageNumber - 1}}"
-                   tabindex="-1">Anterior</a>
-              </li>
-              <th:block th:each="item : ${compras.paging.getItems()}">
-                <li class="page-item" th:classappend="${item.index == compras.paging.pageNumber? 'active' : ''}"
-                    th:if="${item.pageItemType.name() == 'PAGE'}">
-                  <a class="page-link" th:href="@{'/usuario'+${rutaActual}+'?page=' + ${item.index}}"
-                     th:text="${item.index}"></a>
-                </li>
-                <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
-                  <a class="page-link" href="#">...</a>
-                </li>
-              </th:block>
-              <li class="page-item" th:classappend="${!compras.paging.isNextEnabled()? 'disabled' : ''}">
-                <a class="page-link"
-                   th:href="@{'/usuario'+${rutaActual}+'?page=' + ${compras.paging.pageNumber + 1}}">Siguiente</a>
-              </li>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </ul>
-          </nav>
-
-        <!-- ******************** -->
-
       </section>
+     
     </section>
+     <!-- Paginacion -->
+
+     <nav aria-label="Page navigation" class="paging">
+      <ul class="pagination" th:if="${compras.page.totalPages > 1}">
+        <li class="page-item" th:classappend="${!compras.paging.isPrevEnabled()? 'disabled' : ''}">
+          <a class="page-link" th:href="@{'/usuario'+${rutaActual}+'?page=' + ${compras.paging.pageNumber - 1}}"
+            tabindex="-1">Anterior</a>
+        </li>
+        <th:block th:each="item : ${compras.paging.getItems()}">
+          <li class="page-item" th:classappend="${item.index == compras.paging.pageNumber? 'active' : ''}"
+            th:if="${item.pageItemType.name() == 'PAGE'}">
+            <a class="page-link" th:href="@{'/usuario'+${rutaActual}+'?page=' + ${item.index}}"
+              th:text="${item.index}"></a>
+          </li>
+          <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+            <a class="page-link" href="#">...</a>
+          </li>
+        </th:block>
+        <li class="page-item" th:classappend="${!compras.paging.isNextEnabled()? 'disabled' : ''}">
+          <a class="page-link"
+            th:href="@{'/usuario'+${rutaActual}+'?page=' + ${compras.paging.pageNumber + 1}}">Siguiente</a>
+        </li>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </ul>
+    </nav>
+
+    <!-- ******************** -->
 
     <!-- ======= Footer ======= -->
-    <footer id="footer2" style="z-index: 100 !important;">
-      <div class="copyright2">
-        Copyright&copy; 2021-2022 | <b><span>&nbsp;Nutrividas&nbsp;</span></b> | Todos los derechos
-        reservados
-      </div>
+    <footer th:replace="fragmentos::footer2">
     </footer>
     <!-- End Footer -->
 

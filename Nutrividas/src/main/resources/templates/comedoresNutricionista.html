@@ -69,7 +69,7 @@
                             <th scope="row">Localidad</th>
                             <th scope="row">Provincia</th>
                             <th scope="row">Cantidad Personas</th>
-                            <th scope="row">Baja</th>
+                            <th scope="row">Dar de Baja</th>
                             <th scope="row">Canastas</th>
                         </tr>
                     </thead>
@@ -86,7 +86,7 @@
                             <td class="col-md-3 px-md-2" th:text="${comedor.cantidadDePersonas}"></td>
                             <td class="col-md-3 px-md-2">
                                 <form method="post" th:action="@{/nutricionista/desasignar/__${comedor.id}__}">
-                                    <button class="btn btn-danger btn-sm" type="submit">Desasignar</button>
+                                    <button class="btn btn-danger btn-sm" type="submit"  id="boton-guardar">Desasignar</button>
                                 </form>
                             </td>
                             <td class="text-center">

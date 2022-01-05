@@ -57,6 +57,7 @@
               <li><a href="#testimonials">Testimonios</a></li>
               <li><a href="#team">Nuestro Equipo</a></li>
               <li><a href="#faq">Preguntas Frecuentes</a></li>
+              <li><a href="#contact">Contáctanos</a></li>
             </ul>
           </li>
           <li sec:authorize="hasRole('NUTRICIONISTA')" class="drop-down"><a href="#">Nutricionistas</a>
@@ -80,7 +81,7 @@
               <li sec:authorize="hasAnyRole('NUTRICIONISTA','ADMIN')"><a th:href="@{/canasta/crear}">Nueva Canasta</a>
             </ul>
           </li>
-          <li><a href="#contact">Contáctanos</a></li>
+          
           &nbsp;&nbsp;&nbsp;
           <!-- Botón Usuario si está loggeado -->
           <li class="drop-down" sec:authorize="isAuthenticated()">
@@ -93,6 +94,8 @@
               <li class="dropdown-divider"></li>
               <li><a class="dropdown-item" th:href="@{/perfil/modificar/__${session.usernameSession}__}">Editar perfil</a></li>
               <li><a class="dropdown-item" th:href="@{/persona/crear}" sec:authorize="hasRole('COMEDOR')">Agregar Integrante al Comedor</a></li>
+              <li><a class="dropdown-item" th:href="@{/persona}"
+                sec:authorize="hasRole('COMEDOR')">Ver Integrantes del Comedor</a></li>
               <li><a class="dropdown-item" th:href="@{/usuario/compras/__${session.usernameSession}__}" sec:authorize="hasRole('USUARIO')">Mis compras</a></li>
               <li><a class="dropdown-item" th:href="@{/usuario/tarjetas/__${session.usernameSession}__}" sec:authorize="hasRole('USUARIO')">Mis Tarjetas</a></li>
               <li><a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a></li>
