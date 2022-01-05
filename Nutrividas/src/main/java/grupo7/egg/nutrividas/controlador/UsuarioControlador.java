@@ -4,6 +4,7 @@ package grupo7.egg.nutrividas.controlador;
 import grupo7.egg.nutrividas.entidades.Foto;
 import grupo7.egg.nutrividas.entidades.Usuario;
 import grupo7.egg.nutrividas.mail.MailService;
+import grupo7.egg.nutrividas.servicios.CompraServicio;
 import grupo7.egg.nutrividas.servicios.FotoServicio;
 import grupo7.egg.nutrividas.servicios.UsuarioServicio;
 import java.security.Principal;
@@ -37,6 +38,9 @@ public class UsuarioControlador {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private CompraServicio compraServicio;
 
 
     @PostMapping("/modificar")
@@ -95,7 +99,12 @@ public class UsuarioControlador {
     }
 
     @GetMapping(value = "/compras/{username}")
-    public ModelAndView signup(@PathVariable("username")String username, HttpServletRequest request, HttpSession session){
+    public ModelAndView signup(@PathVariable("username")String username,
+                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                               @RequestParam(value = "size", required = false, defaultValue = "6") int size,
+                               @RequestParam(value = "order", required = false, defaultValue = "OrderByIdASC")String order,
+                                           HttpServletRequest request, HttpSession session){
+
         ModelAndView mav = new ModelAndView("historialCompras");
         Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
@@ -107,7 +116,10 @@ public class UsuarioControlador {
             mav.addObject("error", flashMap.get("error"));
             mav.addObject("usuario", flashMap.get("usuario"));
         } else {
-            mav.addObject("usuario", usuarioServicio.buscarPorUsername(username));
+            Usuario usuario = usuarioServicio.buscarPorUsername(username);
+            mav.addObject("usuario", usuario);
+            mav.addObject("compras",compraServicio.listarcomprasUsuario(usuario.getId(),page,size));
+            mav.addObject("rutaActual","/compras/"+session.getAttribute("usernameSession").toString());
         }
 
         return mav;

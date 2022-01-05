@@ -1,7 +1,14 @@
 package grupo7.egg.nutrividas.servicios;
 import grupo7.egg.nutrividas.entidades.*;
 import grupo7.egg.nutrividas.repositorios.CompraRepository;
+import grupo7.egg.nutrividas.util.Validations;
+import grupo7.egg.nutrividas.util.paginacion.Paged;
+import grupo7.egg.nutrividas.util.paginacion.Paging;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -50,10 +57,11 @@ public class CompraServicio {
         return compraRepository.save(compra);
     }
 
-
     @Transactional(readOnly = true)
-    public List<Compra> listarcomprasUsuario(Long idUsaurio){
-        return compraRepository.findByUsuario_id(idUsaurio);
+    public Paged<Compra> listarcomprasUsuario(Long idUsaurio, int page, int size){
+        Pageable request = PageRequest.of(page - 1, size,Sort.by(Sort.Direction.ASC,"id"));
+        Page<Compra> compraPage = compraRepository.findByUsuario_id(idUsaurio,request);
+        return new Paged(compraPage, Paging.of(compraPage.getTotalPages(), page, size));
     }
 
     public Compra buscarPorId(Long idCompra){
