@@ -6,23 +6,40 @@ const tarjeta = document.querySelector('#tarjeta'),
 	  logoMarca = document.querySelector('#logo-marca'),
 	  firma = document.querySelector('#tarjeta .firma p'),
 	  mesExpiracion = document.querySelector('#tarjeta .mes'),
-	  yearExpiracion = document.querySelector('#tarjeta .year');
-	  ccv = document.querySelector('#tarjeta .ccv');
+	  yearExpiracion = document.querySelector('#tarjeta .year'),
+	  ccv = document.querySelector('#tarjeta .ccv'),
+      chip = document.getElementById("chip"),
+      datosTarjeta = document.getElementById("datosTarjeta"),
+      datosTraseros = document.getElementById("datosTraseros"),
+      logo = document.getElementById("logo-marca");
 
 // * Volteamos la tarjeta para mostrar el frente.
 const mostrarFrente = () => {
 	if(tarjeta.classList.contains('active')){
 		tarjeta.classList.remove('active');
         chip.setAttribute("style", "display: block;")
+        datosTarjeta.setAttribute("style", "display: block;")
+        datosTraseros.setAttribute("style", "display: none;")
+        logo.setAttribute("style", "display: block")
 	}
 }
 
 // * Rotacion de la tarjeta
-//tarjeta.addEventListener('click', () => {
-//	tarjeta.classList.toggle('active');
-  //  let chip = document.getElementById("chip");
-    //chip.setAttribute("style", "display: none;")
-//});
+tarjeta.addEventListener('click', () => {
+    if(tarjeta.classList.contains('active')){
+		tarjeta.classList.remove('active');
+        chip.setAttribute("style", "display: block;")
+        datosTarjeta.setAttribute("style", "display: block;")
+        datosTraseros.setAttribute("style", "display: none;")
+        logo.setAttribute("style", "display: block")
+	}else {
+	    tarjeta.classList.toggle('active');
+	    chip.setAttribute("style", "display: none;")
+	    datosTarjeta.setAttribute("style", "display: none;")
+	    datosTraseros.setAttribute("style", "display: block;")
+	    logo.setAttribute("style", "display: none")
+	}
+});
 
 // * Boton de abrir formulario
 btnAbrirFormulario.addEventListener('click', () => {
@@ -125,7 +142,7 @@ formulario.selectYear.addEventListener('change', (e) => {
 // * CCV
 formulario.inputCCV.addEventListener('keyup', () => {
 	if(!tarjeta.classList.contains('active')){
-		//tarjeta.classList.toggle('active');
+		tarjeta.classList.toggle('active');
 	}
 
 	formulario.inputCCV.value = formulario.inputCCV.value
