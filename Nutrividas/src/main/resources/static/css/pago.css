@@ -157,7 +157,6 @@ body {
   position: absolute;
   top: 0;
   transform: rotateY(180deg);
-  backface-visibility: hidden;
 }
 
 .trasera .barra-magnetica {
@@ -224,6 +223,9 @@ body {
   color: #fff;
 }
 
+#datosTraseros {
+    display: none;
+}
 /* ---------- Contenedor Boton ----------*/
 .contenedor-btn .btn-abrir-formulario {
   width: 50px;

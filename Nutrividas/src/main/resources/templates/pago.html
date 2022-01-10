@@ -67,7 +67,7 @@
 					<!-- <img src="../static/img/visa.png" alt=""> -->
 				</div>
 				<img th:src="@{/img/chip-tarjeta.png}" class="chip" alt="" id="chip">
-				<div class="datos">
+				<div class="datos" id="datosTarjeta">
 					<div class="grupo" id="numero">
 						<p class="label">Número Tarjeta</p> <br>
 						<p class="numero">#### #### #### ####</p>
@@ -82,16 +82,16 @@
 							<p class="label">Fecha Exp.</p> <br>
 							<p class="expiracion"><span class="mes">MM</span> / <span class="year">AA</span></p>
 						</div>
-						<div class="grupo" id="ccv">
+					<!--	<div class="grupo" id="ccv">
 							<p class="label">CCV</p> <br>
 							<p class="ccv"><span class="ccv"></span></p>
 
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
 
-			<div class="trasera">
+			<div class="trasera" id="datosTraseros">
 				<div class="barra-magnetica"></div>
 				<div class="datos">
 					<div class="grupo" id="firma">
