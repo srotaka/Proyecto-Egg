@@ -475,7 +475,7 @@ public class Template {
                 "<td class=\"es-m-txt-c\" align=\"left\" style=\"padding:0;Margin:0;padding-bottom:10px\"><h3 style=\"Margin:0;line-height:17px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:14px;font-style:normal;font-weight:bold;color:#333333;text-align:center\">Elaborá un plan</h3></td>\n" +
                 "</tr>\n" +
                 "<tr>\n" +
-                "<td class=\"es-m-txt-c\" align=\"center\" style=\"padding:0;Margin:0;padding-left:5px;padding-right:5px;padding-bottom:10px\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:20px;color:#999999;font-size:13px\">Accedé a los datos médicos de cada uno de los niños y elaborá un plan especialmente diseado&nbsp;para sus requerimientos nutricionales.<br></p></td>\n" +
+                "<td class=\"es-m-txt-c\" align=\"center\" style=\"padding:0;Margin:0;padding-left:5px;padding-right:5px;padding-bottom:10px\"><p style=\"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:20px;color:#999999;font-size:13px\">Accedé a los datos médicos de cada uno de los niños y elaborá un plan especialmente diseñado&nbsp;para sus requerimientos nutricionales.<br></p></td>\n" +
                 "</tr>\n" +
                 "</table></td>\n" +
                 "</tr>\n" +
