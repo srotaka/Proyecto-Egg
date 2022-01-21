@@ -208,6 +208,7 @@
     background: url("../img/cover01.jpg") center center;
     background-size: cover;
     padding-bottom: 2rem;
+    padding-top: 3rem;
   }
   
   .texto-comedores {
